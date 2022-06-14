@@ -12,7 +12,7 @@ class MyGradeSheetsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My GradeSheets"),
+        title: const Text("My Grade Sheets"),
       ),
       body: ListView.builder(
           itemCount: missionNumbers.length,
