@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'models/cts_list.dart';
 
+// will probably not use this class
+// instead favoring the edit_grade_sheet_page
 class ReviewGrades extends StatelessWidget {
   const ReviewGrades({Key? key}) : super(key: key);
 

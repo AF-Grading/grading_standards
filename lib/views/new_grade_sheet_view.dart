@@ -21,6 +21,7 @@ class NewGradeSheetView extends StatelessWidget {
                 ),
               ),
             ),
+            const Text("Add another student..."),
           ],
         ),
         Row(
