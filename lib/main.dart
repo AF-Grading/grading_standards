@@ -1,12 +1,12 @@
-import 'package:app_prototype/grading_activity.dart';
-import 'package:app_prototype/individual_reports_view.dart';
+import 'package:app_prototype/pages/grading_activity_page.dart';
+import 'package:app_prototype/views/individual_reports_view.dart';
 import 'package:app_prototype/pages/my_grade_sheets_page.dart';
 import 'package:app_prototype/pages/reference_materials_page.dart';
 import 'package:app_prototype/pages/settings_page.dart';
-import 'package:app_prototype/training_shop_view.dart';
+import 'package:app_prototype/views/training_shop_view.dart';
 import 'package:flutter/material.dart';
 
-import 'new_grade_sheet_view.dart';
+import 'views/new_grade_sheet_view.dart';
 
 void main() {
   runApp(const MyApp());
