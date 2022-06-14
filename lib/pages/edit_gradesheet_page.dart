@@ -22,6 +22,16 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
   DayNight _dayNight = DayNight.day;
 
   @override
+  void initState() {
+    _overall = widget.gradeSheet.overall;
+    _adQual = widget.gradeSheet.adQual;
+    _pilotQual = widget.gradeSheet.pilotQual;
+    _sortieType = widget.gradeSheet.sortieType;
+    _dayNight = widget.gradeSheet.dayNight;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
