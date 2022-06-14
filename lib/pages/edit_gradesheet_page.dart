@@ -1,5 +1,6 @@
 import 'package:app_prototype/models/cts_list.dart';
 import 'package:app_prototype/models/grade_sheet.dart';
+import 'package:app_prototype/widgets/editable_grade_item.dart';
 import 'package:flutter/material.dart';
 
 class EditGradeSheetPage extends StatefulWidget {
@@ -57,9 +58,16 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                   )
                 ],
               ),
-
-              const SizedBox(
-                  height: 300, child: Center(child: Text("Grades Widget"))),
+              SizedBox(
+                height: 300,
+                child: ListView.builder(
+                  itemCount: widget.gradeSheet.grades.length,
+                  itemBuilder: (context, index) {
+                    return EditableGradeItem(
+                        gradeItem: widget.gradeSheet.grades[index]);
+                  },
+                ),
+              ),
               // Should be moved to a "Grade Picker Widget of some sort for reuse"
               SizedBox(
                 //width: 400,

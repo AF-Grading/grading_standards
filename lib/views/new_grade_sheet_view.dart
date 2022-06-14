@@ -68,13 +68,13 @@ class NewGradeSheetView extends StatelessWidget {
               crossAxisCount: 3,
               childAspectRatio: 6,
             ),
-            itemCount: gradeItems.length,
+            itemCount: ctsItems.length,
             itemBuilder: (BuildContext context, int index) {
               return SizedBox(
                   width: 200,
                   height: 100,
                   child: ListTile(
-                      title: Text(gradeItems[index].name),
+                      title: Text(ctsItems[index].name),
                       leading: const Checkbox(value: false, onChanged: null)));
             },
           ),

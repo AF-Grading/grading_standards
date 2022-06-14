@@ -20,14 +20,14 @@ class ReviewGrades extends StatelessWidget {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
               ),
-              itemCount: gradeItems.length,
+              itemCount: ctsItems.length,
               itemBuilder: (BuildContext context, int index) {
                 return SizedBox(
                     width: 200,
                     child: ListTile(
-                        title: Text(gradeItems[index].name),
+                        title: Text(ctsItems[index].name),
                         leading:
-                            Text(gradeItems[index].passingScore.toString())));
+                            Text(ctsItems[index].passingScore.toString())));
               },
             ),
           ),

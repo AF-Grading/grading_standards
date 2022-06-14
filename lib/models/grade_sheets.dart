@@ -7,7 +7,24 @@ class GradeSheets {
       instructor: "Captain Underpants",
       student: "2nd Lieutenant Dan",
       missionNum: 12303,
-      grades: [],
+      grades: [
+        GradeItem(
+          name: "Communication Skills",
+          grade: Grade.familiar,
+        ),
+        GradeItem(
+          name: "Systems Knowledge",
+          grade: Grade.familiar,
+        ),
+        GradeItem(
+          name: "Combat Governing Documents",
+          grade: Grade.familiar,
+        ),
+        GradeItem(
+          name: "Threat Analysis & Mitigation/ Intel Integration",
+          grade: Grade.familiar,
+        ),
+      ],
       overall: Grade.familiar,
       sortieType: SortieType.ims,
       dayNight: DayNight.night,
@@ -19,7 +36,24 @@ class GradeSheets {
       instructor: "Captain Underpants",
       student: "2nd Lieutenant Dan",
       missionNum: 12303,
-      grades: [],
+      grades: [
+        GradeItem(
+          name: "Communication Skills",
+          grade: Grade.familiar,
+        ),
+        GradeItem(
+          name: "Systems Knowledge",
+          grade: Grade.noGrade,
+        ),
+        GradeItem(
+          name: "Combat Governing Documents",
+          grade: Grade.familiar,
+        ),
+        GradeItem(
+          name: "Threat Analysis & Mitigation/ Intel Integration",
+          grade: Grade.familiar,
+        ),
+      ],
       overall: Grade.introductory,
       sortieType: SortieType.ims,
       dayNight: DayNight.night,
@@ -31,7 +65,24 @@ class GradeSheets {
       instructor: "Captain Underpants",
       student: "2nd Lieutenant Kinger",
       missionNum: 12300,
-      grades: [],
+      grades: [
+        GradeItem(
+          name: "Communication Skills",
+          grade: Grade.familiar,
+        ),
+        GradeItem(
+          name: "Systems Knowledge",
+          grade: Grade.introductory,
+        ),
+        GradeItem(
+          name: "Combat Governing Documents",
+          grade: Grade.familiar,
+        ),
+        GradeItem(
+          name: "Threat Analysis & Mitigation/ Intel Integration",
+          grade: Grade.expert,
+        ),
+      ],
       overall: Grade.familiar,
       sortieType: SortieType.ims,
       dayNight: DayNight.night,
