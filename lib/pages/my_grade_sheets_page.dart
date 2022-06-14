@@ -1,4 +1,4 @@
-import 'package:app_prototype/grade_sheets.dart';
+import 'package:app_prototype/models/grade_sheets.dart';
 import 'package:app_prototype/pages/edit_gradesheet_page.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class MyGradeSheetsPage extends StatelessWidget {
           itemCount: missionNumbers.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text("Mission: ${gradeSheets[index].missionNum}"),
+              title: Text("Mission: ${missionNumbers[index]}"),
               subtitle: Column(
                   children: gradeSheets
                       .where((gradeSheet) =>

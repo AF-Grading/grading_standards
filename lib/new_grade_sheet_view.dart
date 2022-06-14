@@ -1,4 +1,4 @@
-import 'package:app_prototype/cts_list.dart';
+import 'package:app_prototype/models/cts_list.dart';
 import 'package:flutter/material.dart';
 
 class NewGradeSheetView extends StatelessWidget {

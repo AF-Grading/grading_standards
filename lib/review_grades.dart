@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'cts_list.dart';
+import 'models/cts_list.dart';
 
 class ReviewGrades extends StatelessWidget {
   const ReviewGrades({Key? key}) : super(key: key);

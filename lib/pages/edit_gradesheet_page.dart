@@ -1,4 +1,4 @@
-import 'package:app_prototype/grade_sheet.dart';
+import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
 
 class EditGradeSheetPage extends StatefulWidget {
@@ -12,14 +12,25 @@ class EditGradeSheetPage extends StatefulWidget {
 }
 
 class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Grade Sheet"),
       ),
-      body: Center(
-        child: Text(widget.gradeSheet.instructor),
+      body: Form(
+        key: _formKey,
+        child: Column(children: [
+          TextFormField(
+            initialValue: widget.gradeSheet.student,
+            decoration: const InputDecoration(
+              labelText: "Student",
+            ),
+            onSaved: (value) => widget.gradeSheet.student = value!,
+          )
+        ]),
       ),
     );
   }
