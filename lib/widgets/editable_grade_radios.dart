@@ -31,13 +31,13 @@ class _EditableGradeRadiosState extends State<EditableGradeRadios> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SizedBox(width: 150, child: Text(widget.name)),
-          ListTile(
-            title: const Text('NG'),
-            leading: Radio<Grade>(
+      child: ListTile(
+        leading: Text(widget.name),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const Text('NG'),
+            Radio<Grade>(
               value: Grade.noGrade,
               groupValue: _grade,
               onChanged: (Grade? value) {
@@ -47,10 +47,8 @@ class _EditableGradeRadiosState extends State<EditableGradeRadios> {
                 widget.onChanged(_grade);
               },
             ),
-          ),
-          ListTile(
-            title: const Text('0'),
-            leading: Radio<Grade>(
+            const Text('0'),
+            Radio<Grade>(
               value: Grade.unsatisfactory,
               groupValue: _grade,
               onChanged: (Grade? value) {
@@ -60,10 +58,8 @@ class _EditableGradeRadiosState extends State<EditableGradeRadios> {
                 widget.onChanged(_grade);
               },
             ),
-          ),
-          ListTile(
-            title: const Text('1'),
-            leading: Radio<Grade>(
+            const Text('1'),
+            Radio<Grade>(
               value: Grade.introductory,
               groupValue: _grade,
               onChanged: (Grade? value) {
@@ -73,10 +69,8 @@ class _EditableGradeRadiosState extends State<EditableGradeRadios> {
                 widget.onChanged(_grade);
               },
             ),
-          ),
-          ListTile(
-            title: const Text('2'),
-            leading: Radio<Grade>(
+            const Text('2'),
+            Radio<Grade>(
               value: Grade.familiar,
               groupValue: _grade,
               onChanged: (Grade? value) {
@@ -86,10 +80,8 @@ class _EditableGradeRadiosState extends State<EditableGradeRadios> {
                 widget.onChanged(_grade);
               },
             ),
-          ),
-          ListTile(
-            title: const Text('3'),
-            leading: Radio<Grade>(
+            const Text('3'),
+            Radio<Grade>(
               value: Grade.proficient,
               groupValue: _grade,
               onChanged: (Grade? value) {
@@ -99,11 +91,8 @@ class _EditableGradeRadiosState extends State<EditableGradeRadios> {
                 widget.onChanged(_grade);
               },
             ),
-          ),
-          ListTile(
-            title: const Text('4'),
-            dense: true,
-            leading: Radio<Grade>(
+            const Text('4'),
+            Radio<Grade>(
               value: Grade.expert,
               groupValue: _grade,
               onChanged: (Grade? value) {
@@ -113,8 +102,8 @@ class _EditableGradeRadiosState extends State<EditableGradeRadios> {
                 widget.onChanged(_grade);
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

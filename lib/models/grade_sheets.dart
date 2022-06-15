@@ -107,8 +107,10 @@ class GradeSheets extends ChangeNotifier {
       _gradeSheets.map((gradeSheet) => gradeSheet.missionNum).toSet().toList();
 
   void update(GradeSheet gradeSheet) {
-    _gradeSheets.removeWhere((gs) => gs.id == gradeSheet.id);
-    _gradeSheets.add(gradeSheet);
+    int index = _gradeSheets.indexOf(gradeSheet);
+    index == -1
+        ? _gradeSheets.add(gradeSheet)
+        : _gradeSheets.replaceRange(index, index + 1, [gradeSheet]);
     notifyListeners();
   }
 }

@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 import '../models/grade_sheet.dart';
 
 class EditableADQual extends StatefulWidget {
-  const EditableADQual({Key? key, required this.adQual}) : super(key: key);
+  const EditableADQual(
+      {Key? key, required this.adQual, required this.onChanged})
+      : super(key: key);
 
   final AdQual adQual;
+  final ValueChanged<AdQual> onChanged;
 
   @override
   State<EditableADQual> createState() => _EditableADQualState();
 }
 
 class _EditableADQualState extends State<EditableADQual> {
-  AdQual _adQual = AdQual.none;
+  late AdQual _adQual;
 
   @override
   void initState() {
@@ -45,6 +48,7 @@ class _EditableADQualState extends State<EditableADQual> {
                 setState(() {
                   _adQual = value!;
                 });
+                widget.onChanged(_adQual);
               },
             ),
             Radio<AdQual>(
@@ -54,6 +58,7 @@ class _EditableADQualState extends State<EditableADQual> {
                 setState(() {
                   _adQual = value!;
                 });
+                widget.onChanged(_adQual);
               },
             ),
             Radio<AdQual>(
@@ -63,6 +68,7 @@ class _EditableADQualState extends State<EditableADQual> {
                 setState(() {
                   _adQual = value!;
                 });
+                widget.onChanged(_adQual);
               },
             ),
             Radio<AdQual>(
@@ -72,6 +78,7 @@ class _EditableADQualState extends State<EditableADQual> {
                 setState(() {
                   _adQual = value!;
                 });
+                widget.onChanged(_adQual);
               },
             ),
             Radio<AdQual>(
@@ -81,6 +88,7 @@ class _EditableADQualState extends State<EditableADQual> {
                 setState(() {
                   _adQual = value!;
                 });
+                widget.onChanged(_adQual);
               },
             ),
           ],

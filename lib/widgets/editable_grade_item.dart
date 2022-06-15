@@ -1,24 +1,29 @@
+import 'package:app_prototype/widgets/editable_grade_radios.dart';
 import 'package:flutter/material.dart';
 
 import '../models/grade.dart';
 import '../models/grade_sheet.dart';
 
 class EditableGradeItem extends StatefulWidget {
-  const EditableGradeItem({Key? key, required this.gradeItem})
+  const EditableGradeItem(
+      {Key? key, required this.gradeItem, required this.onChanged})
       : super(key: key);
 
   final GradeItem gradeItem;
+  final ValueChanged<GradeItem> onChanged;
 
   @override
   State<EditableGradeItem> createState() => _EditableGradeItemState();
 }
 
 class _EditableGradeItemState extends State<EditableGradeItem> {
-  Grade _overall = Grade.noGrade;
+  late Grade _grade;
+  late String _comments;
 
   @override
   void initState() {
-    _overall = widget.gradeItem.grade;
+    _grade = widget.gradeItem.grade;
+    _comments = widget.gradeItem.comments;
     super.initState();
   }
 
@@ -26,106 +31,18 @@ class _EditableGradeItemState extends State<EditableGradeItem> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              SizedBox(width: 150, child: Text(widget.gradeItem.name)),
-              Flexible(
-                flex: 1,
-                //width: context.size. * .2,
-                child: ListTile(
-                  title: const Text('NG'),
-                  leading: Radio<Grade>(
-                    value: Grade.noGrade,
-                    groupValue: _overall,
-                    onChanged: (Grade? value) {
-                      setState(() {
-                        _overall = value!;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: ListTile(
-                  title: const Text('0'),
-                  leading: Radio<Grade>(
-                    value: Grade.unsatisfactory,
-                    groupValue: _overall,
-                    onChanged: (Grade? value) {
-                      setState(() {
-                        _overall = value!;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: ListTile(
-                  title: const Text('1'),
-                  leading: Radio<Grade>(
-                    value: Grade.introductory,
-                    groupValue: _overall,
-                    onChanged: (Grade? value) {
-                      setState(() {
-                        _overall = value!;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: ListTile(
-                  title: const Text('2'),
-                  leading: Radio<Grade>(
-                    value: Grade.familiar,
-                    groupValue: _overall,
-                    onChanged: (Grade? value) {
-                      setState(() {
-                        _overall = value!;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: ListTile(
-                  title: const Text('3'),
-                  leading: Radio<Grade>(
-                    value: Grade.proficient,
-                    groupValue: _overall,
-                    onChanged: (Grade? value) {
-                      setState(() {
-                        _overall = value!;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: ListTile(
-                  title: const Text('4'),
-                  dense: true,
-                  leading: Radio<Grade>(
-                    value: Grade.expert,
-                    groupValue: _overall,
-                    onChanged: (Grade? value) {
-                      setState(() {
-                        _overall = value!;
-                      });
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        EditableGradeRadios(
+            name: widget.gradeItem.name,
+            grade: _grade,
+            onChanged: (value) {
+              setState(() {
+                _grade = value;
+              });
+              widget.onChanged(GradeItem(
+                  name: widget.gradeItem.name,
+                  grade: _grade,
+                  comments: _comments));
+            }),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
@@ -133,7 +50,15 @@ class _EditableGradeItemState extends State<EditableGradeItem> {
             decoration: const InputDecoration(
               labelText: "Comments",
             ),
-            onSaved: (value) => widget.gradeItem.comments = value!,
+            onChanged: (value) {
+              setState(() {
+                _comments = value;
+              });
+              widget.onChanged(GradeItem(
+                  name: widget.gradeItem.name,
+                  grade: _grade,
+                  comments: _comments));
+            },
           ),
         ),
       ],

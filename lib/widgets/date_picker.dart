@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 class DatePicker extends StatefulWidget {
-  const DatePicker({Key? key, this.restorationId, this.date}) : super(key: key);
+  const DatePicker(
+      {Key? key, this.restorationId, this.date, required this.onChanged})
+      : super(key: key);
 
   final String? restorationId;
   final DateTime? date;
+  final ValueChanged<DateTime> onChanged;
 
   @override
   State<DatePicker> createState() => _DatePickerState();
@@ -13,7 +16,7 @@ class DatePicker extends StatefulWidget {
 class _DatePickerState extends State<DatePicker> with RestorationMixin {
   // In this example, the restoration ID for the mixin is passed in through
   // the [StatefulWidget]'s constructor.
-  DateTime _date = DateTime.now();
+  late DateTime _date;
   bool _startNull = true;
 
   @override
@@ -76,6 +79,7 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
               'Selected: ${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}'),
         ));
       });
+      widget.onChanged(_date);
     }
   }
 

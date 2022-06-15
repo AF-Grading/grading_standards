@@ -5,6 +5,7 @@ import '../pages/edit_gradesheet_page.dart';
 import '../models/grade.dart';
 import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
+import '../models/cts_list.dart';
 
 class MyGradeSheetsPage extends StatelessWidget {
   const MyGradeSheetsPage({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class MyGradeSheetsPage extends StatelessWidget {
                         instructor: "To Be Automatically Obtained",
                         student: "",
                         missionNum: 0,
-                        grades: [],
+                        grades: baseGradeItems,
                         overall: Grade.noGrade,
                         sortieType: SortieType.ims,
                         dayNight: DayNight.night,

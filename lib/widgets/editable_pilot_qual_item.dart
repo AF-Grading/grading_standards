@@ -3,21 +3,23 @@ import 'package:flutter/material.dart';
 import '../models/grade_sheet.dart';
 
 class EditablePilotQualItem extends StatefulWidget {
-  const EditablePilotQualItem({Key? key, required this.gradeSheet})
+  const EditablePilotQualItem(
+      {Key? key, required this.pilotQual, required this.onChanged})
       : super(key: key);
 
-  final GradeSheet gradeSheet;
+  final PilotQual pilotQual;
+  final ValueChanged<PilotQual> onChanged;
 
   @override
   State<EditablePilotQualItem> createState() => _EditablePilotQualItemState();
 }
 
 class _EditablePilotQualItemState extends State<EditablePilotQualItem> {
-  PilotQual _pilotQual = PilotQual.fpq;
+  late PilotQual _pilotQual;
 
   @override
   void initState() {
-    _pilotQual = widget.gradeSheet.pilotQual;
+    _pilotQual = widget.pilotQual;
     super.initState();
   }
 
@@ -45,6 +47,7 @@ class _EditablePilotQualItemState extends State<EditablePilotQualItem> {
                 setState(() {
                   _pilotQual = value!;
                 });
+                widget.onChanged(_pilotQual);
               },
             ),
             Radio<PilotQual>(
@@ -54,6 +57,7 @@ class _EditablePilotQualItemState extends State<EditablePilotQualItem> {
                 setState(() {
                   _pilotQual = value!;
                 });
+                widget.onChanged(_pilotQual);
               },
             ),
             Radio<PilotQual>(
@@ -63,6 +67,7 @@ class _EditablePilotQualItemState extends State<EditablePilotQualItem> {
                 setState(() {
                   _pilotQual = value!;
                 });
+                widget.onChanged(_pilotQual);
               },
             ),
             Radio<PilotQual>(
@@ -72,6 +77,7 @@ class _EditablePilotQualItemState extends State<EditablePilotQualItem> {
                 setState(() {
                   _pilotQual = value!;
                 });
+                widget.onChanged(_pilotQual);
               },
             ),
           ],

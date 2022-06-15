@@ -2,17 +2,19 @@ import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
 
 class EditableSortieType extends StatefulWidget {
-  const EditableSortieType({Key? key, required this.sortieType})
+  const EditableSortieType(
+      {Key? key, required this.sortieType, required this.onChanged})
       : super(key: key);
 
   final SortieType sortieType;
+  final ValueChanged<SortieType> onChanged;
 
   @override
   State<EditableSortieType> createState() => _EditableSortieTypeState();
 }
 
 class _EditableSortieTypeState extends State<EditableSortieType> {
-  SortieType _sortieType = SortieType.local;
+  late SortieType _sortieType;
 
   @override
   void initState() {
@@ -47,6 +49,7 @@ class _EditableSortieTypeState extends State<EditableSortieType> {
                 setState(() {
                   _sortieType = value!;
                 });
+                widget.onChanged(_sortieType);
               },
             ),
             Radio<SortieType>(
@@ -56,6 +59,7 @@ class _EditableSortieTypeState extends State<EditableSortieType> {
                 setState(() {
                   _sortieType = value!;
                 });
+                widget.onChanged(_sortieType);
               },
             ),
             Radio<SortieType>(
@@ -65,6 +69,7 @@ class _EditableSortieTypeState extends State<EditableSortieType> {
                 setState(() {
                   _sortieType = value!;
                 });
+                widget.onChanged(_sortieType);
               },
             ),
             Radio<SortieType>(
@@ -74,6 +79,7 @@ class _EditableSortieTypeState extends State<EditableSortieType> {
                 setState(() {
                   _sortieType = value!;
                 });
+                widget.onChanged(_sortieType);
               },
             ),
             Radio<SortieType>(
@@ -83,6 +89,7 @@ class _EditableSortieTypeState extends State<EditableSortieType> {
                 setState(() {
                   _sortieType = value!;
                 });
+                widget.onChanged(_sortieType);
               },
             ),
             Radio<SortieType>(
@@ -92,6 +99,7 @@ class _EditableSortieTypeState extends State<EditableSortieType> {
                 setState(() {
                   _sortieType = value!;
                 });
+                widget.onChanged(_sortieType);
               },
             ),
             Radio<SortieType>(
@@ -101,6 +109,7 @@ class _EditableSortieTypeState extends State<EditableSortieType> {
                 setState(() {
                   _sortieType = value!;
                 });
+                widget.onChanged(_sortieType);
               },
             ),
           ],
