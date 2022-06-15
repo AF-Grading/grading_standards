@@ -3,9 +3,11 @@ import 'package:app_prototype/widgets/editable_ad_qual.dart';
 import 'package:app_prototype/widgets/editable_day_night_item.dart';
 import 'package:app_prototype/widgets/editable_sortie_type.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 //internal imports
 import '../models/cts_list.dart';
 import '../models/grade_sheet.dart';
+import '../models/grade_sheets.dart';
 import '../widgets/editable_grade_item.dart';
 import '../widgets/editable_pilot_qual_item.dart';
 
@@ -22,16 +24,13 @@ class EditGradeSheetPage extends StatefulWidget {
 class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
   final _formKey = GlobalKey<FormState>();
   Grade _overall = Grade.noGrade;
-  AdQual _adQual = AdQual.none;
-  SortieType _sortieType = SortieType.local;
-  DayNight _dayNight = DayNight.day;
+
+  late GradeSheet _gradeSheet;
 
   @override
   void initState() {
     _overall = widget.gradeSheet.overall;
-    _adQual = widget.gradeSheet.adQual;
-    _sortieType = widget.gradeSheet.sortieType;
-    _dayNight = widget.gradeSheet.dayNight;
+    _gradeSheet = widget.gradeSheet;
     super.initState();
   }
 
@@ -40,6 +39,15 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Grade Sheet"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          //adds the grade sheet TODO: ensure good values
+          context.read<GradeSheets>().add(_gradeSheet);
+          Navigator.pop(context);
+        },
+        tooltip: 'Save',
+        child: const Text("Save"),
       ),
       body: Form(
         key: _formKey,
@@ -63,8 +71,11 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               decoration: const InputDecoration(
                                 labelText: "Student",
                               ),
-                              onSaved: (value) =>
-                                  widget.gradeSheet.student = value!,
+                              onChanged: (value) {
+                                setState(() {
+                                  _gradeSheet.student = value;
+                                });
+                              },
                             ),
                           ),
                         ),

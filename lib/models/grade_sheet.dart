@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import 'cts_list.dart';
 
 enum AdQual { none, ldad, adid, acad, cpad }
@@ -9,6 +11,7 @@ enum DayNight { day, night }
 enum SortieType { local, ims, mission, ost, instmtSim, tacticsSim, mmp, lfe }
 
 class GradeSheet {
+  final String id = UniqueKey().toString();
   String instructor; //to be taken from a shared database
   String student; //to be taken from a shared database
   int missionNum;

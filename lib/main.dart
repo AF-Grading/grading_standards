@@ -5,11 +5,16 @@ import 'package:app_prototype/pages/reference_materials_page.dart';
 import 'package:app_prototype/pages/settings_page.dart';
 import 'package:app_prototype/views/training_shop_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'models/grade_sheets.dart';
 import 'views/new_grade_sheet_view.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+        create: (context) => GradeSheets(), child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
