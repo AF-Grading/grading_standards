@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../models/grade_sheet.dart';
 
 class EditableDayNightItem extends StatefulWidget {
-  const EditableDayNightItem({Key? key, required this.gradeSheet})
+  const EditableDayNightItem(
+      {Key? key, required this.gradeSheet, required this.onChanged})
       : super(key: key);
 
   final GradeSheet gradeSheet;
+  final ValueChanged<DayNight> onChanged;
 
   @override
   State<EditableDayNightItem> createState() => _EditableDayNightItemState();
@@ -40,6 +42,7 @@ class _EditableDayNightItemState extends State<EditableDayNightItem> {
                   setState(() {
                     _dayNight = value!;
                   });
+                  widget.onChanged(_dayNight);
                 },
               ),
             ),
@@ -55,6 +58,7 @@ class _EditableDayNightItemState extends State<EditableDayNightItem> {
                   setState(() {
                     _dayNight = value!;
                   });
+                  widget.onChanged(_dayNight);
                 },
               ),
             ),

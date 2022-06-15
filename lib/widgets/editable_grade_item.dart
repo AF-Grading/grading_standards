@@ -1,7 +1,7 @@
-import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
 
-import '../models/cts_list.dart';
+import '../models/grade.dart';
+import '../models/grade_sheet.dart';
 
 class EditableGradeItem extends StatefulWidget {
   const EditableGradeItem({Key? key, required this.gradeItem})

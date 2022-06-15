@@ -1,6 +1,7 @@
 import 'package:app_prototype/widgets/date_picker.dart';
 import 'package:app_prototype/widgets/editable_ad_qual.dart';
 import 'package:app_prototype/widgets/editable_day_night_item.dart';
+import 'package:app_prototype/widgets/editable_grade_radios.dart';
 import 'package:app_prototype/widgets/editable_sortie_type.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,11 +13,9 @@ import '../widgets/editable_grade_item.dart';
 import '../widgets/editable_pilot_qual_item.dart';
 
 class EditGradeSheetPage extends StatefulWidget {
-  const EditGradeSheetPage(
-      {Key? key, this.newSheet = false, required this.gradeSheet})
+  const EditGradeSheetPage({Key? key, required this.gradeSheet})
       : super(key: key);
 
-  final bool newSheet;
   final GradeSheet gradeSheet;
 
   @override
@@ -43,9 +42,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //adds the grade sheet TODO: ensure good values
-          widget.newSheet
-              ? context.read<GradeSheets>().add(_gradeSheet)
-              : context.read<GradeSheets>().edit(_gradeSheet);
+          context.read<GradeSheets>().update(_gradeSheet);
           Navigator.pop(context);
         },
         tooltip: 'Save',
@@ -164,117 +161,16 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          const SizedBox(
-                              width: 150, child: Text("Overall Grade")),
-                          Flexible(
-                            flex: 1,
-                            //width: context.size. * .2,
-                            child: ListTile(
-                              title: const Text('NG'),
-                              leading: Radio<Grade>(
-                                value: Grade.noGrade,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-                                    //_overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: ListTile(
-                              title: const Text('0'),
-                              leading: Radio<Grade>(
-                                value: Grade.unsatisfactory,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-
-                                    // _overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: ListTile(
-                              title: const Text('1'),
-                              leading: Radio<Grade>(
-                                value: Grade.introductory,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-
-                                    //_overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: ListTile(
-                              title: const Text('2'),
-                              leading: Radio<Grade>(
-                                value: Grade.familiar,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-
-                                    //_overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: ListTile(
-                              title: const Text('3'),
-                              leading: Radio<Grade>(
-                                value: Grade.proficient,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-
-                                    //_overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: ListTile(
-                              title: const Text('4'),
-                              dense: true,
-                              leading: Radio<Grade>(
-                                value: Grade.expert,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-
-                                    //_overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    EditableGradeRadios(
+                      name: "Overall Grade",
+                      grade: _gradeSheet.overall,
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            _gradeSheet.overall = value;
+                          },
+                        );
+                      },
                     ),
                     Row(
                       children: [
@@ -313,7 +209,13 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                         Flexible(
                           flex: 1,
                           child: EditableDayNightItem(
-                              gradeSheet: widget.gradeSheet),
+                            gradeSheet: widget.gradeSheet,
+                            onChanged: (value) {
+                              setState(() {
+                                _gradeSheet.dayNight = value;
+                              });
+                            },
+                          ),
                         ),
                         Flexible(
                           flex: 1,

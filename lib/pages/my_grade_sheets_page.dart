@@ -1,10 +1,10 @@
-import 'package:app_prototype/models/grade_sheets.dart';
-import 'package:app_prototype/pages/edit_gradesheet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/cts_list.dart';
+import '../pages/edit_gradesheet_page.dart';
+import '../models/grade.dart';
 import '../models/grade_sheet.dart';
+import '../models/grade_sheets.dart';
 
 class MyGradeSheetsPage extends StatelessWidget {
   const MyGradeSheetsPage({Key? key}) : super(key: key);
@@ -30,7 +30,6 @@ class MyGradeSheetsPage extends StatelessWidget {
                     builder: (context) =>
                         //TODO: NOT A GOOD PRACTICE TO PASS MODEL WITH DATA LIKE THIS
                         EditGradeSheetPage(
-                      newSheet: true,
                       gradeSheet: GradeSheet(
                         instructor: "To Be Automatically Obtained",
                         student: "",
@@ -39,7 +38,7 @@ class MyGradeSheetsPage extends StatelessWidget {
                         overall: Grade.noGrade,
                         sortieType: SortieType.ims,
                         dayNight: DayNight.night,
-                        date: DateTime(2022),
+                        date: DateTime.now(),
                         sortieNumber: 2,
                         length: "2 hours",
                       ),

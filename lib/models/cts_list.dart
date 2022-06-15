@@ -1,12 +1,4 @@
-//  Grade may need to be moved to another file to separate dependencies
-enum Grade {
-  noGrade,
-  unsatisfactory,
-  introductory,
-  familiar,
-  proficient,
-  expert
-}
+import 'grade.dart';
 
 class CTSItem {
   String name;
