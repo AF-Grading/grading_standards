@@ -30,6 +30,7 @@ class MyGradeSheetsPage extends StatelessWidget {
                     builder: (context) =>
                         //TODO: NOT A GOOD PRACTICE TO PASS MODEL WITH DATA LIKE THIS
                         EditGradeSheetPage(
+                      newSheet: true,
                       gradeSheet: GradeSheet(
                         instructor: "To Be Automatically Obtained",
                         student: "",

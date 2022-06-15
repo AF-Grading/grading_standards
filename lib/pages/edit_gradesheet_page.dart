@@ -12,9 +12,11 @@ import '../widgets/editable_grade_item.dart';
 import '../widgets/editable_pilot_qual_item.dart';
 
 class EditGradeSheetPage extends StatefulWidget {
-  const EditGradeSheetPage({Key? key, required this.gradeSheet})
+  const EditGradeSheetPage(
+      {Key? key, this.newSheet = false, required this.gradeSheet})
       : super(key: key);
 
+  final bool newSheet;
   final GradeSheet gradeSheet;
 
   @override
@@ -23,13 +25,11 @@ class EditGradeSheetPage extends StatefulWidget {
 
 class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
   final _formKey = GlobalKey<FormState>();
-  Grade _overall = Grade.noGrade;
 
   late GradeSheet _gradeSheet;
 
   @override
   void initState() {
-    _overall = widget.gradeSheet.overall;
     _gradeSheet = widget.gradeSheet;
     super.initState();
   }
@@ -43,7 +43,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //adds the grade sheet TODO: ensure good values
-          context.read<GradeSheets>().add(_gradeSheet);
+          widget.newSheet
+              ? context.read<GradeSheets>().add(_gradeSheet)
+              : context.read<GradeSheets>().edit(_gradeSheet);
           Navigator.pop(context);
         },
         tooltip: 'Save',
@@ -175,10 +177,11 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               title: const Text('NG'),
                               leading: Radio<Grade>(
                                 value: Grade.noGrade,
-                                groupValue: _overall,
+                                groupValue: _gradeSheet.overall,
                                 onChanged: (Grade? value) {
                                   setState(() {
-                                    _overall = value!;
+                                    _gradeSheet.overall = value!;
+                                    //_overall = value!;
                                   });
                                 },
                               ),
@@ -190,10 +193,12 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               title: const Text('0'),
                               leading: Radio<Grade>(
                                 value: Grade.unsatisfactory,
-                                groupValue: _overall,
+                                groupValue: _gradeSheet.overall,
                                 onChanged: (Grade? value) {
                                   setState(() {
-                                    _overall = value!;
+                                    _gradeSheet.overall = value!;
+
+                                    // _overall = value!;
                                   });
                                 },
                               ),
@@ -205,10 +210,12 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               title: const Text('1'),
                               leading: Radio<Grade>(
                                 value: Grade.introductory,
-                                groupValue: _overall,
+                                groupValue: _gradeSheet.overall,
                                 onChanged: (Grade? value) {
                                   setState(() {
-                                    _overall = value!;
+                                    _gradeSheet.overall = value!;
+
+                                    //_overall = value!;
                                   });
                                 },
                               ),
@@ -220,10 +227,12 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               title: const Text('2'),
                               leading: Radio<Grade>(
                                 value: Grade.familiar,
-                                groupValue: _overall,
+                                groupValue: _gradeSheet.overall,
                                 onChanged: (Grade? value) {
                                   setState(() {
-                                    _overall = value!;
+                                    _gradeSheet.overall = value!;
+
+                                    //_overall = value!;
                                   });
                                 },
                               ),
@@ -235,10 +244,12 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               title: const Text('3'),
                               leading: Radio<Grade>(
                                 value: Grade.proficient,
-                                groupValue: _overall,
+                                groupValue: _gradeSheet.overall,
                                 onChanged: (Grade? value) {
                                   setState(() {
-                                    _overall = value!;
+                                    _gradeSheet.overall = value!;
+
+                                    //_overall = value!;
                                   });
                                 },
                               ),
@@ -251,10 +262,12 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               dense: true,
                               leading: Radio<Grade>(
                                 value: Grade.expert,
-                                groupValue: _overall,
+                                groupValue: _gradeSheet.overall,
                                 onChanged: (Grade? value) {
                                   setState(() {
-                                    _overall = value!;
+                                    _gradeSheet.overall = value!;
+
+                                    //_overall = value!;
                                   });
                                 },
                               ),
