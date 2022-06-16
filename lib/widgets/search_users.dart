@@ -70,8 +70,8 @@ class _SearchUsersState extends State<SearchUsers> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    _controllers.removeLast();
-                    _selectedUsers.removeLast();
+                    _controllers.isEmpty ? null : _controllers.removeLast();
+                    _selectedUsers.isEmpty ? null : _selectedUsers.removeLast();
                     widget.onSelected(_selectedUsers);
                   });
                 },

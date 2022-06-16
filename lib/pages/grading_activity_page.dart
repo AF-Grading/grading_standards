@@ -1,4 +1,5 @@
 import 'package:app_prototype/review_grades.dart';
+import 'package:app_prototype/views/flight_view.dart';
 import 'package:flutter/material.dart';
 
 import '../models/grade_sheet.dart';
@@ -38,107 +39,14 @@ class _MyHomePageState extends State<GradingActivity> {
           ),
         ),
 
-        body: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              width: 200,
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Overall Grade',
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 200,
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Profile',
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 200,
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Overall Comments',
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 200,
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Recommendation/Next',
-                ),
-              ),
-            ),
-            Card(
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 300,
-                    child: ListTile(
-                        leading: Text("CTS No: 1"),
-                        title: Text("Communcation Skills")),
-                  ),
-                  const SizedBox(width: 150, child: Text("Passing Score: 2")),
-                  const Text("Grade: "),
-                  DropdownButton(items: null, onChanged: null),
-                  const SizedBox(width: 150, child: Text("Comments: ")),
-                  const SizedBox(
-                    width: 100,
-                    child: Icon(Icons.question_mark),
-                  ),
-                ],
-              ),
-            ),
-            Card(
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 300,
-                    child: ListTile(
-                        leading: Text("CTS No: 2"),
-                        title: Text("Systems Knowledge")),
-                  ),
-                  const SizedBox(width: 150, child: Text("Passing Score: 2")),
-                  const Text("Grade: "),
-                  DropdownButton(items: null, onChanged: null),
-                  const SizedBox(width: 150, child: Text("Comments: ")),
-                  const SizedBox(
-                    width: 100,
-                    child: Icon(Icons.question_mark),
-                  ),
-                ],
-              ),
-            ),
-            Card(
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 300,
-                    child: ListTile(
-                        leading: Text("CTS No: 8"),
-                        title: Text("Defensive System Setup")),
-                  ),
-                  const SizedBox(width: 150, child: Text("Passing Score: 3")),
-                  const Text("Grade: "),
-                  DropdownButton(items: null, onChanged: null),
-                  const SizedBox(width: 150, child: Text("Comments: ")),
-                  const SizedBox(
-                    width: 100,
-                    child: Icon(Icons.question_mark),
-                  ),
-                ],
-              ),
-            ),
-            const ListTile(
-              title: Text("Unused grades"),
-              trailing: Icon(Icons.arrow_drop_down_circle_sharp),
-            ),
-          ],
+        body: TabBarView(
+          children: widget.gradeSheets.map((gradeSheet) {
+            return FlightView(
+              gradeSheet: gradeSheet,
+            );
+          }).toList(),
         ),
+
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
