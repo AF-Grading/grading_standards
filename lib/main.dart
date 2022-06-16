@@ -111,7 +111,6 @@ class _MyHomePageState extends State<MyHomePage> {
             TrainingShopView(),
           ],
         ),
-        // This trailing comma makes auto-formatting nicer for build methods.
       ),
     );
   }

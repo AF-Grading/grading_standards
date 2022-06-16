@@ -151,15 +151,18 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
                   });
                 });
               },
+              
             ),
           ],
         ),
         SizedBox(
-          height: 300,
+          height: 400,
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
-              childAspectRatio: 6,
+              childAspectRatio: 4,
+              // changed the size of child aspect ratio to 4 so we can see the titles clearly
+              // we still need to change it so the box aligns neatly though
             ),
             itemCount: ctsItems.length,
             itemBuilder: (BuildContext context, int index) {
@@ -167,7 +170,19 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
                 width: 200,
                 height: 100,
                 child: ListTile(
-                  title: Text(ctsItems[index].name),
+                  title: GestureDetector(onTap: () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text(ctsItems[index].name),
+                            content: Text(ctsItems[index].standards),
+                            actions: <Widget>[
+                              TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Back to grading'),
+                                  child: const Text("Back to grading"))
+                            ],
+                          ),
+                        ),  child: Text(ctsItems[index].name),),
                   leading: Checkbox(
                     value: _selectedParams[ctsItems[index].name],
                     onChanged: (value) {
@@ -179,6 +194,7 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
                   ),
                 ),
               );
+
             },
           ),
         ),
