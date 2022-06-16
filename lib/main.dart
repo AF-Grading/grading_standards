@@ -112,6 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          // maybe we can change the animation for how the pages swap when we click the button
           onPressed: () {
             Navigator.push(
                 context,

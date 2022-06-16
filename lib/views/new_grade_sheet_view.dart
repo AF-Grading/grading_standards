@@ -26,11 +26,11 @@ class NewGradeSheetView extends StatelessWidget {
         ),
         Row(
           children: const [
-            Text("Preselect Grading Paramaters:"),
+            Text("Pre-select Grading Paramaters:"),
             SizedBox(
               width: 200,
               child: ListTile(
-                title: const Text("Free Select"),
+                title: Text("Free Select"),
                 leading: Radio(
                   onChanged: null,
                   groupValue: null,
@@ -41,7 +41,7 @@ class NewGradeSheetView extends StatelessWidget {
             SizedBox(
               width: 200,
               child: ListTile(
-                title: const Text("All"),
+                title: Text("All"),
                 leading: Radio(
                   onChanged: null,
                   groupValue: null,
@@ -52,7 +52,7 @@ class NewGradeSheetView extends StatelessWidget {
             SizedBox(
               width: 200,
               child: ListTile(
-                title: const Text("Formation and Airdrop"),
+                title: Text("Formation and Airdrop"),
                 leading: Radio(
                   onChanged: null,
                   groupValue: null,
@@ -63,20 +63,46 @@ class NewGradeSheetView extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 300,
+          height: 400,
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
-              childAspectRatio: 6,
+              childAspectRatio: 4,
+              // changed the size of child aspect ratio to 4 so we can see the titles clearly
+              // we still need to change it so the box aligns neatly though
             ),
             itemCount: ctsItems.length,
             itemBuilder: (BuildContext context, int index) {
               return SizedBox(
                   width: 200,
-                  height: 100,
-                  child: ListTile(
-                      title: Text(ctsItems[index].name),
-                      leading: const Checkbox(value: false, onChanged: null)));
+                  height: 200,
+
+                  child: SizedBox(
+                    width: 50,
+                    height: 200,
+                    child: ListTile(
+                      title: TextButton(
+                        style: TextButton.styleFrom(
+                          primary: Colors.white,
+                        ),
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text(ctsItems[index].name),
+                            content: Text(ctsItems[index].standards),
+                            actions: <Widget>[
+                              TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Back to grading'),
+                                  child: const Text("Back to grading"))
+                            ],
+                          ),
+                        ),
+                        child: Text(ctsItems[index].name),
+                      ),
+                      leading: const Checkbox(value: false, onChanged: null)))
+
+                      );
             },
           ),
         ),
