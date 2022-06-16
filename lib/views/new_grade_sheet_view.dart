@@ -68,13 +68,15 @@ class NewGradeSheetView extends StatelessWidget {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               childAspectRatio: 4,
+              // changed the size of child aspect ratio to 4 so we can see the titles clearly
+              // we still need to change it so the box aligns neatly though
             ),
             itemCount: ctsItems.length,
             itemBuilder: (BuildContext context, int index) {
               return SizedBox(
                   width: 200,
                   height: 200,
-                  // does width and height even change anything? Tried changing it to 200, nothing happened,
+
                   child: SizedBox(
                     width: 50,
                     height: 200,
