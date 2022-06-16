@@ -226,7 +226,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                         Flexible(
                           flex: 1,
                           child: EditableDayNightItem(
-                            gradeSheet: widget.gradeSheet,
+                            dayNight: _gradeSheet.dayNight,
                             onChanged: (value) {
                               setState(() {
                                 _gradeSheet.dayNight = value;
