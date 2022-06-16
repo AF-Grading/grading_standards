@@ -1,8 +1,8 @@
 import 'dart:collection';
-
-import 'package:app_prototype/models/cts_list.dart';
-import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:flutter/foundation.dart';
+
+import '../models/grade_sheet.dart';
+import 'grade.dart';
 
 // fake back end data
 class GradeSheets extends ChangeNotifier {
@@ -106,15 +106,11 @@ class GradeSheets extends ChangeNotifier {
   List<int> get missionNumbers =>
       _gradeSheets.map((gradeSheet) => gradeSheet.missionNum).toSet().toList();
 
-  void add(GradeSheet gradeSheet) {
-    _gradeSheets.add(gradeSheet);
-    notifyListeners();
-    print("GradeSheets: Added grade sheet");
-  }
-
-  void edit(GradeSheet gradeSheet) {
-    _gradeSheets.removeWhere((gs) => gs.id == gradeSheet.id);
-    _gradeSheets.add(gradeSheet);
+  void update(GradeSheet gradeSheet) {
+    int index = _gradeSheets.indexOf(gradeSheet);
+    index == -1
+        ? _gradeSheets.add(gradeSheet)
+        : _gradeSheets.replaceRange(index, index + 1, [gradeSheet]);
     notifyListeners();
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import 'cts_list.dart';
+import 'grade.dart';
 
 enum AdQual { none, ldad, adid, acad, cpad }
 

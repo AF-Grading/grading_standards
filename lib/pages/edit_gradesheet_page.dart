@@ -1,22 +1,21 @@
-import 'package:app_prototype/widgets/date_picker.dart';
-import 'package:app_prototype/widgets/editable_ad_qual.dart';
-import 'package:app_prototype/widgets/editable_day_night_item.dart';
-import 'package:app_prototype/widgets/editable_sortie_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 //internal imports
-import '../models/cts_list.dart';
 import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
 import '../widgets/editable_grade_item.dart';
 import '../widgets/editable_pilot_qual_item.dart';
+import '../widgets/date_picker.dart';
+import '../widgets/editable_ad_qual.dart';
+import '../widgets/editable_day_night_item.dart';
+import '../widgets/editable_grade_radios.dart';
+import '../widgets/editable_sortie_type.dart';
 
 class EditGradeSheetPage extends StatefulWidget {
-  const EditGradeSheetPage(
-      {Key? key, this.newSheet = false, required this.gradeSheet})
+  const EditGradeSheetPage({Key? key, required this.gradeSheet})
       : super(key: key);
 
-  final bool newSheet;
   final GradeSheet gradeSheet;
 
   @override
@@ -38,14 +37,13 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit Grade Sheet"),
+        title:
+            Text("Edit Grade Sheet    instructor: ${_gradeSheet.instructor}"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //adds the grade sheet TODO: ensure good values
-          widget.newSheet
-              ? context.read<GradeSheets>().add(_gradeSheet)
-              : context.read<GradeSheets>().edit(_gradeSheet);
+          context.read<GradeSheets>().update(_gradeSheet);
           Navigator.pop(context);
         },
         tooltip: 'Save',
@@ -57,7 +55,6 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
           child: Column(
             children: [
               Card(
-                //color: Colors.black12,
                 child: ExpansionTile(
                   title: const Text("Overall"),
                   initiallyExpanded: true,
@@ -86,13 +83,20 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
                               initialValue:
                                   widget.gradeSheet.missionNum.toString(),
                               decoration: const InputDecoration(
                                 labelText: "Mission Number",
                               ),
-                              onSaved: (value) => widget.gradeSheet.missionNum =
-                                  int.parse(value!),
+                              onChanged: (value) => setState(() {
+                                // tryparse needed because of empty string else error
+                                _gradeSheet.missionNum =
+                                    int.tryParse(value) ?? 0;
+                              }),
                             ),
                           ),
                         )
@@ -110,8 +114,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               decoration: const InputDecoration(
                                 labelText: "Sortie Number",
                               ),
-                              onSaved: (value) => widget
-                                  .gradeSheet.sortieNumber = int.parse(value!),
+                              onChanged: (value) => setState(() {
+                                _gradeSheet.sortieNumber = int.parse(value);
+                              }),
                             ),
                           ),
                         ),
@@ -121,12 +126,13 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
-                              initialValue: widget.gradeSheet.length,
+                              initialValue: _gradeSheet.length,
                               decoration: const InputDecoration(
                                 labelText: "Length",
                               ),
-                              onSaved: (value) =>
-                                  widget.gradeSheet.length = value!,
+                              onChanged: (value) => setState(() {
+                                _gradeSheet.length = value;
+                              }),
                             ),
                           ),
                         ),
@@ -143,8 +149,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               decoration: const InputDecoration(
                                 labelText: "Weather",
                               ),
-                              onSaved: (value) =>
-                                  widget.gradeSheet.weather = value!,
+                              onChanged: (value) => setState(() {
+                                _gradeSheet.weather = value;
+                              }),
                             ),
                           ),
                         ),
@@ -157,124 +164,26 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               decoration: const InputDecoration(
                                 labelText: "Profile",
                               ),
-                              onSaved: (value) =>
-                                  widget.gradeSheet.profile = value!,
+                              onChanged: (value) => setState(
+                                () {
+                                  _gradeSheet.profile = value;
+                                },
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          const SizedBox(
-                              width: 150, child: Text("Overall Grade")),
-                          Flexible(
-                            flex: 1,
-                            //width: context.size. * .2,
-                            child: ListTile(
-                              title: const Text('NG'),
-                              leading: Radio<Grade>(
-                                value: Grade.noGrade,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-                                    //_overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: ListTile(
-                              title: const Text('0'),
-                              leading: Radio<Grade>(
-                                value: Grade.unsatisfactory,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-
-                                    // _overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: ListTile(
-                              title: const Text('1'),
-                              leading: Radio<Grade>(
-                                value: Grade.introductory,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-
-                                    //_overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: ListTile(
-                              title: const Text('2'),
-                              leading: Radio<Grade>(
-                                value: Grade.familiar,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-
-                                    //_overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: ListTile(
-                              title: const Text('3'),
-                              leading: Radio<Grade>(
-                                value: Grade.proficient,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-
-                                    //_overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: ListTile(
-                              title: const Text('4'),
-                              dense: true,
-                              leading: Radio<Grade>(
-                                value: Grade.expert,
-                                groupValue: _gradeSheet.overall,
-                                onChanged: (Grade? value) {
-                                  setState(() {
-                                    _gradeSheet.overall = value!;
-
-                                    //_overall = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    EditableGradeRadios(
+                      name: "Overall Grade",
+                      grade: _gradeSheet.overall,
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            _gradeSheet.overall = value;
+                          },
+                        );
+                      },
                     ),
                     Row(
                       children: [
@@ -287,8 +196,11 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               decoration: const InputDecoration(
                                 labelText: "Overall Comments",
                               ),
-                              onSaved: (value) =>
-                                  widget.gradeSheet.overallComments = value!,
+                              onChanged: (value) => setState(
+                                () {
+                                  _gradeSheet.overallComments = value;
+                                },
+                              ),
                             ),
                           ),
                         ),
@@ -301,8 +213,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               decoration: const InputDecoration(
                                 labelText: "Recommendations",
                               ),
-                              onSaved: (value) =>
-                                  widget.gradeSheet.recommendations = value!,
+                              onChanged: (value) => setState(() {
+                                _gradeSheet.recommendations = value;
+                              }),
                             ),
                           ),
                         ),
@@ -313,36 +226,69 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                         Flexible(
                           flex: 1,
                           child: EditableDayNightItem(
-                              gradeSheet: widget.gradeSheet),
+                            gradeSheet: widget.gradeSheet,
+                            onChanged: (value) {
+                              setState(() {
+                                _gradeSheet.dayNight = value;
+                              });
+                            },
+                          ),
                         ),
                         Flexible(
                           flex: 1,
-                          child: DatePicker(date: widget.gradeSheet.date),
+                          child: DatePicker(
+                              date: widget.gradeSheet.date,
+                              onChanged: (value) => setState(() {
+                                    _gradeSheet.date = value;
+                                  })),
                         ),
                       ],
                     ),
                     Row(
                       children: [
                         Flexible(
-                            flex: 1,
-                            child: EditablePilotQualItem(
-                                gradeSheet: widget.gradeSheet)),
+                          flex: 1,
+                          child: EditablePilotQualItem(
+                            pilotQual: _gradeSheet.pilotQual,
+                            onChanged: (value) => setState(() {
+                              _gradeSheet.pilotQual = value;
+                            }),
+                          ),
+                        ),
                         Flexible(
-                            flex: 1,
-                            child: EditableADQual(
-                                adQual: widget.gradeSheet.adQual))
+                          flex: 1,
+                          child: EditableADQual(
+                            adQual: _gradeSheet.adQual,
+                            onChanged: (value) => setState(() {
+                              _gradeSheet.adQual = value;
+                            }),
+                          ),
+                        ),
                       ],
                     ),
                     EditableSortieType(
-                        sortieType: widget.gradeSheet.sortieType),
+                      sortieType: _gradeSheet.sortieType,
+                      onChanged: (value) => setState(() {
+                        _gradeSheet.sortieType = value;
+                      }),
+                    ),
                   ],
                 ),
               ),
               Card(
                 child: ExpansionTile(
                   title: const Text("Grade Items"),
-                  children: widget.gradeSheet.grades
-                      .map((item) => EditableGradeItem(gradeItem: item))
+                  children: _gradeSheet.grades
+                      .map((item) => EditableGradeItem(
+                            gradeItem: item,
+                            onChanged: (value) {
+                              setState(() {
+                                final grades = _gradeSheet.grades;
+                                _gradeSheet.grades[grades.indexOf(item)] =
+                                    value;
+                              });
+                            },
+                          ))
                       .toList(),
                 ),
               ),
