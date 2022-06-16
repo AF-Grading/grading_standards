@@ -1,24 +1,43 @@
 import 'package:app_prototype/review_grades.dart';
 import 'package:flutter/material.dart';
 
+import '../models/grade_sheet.dart';
+
 class GradingActivity extends StatefulWidget {
-  const GradingActivity({Key? key}) : super(key: key);
+  const GradingActivity({Key? key, required this.gradeSheets})
+      : super(key: key);
+
+  final List<GradeSheet> gradeSheets;
 
   @override
   State<GradingActivity> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<GradingActivity> {
+  final Stopwatch _stopwatch = Stopwatch();
+
+  @override
+  void initState() {
+    _stopwatch.start();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 0,
-      length: 2,
+      length: widget.gradeSheets.length,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-              "Proficiency Standards Table Popup | Proficiency Grade Description Popup | Duration: 1:12"),
+          title: Text(
+              "Proficiency Standards Table Popup | Proficiency Grade Description Popup | Duration: ${_stopwatch.elapsedMilliseconds}"),
+          bottom: TabBar(
+            tabs: widget.gradeSheets.map((gradeSheet) {
+              return Tab(text: gradeSheet.student);
+            }).toList(),
+          ),
         ),
+
         body: Column(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

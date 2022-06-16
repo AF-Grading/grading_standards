@@ -111,16 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
             TrainingShopView(),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const GradingActivity()));
-          },
-          tooltip: 'Increment',
-          child: const Text("Start"),
-        ), // This trailing comma makes auto-formatting nicer for build methods.
+        // This trailing comma makes auto-formatting nicer for build methods.
       ),
     );
   }

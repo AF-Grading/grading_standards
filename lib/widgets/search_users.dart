@@ -71,6 +71,8 @@ class _SearchUsersState extends State<SearchUsers> {
                 onPressed: () {
                   setState(() {
                     _controllers.removeLast();
+                    _selectedUsers.removeLast();
+                    widget.onSelected(_selectedUsers);
                   });
                 },
                 child: const Icon(Icons.exposure_minus_1),
