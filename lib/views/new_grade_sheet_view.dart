@@ -6,6 +6,7 @@ class NewGradeSheetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // change this part into a scrollable content
     return Column(
       //mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -76,33 +77,31 @@ class NewGradeSheetView extends StatelessWidget {
               return SizedBox(
                   width: 200,
                   height: 200,
-
                   child: SizedBox(
-                    width: 50,
-                    height: 200,
-                    child: ListTile(
-                      title: TextButton(
-                        style: TextButton.styleFrom(
-                          primary: Colors.white,
-                        ),
-                        onPressed: () => showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: Text(ctsItems[index].name),
-                            content: Text(ctsItems[index].standards),
-                            actions: <Widget>[
-                              TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, 'Back to grading'),
-                                  child: const Text("Back to grading"))
-                            ],
+                      width: 50,
+                      height: 200,
+                      child: ListTile(
+                          title: TextButton(
+                            style: TextButton.styleFrom(
+                              primary: Colors.white,
+                            ),
+                            onPressed: () => showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: Text(ctsItems[index].name),
+                                content: Text(ctsItems[index].standards),
+                                actions: <Widget>[
+                                  TextButton(
+                                      onPressed: () => Navigator.pop(
+                                          context, 'Back to grading'),
+                                      child: const Text("Back to grading"))
+                                ],
+                              ),
+                            ),
+                            child: Text(ctsItems[index].name),
                           ),
-                        ),
-                        child: Text(ctsItems[index].name),
-                      ),
-                      leading: const Checkbox(value: false, onChanged: null)))
-
-                      );
+                          leading:
+                              const Checkbox(value: false, onChanged: null))));
             },
           ),
         ),
