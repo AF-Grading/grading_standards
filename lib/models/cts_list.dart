@@ -3,6 +3,8 @@ import 'package:app_prototype/models/grade_sheet.dart';
 import 'grade.dart';
 
 class CTSItem {
+  // TODO add int value for keeping list location integrity
+  // int id;
   String name;
   Grade passingScore;
   String performance;
@@ -77,7 +79,12 @@ List<CTSItem> ctsItems = [
       Grade.familiar,
       "Demonstrates proper procedures for full flap assault landing on a runway certified for assault operations IAW AFI 13-217 or a runway marked appropriately for practice assault operations.",
       "Maintains smooth approach path. Maintains constant control of flight path vector or made positive corrections. Touches down on centerline within the marked zone within the published sink rate limitations. Maintains runway centerline during rollout. Airspeed +/- 5 kts."),
-  CTSItem("test", Grade.familiar, "testing", "testing",),
+  CTSItem(
+    "test",
+    Grade.familiar,
+    "testing",
+    "testing",
+  ),
 ];
 
 // For calling with new GradeSheets

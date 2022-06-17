@@ -207,6 +207,7 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => GradingActivity(
+                            selectedParams: _selectedParams,
                             gradeSheets: {
                               for (User student in _students)
                                 GradeSheet(
