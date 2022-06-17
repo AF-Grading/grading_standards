@@ -23,7 +23,10 @@ class GradeSheet {
   String weather;
   SortieType sortieType;
   DayNight dayNight; //seems redundant to date
-  //automatic generation
+  // TODO convert to start and end time, and have a length num come from it automatically
+  // DateTime startTime;
+  // DateTime endTime;
+  // int length = startTime - endTime;
   DateTime date;
   int sortieNumber; // 1-20
   // user could press start and stop button to generate length

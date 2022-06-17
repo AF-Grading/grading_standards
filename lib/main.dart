@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/current_flight.dart';
 import 'package:app_prototype/pages/grading_activity_page.dart';
 import 'package:app_prototype/views/individual_reports_view.dart';
 import 'package:app_prototype/pages/my_grade_sheets_page.dart';
@@ -12,8 +13,14 @@ import 'views/new_grade_sheet_view.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-        create: (context) => GradeSheets(), child: const MyApp()),
+    MultiProvider(providers: [
+      ChangeNotifierProvider(
+        create: (context) => GradeSheets(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => CurrentFlight(),
+      )
+    ], child: const MyApp()),
   );
 }
 
