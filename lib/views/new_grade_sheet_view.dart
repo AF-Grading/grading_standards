@@ -1,17 +1,20 @@
 import 'dart:collection';
 
 import 'package:app_prototype/models/cts_list.dart';
+import 'package:app_prototype/models/current_flight.dart';
 import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:app_prototype/widgets/editable_day_night_item.dart';
 import 'package:app_prototype/widgets/editable_sortie_type.dart';
 import 'package:app_prototype/widgets/search_users.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../models/grade.dart';
 import '../models/user.dart';
 import '../models/users.dart';
 import '../pages/grading_activity_page.dart';
+import '../widgets/search_users_2.dart';
 
 enum GradingParams { freeSelect, all, none, formationAndAirdop }
 
@@ -44,15 +47,24 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
       child: Column(
         //mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SearchUsers(
-            onSelected: (values) {
-              setState(() {
-                _students.clear();
-                _students.addAll(values);
-                for (User user in _students) {
-                  print(user.name);
-                }
-              });
+          const SearchUsers2(),
+          Consumer<CurrentFlight>(
+            builder: (context, currentFlight, child) {
+              return SearchUsers(
+                onSelected: (values) {
+                  currentFlight.clear();
+                  for (User user in values) {
+                    currentFlight.add(user);
+                  }
+                  setState(() {
+                    _students.clear();
+                    _students.addAll(values);
+                    for (User user in _students) {
+                      print(user.name);
+                    }
+                  });
+                },
+              );
             },
           ),
           Row(
@@ -200,33 +212,40 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
               },
             ),
           ),
-          const Text("Pilot Qualifications:"),
+          Consumer<CurrentFlight>(
+            builder: (context, currentFlight, child) {
+              return Text('total sheets: ${currentFlight.gradeSheets.length}');
+            },
+          ),
+          Text("Pilot Qualifications:"),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => GradingActivity(
-                            selectedParams: _selectedParams,
-                            gradeSheets: {
-                              for (User student in _students)
-                                GradeSheet(
-                                  // TODO find this by current user instead
-                                  instructor: Users().user.name,
-                                  student: student.name,
-                                  missionNum: _missionNum,
-                                  grades: baseGradeItems,
-                                  overall: Grade.noGrade,
-                                  weather: _weather,
-                                  pilotQual: _pilotQual,
-                                  sortieType: _sortieType,
-                                  dayNight: _dayNight,
-                                  date: DateTime.now(),
-                                  sortieNumber: _sortieNum,
-                                  length: "0",
-                                )
-                            }.toList(),
-                          )));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GradingActivity(
+                    selectedParams: _selectedParams,
+                    gradeSheets: {
+                      for (User student in _students)
+                        GradeSheet(
+                          // TODO find this by current user instead
+                          instructor: Users().user.name,
+                          student: student.name,
+                          missionNum: _missionNum,
+                          grades: baseGradeItems,
+                          overall: Grade.noGrade,
+                          weather: _weather,
+                          pilotQual: _pilotQual,
+                          sortieType: _sortieType,
+                          dayNight: _dayNight,
+                          date: DateTime.now(),
+                          sortieNumber: _sortieNum,
+                          length: "0",
+                        )
+                    }.toList(),
+                  ),
+                ),
+              );
             },
             child: const Text("Start Flight"),
           ),
