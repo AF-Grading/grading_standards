@@ -25,33 +25,40 @@ class _EditableDayNightItemState extends State<EditableDayNightItem> {
 
   @override
   Widget build(BuildContext context) {
+    // addded wrap for readability
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SizedBox(width: 150, child: Text("Day/Night:")),
           Flexible(
             flex: 1,
-            //width: context.size. * .2,
-            child: ListTile(
-              title: const Text('Day'),
-              leading: Radio<DayNight>(
-                value: DayNight.day,
-                groupValue: _dayNight,
-                onChanged: (DayNight? value) {
-                  setState(() {
-                    _dayNight = value!;
-                  });
-                  widget.onChanged(_dayNight);
-                },
-              ),
-            ),
+            child: Wrap(
+                direction: Axis.horizontal,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text('Day'),
+                  Radio<DayNight>(
+                    value: DayNight.day,
+                    groupValue: _dayNight,
+                    onChanged: (DayNight? value) {
+                      setState(() {
+                        _dayNight = value!;
+                      });
+                      widget.onChanged(_dayNight);
+                    },
+                  ),
+                ]),
           ),
           Flexible(
             flex: 1,
-            child: ListTile(
-              title: const Text('Night'),
-              leading: Radio<DayNight>(
+            child: Wrap(
+              direction: Axis.horizontal,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+              Text("Night"),
+              Radio<DayNight>(
                 value: DayNight.night,
                 groupValue: _dayNight,
                 onChanged: (DayNight? value) {
@@ -61,8 +68,9 @@ class _EditableDayNightItemState extends State<EditableDayNightItem> {
                   widget.onChanged(_dayNight);
                 },
               ),
-            ),
+            ]),
           ),
+
         ],
       ),
     );
