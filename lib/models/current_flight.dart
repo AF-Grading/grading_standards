@@ -15,11 +15,29 @@ class CurrentFlight extends ChangeNotifier {
   DayNight _dayNight = DayNight.noSelection;
   SortieType _sortieType = SortieType.noSelection;
   int _missionNum = 0;
+  int _sortieNum = 0;
   static const int max = 4;
 
   // Individual Students
 
-  final List<GradeSheet> _gradeSheets = [];
+  final List<GradeSheet> _gradeSheets = [
+    GradeSheet(
+      // TODO find this by current user instead
+      instructor: Users().user.name,
+      student: "1",
+      missionNum: 0,
+      grades: baseGradeItems,
+      overall: Grade.noGrade,
+      weather: "",
+      pilotQual: PilotQual.fpc,
+      sortieType: SortieType.ims,
+      dayNight: DayNight.day,
+      startTime: DateTime.now(),
+      endTime: DateTime.now(),
+      sortieNumber: 0,
+      length: "0",
+    ),
+  ];
 
   // Getters
 
@@ -49,6 +67,11 @@ class CurrentFlight extends ChangeNotifier {
 
   set missionNum(int value) {
     _missionNum = value;
+    notifyListeners();
+  }
+
+  set sortieNum(int value) {
+    _sortieNum = value;
     notifyListeners();
   }
 
