@@ -1,7 +1,7 @@
 import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
 
-import '../models/grade.dart';
+import '../models/grade_enums.dart';
 import '../widgets/editable_grade_item.dart';
 import '../widgets/editable_grade_radios.dart';
 

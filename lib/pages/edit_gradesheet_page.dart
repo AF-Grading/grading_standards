@@ -237,9 +237,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                         Flexible(
                           flex: 1,
                           child: DatePicker(
-                              date: widget.gradeSheet.date,
+                              date: widget.gradeSheet.startTime,
                               onChanged: (value) => setState(() {
-                                    _gradeSheet.date = value;
+                                    _gradeSheet.startTime = value;
                                   })),
                         ),
                       ],

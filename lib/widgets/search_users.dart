@@ -95,7 +95,7 @@ class _SearchUsersState extends State<SearchUsers> {
                                 // only allows one gradesheet per student at a time for a flight, contains did not work, nor did search by id
                                 // TODO fix so that users with the same name (but different people) can be selected
                                 // if a user already exists at the position, replace them
-                                _selectedUsers
+                                /*_selectedUsers
                                         .where(
                                             (muser) => muser.name == user.name)
                                         .isEmpty
@@ -107,7 +107,7 @@ class _SearchUsersState extends State<SearchUsers> {
                                           content: Text(
                                               "You can only select the same student once per flight"),
                                         ),
-                                      );
+                                      );*/
 
                                 widget.onSelected(_selectedUsers);
                                 _searchResults.clear();

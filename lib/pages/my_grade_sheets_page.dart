@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../pages/edit_gradesheet_page.dart';
-import '../models/grade.dart';
+import '../models/grade_enums.dart';
 import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
 import '../models/cts_list.dart';
@@ -39,7 +39,8 @@ class MyGradeSheetsPage extends StatelessWidget {
                         overall: Grade.noGrade,
                         sortieType: SortieType.ims,
                         dayNight: DayNight.night,
-                        date: DateTime.now(),
+                        startTime: DateTime.now(),
+                        endTime: DateTime.now(),
                         sortieNumber: 2,
                         length: "2 hours",
                       ),
@@ -69,7 +70,7 @@ class MyGradeSheetsPage extends StatelessWidget {
                             .map(
                               (gradeSheet) => ListTile(
                                 leading: Text(gradeSheet.student),
-                                title: Text(gradeSheet.date
+                                title: Text(gradeSheet.startTime
                                     .toString()
                                     .substring(0, 10)),
                                 trailing: Text(gradeSheet.overall.toString()),

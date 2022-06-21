@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../models/grade.dart';
+import '../models/grade_enums.dart';
 import '../models/user.dart';
 import '../models/users.dart';
 import '../pages/grading_activity_page.dart';
@@ -47,7 +47,7 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
       child: Column(
         //mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const SearchUsers2(),
+          //const SearchUsers2(),
           Consumer<CurrentFlight>(
             builder: (context, currentFlight, child) {
               return SearchUsers(
@@ -238,7 +238,8 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
                           pilotQual: _pilotQual,
                           sortieType: _sortieType,
                           dayNight: _dayNight,
-                          date: DateTime.now(),
+                          startTime: DateTime.now(),
+                          endTime: DateTime.now(),
                           sortieNumber: _sortieNum,
                           length: "0",
                         )

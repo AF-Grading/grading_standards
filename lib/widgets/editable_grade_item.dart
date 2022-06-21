@@ -1,7 +1,7 @@
 import 'package:app_prototype/widgets/editable_grade_radios.dart';
 import 'package:flutter/material.dart';
 
-import '../models/grade.dart';
+import '../models/grade_enums.dart';
 import '../models/grade_sheet.dart';
 
 class EditableGradeItem extends StatefulWidget {

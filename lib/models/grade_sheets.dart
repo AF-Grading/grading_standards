@@ -2,7 +2,7 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 
 import '../models/grade_sheet.dart';
-import 'grade.dart';
+import 'grade_enums.dart';
 
 // fake back end data
 class GradeSheets extends ChangeNotifier {
@@ -32,7 +32,8 @@ class GradeSheets extends ChangeNotifier {
       overall: Grade.familiar,
       sortieType: SortieType.ims,
       dayNight: DayNight.night,
-      date: DateTime(2022),
+      startTime: DateTime(2022),
+      endTime: DateTime(2022),
       sortieNumber: 2,
       length: "2 hours",
     ),
@@ -61,7 +62,8 @@ class GradeSheets extends ChangeNotifier {
       overall: Grade.introductory,
       sortieType: SortieType.ims,
       dayNight: DayNight.night,
-      date: DateTime(2022),
+      startTime: DateTime.now(),
+      endTime: DateTime.now(),
       sortieNumber: 2,
       length: "2 hours",
     ),
@@ -90,7 +92,8 @@ class GradeSheets extends ChangeNotifier {
       overall: Grade.familiar,
       sortieType: SortieType.ims,
       dayNight: DayNight.night,
-      date: DateTime(2022),
+      startTime: DateTime.now(),
+      endTime: DateTime.now(),
       sortieNumber: 2,
       length: "2 hours",
       isDraft: false,

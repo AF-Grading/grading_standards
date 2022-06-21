@@ -1,5 +1,6 @@
-import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
+
+import '../models/grade_enums.dart';
 
 class EditableSortieType extends StatefulWidget {
   const EditableSortieType(

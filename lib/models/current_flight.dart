@@ -1,11 +1,10 @@
-// planned model necessary for data retention upon app restart during a flight
-import 'package:app_prototype/models/cts_list.dart';
-import 'package:app_prototype/models/grade_sheet.dart';
-import 'package:app_prototype/models/user.dart';
-import 'package:app_prototype/models/users.dart';
 import 'package:flutter/foundation.dart';
 
-import 'grade.dart';
+import 'grade_enums.dart';
+import 'cts_list.dart';
+import 'grade_sheet.dart';
+import 'user.dart';
+import 'users.dart';
 
 class CurrentFlight extends ChangeNotifier {
   final List<GradeSheet> _gradeSheets = [];
@@ -51,7 +50,8 @@ class CurrentFlight extends ChangeNotifier {
               pilotQual: PilotQual.fpc,
               sortieType: SortieType.ims,
               dayNight: DayNight.day,
-              date: DateTime.now(),
+              startTime: DateTime.now(),
+              endTime: DateTime.now(),
               sortieNumber: 0,
               length: "0",
             ),

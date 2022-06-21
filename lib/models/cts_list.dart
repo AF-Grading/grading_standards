@@ -1,6 +1,6 @@
 import 'package:app_prototype/models/grade_sheet.dart';
 
-import 'grade.dart';
+import 'grade_enums.dart';
 
 class CTSItem {
   // TODO add int value for keeping list location integrity
