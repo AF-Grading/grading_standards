@@ -68,8 +68,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                             child: TextFormField(
                               initialValue: widget.gradeSheet.student,
                               decoration: const InputDecoration(
-                                labelText: "Student",
-                              ),
+                                  labelText: "Student",
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 0)),
                               onChanged: (value) {
                                 setState(() {
                                   _gradeSheet.student = value;
@@ -91,6 +92,8 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                   widget.gradeSheet.missionNum.toString(),
                               decoration: const InputDecoration(
                                 labelText: "Mission Number",
+                                contentPadding:
+                                    const EdgeInsets.fromLTRB(0, 0, 0, 0),
                               ),
                               onChanged: (value) => setState(() {
                                 // tryparse needed because of empty string else error
@@ -112,8 +115,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               initialValue:
                                   widget.gradeSheet.sortieNumber.toString(),
                               decoration: const InputDecoration(
-                                labelText: "Sortie Number",
-                              ),
+                                  labelText: "Sortie Number",
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 0)),
                               onChanged: (value) => setState(() {
                                 _gradeSheet.sortieNumber = int.parse(value);
                               }),
@@ -128,8 +132,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                             child: TextFormField(
                               initialValue: _gradeSheet.length,
                               decoration: const InputDecoration(
-                                labelText: "Length",
-                              ),
+                                  labelText: "Length",
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 0)),
                               onChanged: (value) => setState(() {
                                 _gradeSheet.length = value;
                               }),
@@ -147,8 +152,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                             child: TextFormField(
                               initialValue: widget.gradeSheet.weather,
                               decoration: const InputDecoration(
-                                labelText: "Weather",
-                              ),
+                                  labelText: "Weather",
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 0)),
                               onChanged: (value) => setState(() {
                                 _gradeSheet.weather = value;
                               }),
@@ -162,8 +168,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                             child: TextFormField(
                               initialValue: widget.gradeSheet.profile,
                               decoration: const InputDecoration(
-                                labelText: "Profile",
-                              ),
+                                  labelText: "Profile",
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 0)),
                               onChanged: (value) => setState(
                                 () {
                                   _gradeSheet.profile = value;
@@ -194,8 +201,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                             child: TextFormField(
                               initialValue: widget.gradeSheet.overallComments,
                               decoration: const InputDecoration(
-                                labelText: "Overall Comments",
-                              ),
+                                  labelText: "Overall Comments",
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 0)),
                               onChanged: (value) => setState(
                                 () {
                                   _gradeSheet.overallComments = value;
@@ -211,8 +219,9 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                             child: TextFormField(
                               initialValue: widget.gradeSheet.recommendations,
                               decoration: const InputDecoration(
-                                labelText: "Recommendations",
-                              ),
+                                  labelText: "Recommendations",
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 0)),
                               onChanged: (value) => setState(() {
                                 _gradeSheet.recommendations = value;
                               }),
@@ -257,14 +266,25 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                         ),
                         Flexible(
                           flex: 1,
-                          child: EditableADQual(
-                            adQual: _gradeSheet.adQual,
-                            onChanged: (value) => setState(() {
-                              _gradeSheet.adQual = value;
-                            }),
-                          ),
+                          child: DatePicker(
+                              date: widget.gradeSheet.date,
+                              onChanged: (value) => setState(() {
+                                    _gradeSheet.date = value;
+                                  })),
                         ),
                       ],
+                    ),
+                    EditablePilotQualItem(
+                      pilotQual: _gradeSheet.pilotQual,
+                      onChanged: (value) => setState(() {
+                        _gradeSheet.pilotQual = value;
+                      }),
+                    ),
+                    EditableADQual(
+                      adQual: _gradeSheet.adQual,
+                      onChanged: (value) => setState(() {
+                        _gradeSheet.adQual = value;
+                      }),
                     ),
                     EditableSortieType(
                       sortieType: _gradeSheet.sortieType,

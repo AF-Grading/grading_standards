@@ -33,44 +33,38 @@ class _EditableDayNightItemState extends State<EditableDayNightItem> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SizedBox(width: 150, child: Text("Day/Night:")),
-          Flexible(
-            flex: 1,
-            child: Wrap(
-                direction: Axis.horizontal,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Text('Day'),
-                  Radio<DayNight>(
-                    value: DayNight.day,
-                    groupValue: _dayNight,
-                    onChanged: (DayNight? value) {
-                      setState(() {
-                        _dayNight = value!;
-                      });
-                      widget.onChanged(_dayNight);
-                    },
-                  ),
-                ]),
-          ),
-          Flexible(
-            flex: 1,
-            child: Wrap(
-                direction: Axis.horizontal,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Text("Night"),
-                  Radio<DayNight>(
-                    value: DayNight.night,
-                    groupValue: _dayNight,
-                    onChanged: (DayNight? value) {
-                      setState(() {
-                        _dayNight = value!;
-                      });
-                      widget.onChanged(_dayNight);
-                    },
-                  ),
-                ]),
-          ),
+          Wrap(
+              direction: Axis.horizontal,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                const Text('Day'),
+                Radio<DayNight>(
+                  value: DayNight.day,
+                  groupValue: _dayNight,
+                  onChanged: (DayNight? value) {
+                    setState(() {
+                      _dayNight = value!;
+                    });
+                    widget.onChanged(_dayNight);
+                  },
+                ),
+              ]),
+          Wrap(
+              direction: Axis.horizontal,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                const Text("Night"),
+                Radio<DayNight>(
+                  value: DayNight.night,
+                  groupValue: _dayNight,
+                  onChanged: (DayNight? value) {
+                    setState(() {
+                      _dayNight = value!;
+                    });
+                    widget.onChanged(_dayNight);
+                  },
+                ),
+              ]),
         ],
       ),
     );

@@ -48,8 +48,8 @@ class _EditableGradeItemState extends State<EditableGradeItem> {
           child: TextFormField(
             initialValue: widget.gradeItem.comments,
             decoration: const InputDecoration(
-              labelText: "Comments",
-            ),
+                labelText: "Comments",
+                contentPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0)),
             onChanged: (value) {
               setState(() {
                 _comments = value;
