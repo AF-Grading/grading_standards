@@ -1,14 +1,17 @@
 import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
 
-import '../models/grade.dart';
+import '../models/grade_enums.dart';
 import '../widgets/editable_grade_item.dart';
 import '../widgets/editable_grade_radios.dart';
 
 class FlightView extends StatefulWidget {
-  const FlightView({Key? key, required this.gradeSheet}) : super(key: key);
+  const FlightView(
+      {Key? key, required this.gradeSheet, required this.selectedParams})
+      : super(key: key);
 
   final GradeSheet gradeSheet;
+  final Map<String, bool> selectedParams;
 
   @override
   State<FlightView> createState() => _FlightViewState();
@@ -20,10 +23,20 @@ class _FlightViewState extends State<FlightView> {
   String _recommendation = "";
   String _profile = "";
   late GradeSheet _gradeSheet;
+  late List<GradeItem> _selectedGrades;
+  late List<GradeItem> _unselectedGrades;
 
   @override
   void initState() {
     _gradeSheet = widget.gradeSheet;
+    _selectedGrades = _gradeSheet.grades
+        .where((gradeItem) => widget.selectedParams[gradeItem.name]!)
+        .toList();
+
+    _unselectedGrades = _gradeSheet.grades
+        .where((gradeItem) => !widget.selectedParams[gradeItem.name]!)
+        .toList();
+
     super.initState();
   }
 
@@ -59,30 +72,33 @@ class _FlightViewState extends State<FlightView> {
                     );
                   },
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: "Recommendation/Next",
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: "Recommendation/Next",
+                          ),
+                          onChanged: (value) => setState(() {
+                            _recommendation = value;
+                          }),
                         ),
-                        onChanged: (value) => setState(() {
-                          _recommendation = value;
-                        }),
                       ),
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: "Profile",
+                      Expanded(
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: "Profile",
+                          ),
+                          onChanged: (value) => setState(() {
+                            _profile = value;
+                          }),
                         ),
-                        onChanged: (value) => setState(() {
-                          _profile = value;
-                        }),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -91,26 +107,35 @@ class _FlightViewState extends State<FlightView> {
             child: ExpansionTile(
               initiallyExpanded: true,
               title: const Text("Grade Items"),
-              children: _gradeSheet.grades
+              children: _selectedGrades
                   .map((item) => EditableGradeItem(
                         gradeItem: item,
                         onChanged: (value) {
                           setState(() {
-                            final grades = _gradeSheet.grades;
-                            _gradeSheet.grades[grades.indexOf(item)] = value;
+                            final grades = _selectedGrades;
+                            _selectedGrades[grades.indexOf(item)] = value;
                           });
                         },
                       ))
                   .toList(),
             ),
           ),
-          const Card(
+          Card(
             child: ExpansionTile(
-                initiallyExpanded: false,
-                title: Text("Unused Grades"),
-                children: [
-                  Text("Oh, hi Mark."),
-                ]),
+              initiallyExpanded: false,
+              title: const Text("Unused Grades"),
+              children: _unselectedGrades
+                  .map((item) => EditableGradeItem(
+                        gradeItem: item,
+                        onChanged: (value) {
+                          setState(() {
+                            final grades = _unselectedGrades;
+                            _unselectedGrades[grades.indexOf(item)] = value;
+                          });
+                        },
+                      ))
+                  .toList(),
+            ),
           )
         ],
       ),

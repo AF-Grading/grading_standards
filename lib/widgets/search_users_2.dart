@@ -1,22 +1,21 @@
+import 'package:app_prototype/models/current_flight.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/user.dart';
 import '../models/users.dart';
 
-class SearchUsers extends StatefulWidget {
-  const SearchUsers({Key? key, required this.onSelected}) : super(key: key);
-
-  final ValueChanged<List<User>> onSelected;
+class SearchUsers2 extends StatefulWidget {
+  const SearchUsers2({Key? key}) : super(key: key);
 
   @override
-  State<SearchUsers> createState() => _SearchUsersState();
+  State<SearchUsers2> createState() => _SearchUsers2State();
 }
 
-class _SearchUsersState extends State<SearchUsers> {
+class _SearchUsers2State extends State<SearchUsers2> {
   final List<TextEditingController> _controllers = [TextEditingController()];
   final List<User> _searchResults = [];
   int _editingIndex = 0;
-  final List<User> _selectedUsers = [];
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,6 @@ class _SearchUsersState extends State<SearchUsers> {
                               _searchResults.addAll(Users().users.where(
                                   (user) =>
                                       user.name.toLowerCase().contains(value)));
-                              // TODO remove results that have already been selected
 
                               _editingIndex = _controllers.indexOf(controller);
                               if (value == "") _searchResults.clear();
@@ -68,16 +66,17 @@ class _SearchUsersState extends State<SearchUsers> {
                   child: const Text("Add another student...")),
             // Remove uneeded GradeSheets
             if (_controllers.length > 1)
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _controllers.isEmpty ? null : _controllers.removeLast();
-                    _selectedUsers.isEmpty ? null : _selectedUsers.removeLast();
-                    widget.onSelected(_selectedUsers);
-                  });
-                },
-                child: const Icon(Icons.exposure_minus_1),
-              ),
+              Consumer<CurrentFlight>(builder: (context, currentFlight, child) {
+                return ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _controllers.isEmpty ? null : _controllers.removeLast();
+                      currentFlight.removeLast();
+                    });
+                  },
+                  child: const Icon(Icons.exposure_minus_1),
+                );
+              }),
           ],
         ),
         //Search Overlay
@@ -88,32 +87,45 @@ class _SearchUsersState extends State<SearchUsers> {
               children: _searchResults
                   .map((user) => Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _controllers[_editingIndex].text = user.name;
-                                // only allows one gradesheet per student at a time for a flight, contains did not work, nor did search by id
-                                // TODO fix so that users with the same name (but different people) can be selected
-                                // if a user already exists at the position, replace them
-                                /*_selectedUsers
-                                        .where(
-                                            (muser) => muser.name == user.name)
-                                        .isEmpty
-                                    ? _selectedUsers.(_editingIndex,
-                                        _selectedUsers.length ==  1 ?  null : _editingIndex + 1, [user])
-                                    : ScaffoldMessenger.of(context)
-                                        .showSnackBar(
+                        child: Consumer<CurrentFlight>(
+                          builder: (context, currentFlight, child) {
+                            return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _controllers[_editingIndex].text =
+                                        user.name;
+                                    // only allows one gradesheet per student at a time for a flight, contains did not work, nor did search by id
+                                    // TODO fix so that users with the same name (but different people) can be selected
+
+                                    if (currentFlight.ensureUnique(user) ==
+                                        -1) {
+                                      if (currentFlight.gradeSheets.length <
+                                          CurrentFlight.max) {
+                                        currentFlight.add(user);
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                "Max amount of students reached"),
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
                                         const SnackBar(
                                           content: Text(
                                               "You can only select the same student once per flight"),
                                         ),
-                                      );*/
-
-                                widget.onSelected(_selectedUsers);
-                                _searchResults.clear();
-                              });
-                            },
-                            child: Text(user.name)),
+                                      );
+                                    }
+                                    _searchResults.clear();
+                                  });
+                                },
+                                child: Text(user.name));
+                          },
+                        ),
                       ))
                   .toList(),
             ),

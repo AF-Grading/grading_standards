@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/grade_sheet.dart';
+import '../models/grade_enums.dart';
 
 class EditableADQual extends StatefulWidget {
   const EditableADQual(

@@ -1,14 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import 'grade.dart';
-
-enum AdQual { none, ldad, adid, acad, cpad }
-
-enum PilotQual { fpq, fpc, mp, ip }
-
-enum DayNight { day, night }
-
-enum SortieType { local, ims, mission, ost, instmtSim, tacticsSim, mmp, lfe }
+import 'grade_enums.dart';
 
 class GradeSheet {
   final String id = UniqueKey().toString();
@@ -23,8 +15,11 @@ class GradeSheet {
   String weather;
   SortieType sortieType;
   DayNight dayNight; //seems redundant to date
-  //automatic generation
-  DateTime date;
+  // TODO convert to start and end time, and have a length num come from it automatically
+  DateTime startTime;
+  DateTime endTime;
+  // int length = startTime - endTime;
+  //DateTime date;
   int sortieNumber; // 1-20
   // user could press start and stop button to generate length
   String length; //perhaps a time value instead of string
@@ -39,12 +34,13 @@ class GradeSheet {
     required this.missionNum,
     required this.grades,
     required this.overall,
-    this.adQual = AdQual.none,
-    this.pilotQual = PilotQual.fpq,
+    this.adQual = AdQual.noSelection,
+    this.pilotQual = PilotQual.noSelection,
     this.weather = '',
     required this.sortieType,
     required this.dayNight,
-    required this.date,
+    required this.startTime,
+    required this.endTime,
     required this.sortieNumber,
     required this.length,
     this.profile = '',
