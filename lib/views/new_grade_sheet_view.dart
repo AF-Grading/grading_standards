@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import '../models/grade_enums.dart';
 import '../models/user.dart';
 import '../models/users.dart';
-import '../pages/grading_activity_page.dart';
+import '../pages/current_flight_page.dart';
 import '../widgets/search_users_2.dart';
 
 enum GradingParams { freeSelect, all, none, formationAndAirdop }
@@ -223,7 +223,7 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GradingActivity(
+                  builder: (context) => CurrentFlightPage(
                     selectedParams: _selectedParams,
                     gradeSheets: {
                       for (User student in _students)

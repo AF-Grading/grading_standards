@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 import '../models/grade_sheet.dart';
 
-class GradingActivity extends StatefulWidget {
-  const GradingActivity(
+class CurrentFlightPage extends StatefulWidget {
+  const CurrentFlightPage(
       {Key? key, required this.gradeSheets, required this.selectedParams})
       : super(key: key);
 
@@ -15,10 +15,10 @@ class GradingActivity extends StatefulWidget {
   final Map<String, bool> selectedParams;
 
   @override
-  State<GradingActivity> createState() => _MyHomePageState();
+  State<CurrentFlightPage> createState() => _CurrentFlightPageState();
 }
 
-class _MyHomePageState extends State<GradingActivity> {
+class _CurrentFlightPageState extends State<CurrentFlightPage> {
   final Stopwatch _stopwatch = Stopwatch()..start();
   //int _time = 0;
   String _time = "0";
