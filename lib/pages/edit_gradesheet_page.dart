@@ -230,20 +230,38 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: EditableDayNightItem(
-                              gradeSheet: widget.gradeSheet,
-                              onChanged: (value) {
-                                setState(() {
-                                  _gradeSheet.dayNight = value;
-                                });
-                              },
-                            ),
+                    Row(
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: EditableDayNightItem(
+                            dayNight: _gradeSheet.dayNight,
+                            onChanged: (value) {
+                              setState(() {
+                                _gradeSheet.dayNight = value;
+                              });
+                            },
+                          ),
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: DatePicker(
+                              date: widget.gradeSheet.date,
+                              onChanged: (value) => setState(() {
+                                    _gradeSheet.date = value;
+                                  })),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: EditablePilotQualItem(
+                            pilotQual: _gradeSheet.pilotQual,
+                            onChanged: (value) => setState(() {
+                              _gradeSheet.pilotQual = value;
+                            }),
                           ),
                           Flexible(
                             flex: 1,

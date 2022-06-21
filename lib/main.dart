@@ -111,17 +111,6 @@ class _MyHomePageState extends State<MyHomePage> {
             TrainingShopView(),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          // maybe we can change the animation for how the pages swap when we click the button
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const GradingActivity()));
-          },
-          tooltip: 'Increment',
-          child: const Text("Start"),
-        ), // This trailing comma makes auto-formatting nicer for build methods.
       ),
     );
   }

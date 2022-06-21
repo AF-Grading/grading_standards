@@ -4,10 +4,10 @@ import '../models/grade_sheet.dart';
 
 class EditableDayNightItem extends StatefulWidget {
   const EditableDayNightItem(
-      {Key? key, required this.gradeSheet, required this.onChanged})
+      {Key? key, required this.dayNight, required this.onChanged})
       : super(key: key);
 
-  final GradeSheet gradeSheet;
+  final DayNight dayNight;
   final ValueChanged<DayNight> onChanged;
 
   @override
@@ -19,7 +19,7 @@ class _EditableDayNightItemState extends State<EditableDayNightItem> {
 
   @override
   void initState() {
-    _dayNight = widget.gradeSheet.dayNight;
+    _dayNight = widget.dayNight;
     super.initState();
   }
 
