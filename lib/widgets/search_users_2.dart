@@ -100,7 +100,7 @@ class _SearchUsers2State extends State<SearchUsers2> {
                                     if (currentFlight.ensureUnique(user) ==
                                         -1) {
                                       if (currentFlight.gradeSheets.length <
-                                          currentFlight.max) {
+                                          CurrentFlight.max) {
                                         currentFlight.add(user);
                                       } else {
                                         ScaffoldMessenger.of(context)

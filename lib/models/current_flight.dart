@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'grade_enums.dart';
 import 'cts_list.dart';
@@ -7,11 +7,52 @@ import 'user.dart';
 import 'users.dart';
 
 class CurrentFlight extends ChangeNotifier {
-  final List<GradeSheet> _gradeSheets = [];
-  // Max 4 students per flight
-  final int max = 4;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  // Overall section
+
+  String _weather = "";
+  DayNight _dayNight = DayNight.noSelection;
+  SortieType _sortieType = SortieType.noSelection;
+  int _missionNum = 0;
+  static const int max = 4;
+
+  // Individual Students
+
+  final List<GradeSheet> _gradeSheets = [];
+
+  // Getters
+
+  GlobalKey<FormState> get formKey => _formKey;
   List<GradeSheet> get gradeSheets => _gradeSheets;
+  String get weather => _weather;
+  DayNight get dayNight => _dayNight;
+  SortieType get sortieType => _sortieType;
+  int get missionNum => _missionNum;
+
+  // Setters
+
+  set weather(String value) {
+    _weather = value;
+    notifyListeners();
+  }
+
+  set dayNight(DayNight value) {
+    _dayNight = value;
+    notifyListeners();
+  }
+
+  set sortieType(SortieType value) {
+    _sortieType = value;
+    notifyListeners();
+  }
+
+  set missionNum(int value) {
+    _missionNum = value;
+    notifyListeners();
+  }
+
+  // Methods
 
   void update(GradeSheet gradeSheet) {
     int index = _gradeSheets.indexOf(gradeSheet);
