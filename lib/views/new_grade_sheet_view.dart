@@ -40,6 +40,7 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
 
   @override
   Widget build(BuildContext context) {
+    // change this part into a scrollable content
     return Column(
       //mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -194,7 +195,6 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
                   ),
                 ),
               );
-
             },
           ),
         ),

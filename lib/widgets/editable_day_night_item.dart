@@ -25,33 +25,52 @@ class _EditableDayNightItemState extends State<EditableDayNightItem> {
 
   @override
   Widget build(BuildContext context) {
+    // addded wrap for readability
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text("Day"),
-          Radio<DayNight>(
-            value: DayNight.day,
-            groupValue: _dayNight,
-            onChanged: (DayNight? value) {
-              setState(() {
-                _dayNight = value!;
-              });
-              widget.onChanged(_dayNight);
-            },
+          const SizedBox(width: 150, child: Text("Day/Night:")),
+          Flexible(
+            flex: 1,
+            child: Wrap(
+                direction: Axis.horizontal,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text('Day'),
+                  Radio<DayNight>(
+                    value: DayNight.day,
+                    groupValue: _dayNight,
+                    onChanged: (DayNight? value) {
+                      setState(() {
+                        _dayNight = value!;
+                      });
+                      widget.onChanged(_dayNight);
+                    },
+                  ),
+                ]),
           ),
-          const Text("Night"),
-          Radio<DayNight>(
-            value: DayNight.night,
-            groupValue: _dayNight,
-            onChanged: (value) {
-              setState(() {
-                _dayNight = value!;
-              });
-              widget.onChanged(_dayNight);
-            },
+          Flexible(
+            flex: 1,
+            child: Wrap(
+              direction: Axis.horizontal,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+              Text("Night"),
+              Radio<DayNight>(
+                value: DayNight.night,
+                groupValue: _dayNight,
+                onChanged: (DayNight? value) {
+                  setState(() {
+                    _dayNight = value!;
+                  });
+                  widget.onChanged(_dayNight);
+                },
+              ),
+            ]),
           ),
+
         ],
       ),
     );
