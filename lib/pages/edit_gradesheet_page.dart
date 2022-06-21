@@ -263,16 +263,16 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                               _gradeSheet.pilotQual = value;
                             }),
                           ),
-                          Flexible(
-                            flex: 1,
-                            child: DatePicker(
-                                date: widget.gradeSheet.date,
-                                onChanged: (value) => setState(() {
-                                      _gradeSheet.date = value;
-                                    })),
-                          ),
-                        ],
-                      ),
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: DatePicker(
+                              date: widget.gradeSheet.date,
+                              onChanged: (value) => setState(() {
+                                    _gradeSheet.date = value;
+                                  })),
+                        ),
+                      ],
                     ),
                     EditablePilotQualItem(
                       pilotQual: _gradeSheet.pilotQual,
