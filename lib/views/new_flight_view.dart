@@ -1,3 +1,4 @@
+import 'package:app_prototype/widgets/search_users_form_field.dart';
 import 'package:app_prototype/widgets/sortie_type_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -124,14 +125,55 @@ class NewFlightView extends StatelessWidget {
                 child: ExpansionTile(
                   title: Text("Student: ${gradeSheet.student}"),
                   initiallyExpanded: true,
+                  children: [
+                    SearchUsersFormField(
+                      onSaved: (student) => context
+                          .read<CurrentFlight>()
+                          .updateByStudent(
+                              gradeSheet.student,
+                              GradeSheet(
+                                  instructor: gradeSheet.instructor,
+                                  student: student,
+                                  missionNum: gradeSheet.missionNum,
+                                  grades: gradeSheet.grades,
+                                  overall: gradeSheet.overall,
+                                  sortieType: gradeSheet.sortieType,
+                                  dayNight: gradeSheet.dayNight,
+                                  startTime: gradeSheet.startTime,
+                                  endTime: gradeSheet.endTime,
+                                  sortieNumber: gradeSheet.sortieNumber,
+                                  length: gradeSheet.length)),
+                    ),
+                  ],
                 ),
               ),
+
+            /*for (int i = 0;
+                i < context.watch<CurrentFlight>().gradeSheets.length;
+                i++)
+              Card(
+                child: ExpansionTile(
+                  title: Text(
+                      "Student: ${context.watch<CurrentFlight>().gradeSheets[i].student}"),
+                  initiallyExpanded: true,
+                  children: [
+                    SearchUsersFormField(
+                      onChanged: (value) => context
+                          .read<CurrentFlight>()
+                          .update(
+                              i, context.watch<CurrentFlight>().gradeSheets[i]),
+                    ),
+                  ],
+                ),
+              ),*/
 
             //  FINISH
 
             Row(
               children: [
-                //ElevatedButton(onPressed: onPressed, child: child),
+                ElevatedButton(
+                    onPressed: () => context.read<CurrentFlight>().add(),
+                    child: const Text("Add Student")),
                 ElevatedButton(
                   // TODO if already pressed, instead have a resume flight button
                   child: const Text("Start Flight"),

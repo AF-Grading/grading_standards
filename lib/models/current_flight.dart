@@ -78,7 +78,16 @@ class CurrentFlight extends ChangeNotifier {
   // Methods
 
   void update(GradeSheet gradeSheet) {
-    int index = _gradeSheets.indexOf(gradeSheet);
+    int index =
+        _gradeSheets.indexWhere((sheet) => sheet.student == gradeSheet.student);
+    index == -1
+        ? _gradeSheets.add(gradeSheet)
+        : _gradeSheets.replaceRange(index, index + 1, [gradeSheet]);
+    notifyListeners();
+  }
+
+  void updateByStudent(String student, GradeSheet gradeSheet) {
+    int index = _gradeSheets.indexWhere((sheet) => sheet.student == student);
     index == -1
         ? _gradeSheets.add(gradeSheet)
         : _gradeSheets.replaceRange(index, index + 1, [gradeSheet]);
@@ -100,13 +109,37 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
-  void add(User student) {
+  /*void add(User student) {
     _gradeSheets.length < max
         ? _gradeSheets.add(
             GradeSheet(
               // TODO find this by current user instead
               instructor: Users().user.name,
               student: student.name,
+              missionNum: 0,
+              grades: baseGradeItems,
+              overall: Grade.noGrade,
+              weather: "",
+              pilotQual: PilotQual.fpc,
+              sortieType: SortieType.ims,
+              dayNight: DayNight.day,
+              startTime: DateTime.now(),
+              endTime: DateTime.now(),
+              sortieNumber: 0,
+              length: "0",
+            ),
+          )
+        : null;
+    notifyListeners();
+  }*/
+
+  void add() {
+    _gradeSheets.length < max
+        ? _gradeSheets.add(
+            GradeSheet(
+              // TODO find this by current user instead
+              instructor: Users().user.name,
+              student: "${gradeSheets.length + 1}",
               missionNum: 0,
               grades: baseGradeItems,
               overall: Grade.noGrade,
