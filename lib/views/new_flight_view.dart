@@ -131,7 +131,7 @@ class NewFlightView extends StatelessWidget {
 
             Row(
               children: [
-                ElevatedButton(onPressed: onPressed, child: child),
+                //ElevatedButton(onPressed: onPressed, child: child),
                 ElevatedButton(
                   // TODO if already pressed, instead have a resume flight button
                   child: const Text("Start Flight"),
