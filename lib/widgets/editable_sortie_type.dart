@@ -29,7 +29,7 @@ class _EditableSortieTypeState extends State<EditableSortieType> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        const Text("Ad Qualification:"),
+        const Text("Sortie type:"),
         Wrap(
           direction: Axis.horizontal,
           crossAxisAlignment: WrapCrossAlignment.center,

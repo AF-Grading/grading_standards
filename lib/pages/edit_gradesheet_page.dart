@@ -264,22 +264,14 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                             }),
                           ),
                         ),
-                        Flexible(
-                          flex: 1,
-                          child: DatePicker(
-                              date: widget.gradeSheet.startTime,
-                              onChanged: (value) => setState(() {
-                                    _gradeSheet.startTime = value;
-                                  })),
-                        ),
                       ],
                     ),
-                    EditablePilotQualItem(
-                      pilotQual: _gradeSheet.pilotQual,
-                      onChanged: (value) => setState(() {
-                        _gradeSheet.pilotQual = value;
-                      }),
-                    ),
+                    // EditablePilotQualItem(
+                    //   pilotQual: _gradeSheet.pilotQual,
+                    //   onChanged: (value) => setState(() {
+                    //     _gradeSheet.pilotQual = value;
+                    //   }),
+                    // ),
                     EditableADQual(
                       adQual: _gradeSheet.adQual,
                       onChanged: (value) => setState(() {
