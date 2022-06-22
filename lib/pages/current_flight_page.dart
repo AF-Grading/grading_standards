@@ -3,23 +3,25 @@ import 'dart:async';
 import 'package:app_prototype/review_grades.dart';
 import 'package:app_prototype/views/flight_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../models/current_flight.dart';
 import '../models/grade_sheet.dart';
 
 class CurrentFlightPage extends StatefulWidget {
-  const CurrentFlightPage(
-      {Key? key, required this.gradeSheets, required this.selectedParams})
-      : super(key: key);
+  const CurrentFlightPage({
+    Key? key,
+  }) : super(key: key);
 
-  final List<GradeSheet> gradeSheets;
-  final Map<String, bool> selectedParams;
+  //final List<GradeSheet> gradeSheets;
+  //final Map<String, bool> selectedParams;
 
   @override
   State<CurrentFlightPage> createState() => _CurrentFlightPageState();
 }
 
 class _CurrentFlightPageState extends State<CurrentFlightPage> {
-  final Stopwatch _stopwatch = Stopwatch()..start();
+  /*final Stopwatch _stopwatch = Stopwatch()..start();
   //int _time = 0;
   String _time = "0";
 
@@ -34,19 +36,18 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
     setState(() {
       _time = now.second.toString();
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    return widget.gradeSheets.length == 1
+    return context.watch<CurrentFlight>().gradeSheets.length == 1
         ? Scaffold(
             appBar: AppBar(
-              title: Text(
-                  "Proficienct Standards | Grade Desc | Duration: ${_time}"),
+              title: const Text("Proficienct Standards | Grade Desc"),
             ),
             body: FlightView(
-              gradeSheet: widget.gradeSheets.first,
-              selectedParams: widget.selectedParams,
+              gradeSheet: context.watch<CurrentFlight>().gradeSheets.first,
+              //selectedParams: widget.selectedParams,
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
@@ -61,23 +62,29 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
           )
         : DefaultTabController(
             initialIndex: 0,
-            length: widget.gradeSheets.length,
+            length: context.watch<CurrentFlight>().gradeSheets.length,
             child: Scaffold(
               appBar: AppBar(
-                title: Text(
-                    "Proficiency Standards Table Popup | Proficiency Grade Description Popup | Duration: ${_time}"),
+                title: const Text(
+                    "Proficiency Standards Table Popup | Proficiency Grade Description Popup"),
                 bottom: TabBar(
-                  tabs: widget.gradeSheets.map((gradeSheet) {
+                  tabs: context
+                      .watch<CurrentFlight>()
+                      .gradeSheets
+                      .map((gradeSheet) {
                     return Tab(text: gradeSheet.student);
                   }).toList(),
                 ),
               ),
 
               body: TabBarView(
-                children: widget.gradeSheets.map((gradeSheet) {
+                children: context
+                    .watch<CurrentFlight>()
+                    .gradeSheets
+                    .map((gradeSheet) {
                   return FlightView(
                     gradeSheet: gradeSheet,
-                    selectedParams: widget.selectedParams,
+                    //selectedParams: widget.selectedParams,
                   );
                 }).toList(),
               ),

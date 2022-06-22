@@ -36,7 +36,7 @@ class _EditableGradeRadiosState extends State<EditableGradeRadios> {
         // which button
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          SizedBox(child: const Text("Overall Grade:")),
+          SizedBox(child: Text(widget.name)),
           Wrap(
               direction: Axis.horizontal,
               crossAxisAlignment: WrapCrossAlignment.center,

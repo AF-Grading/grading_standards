@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../models/grade_sheet.dart';
+import '../pages/current_flight_page.dart';
 import '/models/current_flight.dart';
 import '/widgets/day_night_form_field.dart';
 
@@ -113,6 +114,19 @@ class NewFlightView extends StatelessWidget {
                       ),
                     ],
                   ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: "Sortie Profile",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter a value";
+                      }
+                      return null;
+                    },
+                    onChanged: (value) =>
+                        context.read<CurrentFlight>().profile = value,
+                  ),
                 ],
               ),
             ),
@@ -143,6 +157,12 @@ class NewFlightView extends StatelessWidget {
                         .formKey
                         .currentState!
                         .validate()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CurrentFlightPage(),
+                        ),
+                      );
                       // TODO: add/update general items to all gradesheets
                       //TODO go to flight view
 

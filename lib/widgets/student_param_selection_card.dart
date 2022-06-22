@@ -190,6 +190,8 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                           _selectedParams[ctsItems[index].name] = value!;
                           _gradingParams = GradingParams.freeSelect;
                         });
+                        context.read<CurrentFlight>().updateParamsByStudent(
+                            widget.gradeSheet.student, _selectedParams);
                       },
                     ),
                   ),

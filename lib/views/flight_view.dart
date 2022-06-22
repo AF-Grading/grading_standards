@@ -6,12 +6,14 @@ import '../widgets/editable_grade_item.dart';
 import '../widgets/editable_grade_radios.dart';
 
 class FlightView extends StatefulWidget {
-  const FlightView(
-      {Key? key, required this.gradeSheet, required this.selectedParams})
-      : super(key: key);
+  const FlightView({
+    Key? key,
+    required this.gradeSheet,
+  }) //required this.selectedParams})
+  : super(key: key);
 
   final GradeSheet gradeSheet;
-  final Map<String, bool> selectedParams;
+  //final Map<String, bool> selectedParams;
 
   @override
   State<FlightView> createState() => _FlightViewState();
@@ -30,11 +32,11 @@ class _FlightViewState extends State<FlightView> {
   void initState() {
     _gradeSheet = widget.gradeSheet;
     _selectedGrades = _gradeSheet.grades
-        .where((gradeItem) => widget.selectedParams[gradeItem.name]!)
+        .where((gradeItem) => gradeItem.grade == Grade.noSelection)
         .toList();
 
     _unselectedGrades = _gradeSheet.grades
-        .where((gradeItem) => !widget.selectedParams[gradeItem.name]!)
+        .where((gradeItem) => gradeItem.grade == Grade.noGrade)
         .toList();
 
     super.initState();

@@ -16,6 +16,7 @@ class CurrentFlight extends ChangeNotifier {
   SortieType _sortieType = SortieType.noSelection;
   int _missionNum = 0;
   int _sortieNum = 0;
+  String _profile = "";
   static const int max = 4;
 
   // Individual Students
@@ -47,11 +48,18 @@ class CurrentFlight extends ChangeNotifier {
   DayNight get dayNight => _dayNight;
   SortieType get sortieType => _sortieType;
   int get missionNum => _missionNum;
+  int get sortieNum => _sortieNum;
+  String get profile => _profile;
 
   // Setters
 
   set weather(String value) {
     _weather = value;
+    notifyListeners();
+  }
+
+  set profile(String value) {
+    _profile = value;
     notifyListeners();
   }
 
