@@ -52,7 +52,7 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
             builder: (context, currentFlight, child) {
               return SearchUsers(
                 onSelected: (values) {
-                  currentFlight.clear();
+                  currentFlight.clearSheets();
                   for (User user in values) {
                     //currentFlight.add(user);
                   }

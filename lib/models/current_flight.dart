@@ -7,8 +7,15 @@ import 'user.dart';
 import 'users.dart';
 
 class CurrentFlight extends ChangeNotifier {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  GlobalKey<FormState> _newKey = GlobalKey<FormState>();
+  final List<GlobalKey<FormState>> _flightKeys = [
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>()
+  ];
+  GlobalKey<FormState> _reviewKey = GlobalKey<FormState>();
+  //bool
   // Overall section
 
   String _weather = "";
@@ -17,6 +24,8 @@ class CurrentFlight extends ChangeNotifier {
   int _missionNum = 0;
   int _sortieNum = 0;
   String _profile = "";
+  DateTime _start = DateTime.now();
+  DateTime _end = DateTime.now();
   static const int max = 4;
 
   // Individual Students
@@ -28,7 +37,7 @@ class CurrentFlight extends ChangeNotifier {
       student: "1",
       missionNum: 0,
       grades: baseGradeItems,
-      overall: Grade.noGrade,
+      overall: Grade.noSelection,
       weather: "",
       pilotQual: PilotQual.fpc,
       sortieType: SortieType.ims,
@@ -42,7 +51,9 @@ class CurrentFlight extends ChangeNotifier {
 
   // Getters
 
-  GlobalKey<FormState> get formKey => _formKey;
+  GlobalKey<FormState> get newKey => _newKey;
+  List<GlobalKey<FormState>> get flightKeys => _flightKeys;
+  GlobalKey<FormState> get reviewKey => _reviewKey;
   List<GradeSheet> get gradeSheets => _gradeSheets;
   String get weather => _weather;
   DayNight get dayNight => _dayNight;
@@ -50,6 +61,8 @@ class CurrentFlight extends ChangeNotifier {
   int get missionNum => _missionNum;
   int get sortieNum => _sortieNum;
   String get profile => _profile;
+  DateTime get startTime => _start;
+  DateTime get endTime => _end;
 
   // Setters
 
@@ -85,6 +98,32 @@ class CurrentFlight extends ChangeNotifier {
 
   // Methods
 
+  int index(String student) {
+    return _gradeSheets.indexWhere((element) => element.student == student);
+  }
+
+  void end() {
+    _end = DateTime.now();
+    notifyListeners();
+  }
+
+  void start() {
+    _start = DateTime.now();
+    notifyListeners();
+  }
+
+  bool validate() {
+    bool isValid = true;
+    for (GlobalKey<FormState> key in _flightKeys) {
+      if (key.currentState != null) {
+        if (!key.currentState!.validate()) {
+          isValid = false;
+        }
+      }
+    }
+    return isValid;
+  }
+
   void update(GradeSheet gradeSheet) {
     int index =
         _gradeSheets.indexWhere((sheet) => sheet.student == gradeSheet.student);
@@ -119,14 +158,63 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateByGradeItem(String student, GradeItem item) {
+    GradeSheet gradeSheet =
+        _gradeSheets.firstWhere((sheet) => sheet.student == student);
+
+    int index = gradeSheet.grades
+        .indexWhere((gradeItem) => gradeItem.name == item.name);
+
+    gradeSheet.grades.replaceRange(index, index + 1, [item]);
+
+    notifyListeners();
+  }
+
   void delete(GradeSheet gradeSheet) {
     _gradeSheets.remove(gradeSheet);
     notifyListeners();
   }
 
   void clear() {
+    _newKey = GlobalKey<FormState>();
+    _flightKeys.clear();
+    for (int i = 0; i < 4; i++) {
+      _flightKeys.add(GlobalKey<FormState>());
+    }
+    _reviewKey = GlobalKey<FormState>();
+    //bool
+    // Overall section
+
+    _weather = "";
+    _dayNight = DayNight.noSelection;
+    _sortieType = SortieType.noSelection;
+    _missionNum = 0;
+    _sortieNum = 0;
+    _profile = "";
+    _start = DateTime.now();
+    _end = DateTime.now();
     _gradeSheets.clear();
+    _gradeSheets.add(GradeSheet(
+      // TODO find this by current user instead
+      instructor: Users().user.name,
+      student: "1",
+      missionNum: 0,
+      grades: baseGradeItems,
+      overall: Grade.noSelection,
+      weather: "",
+      pilotQual: PilotQual.fpc,
+      sortieType: SortieType.ims,
+      dayNight: DayNight.day,
+      startTime: DateTime.now(),
+      endTime: DateTime.now(),
+      sortieNumber: 0,
+      length: "0",
+    ));
     notifyListeners();
+  }
+
+  void clearSheets() {
+    _gradeSheets.clear();
   }
 
   void removeLast() {
@@ -167,7 +255,7 @@ class CurrentFlight extends ChangeNotifier {
               student: "${gradeSheets.length + 1}",
               missionNum: 0,
               grades: baseGradeItems,
-              overall: Grade.noGrade,
+              overall: Grade.noSelection,
               weather: "",
               pilotQual: PilotQual.fpc,
               sortieType: SortieType.ims,

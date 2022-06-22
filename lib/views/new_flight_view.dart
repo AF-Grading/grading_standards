@@ -17,7 +17,7 @@ class NewFlightView extends StatelessWidget {
     return SingleChildScrollView(
       child: Form(
         // adds key for form validation from the model
-        key: context.read<CurrentFlight>().formKey,
+        key: context.watch<CurrentFlight>().newKey,
         child: Column(
           children: [
             // GENERAL
@@ -148,13 +148,9 @@ class NewFlightView extends StatelessWidget {
                   // TODO if already pressed, instead have a resume flight button
                   child: const Text("Start Flight"),
                   onPressed: () {
-                    print(Provider.of<CurrentFlight>(context, listen: false)
-                        .gradeSheets[0]
-                        .grades[0]
-                        .grade);
                     if (context
                         .read<CurrentFlight>()
-                        .formKey
+                        .newKey
                         .currentState!
                         .validate()) {
                       Navigator.push(
@@ -163,14 +159,8 @@ class NewFlightView extends StatelessWidget {
                           builder: (context) => const CurrentFlightPage(),
                         ),
                       );
-                      // TODO: add/update general items to all gradesheets
-                      //TODO go to flight view
-
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
+                      // TODO if in a flight, dont do this
+                      context.read<CurrentFlight>().start();
                     }
                   },
                 ),
