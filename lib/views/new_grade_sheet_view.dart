@@ -54,7 +54,7 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
                 onSelected: (values) {
                   currentFlight.clear();
                   for (User user in values) {
-                    currentFlight.add(user);
+                    //currentFlight.add(user);
                   }
                   setState(() {
                     _students.clear();

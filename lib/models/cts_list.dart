@@ -89,5 +89,5 @@ List<CTSItem> ctsItems = [
 
 // For calling with new GradeSheets
 List<GradeItem> baseGradeItems = ctsItems
-    .map((item) => GradeItem(name: item.name, grade: Grade.noGrade))
+    .map((item) => GradeItem(name: item.name, grade: Grade.noSelection))
     .toList();

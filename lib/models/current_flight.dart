@@ -94,6 +94,23 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateParamsByStudent(String student, Map<String, bool> params) {
+    GradeSheet gradeSheet =
+        _gradeSheets.firstWhere((sheet) => sheet.student == student);
+
+    for (GradeItem item in gradeSheet.grades) {
+      if (params[item.name] == true) {
+        item.grade = Grade.noSelection;
+      } else {
+        item.grade = Grade.noGrade;
+      }
+    }
+
+    //updateByStudent(student, gradeSheet);
+
+    notifyListeners();
+  }
+
   void delete(GradeSheet gradeSheet) {
     _gradeSheets.remove(gradeSheet);
     notifyListeners();

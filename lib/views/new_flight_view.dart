@@ -1,5 +1,5 @@
-import 'package:app_prototype/widgets/search_users_form_field.dart';
 import 'package:app_prototype/widgets/sortie_type_form_field.dart';
+import 'package:app_prototype/widgets/student_param_selection_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -121,51 +121,7 @@ class NewFlightView extends StatelessWidget {
 
             for (GradeSheet gradeSheet
                 in context.watch<CurrentFlight>().gradeSheets)
-              Card(
-                child: ExpansionTile(
-                  title: Text("Student: ${gradeSheet.student}"),
-                  initiallyExpanded: true,
-                  children: [
-                    SearchUsersFormField(
-                      onSaved: (student) => context
-                          .read<CurrentFlight>()
-                          .updateByStudent(
-                              gradeSheet.student,
-                              GradeSheet(
-                                  instructor: gradeSheet.instructor,
-                                  student: student,
-                                  missionNum: gradeSheet.missionNum,
-                                  grades: gradeSheet.grades,
-                                  overall: gradeSheet.overall,
-                                  sortieType: gradeSheet.sortieType,
-                                  dayNight: gradeSheet.dayNight,
-                                  startTime: gradeSheet.startTime,
-                                  endTime: gradeSheet.endTime,
-                                  sortieNumber: gradeSheet.sortieNumber,
-                                  length: gradeSheet.length)),
-                    ),
-                  ],
-                ),
-              ),
-
-            /*for (int i = 0;
-                i < context.watch<CurrentFlight>().gradeSheets.length;
-                i++)
-              Card(
-                child: ExpansionTile(
-                  title: Text(
-                      "Student: ${context.watch<CurrentFlight>().gradeSheets[i].student}"),
-                  initiallyExpanded: true,
-                  children: [
-                    SearchUsersFormField(
-                      onChanged: (value) => context
-                          .read<CurrentFlight>()
-                          .update(
-                              i, context.watch<CurrentFlight>().gradeSheets[i]),
-                    ),
-                  ],
-                ),
-              ),*/
+              StudentParamSelectionCard(gradeSheet: gradeSheet),
 
             //  FINISH
 
@@ -178,6 +134,10 @@ class NewFlightView extends StatelessWidget {
                   // TODO if already pressed, instead have a resume flight button
                   child: const Text("Start Flight"),
                   onPressed: () {
+                    print(Provider.of<CurrentFlight>(context, listen: false)
+                        .gradeSheets[0]
+                        .grades[0]
+                        .grade);
                     if (context
                         .read<CurrentFlight>()
                         .formKey

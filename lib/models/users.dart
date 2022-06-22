@@ -4,8 +4,9 @@ import 'user.dart';
 class Users {
   final List<User> _users = [
     User(name: "Captain Underpants"),
-    User(name: "2nd Lieutenant Dan"),
-    User(name: "2nd Lieutenant Kinger")
+    User(name: "1st Lieutenant Dan"),
+    User(name: "2nd Lieutenant Kinger"),
+    User(name: "Airman Schmuckatelli")
   ];
 
   User get user => _users.first;

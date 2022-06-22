@@ -30,7 +30,7 @@ class SearchUsersFormField extends FormField<String> {
                           labelText: "Student Name",
                         ),
                         initialValue: formState.value,
-                        validator: validator,
+                        //validator: validator,
                         onChanged: (value) => formState.didChange(value),
                       ),
                       Column(

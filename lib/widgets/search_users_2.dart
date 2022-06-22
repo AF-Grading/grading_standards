@@ -101,7 +101,7 @@ class _SearchUsers2State extends State<SearchUsers2> {
                                         -1) {
                                       if (currentFlight.gradeSheets.length <
                                           CurrentFlight.max) {
-                                        currentFlight.add(user);
+                                        //currentFlight.add(user);
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
