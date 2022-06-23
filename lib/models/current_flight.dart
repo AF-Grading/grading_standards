@@ -14,6 +14,7 @@ class CurrentFlight extends ChangeNotifier {
     GlobalKey<FormState>(),
     GlobalKey<FormState>()
   ];
+  GlobalKey<FormState> _flightKey = GlobalKey<FormState>();
   GlobalKey<FormState> _reviewKey = GlobalKey<FormState>();
   //bool
   // Overall section
@@ -54,6 +55,8 @@ class CurrentFlight extends ChangeNotifier {
   GlobalKey<FormState> get newKey => _newKey;
   List<GlobalKey<FormState>> get flightKeys => _flightKeys;
   GlobalKey<FormState> get reviewKey => _reviewKey;
+  GlobalKey<FormState> get flightKey => _flightKey;
+
   List<GradeSheet> get gradeSheets => _gradeSheets;
   String get weather => _weather;
   DayNight get dayNight => _dayNight;
@@ -229,6 +232,8 @@ class CurrentFlight extends ChangeNotifier {
       _flightKeys.add(GlobalKey<FormState>());
     }
     _reviewKey = GlobalKey<FormState>();
+    _flightKey = GlobalKey<FormState>();
+
     //bool
     // Overall section
 

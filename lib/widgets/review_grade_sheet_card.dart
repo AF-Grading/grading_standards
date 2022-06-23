@@ -17,7 +17,11 @@ class ReviewGradeSheetCard extends StatelessWidget {
         title: Text(gradeSheet.student),
         initiallyExpanded: true,
         children: [
-          OverallCard(gradeSheet: gradeSheet),
+          OverallCard(
+            gradeSheet: gradeSheet,
+            // TODO Implement?
+            hasErrors: (_) {},
+          ),
           GradesCard(
             student: gradeSheet.student,
             grades: gradeSheet.grades,

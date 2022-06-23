@@ -7,9 +7,13 @@ import '../models/grade_enums.dart';
 import 'grade_radio_form_field.dart';
 
 class OverallCard extends StatelessWidget {
-  const OverallCard({Key? key, required this.gradeSheet}) : super(key: key);
+  const OverallCard(
+      {Key? key, required this.gradeSheet, required this.hasErrors})
+      : super(key: key);
 
   final GradeSheet gradeSheet;
+  final ValueChanged<bool> hasErrors;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -49,6 +53,7 @@ class OverallCard extends StatelessWidget {
               initialValue: gradeSheet.overall,
               validator: (value) {
                 if (value == null || value == Grade.noSelection) {
+                  hasErrors(true);
                   return "Please select a value";
                 }
                 return null;
