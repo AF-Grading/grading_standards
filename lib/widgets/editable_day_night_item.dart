@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../models/grade_enums.dart';
-import '../models/grade_sheet.dart';
 
 class EditableDayNightItem extends StatefulWidget {
   const EditableDayNightItem(

@@ -5,10 +5,12 @@ import '../models/grade_enums.dart';
 class SortieTypeFormField extends FormField<SortieType> {
   SortieTypeFormField(
       {Key? key,
+      SortieType? initialValue,
       ValueChanged<SortieType>? onChanged,
       FormFieldValidator<SortieType>? validator})
       : super(
           key: key,
+          initialValue: initialValue,
           // if the user does not select a value, display an error
           validator: validator,
           builder: (formState) {

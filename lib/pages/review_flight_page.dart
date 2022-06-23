@@ -21,10 +21,12 @@ class ReviewFlightPage extends StatelessWidget {
           key: context.read<CurrentFlight>().reviewKey,
           child: Column(
             children: [
-              ReviewGradeSheetGeneralCard(),
+              const ReviewGradeSheetGeneralCard(),
               for (GradeSheet gradeSheet
                   in context.watch<CurrentFlight>().gradeSheets)
-                ReviewGradeSheetCard(gradeSheet: gradeSheet),
+                ReviewGradeSheetCard(
+                  gradeSheet: gradeSheet,
+                ),
             ],
           ),
         ),
