@@ -6,17 +6,28 @@ import '../models/current_flight.dart';
 import 'grade_radio_form_field.dart';
 
 class GradesCard extends StatelessWidget {
-  const GradesCard({Key? key, required this.gradeSheet}) : super(key: key);
+  const GradesCard({
+    Key? key,
+    //required this.gradeSheet,
+    required this.student,
+    required this.grades,
+    this.title,
+    this.initiallyExpanded = true,
+  }) : super(key: key);
 
-  final GradeSheet gradeSheet;
+  //final GradeSheet gradeSheet;
+  final String student;
+  final List<GradeItem> grades;
+  final String? title;
+  final bool initiallyExpanded;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ExpansionTile(
-        initiallyExpanded: true,
-        title: const Text("Grade Items"),
-        children: gradeSheet.grades
+        initiallyExpanded: initiallyExpanded,
+        title: title != null ? Text(title!) : const Text("Grade Items"),
+        children: grades
             .map(
               (item) => ListTile(
                 leading: Text(item.name),
@@ -30,7 +41,7 @@ class GradesCard extends StatelessWidget {
                   },
                   onChanged: (grade) =>
                       context.read<CurrentFlight>().updateByGradeItem(
-                            gradeSheet.student,
+                            student,
                             GradeItem(
                                 name: item.name,
                                 comments: item.comments,
@@ -44,11 +55,12 @@ class GradesCard extends StatelessWidget {
                   ),
                   onChanged: (comment) {
                     context.read<CurrentFlight>().updateByGradeItem(
-                          gradeSheet.student,
+                          student,
                           GradeItem(
-                              name: item.name,
-                              comments: comment,
-                              grade: item.grade),
+                            name: item.name,
+                            comments: comment,
+                            grade: item.grade,
+                          ),
                         );
                   },
                 ),

@@ -39,7 +39,7 @@ class OverallCard extends StatelessWidget {
                         endTime: gradeSheet.endTime,
                         sortieNumber: gradeSheet.sortieNumber,
                         length: gradeSheet.length,
-                        overallComments: gradeSheet.overallComments,
+                        overallComments: overall,
                       )),
             ),
           ),

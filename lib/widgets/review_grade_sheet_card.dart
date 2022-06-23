@@ -18,7 +18,10 @@ class ReviewGradeSheetCard extends StatelessWidget {
         initiallyExpanded: true,
         children: [
           OverallCard(gradeSheet: gradeSheet),
-          GradesCard(gradeSheet: gradeSheet),
+          GradesCard(
+            student: gradeSheet.student,
+            grades: gradeSheet.grades,
+          ),
         ],
       ),
     );

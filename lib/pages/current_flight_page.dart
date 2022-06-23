@@ -1,12 +1,9 @@
-import 'dart:async';
-
-import 'package:app_prototype/pages/review_flight_page.dart';
-import 'package:app_prototype/views/flight_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+// prefer internal routes to be relative
 import '../models/current_flight.dart';
-import '../models/grade_sheet.dart';
+import '/pages/review_flight_page.dart';
+import '/views/flight_view.dart';
 
 class CurrentFlightPage extends StatefulWidget {
   const CurrentFlightPage({

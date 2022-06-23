@@ -1,3 +1,5 @@
+import 'package:app_prototype/widgets/grades_card.dart';
+import 'package:app_prototype/widgets/overall_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +29,7 @@ class _FlightViewState extends State<FlightView> {
   @override
   void initState() {
     _selectedGrades = widget.gradeSheet.grades
-        .where((gradeItem) => gradeItem.grade == Grade.noSelection)
+        .where((gradeItem) => gradeItem.grade != Grade.noGrade)
         .toList();
 
     _unselectedGrades = widget.gradeSheet.grades
@@ -45,7 +47,20 @@ class _FlightViewState extends State<FlightView> {
             context.watch<CurrentFlight>().index(widget.gradeSheet.student)],
         child: Column(
           children: [
-            Card(
+            OverallCard(gradeSheet: widget.gradeSheet),
+            GradesCard(
+              student: widget.gradeSheet.student,
+              grades: _selectedGrades,
+              title: "Grades",
+            ),
+            GradesCard(
+              student: widget.gradeSheet.student,
+              grades: _unselectedGrades,
+              title: "Unused Grades",
+              initiallyExpanded: false,
+            ),
+
+            /*Card(
               child: ExpansionTile(
                 initiallyExpanded: true,
                 title: const Text("Overall"),
@@ -79,6 +94,7 @@ class _FlightViewState extends State<FlightView> {
                   ListTile(
                     leading: const Text("Overall"),
                     title: GradeRadiosFormField(
+                      initialValue: widget.gradeSheet.overall,
                       validator: (value) {
                         if (value == null) {
                           return "Please select a value";
@@ -229,7 +245,7 @@ class _FlightViewState extends State<FlightView> {
                     )
                     .toList(),
               ),
-            ),
+            ),*/
           ],
         ),
       ),

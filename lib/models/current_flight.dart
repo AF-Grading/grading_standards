@@ -139,11 +139,35 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateByStudent(String student, GradeSheet gradeSheet) {
-    int index = _gradeSheets.indexWhere((sheet) => sheet.student == student);
+  void updateByStudent(String student, GradeSheet sheet) {
+    int index = _gradeSheets.indexWhere((sheets) => sheets.student == student);
     index == -1
-        ? _gradeSheets.add(gradeSheet)
-        : _gradeSheets.replaceRange(index, index + 1, [gradeSheet]);
+        ? _gradeSheets.add(sheet)
+        : _gradeSheets.replaceRange(index, index + 1, [
+            GradeSheet(
+              instructor: sheet.instructor,
+              student: sheet.student,
+              missionNum: sheet.missionNum,
+              grades: sheet.grades,
+              overall: sheet.overall,
+              sortieType: sheet.sortieType,
+              dayNight: sheet.dayNight,
+              startTime: sheet.startTime,
+              endTime: sheet.endTime,
+              sortieNumber: sheet.sortieNumber,
+              length:
+                  (_end.microsecondsSinceEpoch - _start.microsecondsSinceEpoch)
+                      .toString(),
+              adQual: sheet.adQual,
+              pilotQual: sheet.pilotQual,
+              weather: sheet.weather,
+              profile: sheet.profile,
+              overallComments: sheet.overallComments,
+              recommendations: sheet.recommendations,
+              //
+              //isDraft: false,
+            )
+          ]);
     notifyListeners();
   }
 

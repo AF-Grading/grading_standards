@@ -33,12 +33,23 @@ class ReviewFlightPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.read<CurrentFlight>().updateAll();
-          for (GradeSheet sheet in context.read<CurrentFlight>().gradeSheets) {
-            context.read<GradeSheets>().addSheet(sheet);
+          if (context
+              .read<CurrentFlight>()
+              .reviewKey
+              .currentState!
+              .validate()) {
+            context.read<CurrentFlight>().updateAll();
+            for (GradeSheet sheet
+                in context.read<CurrentFlight>().gradeSheets) {
+              context.read<GradeSheets>().addSheet(sheet);
+            }
+            context.read<CurrentFlight>().clear();
+            // gets rid of all the flight pages and pushes the home page
+            Navigator.popUntil(
+              context,
+              ModalRoute.withName('/'),
+            );
           }
-          context.read<CurrentFlight>().clear();
-          Navigator.popUntil(context, ModalRoute.withName('/'));
         },
         tooltip: 'Increment',
         child: const Text("Finish"),
