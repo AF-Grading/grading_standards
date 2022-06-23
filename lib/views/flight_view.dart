@@ -195,6 +195,7 @@ class _FlightViewState extends State<FlightView> {
                       (item) => ListTile(
                         leading: Text(item.name),
                         title: GradeRadiosFormField(
+                          initialValue: item.grade,
                           validator: (value) {
                             if (value == null) {
                               return "Please select a value";

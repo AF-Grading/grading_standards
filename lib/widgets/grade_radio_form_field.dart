@@ -5,11 +5,13 @@ import '../models/grade_enums.dart';
 class GradeRadiosFormField extends FormField<Grade> {
   GradeRadiosFormField(
       {Key? key,
+      Grade? initialValue,
       ValueChanged<Grade>? onChanged,
       FormFieldValidator<Grade>? validator})
       : super(
           key: key,
           // if the user does not select a value, display an error
+          initialValue: initialValue,
           validator: validator,
           builder: (formState) {
             return Padding(

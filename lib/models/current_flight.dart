@@ -245,6 +245,39 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Adds the general items to each gradesheet
+  void updateAll() {
+    for (int i = 0; i < _gradeSheets.length; i++) {
+      GradeSheet sheet = _gradeSheets[i];
+      _gradeSheets.replaceRange(i, i + 1, [
+        GradeSheet(
+          instructor: sheet.instructor,
+          student: sheet.student,
+          missionNum: _missionNum,
+          grades: sheet.grades,
+          overall: sheet.overall,
+          sortieType: _sortieType,
+          dayNight: _dayNight,
+          startTime: _start,
+          endTime: _end,
+          sortieNumber: _sortieNum,
+          length: (_end.microsecondsSinceEpoch - _start.microsecondsSinceEpoch)
+              .toString(),
+          adQual: sheet.adQual,
+          pilotQual: sheet.pilotQual,
+          weather: _weather,
+          profile: _profile,
+          overallComments: sheet.overallComments,
+          recommendations: sheet.recommendations,
+          //
+          //isDraft: false,
+        )
+      ]);
+    }
+
+    notifyListeners();
+  }
+
   /*void add(User student) {
     _gradeSheets.length < max
         ? _gradeSheets.add(

@@ -109,6 +109,8 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   if (context.read<CurrentFlight>().validate()) {
+                    context.read<CurrentFlight>().end();
+                    //context.read<CurrentFlight>().updateAllForReview();
                     Navigator.push(
                         context,
                         MaterialPageRoute(

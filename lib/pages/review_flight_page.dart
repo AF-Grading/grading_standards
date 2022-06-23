@@ -3,8 +3,9 @@ import 'package:provider/provider.dart';
 
 import '../models/current_flight.dart';
 import '../models/grade_sheet.dart';
+import '../models/grade_sheets.dart';
+import '../widgets/revie_grade_sheet_general_card.dart';
 import '../widgets/review_grade_sheet_card.dart';
-import 'home_page.dart';
 
 class ReviewFlightPage extends StatelessWidget {
   const ReviewFlightPage({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class ReviewFlightPage extends StatelessWidget {
           key: context.read<CurrentFlight>().reviewKey,
           child: Column(
             children: [
+              ReviewGradeSheetGeneralCard(),
               for (GradeSheet gradeSheet
                   in context.watch<CurrentFlight>().gradeSheets)
                 ReviewGradeSheetCard(gradeSheet: gradeSheet),
@@ -29,18 +31,12 @@ class ReviewFlightPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //TODO consider double pop and push homepage
+          context.read<CurrentFlight>().updateAll();
+          for (GradeSheet sheet in context.read<CurrentFlight>().gradeSheets) {
+            context.read<GradeSheets>().addSheet(sheet);
+          }
           context.read<CurrentFlight>().clear();
           Navigator.popUntil(context, ModalRoute.withName('/'));
-          //Navigator.of(context)
-          //  .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
-          /*Navigator.pop(context);
-          //Navigator.pop(context);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomePage(title: "Standards!"),
-              ));*/
         },
         tooltip: 'Increment',
         child: const Text("Finish"),
