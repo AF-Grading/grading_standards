@@ -1,43 +1,36 @@
-import 'package:app_prototype/models/grade_sheet.dart';
-import 'package:app_prototype/widgets/grade_radio_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/current_flight.dart';
 import '../models/grade_enums.dart';
-import '../pages/review_flight_page.dart';
-import '../widgets/editable_grade_item.dart';
-import '../widgets/editable_grade_radios.dart';
+import '/models/grade_sheet.dart';
+import '/widgets/grade_radio_form_field.dart';
 
 class FlightView extends StatefulWidget {
   const FlightView({
     Key? key,
     required this.index,
     required this.gradeSheet,
-  }) //required this.selectedParams})
-  : super(key: key);
+  }) : super(key: key);
 
   final int index;
   final GradeSheet gradeSheet;
-  //final Map<String, bool> selectedParams;
 
   @override
   State<FlightView> createState() => _FlightViewState();
 }
 
 class _FlightViewState extends State<FlightView> {
-  late GradeSheet _gradeSheet;
   late List<GradeItem> _selectedGrades;
   late List<GradeItem> _unselectedGrades;
 
   @override
   void initState() {
-    _gradeSheet = widget.gradeSheet;
-    _selectedGrades = _gradeSheet.grades
+    _selectedGrades = widget.gradeSheet.grades
         .where((gradeItem) => gradeItem.grade == Grade.noSelection)
         .toList();
 
-    _unselectedGrades = _gradeSheet.grades
+    _unselectedGrades = widget.gradeSheet.grades
         .where((gradeItem) => gradeItem.grade == Grade.noGrade)
         .toList();
 
@@ -48,10 +41,8 @@ class _FlightViewState extends State<FlightView> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
-        // this may overwrite the other key?
         key: context.read<CurrentFlight>().flightKeys[
-            //TODO causes error after reset
-            context.watch<CurrentFlight>().index(_gradeSheet.student)],
+            context.watch<CurrentFlight>().index(widget.gradeSheet.student)],
         child: Column(
           children: [
             Card(

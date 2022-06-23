@@ -56,6 +56,8 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                               length: widget.gradeSheet.length)),
                   child: const Text("Select a different student"))
               : SearchUsersFormField(
+                  //obtains list of users that filters out already used students
+                  users: context.watch<CurrentFlight>().filteredUsers,
                   validator: (value) {
                     // A bit of a bruteish method
                     if (widget.gradeSheet.student == "1" ||
@@ -158,8 +160,6 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 4,
-                // changed the size of child aspect ratio to 4 so we can see the titles clearly
-                // we still need to change it so the box aligns neatly though
               ),
               itemCount: ctsItems.length,
               itemBuilder: (BuildContext context, int index) {

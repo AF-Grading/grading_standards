@@ -63,6 +63,12 @@ class CurrentFlight extends ChangeNotifier {
   String get profile => _profile;
   DateTime get startTime => _start;
   DateTime get endTime => _end;
+  // filters the users out that appear in _gradesheets
+  List<User> get filteredUsers => Users()
+      .users
+      .where((user) =>
+          _gradeSheets.indexWhere((sheet) => sheet.student == user.name) == -1)
+      .toList();
 
   // Setters
 
@@ -145,15 +151,32 @@ class CurrentFlight extends ChangeNotifier {
     GradeSheet gradeSheet =
         _gradeSheets.firstWhere((sheet) => sheet.student == student);
 
+    List<GradeItem> items = [];
     for (GradeItem item in gradeSheet.grades) {
       if (params[item.name] == true) {
-        item.grade = Grade.noSelection;
+        items.add(GradeItem(name: item.name, grade: Grade.noSelection));
+        //item.grade = Grade.noSelection;
       } else {
-        item.grade = Grade.noGrade;
+        items.add(GradeItem(name: item.name, grade: Grade.noGrade));
+        //item.grade = Grade.noGrade;
       }
     }
 
-    //updateByStudent(student, gradeSheet);
+    GradeSheet newSheet = GradeSheet(
+      instructor: gradeSheet.instructor,
+      student: gradeSheet.student,
+      missionNum: gradeSheet.missionNum,
+      grades: items,
+      overall: gradeSheet.overall,
+      sortieType: gradeSheet.sortieType,
+      dayNight: gradeSheet.dayNight,
+      startTime: gradeSheet.startTime,
+      endTime: gradeSheet.endTime,
+      sortieNumber: gradeSheet.sortieNumber,
+      length: gradeSheet.length,
+    );
+
+    updateByStudent(student, newSheet);
 
     notifyListeners();
   }

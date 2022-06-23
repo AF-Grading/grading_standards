@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../models/user.dart';
 import '../models/users.dart';
 
 class SearchUsersFormField extends FormField<String> {
   SearchUsersFormField(
       {Key? key,
-      //List<User> users,
+      required List<User> users,
       controller = TextEditingController,
       ValueChanged<String>? onChanged,
       ValueChanged<String>? onSaved,
@@ -35,8 +36,8 @@ class SearchUsersFormField extends FormField<String> {
                       ),
                       Column(
                         children: formState.value != null
-                            ? Users()
-                                .users
+                            ? //Users()
+                            users
                                 .where((user) => user.name
                                     .toLowerCase()
                                     .contains(formState.value!))
