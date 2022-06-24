@@ -30,7 +30,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       darkTheme: ThemeData.dark(),
-      home: const HomePage(title: 'Grading Standards!!!!!'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(title: 'Grading Standards!!'),
+      },
+      //home: const HomePage(title: 'Grading Standards!!!!!'),
     );
   }
 }

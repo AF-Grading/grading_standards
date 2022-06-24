@@ -1,9 +1,11 @@
 import 'package:app_prototype/widgets/sortie_type_form_field.dart';
+import 'package:app_prototype/widgets/student_param_selection_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../models/grade_sheet.dart';
+import '../pages/current_flight_page.dart';
 import '/models/current_flight.dart';
 import '/widgets/day_night_form_field.dart';
 
@@ -15,7 +17,7 @@ class NewFlightView extends StatelessWidget {
     return SingleChildScrollView(
       child: Form(
         // adds key for form validation from the model
-        key: context.read<CurrentFlight>().formKey,
+        key: context.watch<CurrentFlight>().newKey,
         child: Column(
           children: [
             // GENERAL
@@ -112,6 +114,19 @@ class NewFlightView extends StatelessWidget {
                       ),
                     ],
                   ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: "Sortie Profile",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter a value";
+                      }
+                      return null;
+                    },
+                    onChanged: (value) =>
+                        context.read<CurrentFlight>().profile = value,
+                  ),
                 ],
               ),
             ),
@@ -120,35 +135,32 @@ class NewFlightView extends StatelessWidget {
 
             for (GradeSheet gradeSheet
                 in context.watch<CurrentFlight>().gradeSheets)
-              Card(
-                child: ExpansionTile(
-                  title: Text("Student: ${gradeSheet.student}"),
-                  initiallyExpanded: true,
-                ),
-              ),
+              StudentParamSelectionCard(gradeSheet: gradeSheet),
 
             //  FINISH
 
             Row(
               children: [
-                //ElevatedButton(onPressed: onPressed, child: child),
+                ElevatedButton(
+                    onPressed: () => context.read<CurrentFlight>().add(),
+                    child: const Text("Add Student")),
                 ElevatedButton(
                   // TODO if already pressed, instead have a resume flight button
                   child: const Text("Start Flight"),
                   onPressed: () {
                     if (context
                         .read<CurrentFlight>()
-                        .formKey
+                        .newKey
                         .currentState!
                         .validate()) {
-                      // TODO: add/update general items to all gradesheets
-                      //TODO go to flight view
-
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CurrentFlightPage(),
+                        ),
                       );
+                      // TODO if in a flight, dont do this
+                      context.read<CurrentFlight>().start();
                     }
                   },
                 ),
