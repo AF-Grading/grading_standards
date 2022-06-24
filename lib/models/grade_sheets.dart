@@ -9,7 +9,7 @@ class GradeSheets extends ChangeNotifier {
   final List<GradeSheet> _gradeSheets = [
     GradeSheet(
       instructor: "Captain Underpants",
-      student: "2nd Lieutenant Dan",
+      student: "1st Lieutenant Dan",
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -39,7 +39,7 @@ class GradeSheets extends ChangeNotifier {
     ),
     GradeSheet(
       instructor: "Captain Underpants",
-      student: "2nd Lieutenant Dan",
+      student: "1st Lieutenant Dan",
       missionNum: 12303,
       grades: [
         GradeItem(

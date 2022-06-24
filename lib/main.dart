@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'models/grade_sheets.dart';
 import 'models/current_flight.dart';
+import 'models/users.dart';
 import 'pages/home_page.dart';
 
 void main() {
@@ -13,6 +14,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => CurrentFlight(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => Users(),
       )
     ], child: const MyApp()),
   );
