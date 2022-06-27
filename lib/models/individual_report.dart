@@ -1,5 +1,6 @@
 import 'package:app_prototype/models/cts_list.dart';
 import 'package:flutter/foundation.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'grade_enums.dart';
 import 'grade_sheet.dart';
@@ -47,5 +48,61 @@ class IndividualReport with ChangeNotifier {
     });
 
     return currentGrades;
+  }
+
+  // TODO remove noGrade items
+  List<GradeItem> get bestFive {
+    List<GradeItem> current = currentGrades;
+
+    current.sort((a, b) => b.grade.index.compareTo(a.grade.index));
+
+    return current.take(5).toList();
+  }
+
+  // TODO remove noGrade items
+  List<GradeItem> get worstFive {
+    List<GradeItem> current = currentGrades;
+
+    current.sort((a, b) => a.grade.index.compareTo(b.grade.index));
+
+    return current.take(5).toList();
+  }
+
+  double get overallAverage {
+    int total = 0;
+    for (GradeSheet sheet in _gradeSheets) {
+      // noSelection = -1, noGrade = 0
+      total += sheet.overall.index - 2;
+    }
+
+    return total / _gradeSheets.length;
+  }
+
+  String get mostRecentComment {
+    int newest = 0;
+    String comment = '';
+    for (GradeSheet sheet in _gradeSheets) {
+      if (sheet.endTime.millisecondsSinceEpoch > newest) {
+        if (sheet.overallComments != "") comment = sheet.overallComments;
+        newest = sheet.endTime.millisecondsSinceEpoch;
+      }
+    }
+
+    return comment;
+  }
+
+  List<charts.Series<GradeSheet, DateTime>> get overallChart {
+    //List<Grade> grades = [for (GradeSheet sheet in _gradeSheets) sheet.overall];
+
+    List<charts.Series<GradeSheet, DateTime>> series = [
+      charts.Series(
+        id: "Overall",
+        data: _gradeSheets,
+        measureFn: (GradeSheet grade, _) => grade.overall.index - 2,
+        domainFn: (GradeSheet time, _) => time.endTime,
+      )
+    ];
+
+    return series;
   }
 }
