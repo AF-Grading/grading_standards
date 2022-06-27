@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatelessWidget {
-  var themeValue = "light";
-  bool isSwitched = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
