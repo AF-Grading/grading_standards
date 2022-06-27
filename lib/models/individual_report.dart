@@ -52,7 +52,9 @@ class IndividualReport with ChangeNotifier {
 
   // TODO remove noGrade items
   List<GradeItem> get bestFive {
-    List<GradeItem> current = currentGrades;
+    List<GradeItem> current = currentGrades
+        .where((gradeItem) => gradeItem.grade != Grade.noGrade)
+        .toList();
 
     current.sort((a, b) => b.grade.index.compareTo(a.grade.index));
 
@@ -61,7 +63,9 @@ class IndividualReport with ChangeNotifier {
 
   // TODO remove noGrade items
   List<GradeItem> get worstFive {
-    List<GradeItem> current = currentGrades;
+    List<GradeItem> current = currentGrades
+        .where((gradeItem) => gradeItem.grade != Grade.noGrade)
+        .toList();
 
     current.sort((a, b) => a.grade.index.compareTo(b.grade.index));
 

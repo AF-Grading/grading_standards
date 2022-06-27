@@ -1,5 +1,6 @@
 import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:app_prototype/models/individual_report.dart';
+import 'package:app_prototype/pages/edit_gradesheet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -85,9 +86,26 @@ class IndividualReportPage extends StatelessWidget {
                   )
                 ],
               ),
+
+              // FILLING THE REST OF THE PAGE WITH BS
+
               const Text("All Reports:"),
               for (GradeSheet sheet in gradeSheets)
-                Text(sheet.startTime.toIso8601String()),
+                ListTile(
+                  trailing: Text("Grade ${sheet.overall.index - 2}"),
+                  subtitle: Text(sheet.overallComments),
+                  title: Text(
+                      "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditGradeSheetPage(
+                        isEditing: false,
+                        gradeSheet: sheet,
+                      ),
+                    ),
+                  ),
+                ),
             ]
 
                 //Text(context.watch<IndividualReport>().first.student),
