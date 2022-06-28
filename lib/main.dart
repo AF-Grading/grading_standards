@@ -29,28 +29,33 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   //  MyApp({Key? key}) : super(key: key);
-  bool test = true;
+  bool test = false;
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    if (test) {
-      return Consumer<ThemeChange>(
-        builder: (context, value, child) => MaterialApp(
-          title: 'Flutter Demo',
-          // themeMode: ThemeMode.light,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          darkTheme: ThemeData.dark(),
-          themeMode: value.mode,
-          // themeMode: context.watch<ThemeChange>().mode,
-          home: const HomePage(title: 'Grading Standards!!!!!'),
-        ),
-      );
-    } else {
-      return UserLoginView();
-    }
+    return MaterialApp(
+      theme: ThemeData(accentColor: Colors.blue),
+      darkTheme: ThemeData.dark(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => UserLoginView(),
+        '/home': (context) => Consumer<ThemeChange>(
+              builder: (context, value, child) => MaterialApp(
+                title: 'Flutter Demo',
+                // themeMode: ThemeMode.light,
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                ),
+                darkTheme: ThemeData.dark(),
+                themeMode: value.mode,
+                // themeMode: context.watch<ThemeChange>().mode,
+                home: const HomePage(title: 'Grading Standards!!!!!'),
+              ),
+            ),
+      },
+      // home: UserLoginView(),
+    );
   }
 }
