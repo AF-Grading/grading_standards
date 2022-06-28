@@ -96,22 +96,32 @@ class GradeSheetView extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                              "Overall Grade: ${gradeSheet.overall.index - 2}"),
+                        Expanded(
+                          child: SizedBox(
+                            height: 50,
+                            child: ListTile(
+                              leading: const Text("Overall Grade"),
+                              title: Text("${gradeSheet.overall.index - 2}"),
+                            ),
+                          ),
                         ),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                "Comments: ${gradeSheet.overallComments}")),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                "Recommendations: ${gradeSheet.recommendations}")),
+                        Expanded(
+                          child: SizedBox(
+                              height: 50,
+                              child: ListTile(
+                                leading: const Text("Comments"),
+                                title: Text(gradeSheet.overallComments),
+                              )),
+                        ),
                       ],
                     ),
                   ),
+                  Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        leading: const Text("Recommendations"),
+                        title: Text(gradeSheet.recommendations),
+                      )),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -142,10 +152,30 @@ class GradeSheetView extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                            "Pilot Qualifications: ${gradeSheet.pilotQual.name}"),
-                        Text("AD Qualifications: ${gradeSheet.adQual.name}"),
-                        Text("Sortie Type: ${gradeSheet.sortieType.name}"),
+                        Expanded(
+                          child: SizedBox(
+                            height: 50,
+                            child: ListTile(
+                              leading: const Text("Pilot Qualifications"),
+                              title: Text(gradeSheet.pilotQual.name),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                              height: 50,
+                              child: ListTile(
+                                leading: const Text("AD Qualifications"),
+                                title: Text(gradeSheet.adQual.name),
+                              )),
+                        ),
+                        Expanded(
+                            child: SizedBox(
+                                height: 50,
+                                child: ListTile(
+                                  leading: const Text("Sortie Type"),
+                                  title: Text(gradeSheet.sortieType.name),
+                                ))),
                       ],
                     ),
                   ),

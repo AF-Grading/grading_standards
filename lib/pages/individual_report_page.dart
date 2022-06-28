@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
+import '../models/grade_enums.dart';
 import '/models/user.dart';
 
 class IndividualReportPage extends StatelessWidget {
@@ -33,16 +34,38 @@ class IndividualReportPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          "Average Overall Grade: ${context.watch<IndividualReport>().overallAverage}"),
+                        "Average Overall Grade: ${context.watch<IndividualReport>().overallAverage}",
+                        style: const TextStyle(fontSize: 22),
+                      ),
                       Text(
-                          "Most Recent Overall Comment: ${context.watch<IndividualReport>().mostRecentComment}"),
+                        "Most Recent Overall Comment: ${context.watch<IndividualReport>().mostRecentComment}",
+                        style: const TextStyle(fontSize: 22),
+                      ),
+                      const Text(
+                        "Ungraded Items",
+                        style: TextStyle(fontSize: 22),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: context
+                            .watch<IndividualReport>()
+                            .currentGrades
+                            .where((item) => item.grade == Grade.noGrade)
+                            .map((item) => Text(item.name))
+                            .toList(),
+                      )
                     ],
                   ),
                   Column(
                     children: [
-                      const Text("Overall Grades Over Time"),
+                      const Text(
+                        "Overall Grade Over Time",
+                        style: TextStyle(fontSize: 28),
+                      ),
                       SizedBox(
                         width: 300,
                         height: 300,
@@ -63,26 +86,46 @@ class IndividualReportPage extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        const Text("Top 5"),
+                        const Text(
+                          "Top",
+                          style: TextStyle(fontSize: 28),
+                        ),
                         Column(
                           children: context
                               .watch<IndividualReport>()
                               .bestFive
-                              .map((item) =>
-                                  Text("${item.name}: ${item.grade.index - 2}"))
+                              .map((item) => SizedBox(
+                                    // TODO alter to favor relative sizing
+                                    width: 400,
+                                    height: 40,
+                                    child: ListTile(
+                                        title: Text(item.name),
+                                        trailing:
+                                            Text("${item.grade.index - 2}")),
+                                  ))
                               .toList(),
                         )
                       ],
                     ),
                     Column(
                       children: [
-                        const Text("Bottom 5"),
+                        const Text(
+                          "Bottom",
+                          style: TextStyle(fontSize: 28),
+                        ),
                         Column(
                           children: context
                               .watch<IndividualReport>()
                               .worstFive
-                              .map((item) =>
-                                  Text("${item.name}: ${item.grade.index - 2}"))
+                              .map((item) => SizedBox(
+                                    // TODO alter to favor relative sizing
+                                    width: 400,
+                                    height: 40,
+                                    child: ListTile(
+                                        title: Text(item.name),
+                                        trailing:
+                                            Text("${item.grade.index - 2}")),
+                                  ))
                               .toList(),
                         )
                       ],
@@ -98,13 +141,22 @@ class IndividualReportPage extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        const Text("Strong 5"),
+                        const Text(
+                          "Strong",
+                          style: TextStyle(fontSize: 28),
+                        ),
                         Column(
                           children: context
                               .watch<IndividualReport>()
                               .strongFive
-                              .map((item) =>
-                                  Text("${item.name}: ${item.average}"))
+                              .map((item) => SizedBox(
+                                    // TODO alter to favor relative sizing
+                                    width: 400,
+                                    height: 40,
+                                    child: ListTile(
+                                        title: Text(item.name),
+                                        trailing: Text("${item.average}")),
+                                  ))
                               .toList(),
                         )
                       ],
@@ -112,8 +164,8 @@ class IndividualReportPage extends StatelessWidget {
                     Column(
                       children: [
                         const Text(
-                          "Weak 5",
-                          style: TextStyle(fontSize: 32),
+                          "Weak",
+                          style: TextStyle(fontSize: 28),
                         ),
                         Column(
                           children: context
@@ -124,7 +176,7 @@ class IndividualReportPage extends StatelessWidget {
                                     width: 400,
                                     height: 40,
                                     child: ListTile(
-                                        title: Text("${item.name}"),
+                                        title: Text(item.name),
                                         trailing: Text("${item.average}")),
                                   ))
                               .toList(),
@@ -139,7 +191,10 @@ class IndividualReportPage extends StatelessWidget {
 
               const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text("All Reports:"),
+                child: Text(
+                  "All Reports",
+                  style: TextStyle(fontSize: 28),
+                ),
               ),
               for (GradeSheet sheet in gradeSheets)
                 ListTile(
