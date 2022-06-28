@@ -28,7 +28,9 @@ class _HomePageState extends State<HomePage> {
             tabs: <Widget>[
               Tab(text: 'New Flight'),
               Tab(text: 'Individual Reports'),
-              Tab(text: 'Training Shop'),
+              Tab(
+                text: 'Training Shop',
+              ),
             ],
           ),
         ),
@@ -51,7 +53,8 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MyGradeSheetsPage()),
+                  MaterialPageRoute(
+                      builder: (context) => const MyGradeSheetsPage()),
                 );
               },
             ),

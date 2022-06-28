@@ -79,15 +79,9 @@ List<CTSItem> ctsItems = [
       Grade.familiar,
       "Demonstrates proper procedures for full flap assault landing on a runway certified for assault operations IAW AFI 13-217 or a runway marked appropriately for practice assault operations.",
       "Maintains smooth approach path. Maintains constant control of flight path vector or made positive corrections. Touches down on centerline within the marked zone within the published sink rate limitations. Maintains runway centerline during rollout. Airspeed +/- 5 kts."),
-  CTSItem(
-    "test",
-    Grade.familiar,
-    "testing",
-    "testing",
-  ),
 ];
 
 // For calling with new GradeSheets
 List<GradeItem> baseGradeItems = ctsItems
-    .map((item) => GradeItem(name: item.name, grade: Grade.noGrade))
+    .map((item) => GradeItem(name: item.name, grade: Grade.noSelection))
     .toList();

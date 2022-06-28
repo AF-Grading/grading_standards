@@ -52,9 +52,9 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
             builder: (context, currentFlight, child) {
               return SearchUsers(
                 onSelected: (values) {
-                  currentFlight.clear();
+                  currentFlight.clearSheets();
                   for (User user in values) {
-                    currentFlight.add(user);
+                    //currentFlight.add(user);
                   }
                   setState(() {
                     _students.clear();
@@ -223,8 +223,8 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CurrentFlightPage(
-                    selectedParams: _selectedParams,
+                  builder: (context) => const CurrentFlightPage(
+                      /*selectedParams: _selectedParams,
                     gradeSheets: {
                       for (User student in _students)
                         GradeSheet(
@@ -243,8 +243,8 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
                           sortieNumber: _sortieNum,
                           length: "0",
                         )
-                    }.toList(),
-                  ),
+                    }.toList(),*/
+                      ),
                 ),
               );
             },

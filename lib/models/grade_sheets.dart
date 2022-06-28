@@ -116,4 +116,30 @@ class GradeSheets extends ChangeNotifier {
         : _gradeSheets.replaceRange(index, index + 1, [gradeSheet]);
     notifyListeners();
   }
+
+  void addSheet(GradeSheet sheet) {
+    _gradeSheets.add(
+      GradeSheet(
+        instructor: sheet.instructor,
+        student: sheet.student,
+        missionNum: sheet.missionNum,
+        grades: sheet.grades,
+        overall: sheet.overall,
+        sortieType: sheet.sortieType,
+        dayNight: sheet.dayNight,
+        startTime: sheet.startTime,
+        endTime: sheet.endTime,
+        sortieNumber: sheet.sortieNumber,
+        length: sheet.length,
+        adQual: sheet.adQual,
+        pilotQual: sheet.pilotQual,
+        weather: sheet.weather,
+        profile: sheet.profile,
+        overallComments: sheet.overallComments,
+        recommendations: sheet.recommendations,
+        isDraft: false,
+      ),
+    );
+    notifyListeners();
+  }
 }

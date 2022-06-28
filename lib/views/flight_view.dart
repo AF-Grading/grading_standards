@@ -1,40 +1,41 @@
-import 'package:app_prototype/models/grade_sheet.dart';
+import 'package:app_prototype/widgets/grades_card.dart';
+import 'package:app_prototype/widgets/overall_card.dart';
 import 'package:flutter/material.dart';
 
 import '../models/grade_enums.dart';
-import '../widgets/editable_grade_item.dart';
-import '../widgets/editable_grade_radios.dart';
+import '/models/grade_sheet.dart';
 
 class FlightView extends StatefulWidget {
-  const FlightView(
-      {Key? key, required this.gradeSheet, required this.selectedParams})
-      : super(key: key);
+  const FlightView({
+    Key? key,
+    required this.index,
+    required this.gradeSheet,
+    required this.hasErrors,
+  }) : super(key: key);
 
+  final int index;
   final GradeSheet gradeSheet;
-  final Map<String, bool> selectedParams;
+  final ValueChanged<bool> hasErrors;
 
   @override
   State<FlightView> createState() => _FlightViewState();
 }
 
-class _FlightViewState extends State<FlightView> {
-  String _overallComments = "";
-  Grade _overall = Grade.noGrade;
-  String _recommendation = "";
-  String _profile = "";
-  late GradeSheet _gradeSheet;
+// KeepAlive mixin makes it so all tabs are validated
+class _FlightViewState extends State<FlightView>
+    with AutomaticKeepAliveClientMixin {
   late List<GradeItem> _selectedGrades;
   late List<GradeItem> _unselectedGrades;
+  bool hasErrors = false;
 
   @override
   void initState() {
-    _gradeSheet = widget.gradeSheet;
-    _selectedGrades = _gradeSheet.grades
-        .where((gradeItem) => widget.selectedParams[gradeItem.name]!)
+    _selectedGrades = widget.gradeSheet.grades
+        .where((gradeItem) => gradeItem.grade != Grade.noGrade)
         .toList();
 
-    _unselectedGrades = _gradeSheet.grades
-        .where((gradeItem) => !widget.selectedParams[gradeItem.name]!)
+    _unselectedGrades = widget.gradeSheet.grades
+        .where((gradeItem) => gradeItem.grade == Grade.noGrade)
         .toList();
 
     super.initState();
@@ -45,100 +46,29 @@ class _FlightViewState extends State<FlightView> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Card(
-            child: ExpansionTile(
-              initiallyExpanded: true,
-              title: const Text("Overall"),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: "Overall Comments",
-                    ),
-                    onChanged: (value) => setState(() {
-                      _overallComments = value;
-                    }),
-                  ),
-                ),
-                EditableGradeRadios(
-                  name: "Overall Grade",
-                  grade: _overall,
-                  onChanged: (value) {
-                    setState(
-                      () {
-                        _overall = value;
-                      },
-                    );
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: "Recommendation/Next",
-                          ),
-                          onChanged: (value) => setState(() {
-                            _recommendation = value;
-                          }),
-                        ),
-                      ),
-                      Expanded(
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: "Profile",
-                          ),
-                          onChanged: (value) => setState(() {
-                            _profile = value;
-                          }),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          OverallCard(
+              gradeSheet: widget.gradeSheet,
+              hasErrors: (hasError) {
+                setState(() {
+                  widget.hasErrors(hasError);
+                });
+              }),
+          GradesCard(
+            student: widget.gradeSheet.student,
+            grades: _selectedGrades,
+            title: "Grades",
           ),
-          Card(
-            child: ExpansionTile(
-              initiallyExpanded: true,
-              title: const Text("Grade Items"),
-              children: _selectedGrades
-                  .map((item) => EditableGradeItem(
-                        gradeItem: item,
-                        onChanged: (value) {
-                          setState(() {
-                            final grades = _selectedGrades;
-                            _selectedGrades[grades.indexOf(item)] = value;
-                          });
-                        },
-                      ))
-                  .toList(),
-            ),
+          GradesCard(
+            student: widget.gradeSheet.student,
+            grades: _unselectedGrades,
+            title: "Unused Grades",
+            initiallyExpanded: false,
           ),
-          Card(
-            child: ExpansionTile(
-              initiallyExpanded: false,
-              title: const Text("Unused Grades"),
-              children: _unselectedGrades
-                  .map((item) => EditableGradeItem(
-                        gradeItem: item,
-                        onChanged: (value) {
-                          setState(() {
-                            final grades = _unselectedGrades;
-                            _unselectedGrades[grades.indexOf(item)] = value;
-                          });
-                        },
-                      ))
-                  .toList(),
-            ),
-          )
         ],
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

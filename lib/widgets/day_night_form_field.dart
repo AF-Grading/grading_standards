@@ -5,11 +5,13 @@ import '../models/grade_enums.dart';
 class DayNightFormField extends FormField<DayNight> {
   DayNightFormField(
       {Key? key,
+      DayNight? initialValue,
       ValueChanged<DayNight>? onChanged,
       FormFieldValidator<DayNight>? validator})
       : super(
           key: key,
           // if the user does not select a value, display an error
+          initialValue: initialValue,
           validator: validator,
           builder: (formState) {
             return Padding(
