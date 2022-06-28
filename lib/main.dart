@@ -1,6 +1,7 @@
 import 'package:app_prototype/views/user_log_in_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import 'models/grade_sheets.dart';
 import 'models/current_flight.dart';
@@ -17,7 +18,7 @@ void main() {
         create: (context) => CurrentFlight(),
       ),
       ChangeNotifierProvider(create: (context) => ThemeChange()),
-    ], child: MyApp()),
+    ], child: Phoenix(child: MyApp())),
   );
 }
 
@@ -40,18 +41,23 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       routes: {
         '/': (context) => UserLoginView(),
-        '/home': (context) => Consumer<ThemeChange>(
-              builder: (context, value, child) => MaterialApp(
-                title: 'Flutter Demo',
-                // themeMode: ThemeMode.light,
-                theme: ThemeData(
-                  primarySwatch: Colors.blue,
-                  visualDensity: VisualDensity.adaptivePlatformDensity,
+        '/home': (context) => WillPopScope(
+              onWillPop: () async {
+                return true;
+              },
+              child: Consumer<ThemeChange>(
+                builder: (context, value, child) => MaterialApp(
+                  title: 'Flutter Demo',
+                  // themeMode: ThemeMode.light,
+                  theme: ThemeData(
+                    primarySwatch: Colors.blue,
+                    visualDensity: VisualDensity.adaptivePlatformDensity,
+                  ),
+                  darkTheme: ThemeData.dark(),
+                  themeMode: value.mode,
+                  // themeMode: context.watch<ThemeChange>().mode,
+                  home: HomePage(title: 'Grading Standards!!!!!'),
                 ),
-                darkTheme: ThemeData.dark(),
-                themeMode: value.mode,
-                // themeMode: context.watch<ThemeChange>().mode,
-                home: const HomePage(title: 'Grading Standards!!!!!'),
               ),
             ),
       },

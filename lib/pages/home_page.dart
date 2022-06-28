@@ -7,7 +7,7 @@ import 'package:app_prototype/views/training_shop_view.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
+  HomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
