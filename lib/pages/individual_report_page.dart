@@ -55,41 +55,92 @@ class IndividualReportPage extends StatelessWidget {
               ),
 
               // TOP FIVE BOTTOM FIVE
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      const Text("Top 5"),
-                      Column(
-                        children: context
-                            .watch<IndividualReport>()
-                            .bestFive
-                            .map((item) =>
-                                Text("${item.name}: ${item.grade.index - 2}"))
-                            .toList(),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      const Text("Bottom 5"),
-                      Column(
-                        children: context
-                            .watch<IndividualReport>()
-                            .worstFive
-                            .map((item) =>
-                                Text("${item.name}: ${item.grade.index - 2}"))
-                            .toList(),
-                      )
-                    ],
-                  )
-                ],
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        const Text("Top 5"),
+                        Column(
+                          children: context
+                              .watch<IndividualReport>()
+                              .bestFive
+                              .map((item) =>
+                                  Text("${item.name}: ${item.grade.index - 2}"))
+                              .toList(),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        const Text("Bottom 5"),
+                        Column(
+                          children: context
+                              .watch<IndividualReport>()
+                              .worstFive
+                              .map((item) =>
+                                  Text("${item.name}: ${item.grade.index - 2}"))
+                              .toList(),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        const Text("Strong 5"),
+                        Column(
+                          children: context
+                              .watch<IndividualReport>()
+                              .strongFive
+                              .map((item) =>
+                                  Text("${item.name}: ${item.average}"))
+                              .toList(),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          "Weak 5",
+                          style: TextStyle(fontSize: 32),
+                        ),
+                        Column(
+                          children: context
+                              .watch<IndividualReport>()
+                              .weakFive
+                              .map((item) => SizedBox(
+                                    // TODO alter to favor relative sizing
+                                    width: 400,
+                                    height: 40,
+                                    child: ListTile(
+                                        title: Text("${item.name}"),
+                                        trailing: Text("${item.average}")),
+                                  ))
+                              .toList(),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
 
               // FILLING THE REST OF THE PAGE WITH BS
 
-              const Text("All Reports:"),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("All Reports:"),
+              ),
               for (GradeSheet sheet in gradeSheets)
                 ListTile(
                   trailing: Text("Grade ${sheet.overall.index - 2}"),

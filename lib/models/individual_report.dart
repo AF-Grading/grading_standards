@@ -75,7 +75,7 @@ class IndividualReport with ChangeNotifier {
   double get overallAverage {
     int total = 0;
     for (GradeSheet sheet in _gradeSheets) {
-      // noSelection = -1, noGrade = 0
+      // noSelection = -2, noGrade = -1
       total += sheet.overall.index - 2;
     }
 
@@ -109,4 +109,63 @@ class IndividualReport with ChangeNotifier {
 
     return series;
   }
+
+  // return the average for each grade item, leaving ungraded items as 0
+  Map<String, double> get averageGrades {
+    Map<String, int> totalNum = {
+      for (GradeItem item in baseGradeItems) item.name: 0
+    };
+    Map<String, double> averages = {
+      for (GradeItem item in baseGradeItems) item.name: 0
+    };
+
+    for (GradeSheet sheet in gradeSheets) {
+      for (GradeItem item in sheet.grades) {
+        if (item.grade != Grade.noGrade && item.grade != Grade.noSelection) {
+          totalNum[item.name] = totalNum[item.name]! + 1;
+          averages[item.name] = averages[item.name]! + item.grade.index - 2;
+        }
+      }
+    }
+
+    totalNum.forEach((key, value) {
+      if (value != 0) {
+        averages[key] = averages[key]! / value;
+      }
+    });
+
+    return averages;
+  }
+
+  // return the top 5 average grades, ignoring ungraded items
+  List<AverageGrade> get strongFive {
+    List<AverageGrade> current = [];
+
+    averageGrades.forEach((key, value) {
+      if (value != 0) current.add(AverageGrade(key, value));
+    });
+
+    current.sort((a, b) => b.average.compareTo(a.average));
+
+    return current.take(5).toList();
+  }
+
+  // return the worst 5 average grades, ignoring ungraded items
+  List<AverageGrade> get weakFive {
+    List<AverageGrade> current = [];
+
+    averageGrades.forEach((key, value) {
+      if (value != 0) current.add(AverageGrade(key, value));
+    });
+
+    current.sort((a, b) => a.average.compareTo(b.average));
+
+    return current.take(5).toList();
+  }
+}
+
+class AverageGrade {
+  String name;
+  double average;
+  AverageGrade(this.name, this.average);
 }

@@ -21,105 +21,133 @@ class GradeSheetView extends StatelessWidget {
                 title: const Text("Overall"),
                 initiallyExpanded: true,
                 children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("Student: ${gradeSheet.student}")),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                "Mission Number: ${gradeSheet.missionNum}")),
-                      )
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            height: 50,
+                            child: ListTile(
+                                leading: const Text("Student"),
+                                title: Text(gradeSheet.student)),
+                          ),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            height: 50,
+                            child: ListTile(
+                              leading: const Text("Mission Number:"),
+                              title: Text(gradeSheet.missionNum.toString()),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                "Sortie Number: ${gradeSheet.sortieNumber}")),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        // consider some sort of time picker here
-                        child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child:
-                                Text("Flight Duration: ${gradeSheet.length}")),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                              height: 50,
+                              child: ListTile(
+                                  leading: const Text("Sortie Number"),
+                                  title: Text(
+                                      gradeSheet.sortieNumber.toString()))),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                              height: 50,
+                              child: ListTile(
+                                  leading: const Text("Flight Duration"),
+                                  title: Text(gradeSheet.length))),
+                        ),
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("Weather ${gradeSheet.weather}")),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child:
-                                Text("Sortie Profile: ${gradeSheet.profile}")),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                              height: 50,
+                              child: ListTile(
+                                  leading: const Text("Weather"),
+                                  title: Text(gradeSheet.weather))),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                              height: 50,
+                              child: ListTile(
+                                  leading: const Text("Sortie Profile"),
+                                  title: Text(gradeSheet.profile))),
+                        ),
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                            "Overall Grade: ${gradeSheet.overall.index - 2}"),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Padding(
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                              "Overall Grade: ${gradeSheet.overall.index - 2}"),
+                        ),
+                        Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                                 "Comments: ${gradeSheet.overallComments}")),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Padding(
+                        Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                                 "Recommendations: ${gradeSheet.recommendations}")),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Flexible(
-                          flex: 1,
-                          child: Text("Day/Night: ${gradeSheet.dayNight}")),
-                      Flexible(
-                          flex: 1,
-                          child: Text("Date: ${gradeSheet.startTime}")),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                            child: SizedBox(
+                                height: 50,
+                                child: ListTile(
+                                  leading: const Text("Day/Night"),
+                                  title: Text(gradeSheet.dayNight.name),
+                                ))),
+                        Expanded(
+                          child: SizedBox(
+                            height: 50,
+                            child: ListTile(
+                              leading: const Text("Date"),
+                              title: Text(
+                                  "${gradeSheet.startTime.year}/${gradeSheet.startTime.month}/${gradeSheet.startTime.day}"),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Flexible(
-                          flex: 1,
-                          child: Text(
-                              "Pilot Qualifications: ${gradeSheet.pilotQual}")),
-                      Flexible(
-                          flex: 1,
-                          child:
-                              Text("AD Qualifications: ${gradeSheet.adQual}")),
-                      Flexible(
-                          flex: 1,
-                          child: Text("Sortie Type: ${gradeSheet.sortieType}")),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                            "Pilot Qualifications: ${gradeSheet.pilotQual.name}"),
+                        Text("AD Qualifications: ${gradeSheet.adQual.name}"),
+                        Text("Sortie Type: ${gradeSheet.sortieType.name}"),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -127,6 +155,7 @@ class GradeSheetView extends StatelessWidget {
             Card(
               child: ExpansionTile(
                 title: const Text("Graded Items"),
+                initiallyExpanded: true,
                 children: gradeSheet.grades
                     .where((item) => item.grade != Grade.noGrade)
                     .map((item) => ListTile(

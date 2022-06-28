@@ -57,7 +57,7 @@ class GradeSheets extends ChangeNotifier {
       grades: [
         GradeItem(
           name: "Communication Skills",
-          grade: Grade.familiar,
+          grade: Grade.introductory,
         ),
         GradeItem(
           name: "Systems Knowledge",
