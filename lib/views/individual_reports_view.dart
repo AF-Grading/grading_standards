@@ -34,7 +34,7 @@ class IndividualReportsView extends StatelessWidget {
                           .watch<GradeSheets>()
                           .gradeSheets
                           .where(
-                              (gradeSheet) => gradeSheet.student == user.name)
+                              (gradeSheet) => gradeSheet.student.id == user.id)
                           .toList(),
                     ),
                   ),

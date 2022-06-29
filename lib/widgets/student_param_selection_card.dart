@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/cts_list.dart';
+import '../models/user.dart';
+import '../models/users.dart';
 import '../views/new_grade_sheet_view.dart';
 import '/models/current_flight.dart';
 import '/models/grade_sheet.dart';
@@ -31,12 +33,12 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
     return Card(
       child: ExpansionTile(
         title: hasErrors
-            ? Text("Student: ${widget.gradeSheet.student}",
+            ? Text("Student: ${widget.gradeSheet.student.name}",
                 style: const TextStyle(color: Colors.red))
-            : Text("Student: ${widget.gradeSheet.student}"),
+            : Text("Student: ${widget.gradeSheet.student.name}"),
         initiallyExpanded: true,
         children: [
-          int.tryParse(widget.gradeSheet.student) == null
+          int.tryParse(widget.gradeSheet.student.name) == null
               ? ElevatedButton(
                   onPressed: () => context
                       .read<CurrentFlight>()
@@ -44,7 +46,11 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                           widget.gradeSheet.student,
                           GradeSheet(
                               instructor: widget.gradeSheet.instructor,
-                              student: "0",
+                              student: User(
+                                  name: "1st Lieutenant Dan",
+                                  rank: Rank.firstLt,
+                                  squad: "4th Airlift",
+                                  id: "0"),
                               missionNum: widget.gradeSheet.missionNum,
                               grades: widget.gradeSheet.grades,
                               overall: widget.gradeSheet.overall,
@@ -60,11 +66,11 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                   users: context.watch<CurrentFlight>().filteredUsers,
                   validator: (value) {
                     // A bit of a bruteish method
-                    if (widget.gradeSheet.student == "1" ||
-                        widget.gradeSheet.student == "2" ||
-                        widget.gradeSheet.student == "3" ||
-                        widget.gradeSheet.student == "4" ||
-                        widget.gradeSheet.student == "0") {
+                    if (widget.gradeSheet.student.name == "1" ||
+                        widget.gradeSheet.student.name == "2" ||
+                        widget.gradeSheet.student.name == "3" ||
+                        widget.gradeSheet.student.name == "4" ||
+                        widget.gradeSheet.student.name == "0") {
                       setState(() {
                         hasErrors = true;
                       });
@@ -81,7 +87,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                         widget.gradeSheet.student,
                         GradeSheet(
                             instructor: widget.gradeSheet.instructor,
-                            student: student,
+                            student: context.read<Users>().userByName(student),
                             missionNum: widget.gradeSheet.missionNum,
                             grades: widget.gradeSheet.grades,
                             overall: widget.gradeSheet.overall,

@@ -12,7 +12,7 @@ class GradeSheetView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Grade Sheet    Instructor: ${gradeSheet.instructor}"),
+        title: Text("Grade Sheet    Instructor: ${gradeSheet.instructor.name}"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -32,7 +32,7 @@ class GradeSheetView extends StatelessWidget {
                             height: dist,
                             child: ListTile(
                                 leading: const Text("Student"),
-                                title: Text(gradeSheet.student)),
+                                title: Text(gradeSheet.student.name)),
                           ),
                         ),
                         Expanded(

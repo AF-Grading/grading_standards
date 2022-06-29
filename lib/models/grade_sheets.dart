@@ -3,13 +3,23 @@ import 'package:flutter/foundation.dart';
 
 import '../models/grade_sheet.dart';
 import 'grade_enums.dart';
+import 'user.dart';
 
 // fake back end data
 class GradeSheets extends ChangeNotifier {
+  // TODO inject users so there is only one instance of each user
   final List<GradeSheet> _gradeSheets = [
     GradeSheet(
-      instructor: "Captain Underpants",
-      student: "1st Lieutenant Dan",
+      instructor: User(
+          name: "Captain Underpants",
+          rank: Rank.capt,
+          squad: "4th Airlift",
+          id: "1"),
+      student: User(
+          name: "1st Lieutenant Dan",
+          rank: Rank.firstLt,
+          squad: "4th Airlift",
+          id: "2"),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -51,8 +61,16 @@ class GradeSheets extends ChangeNotifier {
       length: "2 hours",
     ),
     GradeSheet(
-      instructor: "Captain Underpants",
-      student: "1st Lieutenant Dan",
+      instructor: User(
+          name: "Captain Underpants",
+          rank: Rank.capt,
+          squad: "4th Airlift",
+          id: "1"),
+      student: User(
+          name: "1st Lieutenant Dan",
+          rank: Rank.firstLt,
+          squad: "4th Airlift",
+          id: "2"),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -82,8 +100,16 @@ class GradeSheets extends ChangeNotifier {
       length: "2 hours",
     ),
     GradeSheet(
-      instructor: "Captain Underpants",
-      student: "1st Lieutenant Dan",
+      instructor: User(
+          name: "Captain Underpants",
+          rank: Rank.capt,
+          squad: "4th Airlift",
+          id: "1"),
+      student: User(
+          name: "1st Lieutenant Dan",
+          rank: Rank.firstLt,
+          squad: "4th Airlift",
+          id: "2"),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -112,8 +138,16 @@ class GradeSheets extends ChangeNotifier {
       length: "2 hours",
     ),
     GradeSheet(
-      instructor: "Captain Underpants",
-      student: "1st Lieutenant Dan",
+      instructor: User(
+          name: "Captain Underpants",
+          rank: Rank.capt,
+          squad: "4th Airlift",
+          id: "1"),
+      student: User(
+          name: "1st Lieutenant Dan",
+          rank: Rank.firstLt,
+          squad: "4th Airlift",
+          id: "2"),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -143,8 +177,16 @@ class GradeSheets extends ChangeNotifier {
       length: "2 hours",
     ),
     GradeSheet(
-      instructor: "Captain Underpants",
-      student: "2nd Lieutenant Kinger",
+      instructor: User(
+          name: "Captain Underpants",
+          rank: Rank.capt,
+          squad: "4th Airlift",
+          id: "1"),
+      student: User(
+          name: "2nd Lieutenant Kinger",
+          rank: Rank.secondLt,
+          squad: "4th Airlift",
+          id: "3"),
       missionNum: 12300,
       grades: [
         GradeItem(
@@ -169,6 +211,45 @@ class GradeSheets extends ChangeNotifier {
       dayNight: DayNight.night,
       startTime: DateTime.now(),
       endTime: DateTime.now(),
+      sortieNumber: 2,
+      length: "2 hours",
+      isDraft: false,
+    ),
+    GradeSheet(
+      instructor: User(
+          name: "1st Lieutenant Dan",
+          rank: Rank.firstLt,
+          squad: "4th Airlift",
+          id: "2"),
+      student: User(
+          name: "2nd Lieutenant Kinger",
+          rank: Rank.secondLt,
+          squad: "4th Airlift",
+          id: "3"),
+      missionNum: 12300,
+      grades: [
+        GradeItem(
+          name: "Communication Skills",
+          grade: Grade.proficient,
+        ),
+        GradeItem(
+          name: "Systems Knowledge",
+          grade: Grade.proficient,
+        ),
+        GradeItem(
+          name: "Combat Governing Documents",
+          grade: Grade.familiar,
+        ),
+        GradeItem(
+          name: "Threat Analysis & Mitigation/ Intel Integration",
+          grade: Grade.expert,
+        ),
+      ],
+      overall: Grade.expert,
+      sortieType: SortieType.ims,
+      dayNight: DayNight.night,
+      startTime: DateTime(2022, 7),
+      endTime: DateTime(2022, 8),
       sortieNumber: 2,
       length: "2 hours",
       isDraft: false,

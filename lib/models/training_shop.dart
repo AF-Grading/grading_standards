@@ -1,25 +1,18 @@
-import 'package:app_prototype/models/cts_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
+import 'cts_list.dart';
 import 'grade_enums.dart';
 import 'grade_sheet.dart';
 
-// Takes in a list of GradeSheets and returns
-// various statistics
-class IndividualReport with ChangeNotifier {
+class TrainingShop with ChangeNotifier {
   // The gradesheets are injected as a dependency and
   // should remain unmodfified
-  IndividualReport(this._gradeSheets);
+  TrainingShop(this._gradeSheets);
 
   final List<GradeSheet> _gradeSheets;
 
-  List<GradeSheet> get gradeSheets => _gradeSheets;
-
-  // TODO delete
-  GradeSheet get first => _gradeSheets.first;
-
-  // Returns the most recently altered gradeItems
+// Returns the most recently altered gradeItems
   // This assumes grades length and itemnames are in the same spot
   List<GradeItem> get currentGrades {
     List<GradeItem> currentGrades = [];
@@ -108,6 +101,41 @@ class IndividualReport with ChangeNotifier {
     ];
 
     return series;
+  }
+
+  // Return the average overall grade for each instructor
+  List<AverageGrade> get avgPerInstructor {
+    Map<String, int> totalNum = {
+      for (GradeSheet sheet in _gradeSheets) sheet.instructor.name: 0
+    };
+    Map<String, double> averages = {
+      for (GradeSheet sheet in _gradeSheets) sheet.instructor.name: 0
+    };
+
+    for (GradeSheet sheet in _gradeSheets) {
+      if (sheet.overall != Grade.noGrade &&
+          sheet.overall != Grade.noSelection) {
+        totalNum[sheet.instructor.name] = totalNum[sheet.instructor.name]! + 1;
+        averages[sheet.instructor.name] =
+            averages[sheet.instructor.name]! + sheet.overall.index - 2;
+      }
+    }
+
+    totalNum.forEach((key, value) {
+      if (value != 0) {
+        averages[key] = averages[key]! / value;
+      }
+    });
+
+    List<AverageGrade> current = [];
+
+    averages.forEach((key, value) {
+      if (value != 0) current.add(AverageGrade(key, value));
+    });
+
+    //current.sort((a, b) => b.average.compareTo(a.average));
+
+    return current;
   }
 
   // return the average for each grade item, leaving ungraded items as 0

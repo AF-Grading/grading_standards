@@ -6,16 +6,17 @@ import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import '../models/grade_enums.dart';
+import '../models/training_shop.dart';
 import '/models/user.dart';
 
-class IndividualReportPage extends StatelessWidget {
-  const IndividualReportPage({
+class TrainingShopPage extends StatelessWidget {
+  const TrainingShopPage({
     Key? key,
-    required this.user,
+    required this.squad,
     required this.gradeSheets,
   }) : super(key: key);
 
-  final User user;
+  final String squad;
   final List<GradeSheet> gradeSheets;
 
   @override
@@ -23,10 +24,10 @@ class IndividualReportPage extends StatelessWidget {
     // We create the provider here because it will change for each student
     return ChangeNotifierProvider(
       // Here we inject the Individual's gradesheets
-      create: (context) => IndividualReport(gradeSheets),
-      builder: (context, individualReport) {
+      create: (context) => TrainingShop(gradeSheets),
+      builder: (context, trainingShop) {
         return Scaffold(
-          appBar: AppBar(title: Text(user.name)),
+          appBar: AppBar(title: Text(squad)),
           body: SingleChildScrollView(
             child: Column(children: [
               // OVERALL SECTION
@@ -37,26 +38,18 @@ class IndividualReportPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Average Overall Grade: ${context.watch<IndividualReport>().overallAverage}",
-                        style: const TextStyle(fontSize: 22),
-                      ),
-                      Text(
-                        "Most Recent Overall Comment: ${context.watch<IndividualReport>().mostRecentComment}",
-                        style: const TextStyle(fontSize: 22),
-                      ),
                       const Text(
-                        "Ungraded Items",
+                        "Average Overall Grade by Instructor",
                         style: TextStyle(fontSize: 22),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: context
-                            .watch<IndividualReport>()
-                            .currentGrades
-                            .where((item) => item.grade == Grade.noGrade)
-                            .map((item) => Text(item.name))
+                            .watch<TrainingShop>()
+                            .avgPerInstructor
+                            .map(
+                                (item) => Text("${item.name}: ${item.average}"))
                             .toList(),
                       )
                     ],
@@ -71,7 +64,9 @@ class IndividualReportPage extends StatelessWidget {
                         width: 300,
                         height: 300,
                         child: charts.TimeSeriesChart(
-                            context.watch<IndividualReport>().overallChart),
+                          context.watch<TrainingShop>().overallChart,
+                          //domainAxis: charts.DateTimeAxisSpec(),
+                        ),
                       ),
                     ],
                   ),
@@ -93,7 +88,7 @@ class IndividualReportPage extends StatelessWidget {
                         ),
                         Column(
                           children: context
-                              .watch<IndividualReport>()
+                              .watch<TrainingShop>()
                               .bestFive
                               .map((item) => SizedBox(
                                     // TODO alter to favor relative sizing
@@ -116,7 +111,7 @@ class IndividualReportPage extends StatelessWidget {
                         ),
                         Column(
                           children: context
-                              .watch<IndividualReport>()
+                              .watch<TrainingShop>()
                               .worstFive
                               .map((item) => SizedBox(
                                     // TODO alter to favor relative sizing
@@ -148,7 +143,7 @@ class IndividualReportPage extends StatelessWidget {
                         ),
                         Column(
                           children: context
-                              .watch<IndividualReport>()
+                              .watch<TrainingShop>()
                               .strongFive
                               .map((item) => SizedBox(
                                     // TODO alter to favor relative sizing
@@ -171,7 +166,7 @@ class IndividualReportPage extends StatelessWidget {
                         ),
                         Column(
                           children: context
-                              .watch<IndividualReport>()
+                              .watch<TrainingShop>()
                               .weakFive
                               .map((item) => SizedBox(
                                     // TODO alter to favor relative sizing
@@ -202,8 +197,9 @@ class IndividualReportPage extends StatelessWidget {
               for (GradeSheet sheet in gradeSheets)
                 ListTile(
                   trailing: Text("Grade ${sheet.overall.index - 2}"),
-                  subtitle: Text(sheet.overallComments),
-                  title: Text(
+                  title: Text(sheet.instructor.name),
+                  subtitle: Text(sheet.student.name),
+                  leading: Text(
                       "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
                   onTap: () => Navigator.push(
                     context,
@@ -217,9 +213,9 @@ class IndividualReportPage extends StatelessWidget {
                 ),
             ]
 
-                //Text(context.watch<IndividualReport>().first.student),
+                //Text(context.watch<TrainingShop>().first.student),
                 /*context
-                      .watch<IndividualReport>()
+                      .watch<TrainingShop>()
                       .currentGrades
                       .map((grade) => ListTile(
                             title: Text(grade.name),

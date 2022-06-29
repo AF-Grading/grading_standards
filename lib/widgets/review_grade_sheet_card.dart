@@ -14,7 +14,7 @@ class ReviewGradeSheetCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ExpansionTile(
-        title: Text(gradeSheet.student),
+        title: Text(gradeSheet.student.name),
         initiallyExpanded: true,
         children: [
           OverallCard(
