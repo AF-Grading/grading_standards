@@ -173,6 +173,37 @@ class GradeSheets extends ChangeNotifier {
       length: "2 hours",
       isDraft: false,
     ),
+    GradeSheet(
+      instructor: "1st Lieutenant Dan",
+      student: "2nd Lieutenant Kinger",
+      missionNum: 12300,
+      grades: [
+        GradeItem(
+          name: "Communication Skills",
+          grade: Grade.proficient,
+        ),
+        GradeItem(
+          name: "Systems Knowledge",
+          grade: Grade.proficient,
+        ),
+        GradeItem(
+          name: "Combat Governing Documents",
+          grade: Grade.familiar,
+        ),
+        GradeItem(
+          name: "Threat Analysis & Mitigation/ Intel Integration",
+          grade: Grade.expert,
+        ),
+      ],
+      overall: Grade.expert,
+      sortieType: SortieType.ims,
+      dayNight: DayNight.night,
+      startTime: DateTime(2022, 7),
+      endTime: DateTime(2022, 8),
+      sortieNumber: 2,
+      length: "2 hours",
+      isDraft: false,
+    ),
   ];
 
   List<GradeSheet> get gradeSheets => UnmodifiableListView(_gradeSheets);
