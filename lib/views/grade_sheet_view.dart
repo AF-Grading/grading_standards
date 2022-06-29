@@ -6,6 +6,7 @@ class GradeSheetView extends StatelessWidget {
   const GradeSheetView({Key? key, required this.gradeSheet}) : super(key: key);
 
   final GradeSheet gradeSheet;
+  static double dist = 35;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class GradeSheetView extends StatelessWidget {
                       children: [
                         Expanded(
                           child: SizedBox(
-                            height: 50,
+                            height: dist,
                             child: ListTile(
                                 leading: const Text("Student"),
                                 title: Text(gradeSheet.student)),
@@ -36,7 +37,7 @@ class GradeSheetView extends StatelessWidget {
                         ),
                         Expanded(
                           child: SizedBox(
-                            height: 50,
+                            height: dist,
                             child: ListTile(
                               leading: const Text("Mission Number:"),
                               title: Text(gradeSheet.missionNum.toString()),
@@ -53,7 +54,7 @@ class GradeSheetView extends StatelessWidget {
                       children: [
                         Expanded(
                           child: SizedBox(
-                              height: 50,
+                              height: dist,
                               child: ListTile(
                                   leading: const Text("Sortie Number"),
                                   title: Text(
@@ -61,7 +62,7 @@ class GradeSheetView extends StatelessWidget {
                         ),
                         Expanded(
                           child: SizedBox(
-                              height: 50,
+                              height: dist,
                               child: ListTile(
                                   leading: const Text("Flight Duration"),
                                   title: Text(gradeSheet.length))),
@@ -76,14 +77,14 @@ class GradeSheetView extends StatelessWidget {
                       children: [
                         Expanded(
                           child: SizedBox(
-                              height: 50,
+                              height: dist,
                               child: ListTile(
                                   leading: const Text("Weather"),
                                   title: Text(gradeSheet.weather))),
                         ),
                         Expanded(
                           child: SizedBox(
-                              height: 50,
+                              height: dist,
                               child: ListTile(
                                   leading: const Text("Sortie Profile"),
                                   title: Text(gradeSheet.profile))),
@@ -98,7 +99,7 @@ class GradeSheetView extends StatelessWidget {
                       children: [
                         Expanded(
                           child: SizedBox(
-                            height: 50,
+                            height: dist,
                             child: ListTile(
                               leading: const Text("Overall Grade"),
                               title: Text("${gradeSheet.overall.index - 2}"),
@@ -107,7 +108,7 @@ class GradeSheetView extends StatelessWidget {
                         ),
                         Expanded(
                           child: SizedBox(
-                              height: 50,
+                              height: dist,
                               child: ListTile(
                                 leading: const Text("Comments"),
                                 title: Text(gradeSheet.overallComments),
@@ -129,14 +130,14 @@ class GradeSheetView extends StatelessWidget {
                       children: [
                         Expanded(
                             child: SizedBox(
-                                height: 50,
+                                height: dist,
                                 child: ListTile(
                                   leading: const Text("Day/Night"),
                                   title: Text(gradeSheet.dayNight.name),
                                 ))),
                         Expanded(
                           child: SizedBox(
-                            height: 50,
+                            height: dist,
                             child: ListTile(
                               leading: const Text("Date"),
                               title: Text(
@@ -154,24 +155,31 @@ class GradeSheetView extends StatelessWidget {
                       children: [
                         Expanded(
                           child: SizedBox(
-                            height: 50,
+                            height: dist,
                             child: ListTile(
                               leading: const Text("Pilot Qualifications"),
-                              title: Text(gradeSheet.pilotQual.name),
+                              title: Text(
+                                  gradeSheet.pilotQual == PilotQual.noSelection
+                                      ? ""
+                                      : gradeSheet.pilotQual.name),
                             ),
                           ),
                         ),
                         Expanded(
                           child: SizedBox(
-                              height: 50,
+                              height: dist,
                               child: ListTile(
                                 leading: const Text("AD Qualifications"),
-                                title: Text(gradeSheet.adQual.name),
+                                // display emtpy string if not used
+                                title: Text(
+                                    gradeSheet.adQual == AdQual.noSelection
+                                        ? ""
+                                        : gradeSheet.adQual.name),
                               )),
                         ),
                         Expanded(
                             child: SizedBox(
-                                height: 50,
+                                height: dist,
                                 child: ListTile(
                                   leading: const Text("Sortie Type"),
                                   title: Text(gradeSheet.sortieType.name),

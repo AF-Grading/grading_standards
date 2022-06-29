@@ -22,7 +22,7 @@ class IndividualReportsView extends StatelessWidget {
           itemBuilder: (context, index) {
             final user = users[index];
             return ListTile(
-              title: Text(user.name),
+              title: Center(child: Text(user.name)),
               onTap: () {
                 Navigator.push(
                   context,
