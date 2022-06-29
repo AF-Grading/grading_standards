@@ -5,29 +5,29 @@ import 'user.dart';
 
 class GradeSheet {
   final String id; // = UniqueKey().toString();
-  User instructor; //to be taken from a shared database
-  User student; //to be taken from a shared database
-  int missionNum;
-  List<GradeItem> grades;
-  Grade overall;
+  final User instructor; //to be taken from a shared database
+  final User student; //to be taken from a shared database
+  final int missionNum;
+  final List<GradeItem> grades;
+  final Grade overall;
   // part of formation and airdrop events
-  AdQual adQual;
-  PilotQual pilotQual;
-  String weather;
-  SortieType sortieType;
-  DayNight dayNight; //seems redundant to date
+  final AdQual adQual;
+  final PilotQual pilotQual;
+  final String weather;
+  final SortieType sortieType;
+  final DayNight dayNight; //seems redundant to date
   // TODO convert to start and end time, and have a length num come from it automatically
-  DateTime startTime;
-  DateTime endTime;
+  final DateTime startTime;
+  final DateTime endTime;
   // int length = startTime - endTime;
   //DateTime date;
-  int sortieNumber; // 1-20
+  final int sortieNumber; // 1-20
   // user could press start and stop button to generate length
-  String length; //perhaps a time value instead of string
-  String profile; //unsure what this means
-  String overallComments;
-  String recommendations;
-  bool isDraft;
+  final String length; //perhaps a time value instead of string
+  final String profile; //unsure what this means
+  final String overallComments;
+  final String recommendations;
+  final bool isDraft;
 
   GradeSheet({
     required this.instructor,

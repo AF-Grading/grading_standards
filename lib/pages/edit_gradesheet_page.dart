@@ -104,8 +104,8 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                     ),
                                     onChanged: (value) => setState(() {
                                       // tryparse needed because of empty string else error
-                                      _gradeSheet.missionNum =
-                                          int.tryParse(value) ?? 0;
+                                      //_gradeSheet.missionNum =
+                                      // int.tryParse(value) ?? 0;
                                     }),
                                   ),
                                 ),
@@ -127,8 +127,8 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                             const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 0)),
                                     onChanged: (value) => setState(() {
-                                      _gradeSheet.sortieNumber =
-                                          int.parse(value);
+                                      //_gradeSheet.sortieNumber =
+                                      //int.parse(value);
                                     }),
                                   ),
                                 ),
@@ -146,7 +146,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                             const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 0)),
                                     onChanged: (value) => setState(() {
-                                      _gradeSheet.length = value;
+                                      //_gradeSheet.length = value;
                                     }),
                                   ),
                                 ),
@@ -167,7 +167,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                             const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 0)),
                                     onChanged: (value) => setState(() {
-                                      _gradeSheet.weather = value;
+                                      //_gradeSheet.weather = value;
                                     }),
                                   ),
                                 ),
@@ -185,7 +185,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                                 0, 0, 0, 0)),
                                     onChanged: (value) => setState(
                                       () {
-                                        _gradeSheet.profile = value;
+                                        //_gradeSheet.profile = value;
                                       },
                                     ),
                                   ),
@@ -199,7 +199,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                             onChanged: (value) {
                               setState(
                                 () {
-                                  _gradeSheet.overall = value;
+                                  //_gradeSheet.overall = value;
                                 },
                               );
                             },
@@ -220,7 +220,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                                 0, 0, 0, 0)),
                                     onChanged: (value) => setState(
                                       () {
-                                        _gradeSheet.overallComments = value;
+                                        // _gradeSheet.overallComments = value;
                                       },
                                     ),
                                   ),
@@ -239,7 +239,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                             const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 0)),
                                     onChanged: (value) => setState(() {
-                                      _gradeSheet.recommendations = value;
+                                      //_gradeSheet.recommendations = value;
                                     }),
                                   ),
                                 ),
@@ -254,7 +254,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                   dayNight: _gradeSheet.dayNight,
                                   onChanged: (value) {
                                     setState(() {
-                                      _gradeSheet.dayNight = value;
+                                      //_gradeSheet.dayNight = value;
                                     });
                                   },
                                 ),
@@ -264,7 +264,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                 child: DatePicker(
                                     date: widget.gradeSheet.startTime,
                                     onChanged: (value) => setState(() {
-                                          _gradeSheet.startTime = value;
+                                          //_gradeSheet.startTime = value;
                                         })),
                               ),
                             ],
@@ -276,7 +276,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                 child: EditablePilotQualItem(
                                   pilotQual: _gradeSheet.pilotQual,
                                   onChanged: (value) => setState(() {
-                                    _gradeSheet.pilotQual = value;
+                                    //_gradeSheet.pilotQual = value;
                                   }),
                                 ),
                               ),
@@ -285,7 +285,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                 child: DatePicker(
                                     date: widget.gradeSheet.startTime,
                                     onChanged: (value) => setState(() {
-                                          _gradeSheet.startTime = value;
+                                          //_gradeSheet.startTime = value;
                                         })),
                               ),
                             ],
@@ -293,19 +293,19 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                           EditablePilotQualItem(
                             pilotQual: _gradeSheet.pilotQual,
                             onChanged: (value) => setState(() {
-                              _gradeSheet.pilotQual = value;
+                              //  _gradeSheet.pilotQual = value;
                             }),
                           ),
                           EditableADQual(
                             adQual: _gradeSheet.adQual,
                             onChanged: (value) => setState(() {
-                              _gradeSheet.adQual = value;
+                              //_gradeSheet.adQual = value;
                             }),
                           ),
                           EditableSortieType(
                             sortieType: _gradeSheet.sortieType,
                             onChanged: (value) => setState(() {
-                              _gradeSheet.sortieType = value;
+                              //_gradeSheet.sortieType = value;
                             }),
                           ),
                         ],
