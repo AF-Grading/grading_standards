@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
 import 'grade_enums.dart';
+import 'user.dart';
 
 class GradeSheet {
-  final String id = UniqueKey().toString();
-  String instructor; //to be taken from a shared database
-  String student; //to be taken from a shared database
+  final String id; // = UniqueKey().toString();
+  User instructor; //to be taken from a shared database
+  User student; //to be taken from a shared database
   int missionNum;
   List<GradeItem> grades;
   Grade overall;
@@ -47,7 +48,8 @@ class GradeSheet {
     this.overallComments = '',
     this.recommendations = '',
     this.isDraft = true,
-  });
+    String? id,
+  }) : id = id ?? UniqueKey().toString();
 }
 
 class GradeItem {

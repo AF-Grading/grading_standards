@@ -106,18 +106,18 @@ class TrainingShop with ChangeNotifier {
   // Return the average overall grade for each instructor
   List<AverageGrade> get avgPerInstructor {
     Map<String, int> totalNum = {
-      for (GradeSheet sheet in _gradeSheets) sheet.instructor: 0
+      for (GradeSheet sheet in _gradeSheets) sheet.instructor.name: 0
     };
     Map<String, double> averages = {
-      for (GradeSheet sheet in _gradeSheets) sheet.instructor: 0
+      for (GradeSheet sheet in _gradeSheets) sheet.instructor.name: 0
     };
 
     for (GradeSheet sheet in _gradeSheets) {
       if (sheet.overall != Grade.noGrade &&
           sheet.overall != Grade.noSelection) {
-        totalNum[sheet.instructor] = totalNum[sheet.instructor]! + 1;
-        averages[sheet.instructor] =
-            averages[sheet.instructor]! + sheet.overall.index - 2;
+        totalNum[sheet.instructor.name] = totalNum[sheet.instructor.name]! + 1;
+        averages[sheet.instructor.name] =
+            averages[sheet.instructor.name]! + sheet.overall.index - 2;
       }
     }
 

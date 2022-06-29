@@ -3,13 +3,23 @@ import 'package:flutter/foundation.dart';
 
 import '../models/grade_sheet.dart';
 import 'grade_enums.dart';
+import 'user.dart';
 
 // fake back end data
 class GradeSheets extends ChangeNotifier {
+  // TODO inject users so there is only one instance of each user
   final List<GradeSheet> _gradeSheets = [
     GradeSheet(
-      instructor: "Captain Underpants",
-      student: "1st Lieutenant Dan",
+      instructor: User(
+          name: "Captain Underpants",
+          rank: Rank.capt,
+          squad: "4th Airlift",
+          id: "1"),
+      student: User(
+          name: "1st Lieutenant Dan",
+          rank: Rank.firstLt,
+          squad: "4th Airlift",
+          id: "2"),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -51,8 +61,16 @@ class GradeSheets extends ChangeNotifier {
       length: "2 hours",
     ),
     GradeSheet(
-      instructor: "Captain Underpants",
-      student: "1st Lieutenant Dan",
+      instructor: User(
+          name: "Captain Underpants",
+          rank: Rank.capt,
+          squad: "4th Airlift",
+          id: "1"),
+      student: User(
+          name: "1st Lieutenant Dan",
+          rank: Rank.firstLt,
+          squad: "4th Airlift",
+          id: "2"),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -82,8 +100,16 @@ class GradeSheets extends ChangeNotifier {
       length: "2 hours",
     ),
     GradeSheet(
-      instructor: "Captain Underpants",
-      student: "1st Lieutenant Dan",
+      instructor: User(
+          name: "Captain Underpants",
+          rank: Rank.capt,
+          squad: "4th Airlift",
+          id: "1"),
+      student: User(
+          name: "1st Lieutenant Dan",
+          rank: Rank.firstLt,
+          squad: "4th Airlift",
+          id: "2"),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -112,8 +138,16 @@ class GradeSheets extends ChangeNotifier {
       length: "2 hours",
     ),
     GradeSheet(
-      instructor: "Captain Underpants",
-      student: "1st Lieutenant Dan",
+      instructor: User(
+          name: "Captain Underpants",
+          rank: Rank.capt,
+          squad: "4th Airlift",
+          id: "1"),
+      student: User(
+          name: "1st Lieutenant Dan",
+          rank: Rank.firstLt,
+          squad: "4th Airlift",
+          id: "2"),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -143,8 +177,16 @@ class GradeSheets extends ChangeNotifier {
       length: "2 hours",
     ),
     GradeSheet(
-      instructor: "Captain Underpants",
-      student: "2nd Lieutenant Kinger",
+      instructor: User(
+          name: "Captain Underpants",
+          rank: Rank.capt,
+          squad: "4th Airlift",
+          id: "1"),
+      student: User(
+          name: "2nd Lieutenant Kinger",
+          rank: Rank.secondLt,
+          squad: "4th Airlift",
+          id: "3"),
       missionNum: 12300,
       grades: [
         GradeItem(
@@ -174,8 +216,16 @@ class GradeSheets extends ChangeNotifier {
       isDraft: false,
     ),
     GradeSheet(
-      instructor: "1st Lieutenant Dan",
-      student: "2nd Lieutenant Kinger",
+      instructor: User(
+          name: "1st Lieutenant Dan",
+          rank: Rank.firstLt,
+          squad: "4th Airlift",
+          id: "2"),
+      student: User(
+          name: "2nd Lieutenant Kinger",
+          rank: Rank.secondLt,
+          squad: "4th Airlift",
+          id: "3"),
       missionNum: 12300,
       grades: [
         GradeItem(

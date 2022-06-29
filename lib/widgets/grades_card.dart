@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/current_flight.dart';
+import '../models/user.dart';
 import 'grade_radio_form_field.dart';
 
 class GradesCard extends StatelessWidget {
@@ -16,7 +17,7 @@ class GradesCard extends StatelessWidget {
   }) : super(key: key);
 
   //final GradeSheet gradeSheet;
-  final String student;
+  final User student;
   final List<GradeItem> grades;
   final String? title;
   final bool initiallyExpanded;

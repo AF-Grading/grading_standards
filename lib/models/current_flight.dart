@@ -34,8 +34,8 @@ class CurrentFlight extends ChangeNotifier {
   final List<GradeSheet> _gradeSheets = [
     GradeSheet(
       // TODO find this by current user instead
-      instructor: Users().user.name,
-      student: "1",
+      instructor: Users().user,
+      student: User(name: "1", rank: Rank.capt, squad: ""),
       missionNum: 0,
       grades: baseGradeItems,
       overall: Grade.noSelection,
@@ -142,8 +142,9 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateByStudent(String student, GradeSheet sheet) {
-    int index = _gradeSheets.indexWhere((sheets) => sheets.student == student);
+  void updateByStudent(User student, GradeSheet sheet) {
+    int index =
+        _gradeSheets.indexWhere((sheets) => sheets.student.id == student.id);
     index == -1
         ? _gradeSheets.add(sheet)
         : _gradeSheets.replaceRange(index, index + 1, [
@@ -174,9 +175,9 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateParamsByStudent(String student, Map<String, bool> params) {
+  void updateParamsByStudent(User student, Map<String, bool> params) {
     GradeSheet gradeSheet =
-        _gradeSheets.firstWhere((sheet) => sheet.student == student);
+        _gradeSheets.firstWhere((sheet) => sheet.student.id == student.id);
 
     List<GradeItem> items = [];
     for (GradeItem item in gradeSheet.grades) {
@@ -208,9 +209,9 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateByGradeItem(String student, GradeItem item) {
+  void updateByGradeItem(User student, GradeItem item) {
     GradeSheet gradeSheet =
-        _gradeSheets.firstWhere((sheet) => sheet.student == student);
+        _gradeSheets.firstWhere((sheet) => sheet.student.id == student.id);
 
     int index = gradeSheet.grades
         .indexWhere((gradeItem) => gradeItem.name == item.name);
@@ -248,8 +249,8 @@ class CurrentFlight extends ChangeNotifier {
     _gradeSheets.clear();
     _gradeSheets.add(GradeSheet(
       // TODO find this by current user instead
-      instructor: Users().user.name,
-      student: "1",
+      instructor: Users().user,
+      student: User(name: "1", rank: Rank.capt, squad: ""),
       missionNum: 0,
       grades: baseGradeItems,
       overall: Grade.noSelection,
@@ -336,8 +337,11 @@ class CurrentFlight extends ChangeNotifier {
         ? _gradeSheets.add(
             GradeSheet(
               // TODO find this by current user instead
-              instructor: Users().user.name,
-              student: "${gradeSheets.length + 1}",
+              instructor: Users().user,
+              student: User(
+                  name: "${gradeSheets.length + 1}",
+                  rank: Rank.capt,
+                  squad: ""),
               missionNum: 0,
               grades: baseGradeItems,
               overall: Grade.noSelection,

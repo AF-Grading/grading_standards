@@ -70,7 +70,8 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: TextFormField(
-                                    initialValue: widget.gradeSheet.student,
+                                    initialValue:
+                                        widget.gradeSheet.student.name,
                                     decoration: const InputDecoration(
                                         labelText: "Student",
                                         contentPadding:
@@ -78,7 +79,8 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                                 0, 0, 0, 0)),
                                     onChanged: (value) {
                                       setState(() {
-                                        _gradeSheet.student = value;
+                                        //TODO REDO
+                                        //_gradeSheet.student.name = value;
                                       });
                                     },
                                   ),

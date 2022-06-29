@@ -197,8 +197,8 @@ class TrainingShopPage extends StatelessWidget {
               for (GradeSheet sheet in gradeSheets)
                 ListTile(
                   trailing: Text("Grade ${sheet.overall.index - 2}"),
-                  title: Text(sheet.instructor),
-                  subtitle: Text(sheet.student),
+                  title: Text(sheet.instructor.name),
+                  subtitle: Text(sheet.student.name),
                   leading: Text(
                       "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
                   onTap: () => Navigator.push(
