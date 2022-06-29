@@ -77,7 +77,8 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                                   context
                                       .watch<CurrentFlight>()
                                       .gradeSheets[i]
-                                      .student,
+                                      .student
+                                      .name,
                                   style: const TextStyle(color: Colors.red),
                                 ),
                               )
@@ -85,7 +86,8 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                                 child: Text(context
                                     .watch<CurrentFlight>()
                                     .gradeSheets[i]
-                                    .student))
+                                    .student
+                                    .name))
                     ],
 
                     /*context

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/user.dart';
 import '../pages/edit_gradesheet_page.dart';
 import '../models/grade_enums.dart';
 import '../models/grade_sheet.dart';
@@ -31,9 +32,23 @@ class MyGradeSheetsPage extends StatelessWidget {
                     builder: (context) =>
                         //TODO: NOT A GOOD PRACTICE TO PASS MODEL WITH DATA LIKE THIS
                         EditGradeSheetPage(
+                      isEditing: true,
                       gradeSheet: GradeSheet(
-                        instructor: "To Be Automatically Obtained",
-                        student: "",
+                        // TODO get
+                        instructor: User(
+                            name: "GET AUTOMATICALLY",
+                            rank: Rank.capt,
+                            squad: "4th Airlift",
+                            id: "0",
+                            email: '',
+                            password: ''),
+                        student: User(
+                            name: "",
+                            rank: Rank.capt,
+                            squad: "4th Airlift",
+                            id: "0",
+                            email: '',
+                            password: ''),
                         missionNum: 0,
                         grades: baseGradeItems,
                         overall: Grade.noGrade,
@@ -69,7 +84,7 @@ class MyGradeSheetsPage extends StatelessWidget {
                                 gradeSheet.missionNum == missionNumbers[index])
                             .map(
                               (gradeSheet) => ListTile(
-                                leading: Text(gradeSheet.student),
+                                leading: Text(gradeSheet.student.name),
                                 title: Text(gradeSheet.startTime
                                     .toString()
                                     .substring(0, 10)),
@@ -80,6 +95,7 @@ class MyGradeSheetsPage extends StatelessWidget {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             EditGradeSheetPage(
+                                                isEditing: true,
                                                 gradeSheet: gradeSheet)),
                                   );
                                 },
