@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
+
 import 'user.dart';
 
 // fake backend
-class Users {
+class Users with ChangeNotifier {
   final List<User> _users = [
     User(name: "Captain Underpants"),
     User(name: "1st Lieutenant Dan"),

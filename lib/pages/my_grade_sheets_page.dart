@@ -31,6 +31,7 @@ class MyGradeSheetsPage extends StatelessWidget {
                     builder: (context) =>
                         //TODO: NOT A GOOD PRACTICE TO PASS MODEL WITH DATA LIKE THIS
                         EditGradeSheetPage(
+                      isEditing: true,
                       gradeSheet: GradeSheet(
                         instructor: "To Be Automatically Obtained",
                         student: "",
@@ -80,6 +81,7 @@ class MyGradeSheetsPage extends StatelessWidget {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             EditGradeSheetPage(
+                                                isEditing: true,
                                                 gradeSheet: gradeSheet)),
                                   );
                                 },
