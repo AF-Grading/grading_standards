@@ -6,14 +6,6 @@ import 'user.dart';
 class Users with ChangeNotifier {
   final List<User> _users = [
     User(
-        name: 'test',
-        rank: Rank.capt,
-        squad: "test",
-        id: "100000",
-        email: 'test',
-        password: 'test',
-        permission: Permission.wing_training),
-    User(
         name: "Captain Underpants",
         rank: Rank.capt,
         squad: "4th Airlift",

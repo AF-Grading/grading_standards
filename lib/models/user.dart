@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class User {
-  String email;
-  String password;
+  final String email;
+  final String password;
   final String id; //= UniqueKey().toString();
   final String name;
   final String squad;
@@ -25,7 +25,8 @@ class User {
 
 enum Rank { secondLt, firstLt, capt, maj, ltCol, colonel }
 
-enum Permission { wing_training, training_shop, instructor, student }
+// User Permission.length
+enum Permission { student, instructor, wing_training, training_shop }
 
 //wing_training have rights to everything and can grant perssions to other users
 
