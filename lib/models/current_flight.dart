@@ -19,7 +19,7 @@ class CurrentFlight extends ChangeNotifier {
   //bool
   // Overall section
 
-  String _weather = "";
+  Weather _weather = Weather.noSelection;
   DayNight _dayNight = DayNight.noSelection;
   SortieType _sortieType = SortieType.noSelection;
   int _missionNum = 0;
@@ -35,11 +35,12 @@ class CurrentFlight extends ChangeNotifier {
     GradeSheet(
       // TODO find this by current user instead
       instructor: Users().user,
-      student: User(name: "1", rank: Rank.capt, squad: "", email: '', password: ''),
+      student:
+          User(name: "1", rank: Rank.capt, squad: "", email: '', password: ''),
       missionNum: 0,
       grades: baseGradeItems,
       overall: Grade.noSelection,
-      weather: "",
+      weather: Weather.imc,
       pilotQual: PilotQual.fpc,
       sortieType: SortieType.ims,
       dayNight: DayNight.day,
@@ -58,7 +59,7 @@ class CurrentFlight extends ChangeNotifier {
   GlobalKey<FormState> get flightKey => _flightKey;
 
   List<GradeSheet> get gradeSheets => _gradeSheets;
-  String get weather => _weather;
+  Weather get weather => _weather;
   DayNight get dayNight => _dayNight;
   SortieType get sortieType => _sortieType;
   int get missionNum => _missionNum;
@@ -75,7 +76,7 @@ class CurrentFlight extends ChangeNotifier {
 
   // Setters
 
-  set weather(String value) {
+  set weather(Weather value) {
     _weather = value;
     notifyListeners();
   }
@@ -191,18 +192,18 @@ class CurrentFlight extends ChangeNotifier {
     }
 
     GradeSheet newSheet = GradeSheet(
-      instructor: gradeSheet.instructor,
-      student: gradeSheet.student,
-      missionNum: gradeSheet.missionNum,
-      grades: items,
-      overall: gradeSheet.overall,
-      sortieType: gradeSheet.sortieType,
-      dayNight: gradeSheet.dayNight,
-      startTime: gradeSheet.startTime,
-      endTime: gradeSheet.endTime,
-      sortieNumber: gradeSheet.sortieNumber,
-      length: gradeSheet.length,
-    );
+        instructor: gradeSheet.instructor,
+        student: gradeSheet.student,
+        missionNum: gradeSheet.missionNum,
+        grades: items,
+        overall: gradeSheet.overall,
+        sortieType: gradeSheet.sortieType,
+        dayNight: gradeSheet.dayNight,
+        startTime: gradeSheet.startTime,
+        endTime: gradeSheet.endTime,
+        sortieNumber: gradeSheet.sortieNumber,
+        length: gradeSheet.length,
+        weather: gradeSheet.weather);
 
     updateByStudent(student, newSheet);
 
@@ -238,7 +239,7 @@ class CurrentFlight extends ChangeNotifier {
     //bool
     // Overall section
 
-    _weather = "";
+    _weather = Weather.noSelection;
     _dayNight = DayNight.noSelection;
     _sortieType = SortieType.noSelection;
     _missionNum = 0;
@@ -250,11 +251,16 @@ class CurrentFlight extends ChangeNotifier {
     _gradeSheets.add(GradeSheet(
       // TODO find this by current user instead
       instructor: Users().user,
-      student: User(name: "1", rank: Rank.capt, squad: "", email: 'test@gmail.com', password: 'test@gmail.com'),
+      student: User(
+          name: "1",
+          rank: Rank.capt,
+          squad: "",
+          email: 'test@gmail.com',
+          password: 'test@gmail.com'),
       missionNum: 0,
       grades: baseGradeItems,
       overall: Grade.noSelection,
-      weather: "",
+      weather: Weather.imc,
       pilotQual: PilotQual.fpc,
       sortieType: SortieType.ims,
       dayNight: DayNight.day,
@@ -341,11 +347,13 @@ class CurrentFlight extends ChangeNotifier {
               student: User(
                   name: "${gradeSheets.length + 1}",
                   rank: Rank.capt,
-                  squad: "", email: '', password: ''),
+                  squad: "",
+                  email: '',
+                  password: ''),
               missionNum: 0,
               grades: baseGradeItems,
               overall: Grade.noSelection,
-              weather: "",
+              weather: Weather.noSelection,
               pilotQual: PilotQual.fpc,
               sortieType: SortieType.ims,
               dayNight: DayNight.day,

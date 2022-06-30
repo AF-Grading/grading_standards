@@ -25,3 +25,5 @@ enum SortieType {
   mmp,
   lfe
 }
+
+enum Weather { noSelection, vmc, imc }

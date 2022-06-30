@@ -32,6 +32,7 @@ class OverallCard extends StatelessWidget {
                   context.read<CurrentFlight>().updateByStudent(
                       gradeSheet.student,
                       GradeSheet(
+                        weather: gradeSheet.weather,
                         instructor: gradeSheet.instructor,
                         student: gradeSheet.student,
                         missionNum: gradeSheet.missionNum,
@@ -62,6 +63,7 @@ class OverallCard extends StatelessWidget {
                   context.read<CurrentFlight>().updateByStudent(
                       gradeSheet.student,
                       GradeSheet(
+                        weather: gradeSheet.weather,
                         instructor: gradeSheet.instructor,
                         student: gradeSheet.student,
                         missionNum: gradeSheet.missionNum,
@@ -92,6 +94,7 @@ class OverallCard extends StatelessWidget {
                         context.read<CurrentFlight>().updateByStudent(
                             gradeSheet.student,
                             GradeSheet(
+                              weather: gradeSheet.weather,
                               instructor: gradeSheet.instructor,
                               student: gradeSheet.student,
                               missionNum: gradeSheet.missionNum,

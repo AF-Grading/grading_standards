@@ -47,7 +47,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                           GradeSheet(
                               instructor: widget.gradeSheet.instructor,
                               student: User(
-                                  name: "1st Lieutenant Dan",
+                                  name: "0",
                                   rank: Rank.firstLt,
                                   squad: "4th Airlift",
                                   id: "0",
@@ -61,6 +61,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                               startTime: widget.gradeSheet.startTime,
                               endTime: widget.gradeSheet.endTime,
                               sortieNumber: widget.gradeSheet.sortieNumber,
+                              weather: widget.gradeSheet.weather,
                               length: widget.gradeSheet.length)),
                   child: const Text("Select a different student"))
               : SearchUsersFormField(
@@ -97,6 +98,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                             dayNight: widget.gradeSheet.dayNight,
                             startTime: widget.gradeSheet.startTime,
                             endTime: widget.gradeSheet.endTime,
+                            weather: widget.gradeSheet.weather,
                             sortieNumber: widget.gradeSheet.sortieNumber,
                             length: widget.gradeSheet.length));
                     setState(() {

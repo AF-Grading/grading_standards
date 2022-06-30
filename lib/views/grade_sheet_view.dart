@@ -80,7 +80,7 @@ class GradeSheetView extends StatelessWidget {
                               height: dist,
                               child: ListTile(
                                   leading: const Text("Weather"),
-                                  title: Text(gradeSheet.weather))),
+                                  title: Text(gradeSheet.weather.name))),
                         ),
                         Expanded(
                           child: SizedBox(

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../models/current_flight.dart';
 import 'day_night_form_field.dart';
 import 'sortie_type_form_field.dart';
+import 'weather_form_field.dart';
 
 class ReviewGradeSheetGeneralCard extends StatelessWidget {
   const ReviewGradeSheetGeneralCard({Key? key}) : super(key: key);
@@ -22,22 +23,17 @@ class ReviewGradeSheetGeneralCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: "Weather",
-                    ),
+                WeatherFormField(
                     initialValue: context.read<CurrentFlight>().weather,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter a value";
+                      if (value == null || value == Weather.noSelection) {
+                        return "Please select a value";
                       }
                       return null;
                     },
-                    onChanged: (value) =>
-                        context.read<CurrentFlight>().weather = value,
-                  ),
-                ),
+                    onChanged: (value) {
+                      context.read<CurrentFlight>().weather = value;
+                    }),
                 DayNightFormField(
                     initialValue: context.read<CurrentFlight>().dayNight,
                     validator: (value) {

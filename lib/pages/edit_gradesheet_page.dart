@@ -160,7 +160,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: TextFormField(
-                                    initialValue: widget.gradeSheet.weather,
+                                    // initialValue: //widget.gradeSheet.weather,
                                     decoration: const InputDecoration(
                                         labelText: "Weather",
                                         contentPadding:
