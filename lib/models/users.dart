@@ -11,7 +11,8 @@ class Users with ChangeNotifier {
         squad: "test",
         id: "100000",
         email: 'test',
-        password: 'test'),
+        password: 'test',
+        permission: Permission.wing_training),
     User(
         name: "Captain Underpants",
         rank: Rank.capt,

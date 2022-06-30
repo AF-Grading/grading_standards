@@ -1,3 +1,5 @@
+import 'package:app_prototype/models/individual_report.dart';
+import 'package:app_prototype/views/individual_reports_view.dart';
 import 'package:app_prototype/views/user_log_in_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,8 +33,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   //  MyApp({Key? key}) : super(key: key);
-  bool test = false;
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       routes: {
         '/': (context) => UserLoginView(),
-        '/home': (context) => WillPopScope(
+        '/wing_training': (context) => WillPopScope(
               onWillPop: () async {
                 return true;
               },
@@ -58,6 +58,63 @@ class _MyAppState extends State<MyApp> {
                   themeMode: value.mode,
                   // themeMode: context.watch<ThemeChange>().mode,
                   home: HomePage(title: 'Grading Standards!!!!!'),
+                ),
+              ),
+            ),
+        '/training_shop': (context) => WillPopScope(
+              onWillPop: () async {
+                return true;
+              },
+              child: Consumer<ThemeChange>(
+                builder: (context, value, child) => MaterialApp(
+                  title: 'Flutter Demo',
+                  // themeMode: ThemeMode.light,
+                  theme: ThemeData(
+                    primarySwatch: Colors.blue,
+                    visualDensity: VisualDensity.adaptivePlatformDensity,
+                  ),
+                  darkTheme: ThemeData.dark(),
+                  themeMode: value.mode,
+                  // themeMode: context.watch<ThemeChange>().mode,
+                  home: HomePage(title: 'Grading Standards!!!!!'),
+                ),
+              ),
+            ),
+        '/instructor': (context) => WillPopScope(
+              onWillPop: () async {
+                return true;
+              },
+              child: Consumer<ThemeChange>(
+                builder: (context, value, child) => MaterialApp(
+                  title: 'Flutter Demo',
+                  // themeMode: ThemeMode.light,
+                  theme: ThemeData(
+                    primarySwatch: Colors.blue,
+                    visualDensity: VisualDensity.adaptivePlatformDensity,
+                  ),
+                  darkTheme: ThemeData.dark(),
+                  themeMode: value.mode,
+                  // themeMode: context.watch<ThemeChange>().mode,
+                  home: HomePage(title: 'Grading Standards!!!!!'),
+                ),
+              ),
+            ),
+        '/student': (context) => WillPopScope(
+              onWillPop: () async {
+                return true;
+              },
+              child: Consumer<ThemeChange>(
+                builder: (context, value, child) => MaterialApp(
+                  title: 'Flutter Demo',
+                  // themeMode: ThemeMode.light,
+                  theme: ThemeData(
+                    primarySwatch: Colors.blue,
+                    visualDensity: VisualDensity.adaptivePlatformDensity,
+                  ),
+                  darkTheme: ThemeData.dark(),
+                  themeMode: value.mode,
+                  // themeMode: context.watch<ThemeChange>().mode,
+                  home: IndividualReportsView(),
                 ),
               ),
             ),

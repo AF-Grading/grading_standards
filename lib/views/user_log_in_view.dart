@@ -57,7 +57,16 @@ class _UserLoginViewState extends State<UserLoginView> {
             onPressed: () {
               for (User user in Users().users) {
                 if (user.email == _email && user.password == _password) {
-                  Navigator.pushNamed(context, '/home');
+                  if (user.permission == Permission.wing_training) {
+                    Navigator.pushNamed(context, '/wing_training');
+                  } else if (user.permission == Permission.training_shop) {
+                    Navigator.pushNamed(context, '/training_shop');
+                  } else if (user.permission == Permission.instructor) {
+                    Navigator.pushNamed(context, '/instructor');
+                  } else if (user.permission == Permission.student) {
+                    Navigator.pushNamed(context, '/student');
+                  }
+                  // Navigator.pushNamed(context, '/home');
                 }
               }
               print("password: $_password");
