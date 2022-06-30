@@ -338,7 +338,8 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }*/
 
-  void add() {
+  String? add() {
+    String? message;
     _gradeSheets.length < max
         ? _gradeSheets.add(
             GradeSheet(
@@ -363,8 +364,22 @@ class CurrentFlight extends ChangeNotifier {
               length: "0",
             ),
           )
-        : null;
+        : message = "Max Students added";
+
     notifyListeners();
+
+    return message;
+  }
+
+  String? subtract() {
+    String? message;
+    _gradeSheets.length > 1
+        ? _gradeSheets.removeLast()
+        : message = "At least 1 student required";
+
+    notifyListeners();
+
+    return message;
   }
 
   int ensureUnique(User student) {
