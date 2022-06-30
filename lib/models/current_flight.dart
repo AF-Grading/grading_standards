@@ -35,7 +35,7 @@ class CurrentFlight extends ChangeNotifier {
     GradeSheet(
       // TODO find this by current user instead
       instructor: Users().user,
-      student: User(name: "1", rank: Rank.capt, squad: ""),
+      student: User(name: "1", rank: Rank.capt, squad: "", email: '', password: ''),
       missionNum: 0,
       grades: baseGradeItems,
       overall: Grade.noSelection,
@@ -250,7 +250,7 @@ class CurrentFlight extends ChangeNotifier {
     _gradeSheets.add(GradeSheet(
       // TODO find this by current user instead
       instructor: Users().user,
-      student: User(name: "1", rank: Rank.capt, squad: ""),
+      student: User(name: "1", rank: Rank.capt, squad: "", email: 'test@gmail.com', password: 'test@gmail.com'),
       missionNum: 0,
       grades: baseGradeItems,
       overall: Grade.noSelection,
@@ -341,7 +341,7 @@ class CurrentFlight extends ChangeNotifier {
               student: User(
                   name: "${gradeSheets.length + 1}",
                   rank: Rank.capt,
-                  squad: ""),
+                  squad: "", email: '', password: ''),
               missionNum: 0,
               grades: baseGradeItems,
               overall: Grade.noSelection,

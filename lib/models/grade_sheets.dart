@@ -14,12 +14,16 @@ class GradeSheets extends ChangeNotifier {
           name: "Captain Underpants",
           rank: Rank.capt,
           squad: "4th Airlift",
-          id: "1"),
+          id: "1",
+          email: '',
+          password: ''),
       student: User(
           name: "1st Lieutenant Dan",
           rank: Rank.firstLt,
           squad: "4th Airlift",
-          id: "2"),
+          id: "2",
+          email: '',
+          password: ''),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -65,12 +69,16 @@ class GradeSheets extends ChangeNotifier {
           name: "Captain Underpants",
           rank: Rank.capt,
           squad: "4th Airlift",
-          id: "1"),
+          id: "1",
+          email: '',
+          password: ''),
       student: User(
           name: "1st Lieutenant Dan",
           rank: Rank.firstLt,
           squad: "4th Airlift",
-          id: "2"),
+          id: "2",
+          email: '',
+          password: ''),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -104,12 +112,16 @@ class GradeSheets extends ChangeNotifier {
           name: "Captain Underpants",
           rank: Rank.capt,
           squad: "4th Airlift",
-          id: "1"),
+          id: "1",
+          email: '',
+          password: ''),
       student: User(
           name: "1st Lieutenant Dan",
           rank: Rank.firstLt,
           squad: "4th Airlift",
-          id: "2"),
+          id: "2",
+          email: '',
+          password: ''),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -142,12 +154,16 @@ class GradeSheets extends ChangeNotifier {
           name: "Captain Underpants",
           rank: Rank.capt,
           squad: "4th Airlift",
-          id: "1"),
+          id: "1",
+          email: '',
+          password: ''),
       student: User(
           name: "1st Lieutenant Dan",
           rank: Rank.firstLt,
           squad: "4th Airlift",
-          id: "2"),
+          id: "2",
+          email: '',
+          password: ''),
       missionNum: 12303,
       grades: [
         GradeItem(
@@ -181,12 +197,16 @@ class GradeSheets extends ChangeNotifier {
           name: "Captain Underpants",
           rank: Rank.capt,
           squad: "4th Airlift",
-          id: "1"),
+          id: "1",
+          email: '',
+          password: ''),
       student: User(
           name: "2nd Lieutenant Kinger",
           rank: Rank.secondLt,
           squad: "4th Airlift",
-          id: "3"),
+          id: "3",
+          email: '',
+          password: ''),
       missionNum: 12300,
       grades: [
         GradeItem(
@@ -220,12 +240,16 @@ class GradeSheets extends ChangeNotifier {
           name: "1st Lieutenant Dan",
           rank: Rank.firstLt,
           squad: "4th Airlift",
-          id: "2"),
+          id: "2",
+          email: '',
+          password: ''),
       student: User(
           name: "2nd Lieutenant Kinger",
           rank: Rank.secondLt,
           squad: "4th Airlift",
-          id: "3"),
+          id: "3",
+          email: '',
+          password: ''),
       missionNum: 12300,
       grades: [
         GradeItem(
