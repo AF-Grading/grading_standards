@@ -1,6 +1,6 @@
 import 'package:app_prototype/models/individual_report.dart';
 import 'package:app_prototype/views/individual_reports_view.dart';
-import 'package:app_prototype/pages/user_log_in_view.dart';
+import 'package:app_prototype/pages/user_log_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';

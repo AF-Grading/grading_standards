@@ -30,7 +30,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             initialValue: "",
             decoration: const InputDecoration(
               labelText: 'Email',
-              labelStyle: TextStyle(color: Colors.white),
+              // labelStyle: TextStyle(color: Colors.white),
             ),
             //style: TextStyle(color: Colors.white),
             onChanged: (value) {
@@ -45,7 +45,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             obscureText: true,
             decoration: const InputDecoration(
               labelText: 'Password',
-              labelStyle: TextStyle(color: Colors.white),
+              //labelStyle: TextStyle(color: Colors.white),
             ),
             //style: TextStyle(color: Colors.white),
             onChanged: (value) {
