@@ -32,6 +32,27 @@ class NewFlightView extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        Expanded(
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            decoration: const InputDecoration(
+                              labelText: "Mission Number",
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter a number";
+                              }
+                              return null;
+                            },
+                            onChanged: (value) =>
+                                // tryparse needed because of empty string else error
+                                context.read<CurrentFlight>().missionNum =
+                                    int.tryParse(value) ?? 0,
+                          ),
+                        ),
                         WeatherFormField(validator: (value) {
                           if (value == null) {
                             return "Please select a value";
@@ -39,14 +60,6 @@ class NewFlightView extends StatelessWidget {
                           return null;
                         }, onChanged: (value) {
                           context.read<CurrentFlight>().weather = value;
-                        }),
-                        DayNightFormField(validator: (value) {
-                          if (value == null) {
-                            return "Please select a value";
-                          }
-                          return null;
-                        }, onChanged: (value) {
-                          context.read<CurrentFlight>().dayNight = value;
                         }),
                       ],
                     ),
@@ -61,27 +74,6 @@ class NewFlightView extends StatelessWidget {
                   }),
                   Row(
                     children: [
-                      Expanded(
-                        child: TextFormField(
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          decoration: const InputDecoration(
-                            labelText: "Mission Number",
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please enter a number";
-                            }
-                            return null;
-                          },
-                          onChanged: (value) =>
-                              // tryparse needed because of empty string else error
-                              context.read<CurrentFlight>().missionNum =
-                                  int.tryParse(value) ?? 0,
-                        ),
-                      ),
                       Expanded(
                         child: TextFormField(
                           keyboardType: TextInputType.number,
@@ -106,6 +98,14 @@ class NewFlightView extends StatelessWidget {
                                   int.tryParse(value) ?? 0,
                         ),
                       ),
+                      DayNightFormField(validator: (value) {
+                        if (value == null) {
+                          return "Please select a value";
+                        }
+                        return null;
+                      }, onChanged: (value) {
+                        context.read<CurrentFlight>().dayNight = value;
+                      }),
                     ],
                   ),
                   TextFormField(

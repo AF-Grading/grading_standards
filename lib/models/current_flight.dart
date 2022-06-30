@@ -71,7 +71,7 @@ class CurrentFlight extends ChangeNotifier {
   List<User> get filteredUsers => Users()
       .users
       .where((user) =>
-          _gradeSheets.indexWhere((sheet) => sheet.student == user.name) == -1)
+          _gradeSheets.indexWhere((sheet) => sheet.student.id == user.id) == -1)
       .toList();
 
   // Setters

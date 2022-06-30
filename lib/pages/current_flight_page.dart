@@ -48,7 +48,13 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
               ),
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
-                  if (context.read<CurrentFlight>().validate()) {
+                  if (context
+                      .read<CurrentFlight>()
+                      .flightKey
+                      .currentState!
+                      .validate()) {
+                    context.read<CurrentFlight>().end();
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(

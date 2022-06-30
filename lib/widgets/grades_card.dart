@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/current_flight.dart';
+import '../models/grade_enums.dart';
 import '../models/user.dart';
 import 'grade_radio_form_field.dart';
 
@@ -12,6 +13,7 @@ class GradesCard extends StatelessWidget {
     //required this.gradeSheet,
     required this.student,
     required this.grades,
+    required this.hasErrors,
     this.title,
     this.initiallyExpanded = true,
   }) : super(key: key);
@@ -21,6 +23,7 @@ class GradesCard extends StatelessWidget {
   final List<GradeItem> grades;
   final String? title;
   final bool initiallyExpanded;
+  final ValueChanged<bool> hasErrors;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +38,12 @@ class GradesCard extends StatelessWidget {
                 title: GradeRadiosFormField(
                   initialValue: item.grade,
                   validator: (value) {
-                    if (value == null) {
+                    if (value == null || value == Grade.noSelection) {
                       return "Please select a value";
+                    } else {
+                      hasErrors(false);
+                      return null;
                     }
-                    return null;
                   },
                   onChanged: (grade) =>
                       context.read<CurrentFlight>().updateByGradeItem(

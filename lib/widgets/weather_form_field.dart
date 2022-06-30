@@ -21,6 +21,7 @@ class WeatherFormField extends FormField<Weather> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      const Text("Weather: "),
                       const Text("vmc"),
                       Radio<Weather>(
                         value: Weather.vmc,

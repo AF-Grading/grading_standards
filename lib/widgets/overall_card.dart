@@ -28,6 +28,14 @@ class OverallCard extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: "Overall Comments",
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select a value";
+                } else {
+                  hasErrors(false);
+                  return null;
+                }
+              },
               onChanged: (overall) =>
                   context.read<CurrentFlight>().updateByStudent(
                       gradeSheet.student,
@@ -56,8 +64,10 @@ class OverallCard extends StatelessWidget {
                 if (value == null || value == Grade.noSelection) {
                   hasErrors(true);
                   return "Please select a value";
+                } else {
+                  hasErrors(false);
+                  return null;
                 }
-                return null;
               },
               onChanged: (overall) =>
                   context.read<CurrentFlight>().updateByStudent(
