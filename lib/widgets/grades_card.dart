@@ -2,6 +2,7 @@ import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/cts_list.dart';
 import '../models/current_flight.dart';
 import '../models/grade_enums.dart';
 import '../models/user.dart';
@@ -34,7 +35,26 @@ class GradesCard extends StatelessWidget {
         children: grades
             .map(
               (item) => ListTile(
-                leading: Text(item.name),
+                leading: GestureDetector(
+                  onTap: () {
+                    var ctsItem = ctsItems
+                        .firstWhere((ctsItem) => item.name == ctsItem.name);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: Text(ctsItem.name),
+                        content: Text(ctsItem.standards),
+                        actions: <Widget>[
+                          TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(context, 'Back to grading'),
+                              child: const Text("Back to grading"))
+                        ],
+                      ),
+                    );
+                  },
+                  child: Text(item.name),
+                ),
                 title: GradeRadiosFormField(
                   initialValue: item.grade,
                   validator: (value) {

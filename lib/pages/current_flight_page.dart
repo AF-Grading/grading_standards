@@ -1,4 +1,6 @@
 import 'package:app_prototype/models/grade_sheet.dart';
+import 'package:app_prototype/widgets/proficiency_grade_popup.dart';
+import 'package:app_prototype/widgets/proficiency_table_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // prefer internal routes to be relative
@@ -34,7 +36,13 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
       child: context.watch<CurrentFlight>().gradeSheets.length == 1
           ? Scaffold(
               appBar: AppBar(
-                title: const Text("Proficiency Standards | Grade Desc"),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    ProficencyTablePopup(),
+                    ProficencyGradePopup(),
+                  ],
+                ),
               ),
               body: FlightView(
                 index: 0,
@@ -70,8 +78,13 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
               length: context.watch<CurrentFlight>().gradeSheets.length,
               child: Scaffold(
                 appBar: AppBar(
-                  title: const Text(
-                      "Proficiency Standards Table Popup | Proficiency Grade Description Popup"),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: const [
+                      ProficencyTablePopup(),
+                      ProficencyGradePopup(),
+                    ],
+                  ),
                   bottom: TabBar(
                     tabs: [
                       for (int i = 0;
