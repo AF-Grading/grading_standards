@@ -1,6 +1,6 @@
 import 'package:app_prototype/models/individual_report.dart';
 import 'package:app_prototype/views/individual_reports_view.dart';
-import 'package:app_prototype/views/user_log_in_view.dart';
+import 'package:app_prototype/pages/user_log_in_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -19,6 +19,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => CurrentFlight(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => Users(),
       ),
       ChangeNotifierProvider(create: (context) => ThemeChange()),
     ], child: Phoenix(child: MyApp())),
@@ -41,7 +44,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData.dark(),
       initialRoute: '/',
       routes: {
-        '/': (context) => UserLoginView(),
+        '/': (context) => UserLoginPage(),
         '/wing_training': (context) => WillPopScope(
               onWillPop: () async {
                 return true;

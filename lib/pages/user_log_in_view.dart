@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import '../models/user.dart';
 import '../models/users.dart';
 
-class UserLoginView extends StatefulWidget {
+class UserLoginPage extends StatefulWidget {
   @override
-  _UserLoginViewState createState() => _UserLoginViewState();
+  _UserLoginPageState createState() => _UserLoginPageState();
 }
 
-class _UserLoginViewState extends State<UserLoginView> {
+class _UserLoginPageState extends State<UserLoginPage> {
   String _email = "";
   String _password = "";
   @override
@@ -22,7 +22,7 @@ class _UserLoginViewState extends State<UserLoginView> {
         Icon(
           Icons.person,
           size: 300,
-          color: Colors.white,
+          //color: Colors.white,
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(200, 0, 200, 0),
@@ -32,7 +32,7 @@ class _UserLoginViewState extends State<UserLoginView> {
               labelText: 'Email',
               labelStyle: TextStyle(color: Colors.white),
             ),
-            style: TextStyle(color: Colors.white),
+            //style: TextStyle(color: Colors.white),
             onChanged: (value) {
               _email = value;
             },
@@ -47,7 +47,7 @@ class _UserLoginViewState extends State<UserLoginView> {
               labelText: 'Password',
               labelStyle: TextStyle(color: Colors.white),
             ),
-            style: TextStyle(color: Colors.white),
+            //style: TextStyle(color: Colors.white),
             onChanged: (value) {
               _password = value;
             },
@@ -69,7 +69,7 @@ class _UserLoginViewState extends State<UserLoginView> {
                   // Navigator.pushNamed(context, '/home');
                 }
               }
-              print("password: $_password");
+              // print("password: $_password");
             },
             child: const Text('Login')),
       ]),
