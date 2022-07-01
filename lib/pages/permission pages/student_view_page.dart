@@ -19,6 +19,7 @@ class StudentViewPage extends StatefulWidget {
 class _StudentViewPageState extends State<StudentViewPage> {
   // temp hot coded until we can figure out how to do it dynamiclly
   GradeSheet _selectedGradeSheet = GradeSheet(
+    weather: Weather.imc,
     instructor: User(
         name: "Captain Underpants",
         rank: Rank.capt,
