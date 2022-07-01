@@ -1,4 +1,8 @@
 import 'package:app_prototype/models/user.dart';
+import 'package:app_prototype/pages/permission%20pages/instructor_view_page.dart';
+import 'package:app_prototype/pages/permission%20pages/student_view_page.dart';
+import 'package:app_prototype/pages/permission%20pages/training_shop_view_page.dart';
+import 'package:app_prototype/pages/permission%20pages/wing_training_view_page.dart';
 import 'package:app_prototype/views/individual_reports_view.dart';
 import 'package:app_prototype/pages/my_grade_sheets_page.dart';
 import 'package:app_prototype/pages/reference_materials_page.dart';
@@ -11,9 +15,7 @@ import 'package:provider/provider.dart';
 import '../models/CurrentUser.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -22,80 +24,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    
-
-    // if (context.watch<CurrentUser>().permission.index >=
-    //     Permission.student.index) {}
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          bottom: const TabBar(
-            tabs: <Widget>[
-              Tab(text: 'New Flight'),
-              Tab(text: 'Individual Reports'),
-              Tab(
-                text: 'Training Shop',
-              ),
-            ],
-          ),
-        ),
-        drawer: Drawer(
-          child: ListView(children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Grading Standards',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              title: const Text('My Grade Sheets'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MyGradeSheetsPage()),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('Reference Materials'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ReferenceMaterialsPages()),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('Settings'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SettingsPage()),
-                );
-              },
-            ),
-          ]),
-        ),
-        body: const TabBarView(
-          children: [
-            //NewGradeSheetView(),
-            NewFlightView(),
-            IndividualReportsView(),
-            TrainingShopView(),
-          ],
-        ),
-      ),
-    );
+    if (context.read<CurrentUser>().permission.index ==
+        Permission.wing_training.index) {
+      //     Permission.student.index) {}
+      return WingTrainingViewPage();
+    } else if (context.read<CurrentUser>().permission.index ==
+        Permission.training_shop.index) {
+      return TrainingShopViewPage();
+    } else if (context.read<CurrentUser>().permission.index ==
+        Permission.instructor.index) {
+      return InstructorViewPage();
+    } else {
+      return StudentViewPage();
+    }
   }
 }

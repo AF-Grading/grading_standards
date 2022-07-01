@@ -2,6 +2,7 @@ import 'package:app_prototype/models/CurrentUser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:provider/provider.dart';
 
 import '../models/user.dart';
 import '../models/users.dart';
@@ -82,6 +83,13 @@ class _UserLoginPageState extends State<UserLoginPage> {
                       setState(() {
                         _logInFail = false;
                       });
+
+                      CurrentUser().setUser = user;
+
+                      context.read<CurrentUser>().setUser = user;
+
+                      // print(context.watch<CurrentUser>().user.email);
+
                       if (user.permission.index >= Permission.student.index) {
                         Navigator.popAndPushNamed(context, '/home');
                       }

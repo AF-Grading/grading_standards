@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
                   darkTheme: ThemeData.dark(),
                   themeMode: value.mode,
                   // themeMode: context.watch<ThemeChange>().mode,
-                  home: HomePage(title: 'Grading Standards!!!!!'),
+                  home: HomePage(),
                 ),
               ),
             ),
