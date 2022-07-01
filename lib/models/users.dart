@@ -34,7 +34,15 @@ class Users with ChangeNotifier {
       id: "4",
       email: "as@gmail.com",
       password: '123456',
-    )
+    ),
+    User(
+        name: "test",
+        rank: Rank.secondLt,
+        squad: "4th Airlift",
+        id: "test",
+        email: "test",
+        password: "test",
+        permission: Permission.student),
   ];
 
   User get user => _users.first;
