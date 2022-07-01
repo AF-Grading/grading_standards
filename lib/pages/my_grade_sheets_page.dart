@@ -1,3 +1,4 @@
+import 'package:app_prototype/views/grade_sheet_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -88,15 +89,14 @@ class MyGradeSheetsPage extends StatelessWidget {
                                 title: Text(gradeSheet.startTime
                                     .toString()
                                     .substring(0, 10)),
-                                trailing: Text(gradeSheet.overall.toString()),
+                                trailing: Text(gradeSheet.overall.name),
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditGradeSheetPage(
-                                                isEditing: true,
-                                                gradeSheet: gradeSheet)),
+                                        builder: (context) => GradeSheetView(
+                                            //isEditing: true,
+                                            gradeSheet: gradeSheet)),
                                   );
                                 },
                               ),
