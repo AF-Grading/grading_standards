@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/CurrentUser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -78,7 +79,9 @@ class _UserLoginPageState extends State<UserLoginPage> {
                 onPressed: () {
                   for (User user in Users().users) {
                     if (user.email == _email && user.password == _password) {
-                      _logInFail = false;
+                      setState(() {
+                        _logInFail = false;
+                      });
                       if (user.permission.index >= Permission.student.index) {
                         Navigator.popAndPushNamed(context, '/home');
                       }

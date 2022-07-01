@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/user.dart';
 import 'package:app_prototype/views/individual_reports_view.dart';
 import 'package:app_prototype/pages/my_grade_sheets_page.dart';
 import 'package:app_prototype/pages/reference_materials_page.dart';
@@ -5,6 +6,9 @@ import 'package:app_prototype/pages/settings_page.dart';
 import 'package:app_prototype/views/new_flight_view.dart';
 import 'package:app_prototype/views/training_shop_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../models/CurrentUser.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, required this.title}) : super(key: key);
@@ -18,6 +22,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    
+
+    // if (context.watch<CurrentUser>().permission.index >=
+    //     Permission.student.index) {}
     return DefaultTabController(
       initialIndex: 0,
       length: 3,
@@ -73,7 +81,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  SettingsPage()),
+                  MaterialPageRoute(builder: (context) => SettingsPage()),
                 );
               },
             ),
