@@ -80,7 +80,6 @@ class _WingTrainingViewPageState extends State<WingTrainingViewPage> {
         ),
         body: TabBarView(
           children: [
-            //NewGradeSheetView(),
             NewFlightView(),
             IndividualReportsView(),
             TrainingShopView(),
