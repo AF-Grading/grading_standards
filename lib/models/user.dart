@@ -26,7 +26,7 @@ class User {
 enum Rank { secondLt, firstLt, capt, maj, ltCol, colonel }
 
 // User Permission.length
-enum Permission { student, instructor, wing_training, training_shop }
+enum Permission { student, instructor, training_shop, wing_training,}
 
 //wing_training have rights to everything and can grant perssions to other users
 

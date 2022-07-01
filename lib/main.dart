@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/CurrentUser.dart';
 import 'package:app_prototype/models/individual_report.dart';
 import 'package:app_prototype/views/individual_reports_view.dart';
 import 'package:app_prototype/pages/user_log_in_page.dart';
@@ -24,6 +25,7 @@ void main() {
         create: (context) => Users(),
       ),
       ChangeNotifierProvider(create: (context) => ThemeChange()),
+      ChangeNotifierProvider(create: (context) => CurrentUser(),)
     ], child: Phoenix(child: MyApp())),
   );
 }
@@ -45,7 +47,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       routes: {
         '/': (context) => UserLoginPage(),
-        '/wing_training': (context) => WillPopScope(
+        '/home': (context) => WillPopScope(
               onWillPop: () async {
                 return true;
               },
@@ -60,64 +62,7 @@ class _MyAppState extends State<MyApp> {
                   darkTheme: ThemeData.dark(),
                   themeMode: value.mode,
                   // themeMode: context.watch<ThemeChange>().mode,
-                  home: HomePage(title: 'Grading Standards!!!!!'),
-                ),
-              ),
-            ),
-        '/training_shop': (context) => WillPopScope(
-              onWillPop: () async {
-                return true;
-              },
-              child: Consumer<ThemeChange>(
-                builder: (context, value, child) => MaterialApp(
-                  title: 'Flutter Demo',
-                  // themeMode: ThemeMode.light,
-                  theme: ThemeData(
-                    primarySwatch: Colors.blue,
-                    visualDensity: VisualDensity.adaptivePlatformDensity,
-                  ),
-                  darkTheme: ThemeData.dark(),
-                  themeMode: value.mode,
-                  // themeMode: context.watch<ThemeChange>().mode,
-                  home: HomePage(title: 'Grading Standards!!!!!'),
-                ),
-              ),
-            ),
-        '/instructor': (context) => WillPopScope(
-              onWillPop: () async {
-                return true;
-              },
-              child: Consumer<ThemeChange>(
-                builder: (context, value, child) => MaterialApp(
-                  title: 'Flutter Demo',
-                  // themeMode: ThemeMode.light,
-                  theme: ThemeData(
-                    primarySwatch: Colors.blue,
-                    visualDensity: VisualDensity.adaptivePlatformDensity,
-                  ),
-                  darkTheme: ThemeData.dark(),
-                  themeMode: value.mode,
-                  // themeMode: context.watch<ThemeChange>().mode,
-                  home: HomePage(title: 'Grading Standards!!!!!'),
-                ),
-              ),
-            ),
-        '/student': (context) => WillPopScope(
-              onWillPop: () async {
-                return true;
-              },
-              child: Consumer<ThemeChange>(
-                builder: (context, value, child) => MaterialApp(
-                  title: 'Flutter Demo',
-                  // themeMode: ThemeMode.light,
-                  theme: ThemeData(
-                    primarySwatch: Colors.blue,
-                    visualDensity: VisualDensity.adaptivePlatformDensity,
-                  ),
-                  darkTheme: ThemeData.dark(),
-                  themeMode: value.mode,
-                  // themeMode: context.watch<ThemeChange>().mode,
-                  home: IndividualReportsView(),
+                  home: HomePage(),
                 ),
               ),
             ),
