@@ -24,6 +24,7 @@ class ReviewGradeSheetCard extends StatelessWidget {
             hasErrors: (_) {},
           ),
           GradesCard(
+            title: "Graded Items",
             student: gradeSheet.student,
             grades: gradeSheet.grades
                 .where((item) => item.grade != Grade.noGrade)
@@ -31,6 +32,8 @@ class ReviewGradeSheetCard extends StatelessWidget {
             hasErrors: (_) {},
           ),
           GradesCard(
+            title: "Ungraded",
+            initiallyExpanded: false,
             student: gradeSheet.student,
             grades: gradeSheet.grades
                 .where((item) => item.grade == Grade.noGrade)

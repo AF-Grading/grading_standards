@@ -55,7 +55,7 @@ class ProficencyTablePopup extends StatelessWidget {
                       children: const [
                         Padding(
                           padding: EdgeInsets.only(right: 8.0),
-                          child: SizedBox(width: 150, child: Text("CTSItem")),
+                          child: SizedBox(width: 100, child: Text("CTSItem")),
                         ),
                         Text("CPAD"),
                         Text("ACAD"),
