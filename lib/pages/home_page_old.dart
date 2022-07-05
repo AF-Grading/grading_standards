@@ -5,12 +5,12 @@ import '/models/CurrentUser.dart';
 import '/models/current_flight.dart';
 import '/models/grade_sheets.dart';
 import 'training_shop_page.dart';
-import 'permission_pages/student_view_page.dart';
 import '/utils/app_drawer.dart';
 import '/utils/new_flight_buttons.dart';
 import '/views/individual_reports_view.dart';
 import '/views/new_flight_view.dart';
 import '/views/training_shop_view.dart';
+import '/views/user_grade_sheets_view.dart';
 
 class HomePageOld extends StatefulWidget {
   const HomePageOld({Key? key, required this.title, required this.permission})
@@ -51,7 +51,11 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
     return Form(
       key: context.watch<CurrentFlight>().newKey,
       child: tabLength == 1
-          ? StudentViewPage()
+          ? Scaffold(
+              appBar: AppBar(title: Text(widget.title)),
+              body: const UserGradeSheetsView(),
+              drawer: const AppDrawer(),
+            )
           : Scaffold(
               appBar: AppBar(
                 title: Text(widget.title),

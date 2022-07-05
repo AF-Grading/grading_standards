@@ -6,10 +6,10 @@ import '../pages/training_shop_page.dart';
 
 // TODO obtain from elsewhere
 List<String> squads = [
-  "62nd Operations",
-  "4th Airlift",
-  "7th Airlift",
-  "8th Airlift"
+  "62nd Operations Group",
+  "4th Airlift Squadron",
+  "7th Airlift Squadron",
+  "8th Airlift Squadron"
 ];
 
 class TrainingShopView extends StatelessWidget {

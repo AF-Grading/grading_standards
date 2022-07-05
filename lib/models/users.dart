@@ -8,7 +8,7 @@ class Users with ChangeNotifier {
     User(
         name: "Captain Underpants",
         rank: Rank.capt,
-        squad: "4th Airlift",
+        squad: "4th Airlift Squadron",
         id: "1",
         email: 'test',
         password: 'test',
@@ -16,7 +16,7 @@ class Users with ChangeNotifier {
     User(
         name: "1st Lieutenant Dan",
         rank: Rank.firstLt,
-        squad: "4th Airlift",
+        squad: "4th Airlift Squadron",
         id: "2",
         email: 'test2',
         password: 'test',
@@ -24,7 +24,7 @@ class Users with ChangeNotifier {
     User(
         name: "2nd Lieutenant Kinger",
         rank: Rank.secondLt,
-        squad: "4th Airlift",
+        squad: "4th Airlift Squadron",
         id: "3",
         email: '2lk@gmail.com',
         password: '123456',
@@ -32,9 +32,17 @@ class Users with ChangeNotifier {
     User(
       name: "Airman Schmuckatelli",
       rank: Rank.secondLt,
-      squad: "7th Airlift",
+      squad: "7th Airlift Squadron",
       id: "4",
       email: "as@gmail.com",
+      password: '123456',
+    ),
+    User(
+      name: "Airman Scruffy",
+      rank: Rank.secondLt,
+      squad: "7th Airlift Squadron",
+      id: "5",
+      email: "scruff@gmail.com",
       password: '123456',
     ),
   ];

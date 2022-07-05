@@ -244,6 +244,50 @@ class GradeSheets extends ChangeNotifier {
             email: '',
             password: ''),
         student: User(
+          name: "Airman Schmuckatelli",
+          rank: Rank.secondLt,
+          squad: "7th Airlift",
+          id: "4",
+          email: "as@gmail.com",
+          password: '123456',
+        ),
+        missionNum: 12300,
+        grades: [
+          GradeItem(
+            name: "Communication Skills",
+            grade: Grade.unsatisfactory,
+          ),
+          GradeItem(
+            name: "Systems Knowledge",
+            grade: Grade.unsatisfactory,
+          ),
+          GradeItem(
+            name: "Combat Governing Documents",
+            grade: Grade.unsatisfactory,
+          ),
+          GradeItem(
+            name: "Threat Analysis & Mitigation/ Intel Integration",
+            grade: Grade.unsatisfactory,
+          ),
+        ],
+        overall: Grade.unsatisfactory,
+        sortieType: SortieType.ims,
+        dayNight: DayNight.night,
+        startTime: DateTime(2022, 7),
+        endTime: DateTime(2022, 8),
+        sortieNumber: 2,
+        length: "2 hours",
+        isDraft: false,
+        weather: Weather.imc),
+    GradeSheet(
+        instructor: User(
+            name: "1st Lieutenant Dan",
+            rank: Rank.firstLt,
+            squad: "4th Airlift",
+            id: "2",
+            email: '',
+            password: ''),
+        student: User(
             name: "2nd Lieutenant Kinger",
             rank: Rank.secondLt,
             squad: "4th Airlift",
