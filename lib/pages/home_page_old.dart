@@ -10,7 +10,7 @@ import '/utils/new_flight_buttons.dart';
 import '/views/individual_reports_view.dart';
 import '/views/new_flight_view.dart';
 import '/views/training_shop_view.dart';
-import '/views/user_grade_sheets_view.dart';
+import '../views/grade_sheets_view.dart';
 
 class HomePageOld extends StatefulWidget {
   const HomePageOld({Key? key, required this.title, required this.permission})
@@ -53,7 +53,9 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
       child: tabLength == 1
           ? Scaffold(
               appBar: AppBar(title: Text(widget.title)),
-              body: const UserGradeSheetsView(),
+              body: const GradeSheetsView(
+                isInstructor: false,
+              ),
               drawer: const AppDrawer(),
             )
           : Scaffold(

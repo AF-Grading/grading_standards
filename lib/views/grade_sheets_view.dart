@@ -6,17 +6,28 @@ import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
 import '../pages/grade_sheet_page.dart';
 
-class UserGradeSheetsView extends StatelessWidget {
-  const UserGradeSheetsView({Key? key}) : super(key: key);
+class GradeSheetsView extends StatelessWidget {
+  const GradeSheetsView({Key? key, required this.isInstructor})
+      : super(key: key);
+
+  final bool isInstructor;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<GradeSheets>(
       builder: (context, gradeSheetsModel, _) {
-        final List<GradeSheet> gradeSheets = gradeSheetsModel.gradeSheets
-            .where((gradesheet) =>
-                gradesheet.student.id == context.watch<CurrentUser>().user.id)
-            .toList();
+        // if the viewer is an instructor, see student gradesheets
+        final List<GradeSheet> gradeSheets = isInstructor
+            ? gradeSheetsModel.gradeSheets
+                .where((gradesheet) =>
+                    gradesheet.instructor.id ==
+                    context.watch<CurrentUser>().user.id)
+                .toList()
+            : gradeSheetsModel.gradeSheets
+                .where((gradesheet) =>
+                    gradesheet.student.id ==
+                    context.watch<CurrentUser>().user.id)
+                .toList();
         final missionNumbers = gradeSheetsModel.missionNumbers
             .where((number) =>
                 gradeSheets.any((sheet) => sheet.missionNum == number))

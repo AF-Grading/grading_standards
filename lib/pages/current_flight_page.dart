@@ -1,11 +1,9 @@
-import 'package:app_prototype/models/grade_sheet.dart';
-import 'package:app_prototype/widgets/proficiency_grade_popup.dart';
-import 'package:app_prototype/widgets/proficiency_table_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // prefer internal routes to be relative
-import '../models/current_flight.dart';
-import '../models/grade_enums.dart';
+import '/models/current_flight.dart';
+import '/widgets/proficiency_grade_popup.dart';
+import '/widgets/proficiency_table_popup.dart';
 import '/pages/review_flight_page.dart';
 import '/views/flight_view.dart';
 
