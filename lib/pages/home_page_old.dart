@@ -1,21 +1,19 @@
-import 'package:app_prototype/pages/permission%20pages/student_view_page.dart';
-import 'package:app_prototype/views/individual_reports_view.dart';
-import 'package:app_prototype/pages/my_grade_sheets_page.dart';
-import 'package:app_prototype/pages/reference_materials_page.dart';
-import 'package:app_prototype/pages/settings_page.dart';
-import 'package:app_prototype/views/new_flight_view.dart';
-import 'package:app_prototype/views/training_shop_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../models/CurrentUser.dart';
-import '../models/current_flight.dart';
-import '../models/grade_sheets.dart';
-import 'current_flight_page.dart';
+//internal imports
+import '/models/CurrentUser.dart';
+import '/models/current_flight.dart';
+import '/models/grade_sheets.dart';
 import 'training_shop_page.dart';
+import 'permission_pages/student_view_page.dart';
+import '/utils/app_drawer.dart';
+import '/utils/new_flight_buttons.dart';
+import '/views/individual_reports_view.dart';
+import '/views/new_flight_view.dart';
+import '/views/training_shop_view.dart';
 
 class HomePageOld extends StatefulWidget {
-  HomePageOld({Key? key, required this.title, required this.permission})
+  const HomePageOld({Key? key, required this.title, required this.permission})
       : super(key: key);
 
   final String title;
@@ -32,6 +30,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    // set number of tabs based on permission
     if (widget.permission == 0) {
       tabLength = 1;
     } else if (widget.permission == 1) {
@@ -62,9 +61,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                         tabs: const [
                           Tab(text: 'New Flight'),
                           Tab(text: 'Individual Reports'),
-                          Tab(
-                            text: 'Squadron View',
-                          ),
+                          Tab(text: 'Squadron View'),
                         ],
                       )
                     : TabBar(
@@ -72,65 +69,18 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                         tabs: const [
                           Tab(text: 'New Flight'),
                           Tab(text: 'Individual Reports'),
-                          Tab(
-                            text: 'Training Shop',
-                          ),
+                          Tab(text: 'Training Shop'),
                         ],
                       ),
               ),
-              drawer: Drawer(
-                child: ListView(children: [
-                  const DrawerHeader(
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                    ),
-                    child: Text(
-                      'Grading Standards',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text('My Grade Sheets'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MyGradeSheetsPage()),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Reference Materials'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const ReferenceMaterialsPages()),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Settings'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SettingsPage()),
-                      );
-                    },
-                  ),
-                ]),
-              ),
+              drawer: const AppDrawer(),
               body: TabBarView(
                 controller: _controller,
                 children: widget.permission == 1
                     ? [
                         //NewGradeSheetView(),
-                        NewFlightView(),
-                        IndividualReportsView(),
+                        const NewFlightView(),
+                        const IndividualReportsView(),
                         TrainingShopPage(
                           gradeSheets: context.watch<GradeSheets>().gradeSheets,
                           squad: context.read<CurrentUser>().user.squad,
@@ -142,73 +92,9 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                         TrainingShopView(),
                       ],
               ),
-              floatingActionButton: _index == 0
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: FloatingActionButton(
-                            onPressed: () {
-                              String? message =
-                                  context.read<CurrentFlight>().subtract();
-                              if (message != null) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(message),
-                                  ),
-                                );
-                              }
-                            },
-                            tooltip: "Subtract Student",
-                            child: const Icon(Icons.remove),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: FloatingActionButton(
-                              tooltip: "Add Student",
-                              onPressed: () {
-                                String? message =
-                                    context.read<CurrentFlight>().add();
-                                if (message != null) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(message),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: const Icon(Icons.add)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: FloatingActionButton(
-                            // TODO if already pressed, instead have a resume flight button
-                            tooltip: "Start Flight",
-                            child: const Icon(Icons.airplanemode_active),
-                            onPressed: () {
-                              if (context
-                                  .read<CurrentFlight>()
-                                  .newKey
-                                  .currentState!
-                                  .validate()) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CurrentFlightPage(),
-                                  ),
-                                );
-                                // TODO if in a flight, dont do this
-                                context.read<CurrentFlight>().start();
-                              }
-                            },
-                          ),
-                        ),
-                      ],
-                    )
-                  : null,
+              floatingActionButton:
+                  // only show buttons if on new flight tab
+                  _index == 0 ? const NewFlightButtons() : null,
             ),
     );
   }

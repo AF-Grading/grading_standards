@@ -1,4 +1,4 @@
-import 'package:app_prototype/views/grade_sheet_view.dart';
+import 'package:app_prototype/pages/grade_sheet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

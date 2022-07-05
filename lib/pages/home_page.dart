@@ -1,8 +1,8 @@
 import 'package:app_prototype/models/user.dart';
-import 'package:app_prototype/pages/permission%20pages/instructor_view_page.dart';
-import 'package:app_prototype/pages/permission%20pages/student_view_page.dart';
-import 'package:app_prototype/pages/permission%20pages/training_shop_view_page.dart';
-import 'package:app_prototype/pages/permission%20pages/wing_training_view_page.dart';
+import 'package:app_prototype/pages/permission_pages/instructor_view_page.dart';
+import 'package:app_prototype/pages/permission_pages/student_view_page.dart';
+import 'package:app_prototype/pages/permission_pages/training_shop_view_page.dart';
+import 'package:app_prototype/pages/permission_pages/wing_training_view_page.dart';
 import 'package:app_prototype/views/individual_reports_view.dart';
 import 'package:app_prototype/pages/my_grade_sheets_page.dart';
 import 'package:app_prototype/pages/reference_materials_page.dart';
