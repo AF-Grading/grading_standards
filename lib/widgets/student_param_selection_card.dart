@@ -65,6 +65,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                               length: widget.gradeSheet.length)),
                   child: const Text("Select a different student"))
               : SearchUsersFormField(
+                  labelText: "Student Name",
                   //obtains list of users that filters out already used students
                   users: context.watch<CurrentFlight>().filteredUsers,
                   validator: (value) {

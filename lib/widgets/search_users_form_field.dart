@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
-import '../models/users.dart';
 
+// TODO SEARCH BY ID NOT NAME
 class SearchUsersFormField extends FormField<String> {
   SearchUsersFormField(
       {Key? key,
       required List<User> users,
+      required labelText,
       controller = TextEditingController,
       ValueChanged<String>? onChanged,
       ValueChanged<String>? onSaved,
@@ -27,8 +28,8 @@ class SearchUsersFormField extends FormField<String> {
                     children: [
                       TextFormField(
                         //controller: _controller.text,
-                        decoration: const InputDecoration(
-                          labelText: "Student Name",
+                        decoration: InputDecoration(
+                          labelText: labelText,
                         ),
                         initialValue: formState.value,
                         //validator: validator,
