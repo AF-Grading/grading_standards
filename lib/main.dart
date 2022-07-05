@@ -1,6 +1,8 @@
 import 'package:app_prototype/models/CurrentUser.dart';
 import 'package:app_prototype/models/individual_report.dart';
 import 'package:app_prototype/pages/home_page_old.dart';
+import 'package:app_prototype/theme/dark_mode.dart';
+import 'package:app_prototype/theme/light_mode.dart';
 import 'package:app_prototype/views/individual_reports_view.dart';
 import 'package:app_prototype/pages/user_log_in_page.dart';
 import 'package:flutter/material.dart';
@@ -45,8 +47,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(accentColor: Colors.blue),
-      darkTheme: ThemeData.dark(),
+      theme: light_theme,
+      darkTheme: dark_theme,
       initialRoute: '/',
       routes: {
         '/': (context) => UserLoginPage(),
@@ -58,13 +60,10 @@ class _MyAppState extends State<MyApp> {
                 builder: (context, value, child) => MaterialApp(
                   title: 'Flutter Demo',
                   // themeMode: ThemeMode.light,
-                  theme: ThemeData(
-                    primarySwatch: Colors.blue,
-                    visualDensity: VisualDensity.adaptivePlatformDensity,
-                  ),
-                  darkTheme: ThemeData.dark(),
-                  themeMode: value.mode,
-                  // themeMode: context.watch<ThemeChange>().mode,
+                  theme: light_theme,
+                  darkTheme: dark_theme,
+                  // themeMode: value.mode,
+                  themeMode: context.watch<ThemeChange>().mode,
                   home: HomePageOld(
                       title: "Flying Standards",
                       permission:

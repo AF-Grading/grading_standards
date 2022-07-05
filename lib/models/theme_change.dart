@@ -1,17 +1,12 @@
+import 'package:app_prototype/theme/light_mode.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../theme/dark_mode.dart';
+
 class ThemeChange extends ChangeNotifier {
-  
-
   ThemeMode _mode = ThemeMode.system;
-
-  // add on the system thing
-
-  // bool get dark_mode => _dark_mode;
-
-  // ignore: non_constant_identifier_names
-
+  
   set mode(ThemeMode value) {
     _mode = value;
     notifyListeners();

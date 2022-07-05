@@ -1,4 +1,7 @@
+import 'package:app_prototype/models/theme_change.dart';
 import 'package:app_prototype/pages/training_shop_page.dart';
+import 'package:app_prototype/theme/dark_mode.dart';
+import 'package:app_prototype/theme/light_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +43,9 @@ class _InstructorViewPageState extends State<InstructorViewPage> {
           child: ListView(children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: context.watch<ThemeChange>().mode == ThemeMode.dark
+                    ? primaryBlue
+                    : primaryDarkBlue,
               ),
               child: Text(
                 context.watch<CurrentUser>().user.name,
@@ -88,7 +93,7 @@ class _InstructorViewPageState extends State<InstructorViewPage> {
             // need to change the individual report view to only views
             // of the students that this specifis instructor have graded
             // or view of the people that is in this instructors squadron
-            
+
             TrainingShopPage(
               gradeSheets: context.watch<GradeSheets>().gradeSheets,
               squad: context.read<CurrentUser>().user.squad,

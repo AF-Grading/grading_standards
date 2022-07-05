@@ -35,25 +35,29 @@ class GradesCard extends StatelessWidget {
         children: grades
             .map(
               (item) => ListTile(
-                leading: GestureDetector(
-                  onTap: () {
-                    var ctsItem = ctsItems
-                        .firstWhere((ctsItem) => item.name == ctsItem.name);
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: Text(ctsItem.name),
-                        content: Text(ctsItem.standards),
-                        actions: <Widget>[
-                          TextButton(
-                              onPressed: () =>
-                                  Navigator.pop(context, 'Back to grading'),
-                              child: const Text("Back to grading"))
-                        ],
-                      ),
-                    );
-                  },
-                  child: Text(item.name),
+                leading:
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  child: GestureDetector(
+                    onTap: () {
+                      var ctsItem = ctsItems
+                          .firstWhere((ctsItem) => item.name == ctsItem.name);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: Text(ctsItem.name),
+                          content: Text(ctsItem.standards),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Back to grading'),
+                                child: const Text("Back to grading"))
+                          ],
+                        ),
+                      );
+                    },
+                    child: Text(item.name),
+                  ),
                 ),
                 title: GradeRadiosFormField(
                   initialValue: item.grade,
@@ -97,3 +101,69 @@ class GradesCard extends StatelessWidget {
     );
   }
 }
+
+//  Column(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 // change this part to change the arrangement
+//                 children: [
+//                   Row(children: [
+//                     GestureDetector(
+//                       onTap: () {
+//                         var ctsItem = ctsItems
+//                             .firstWhere((ctsItem) => item.name == ctsItem.name);
+//                         showDialog(
+//                           context: context,
+//                           builder: (BuildContext context) => AlertDialog(
+//                             title: Text(ctsItem.name),
+//                             content: Text(ctsItem.standards),
+//                             actions: <Widget>[
+//                               TextButton(
+//                                   onPressed: () =>
+//                                       Navigator.pop(context, 'Back to grading'),
+//                                   child: const Text("Back to grading"))
+//                             ],
+//                           ),
+//                         );
+//                       },
+//                       child: Text(item.name),
+//                     ),
+//                     GradeRadiosFormField(
+//                       initialValue: item.grade,
+//                       validator: (value) {
+//                         if (value == null || value == Grade.noSelection) {
+//                           return "Please select a value";
+//                         } else {
+//                           hasErrors(false);
+//                           return null;
+//                         }
+//                       },
+//                       onChanged: (grade) =>
+//                           context.read<CurrentFlight>().updateByGradeItem(
+//                                 student,
+//                                 GradeItem(
+//                                     name: item.name,
+//                                     comments: item.comments,
+//                                     grade: grade),
+//                               ),
+//                     ),
+//                   ]),
+//                   Row(children: [
+//                     TextFormField(
+//                       initialValue: item.comments,
+//                       decoration: const InputDecoration(
+//                         labelText: "Comments",
+//                       ),
+//                       onChanged: (comment) {
+//                         context.read<CurrentFlight>().updateByGradeItem(
+//                               student,
+//                               GradeItem(
+//                                 name: item.name,
+//                                 comments: comment,
+//                                 grade: item.grade,
+//                               ),
+//                             );
+//                       },
+//                     ),
+//                   ])
+//                 ],
+              // ),

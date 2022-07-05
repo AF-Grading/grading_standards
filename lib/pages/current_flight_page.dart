@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // prefer internal routes to be relative
+import '../theme/light_mode.dart';
 import '/models/current_flight.dart';
 import '/widgets/proficiency_grade_popup.dart';
 import '/widgets/proficiency_table_popup.dart';
@@ -117,7 +118,6 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                     }).toList(),*/
                   ),
                 ),
-
                 body: TabBarView(children: [
                   for (int i = 0;
                       i < context.watch<CurrentFlight>().gradeSheets.length;
@@ -149,8 +149,8 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                   },
                   tooltip: 'Increment',
                   child: const Text("Review"),
-                ), // This trailing comma makes auto-formatting nicer for build methods.
-              ),
+                ),
+              ), // This trailing comma makes auto-formatting nicer for build methods.
             ),
     );
   }
