@@ -13,7 +13,7 @@ class GradeSheet {
   // part of formation and airdrop events
   final AdQual adQual;
   final PilotQual pilotQual;
-  final String weather;
+  final Weather weather;
   final SortieType sortieType;
   final DayNight dayNight; //seems redundant to date
   // TODO convert to start and end time, and have a length num come from it automatically
@@ -37,7 +37,7 @@ class GradeSheet {
     required this.overall,
     this.adQual = AdQual.noSelection,
     this.pilotQual = PilotQual.noSelection,
-    this.weather = '',
+    required this.weather,
     required this.sortieType,
     required this.dayNight,
     required this.startTime,

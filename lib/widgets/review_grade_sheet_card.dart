@@ -1,6 +1,7 @@
 import 'package:app_prototype/widgets/overall_card.dart';
 import 'package:flutter/material.dart';
 
+import '../models/grade_enums.dart';
 import '../models/grade_sheet.dart';
 import 'grades_card.dart';
 
@@ -23,8 +24,21 @@ class ReviewGradeSheetCard extends StatelessWidget {
             hasErrors: (_) {},
           ),
           GradesCard(
+            title: "Graded Items",
             student: gradeSheet.student,
-            grades: gradeSheet.grades,
+            grades: gradeSheet.grades
+                .where((item) => item.grade != Grade.noGrade)
+                .toList(),
+            hasErrors: (_) {},
+          ),
+          GradesCard(
+            title: "Ungraded",
+            initiallyExpanded: false,
+            student: gradeSheet.student,
+            grades: gradeSheet.grades
+                .where((item) => item.grade == Grade.noGrade)
+                .toList(),
+            hasErrors: (_) {},
           ),
         ],
       ),

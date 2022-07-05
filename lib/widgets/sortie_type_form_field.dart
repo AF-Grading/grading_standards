@@ -21,6 +21,7 @@ class SortieTypeFormField extends FormField<SortieType> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      const Text("Sortie Type: "),
                       const Text("local"),
                       Radio<SortieType>(
                         value: SortieType.local,

@@ -43,6 +43,7 @@ class _FlightViewState extends State<FlightView>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -54,16 +55,24 @@ class _FlightViewState extends State<FlightView>
                 });
               }),
           GradesCard(
-            student: widget.gradeSheet.student,
-            grades: _selectedGrades,
-            title: "Grades",
-          ),
+              student: widget.gradeSheet.student,
+              grades: _selectedGrades,
+              title: "Grades",
+              hasErrors: (hasError) {
+                setState(() {
+                  widget.hasErrors(hasError);
+                });
+              }),
           GradesCard(
-            student: widget.gradeSheet.student,
-            grades: _unselectedGrades,
-            title: "Unused Grades",
-            initiallyExpanded: false,
-          ),
+              student: widget.gradeSheet.student,
+              grades: _unselectedGrades,
+              title: "Unused Grades",
+              initiallyExpanded: false,
+              hasErrors: (hasError) {
+                setState(() {
+                  widget.hasErrors(hasError);
+                });
+              }),
         ],
       ),
     );

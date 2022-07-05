@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 //internal imports
 import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
-import '../views/grade_sheet_view.dart';
+import 'grade_sheet_page.dart';
 import '../widgets/editable_grade_item.dart';
 import '../widgets/editable_pilot_qual_item.dart';
 import '../widgets/date_picker.dart';
@@ -160,7 +160,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: TextFormField(
-                                    initialValue: widget.gradeSheet.weather,
+                                    // initialValue: //widget.gradeSheet.weather,
                                     decoration: const InputDecoration(
                                         labelText: "Weather",
                                         contentPadding:

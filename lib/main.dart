@@ -1,5 +1,6 @@
 import 'package:app_prototype/models/CurrentUser.dart';
 import 'package:app_prototype/models/individual_report.dart';
+import 'package:app_prototype/pages/home_page_old.dart';
 import 'package:app_prototype/views/individual_reports_view.dart';
 import 'package:app_prototype/pages/user_log_in_page.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,9 @@ void main() {
         create: (context) => Users(),
       ),
       ChangeNotifierProvider(create: (context) => ThemeChange()),
-      ChangeNotifierProvider(create: (context) => CurrentUser(),)
+      ChangeNotifierProvider(
+        create: (context) => CurrentUser(),
+      )
     ], child: Phoenix(child: MyApp())),
   );
 }
@@ -62,7 +65,10 @@ class _MyAppState extends State<MyApp> {
                   darkTheme: ThemeData.dark(),
                   themeMode: value.mode,
                   // themeMode: context.watch<ThemeChange>().mode,
-                  home: HomePage(),
+                  home: HomePageOld(
+                      title: "Flying Standards",
+                      permission:
+                          context.watch<CurrentUser>().permission.index),
                 ),
               ),
             ),

@@ -41,12 +41,13 @@ class IndividualReportPage extends StatelessWidget {
                         "Average Overall Grade: ${context.watch<IndividualReport>().overallAverage}",
                         style: const TextStyle(fontSize: 22),
                       ),
-                      Text(
-                        "Most Recent Overall Comment: ${context.watch<IndividualReport>().mostRecentComment}",
-                        style: const TextStyle(fontSize: 22),
-                      ),
                       const Text(
-                        "Ungraded Items",
+                        "Most Recent Overall Comment:",
+                        style: TextStyle(fontSize: 22),
+                      ),
+                      Text(context.watch<IndividualReport>().mostRecentComment),
+                      const Text(
+                        "Ungraded Items:",
                         style: TextStyle(fontSize: 22),
                       ),
                       Column(

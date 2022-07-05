@@ -1,5 +1,5 @@
 import 'package:app_prototype/models/grade_sheet.dart';
-import 'package:app_prototype/views/grade_sheet_view.dart';
+import 'package:app_prototype/pages/grade_sheet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +19,7 @@ class StudentViewPage extends StatefulWidget {
 class _StudentViewPageState extends State<StudentViewPage> {
   // temp hot coded until we can figure out how to do it dynamiclly
   GradeSheet _selectedGradeSheet = GradeSheet(
+    weather: Weather.imc,
     instructor: User(
         name: "Captain Underpants",
         rank: Rank.capt,
