@@ -2,8 +2,8 @@ import '../models/grade_enums.dart';
 import '/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
 
-class GradeSheetView extends StatelessWidget {
-  const GradeSheetView({Key? key, required this.gradeSheet}) : super(key: key);
+class GradeSheetPage extends StatelessWidget {
+  const GradeSheetPage({Key? key, required this.gradeSheet}) : super(key: key);
 
   final GradeSheet gradeSheet;
   static double dist = 35;

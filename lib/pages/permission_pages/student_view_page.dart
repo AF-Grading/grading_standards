@@ -111,7 +111,7 @@ class _StudentViewPageState extends State<StudentViewPage> {
           ),
         ]),
       ),
-      body: GradeSheetView(
+      body: GradeSheetPage(
         gradeSheet: _selectedGradeSheet,
       ),
     );

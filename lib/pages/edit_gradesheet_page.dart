@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 //internal imports
 import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
-import 'grade_sheet_page.dart';
 import '../widgets/editable_grade_item.dart';
 import '../widgets/editable_pilot_qual_item.dart';
 import '../widgets/date_picker.dart';
@@ -12,6 +11,7 @@ import '../widgets/editable_ad_qual.dart';
 import '../widgets/editable_day_night_item.dart';
 import '../widgets/editable_grade_radios.dart';
 import '../widgets/editable_sortie_type.dart';
+import 'grade_sheet_page.dart';
 
 class EditGradeSheetPage extends StatefulWidget {
   const EditGradeSheetPage(
@@ -333,6 +333,6 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
               ),
             ),
           )
-        : GradeSheetView(gradeSheet: _gradeSheet);
+        : GradeSheetPage(gradeSheet: _gradeSheet);
   }
 }
