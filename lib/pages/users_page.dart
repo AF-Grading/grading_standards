@@ -1,5 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../models/users.dart';
 
 class UsersPage extends StatelessWidget {
   const UsersPage({Key? key}) : super(key: key);
@@ -7,9 +9,17 @@ class UsersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Text("USERS PAGE"),
+      appBar: AppBar(
+        title: const Text("Users"),
+      ),
+      body: Column(
+        children: context
+            .watch<Users>()
+            .users
+            .map((user) => ListTile(
+                  title: Text(user.name),
+                ))
+            .toList(),
       ),
     );
   }
