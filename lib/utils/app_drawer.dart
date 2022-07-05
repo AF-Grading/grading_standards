@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../pages/my_grade_sheets_page.dart';
 import '../pages/reference_materials_page.dart';
 import '../pages/settings_page.dart';
+import '../pages/users_page.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -13,13 +14,13 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(children: [
-        const DrawerHeader(
-          decoration: BoxDecoration(
+        DrawerHeader(
+          decoration: const BoxDecoration(
             color: Colors.blue,
           ),
           child: Text(
-            'Grading Standards',
-            style: TextStyle(
+            context.watch<CurrentUser>().user.name,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 24,
             ),
@@ -56,6 +57,16 @@ class AppDrawer extends StatelessWidget {
             );
           },
         ),
+        if (context.watch<CurrentUser>().permission.index > 2)
+          ListTile(
+            title: const Text('Users'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const UsersPage()),
+              );
+            },
+          ),
       ]),
     );
   }
