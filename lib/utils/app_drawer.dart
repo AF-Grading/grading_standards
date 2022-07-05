@@ -48,15 +48,6 @@ class AppDrawer extends StatelessWidget {
             );
           },
         ),
-        ListTile(
-          title: const Text('Settings'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsPage()),
-            );
-          },
-        ),
         if (context.watch<CurrentUser>().permission.index > 2)
           ListTile(
             title: const Text('Users'),
@@ -67,6 +58,15 @@ class AppDrawer extends StatelessWidget {
               );
             },
           ),
+        ListTile(
+          title: const Text('Settings'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsPage()),
+            );
+          },
+        ),
       ]),
     );
   }
