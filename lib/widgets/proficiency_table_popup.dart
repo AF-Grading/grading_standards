@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../models/cts_list.dart';
+
 class ProficencyTablePopup extends StatelessWidget {
   const ProficencyTablePopup({Key? key}) : super(key: key);
 
@@ -96,37 +98,4 @@ class ProficencyTablePopup extends StatelessWidget {
       child: const Text("Proficiency Table"),
     );
   }
-}
-
-List<TableDescription> tableDescriptions = [
-  TableDescription("Communication Skill", 1, 2, 3, 3),
-  TableDescription("Systems Knowledge", 2, 2, 3, 3),
-  TableDescription("Combat Governing Documents", 1, 2, 3, 3),
-  TableDescription(
-      "Threat Analysis & Mitigation/Intel Integration", 1, 2, 3, 3),
-  TableDescription("Mission Planning", 2, 2, 3, 3),
-];
-
-List<AirDropTableDescription> airDropDescriptions = [
-  AirDropTableDescription(
-      "Formation Operations - Visual Procedures", 2, 3, 3, 4),
-];
-
-class TableDescription {
-  final String ctsItem;
-  final int fpc;
-  final int fpq;
-  final int mp;
-  final int ip;
-  TableDescription(this.ctsItem, this.fpc, this.fpq, this.mp, this.ip);
-}
-
-class AirDropTableDescription {
-  final String ctsItem;
-  final int cpad;
-  final int acad;
-  final int adip;
-  final int ldad;
-  AirDropTableDescription(
-      this.ctsItem, this.cpad, this.acad, this.adip, this.ldad);
 }
