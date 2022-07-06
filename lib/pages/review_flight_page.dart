@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/current_flight.dart';
 import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
+import '../theme/light_mode.dart';
 import '../widgets/revie_grade_sheet_general_card.dart';
 import '../widgets/review_grade_sheet_card.dart';
 
@@ -53,7 +54,7 @@ class ReviewFlightPage extends StatelessWidget {
         },
         //tooltip: 'Increment',
         child: const Text("Finish"),
-      ), // This
+      ),
     );
   }
 }

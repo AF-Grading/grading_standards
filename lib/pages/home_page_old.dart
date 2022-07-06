@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
               body: const GradeSheetsView(
                 isInstructor: false,
               ),
-              drawer: const AppDrawer(),
+              drawer: AppDrawer(),
             )
           : Scaffold(
               appBar: AppBar(
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                         ],
                       ),
               ),
-              drawer: const AppDrawer(),
+              drawer: AppDrawer(),
               body: TabBarView(
                 controller: _controller,
                 children: widget.permission == 1

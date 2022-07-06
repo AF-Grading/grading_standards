@@ -1,10 +1,13 @@
 import 'package:app_prototype/models/grade_sheet.dart';
+import 'package:app_prototype/models/theme_change.dart';
 import 'package:app_prototype/pages/grade_sheet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/CurrentUser.dart';
 import '../../models/grade_sheets.dart';
+import '../../theme/dark_mode.dart';
+import '../../theme/light_mode.dart';
 import '../../views/individual_reports_view.dart';
 import '../reference_materials_page.dart';
 import '../settings_page.dart';
@@ -80,7 +83,9 @@ class _StudentViewPageState extends State<StudentViewPage> {
         child: ListView(children: [
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+               color: context.watch<ThemeChange>().mode == ThemeMode.dark
+                    ? primaryDarkBlue
+                    : primaryBlue,
             ),
             child: Text(
               context.watch<CurrentUser>().user.name,

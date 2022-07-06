@@ -1,4 +1,5 @@
 import 'package:app_prototype/models/CurrentUser.dart';
+import 'package:app_prototype/models/theme_change.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,17 +7,25 @@ import '../pages/my_grade_sheets_page.dart';
 import '../pages/reference_materials_page.dart';
 import '../pages/settings_page.dart';
 import '../pages/users_page.dart';
+import '../theme/dark_mode.dart';
+import '../theme/light_mode.dart';
 
-class AppDrawer extends StatelessWidget {
-  const AppDrawer({Key? key}) : super(key: key);
+class AppDrawer extends StatefulWidget {
+  @override
+  _AppDrawerState createState() => _AppDrawerState();
+}
 
+class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(children: [
         DrawerHeader(
-          decoration: const BoxDecoration(
-            color: Colors.blue,
+          decoration: BoxDecoration(
+            // not really sure why this isn't changing
+            color: context.watch<ThemeChange>().mode == ThemeMode.dark
+                ? primaryDarkBlue
+                : primaryBlue,
           ),
           child: Text(
             context.watch<CurrentUser>().user.name,

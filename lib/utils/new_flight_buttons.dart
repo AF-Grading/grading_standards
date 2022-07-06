@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../models/current_flight.dart';
 import '../pages/current_flight_page.dart';
+import '../theme/light_mode.dart';
 
 class NewFlightButtons extends StatelessWidget {
   const NewFlightButtons({Key? key}) : super(key: key);
@@ -15,29 +16,12 @@ class NewFlightButtons extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: FloatingActionButton(
-            heroTag: "subtract student",
-            onPressed: () {
-              String? message = context.read<CurrentFlight>().subtract();
-              if (message != null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(message),
-                  ),
-                );
-              }
-            },
-            tooltip: "Subtract Student",
-            child: const Icon(Icons.remove),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FloatingActionButton(
-              heroTag: "add student",
-              tooltip: "Add Student",
+          child: Theme(
+            data: Theme.of(context).copyWith(backgroundColor: primaryYellow),
+            child: FloatingActionButton(
+              heroTag: "subtract student",
               onPressed: () {
-                String? message = context.read<CurrentFlight>().add();
+                String? message = context.read<CurrentFlight>().subtract();
                 if (message != null) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -46,31 +30,57 @@ class NewFlightButtons extends StatelessWidget {
                   );
                 }
               },
-              child: const Icon(Icons.add)),
+              tooltip: "Subtract Student",
+              child: const Icon(Icons.remove),
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: FloatingActionButton(
-            heroTag: "start flight",
-            // TODO if already pressed, instead have a resume flight button
-            tooltip: "Start Flight",
-            child: const Icon(Icons.airplanemode_active),
-            onPressed: () {
-              if (context
-                  .read<CurrentFlight>()
-                  .newKey
-                  .currentState!
-                  .validate()) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CurrentFlightPage(),
-                  ),
-                );
-                // TODO if in a flight, dont do this
-                context.read<CurrentFlight>().start();
-              }
-            },
+          child: Theme(
+            data: Theme.of(context).copyWith(backgroundColor: primaryYellow),
+            child: FloatingActionButton(
+                heroTag: "add student",
+                tooltip: "Add Student",
+                onPressed: () {
+                  String? message = context.read<CurrentFlight>().add();
+                  if (message != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(message),
+                      ),
+                    );
+                  }
+                },
+                child: const Icon(Icons.add)),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Theme(
+            data: Theme.of(context).copyWith(backgroundColor: primaryYellow),
+            child: FloatingActionButton(
+              heroTag: "start flight",
+              // TODO if already pressed, instead have a resume flight button
+              tooltip: "Start Flight",
+              child: const Icon(Icons.airplanemode_active),
+              onPressed: () {
+                if (context
+                    .read<CurrentFlight>()
+                    .newKey
+                    .currentState!
+                    .validate()) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CurrentFlightPage(),
+                    ),
+                  );
+                  // TODO if in a flight, dont do this
+                  context.read<CurrentFlight>().start();
+                }
+              },
+            ),
           ),
         ),
       ],
