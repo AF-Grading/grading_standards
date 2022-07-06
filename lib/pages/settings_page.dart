@@ -1,6 +1,6 @@
 import 'package:app_prototype/models/CurrentUser.dart';
 import 'package:app_prototype/models/theme_change.dart';
-import 'package:app_prototype/models/user_profile.dart';
+//import 'package:app_prototype/models/user_profile.dart';
 import 'package:app_prototype/widgets/theme_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
