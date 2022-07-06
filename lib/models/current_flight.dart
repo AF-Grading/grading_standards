@@ -160,9 +160,10 @@ class CurrentFlight extends ChangeNotifier {
               startTime: sheet.startTime,
               endTime: sheet.endTime,
               sortieNumber: sheet.sortieNumber,
-              length:
-                  (_end.microsecondsSinceEpoch - _start.microsecondsSinceEpoch)
-                      .toString(),
+              length: ((_end.millisecondsSinceEpoch -
+                          _start.millisecondsSinceEpoch) ~/
+                      1000)
+                  .toString(),
               adQual: sheet.adQual,
               pilotQual: sheet.pilotQual,
               weather: sheet.weather,
@@ -297,8 +298,7 @@ class CurrentFlight extends ChangeNotifier {
           startTime: _start,
           endTime: _end,
           sortieNumber: _sortieNum,
-          length: (_end.microsecondsSinceEpoch - _start.microsecondsSinceEpoch)
-              .toString(),
+          length: _end.difference(_start).toString(),
           adQual: sheet.adQual,
           pilotQual: sheet.pilotQual,
           weather: _weather,

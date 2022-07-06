@@ -14,7 +14,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("settings"),
+          title: const Text("Settings"),
           elevation: 0,
         ),
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
