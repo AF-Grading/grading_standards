@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-
 // light theme
 ThemeData light_theme = ThemeData(
-  fontFamily: "Times New Roman",
+  fontFamily: "Cambo",
   colorScheme: ColorScheme.fromSwatch(
     primarySwatch: primaryBlue,
   )
@@ -52,8 +51,6 @@ ThemeData light_theme = ThemeData(
   toggleableActiveColor: primaryYellow,
 );
 
-
-
 // light theme colors
 const MaterialColor primaryBlue = MaterialColor(
   _bluePrimaryValue,
@@ -89,4 +86,3 @@ const MaterialColor primaryYellow = MaterialColor(
   },
 );
 const int _yellowPrimaryValue = 0xFFB6860A;
-

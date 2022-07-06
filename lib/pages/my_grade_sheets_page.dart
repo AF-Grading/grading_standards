@@ -21,6 +21,7 @@ class MyGradeSheetsPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text("My Grade Sheets"),
               GestureDetector(
@@ -31,14 +32,15 @@ class MyGradeSheetsPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddEditGradeSheetPage(
+                      builder:
+                          (context) => /*AddEditGradeSheetPage(
                         instructor:
                             context.watch<CurrentUser>().permission.index < 3
                                 ? context.watch<CurrentUser>().user
                                 : null,
-                      ),
-                      //TODO: NOT A GOOD PRACTICE TO PASS MODEL WITH DATA LIKE THIS
-                      /*EditGradeSheetPage(
+                      ),*/
+                              //TODO: NOT A GOOD PRACTICE TO PASS MODEL WITH DATA LIKE THIS
+                              EditGradeSheetPage(
                         isEditing: true,
                         gradeSheet: GradeSheet(
                             // TODO get
@@ -58,15 +60,15 @@ class MyGradeSheetsPage extends StatelessWidget {
                                 password: ''),
                             missionNum: 0,
                             grades: baseGradeItems,
-                            overall: Grade.noGrade,
-                            sortieType: SortieType.ims,
-                            dayNight: DayNight.night,
+                            overall: Grade.noSelection,
+                            sortieType: SortieType.noSelection,
+                            dayNight: DayNight.noSelection,
                             startTime: DateTime.now(),
                             endTime: DateTime.now(),
-                            sortieNumber: 2,
-                            length: "2 hours",
+                            sortieNumber: 0,
+                            length: "",
                             weather: Weather.noSelection),
-                      ),*/
+                      ),
                     ),
                   );
                 },

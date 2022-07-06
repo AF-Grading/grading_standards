@@ -1,3 +1,5 @@
+import 'package:app_prototype/pages/edit_gradesheet_page.dart';
+
 import '../models/grade_enums.dart';
 import '/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,24 @@ class GradeSheetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Grade Sheet    Instructor: ${gradeSheet.instructor.name}"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Instructor: ${gradeSheet.instructor.name}"),
+            GestureDetector(
+              child: const Icon(Icons.edit),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditGradeSheetPage(
+                    isEditing: true,
+                    gradeSheet: gradeSheet,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
