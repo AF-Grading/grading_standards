@@ -21,60 +21,107 @@ class GradeRadiosFormField extends FormField<Grade> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Text("NG"),
-                      Radio<Grade>(
-                        value: Grade.noGrade,
-                        groupValue: formState.value,
-                        onChanged: (value) {
-                          formState.didChange(value);
-                          onChanged!(value!);
-                        },
-                      ),
-                      const Text("0"),
-                      Radio<Grade>(
-                        value: Grade.unsatisfactory,
-                        groupValue: formState.value,
-                        onChanged: (value) {
-                          formState.didChange(value);
-                          onChanged!(value!);
-                        },
-                      ),
-                      const Text("1"),
-                      Radio<Grade>(
-                        value: Grade.introductory,
-                        groupValue: formState.value,
-                        onChanged: (value) {
-                          formState.didChange(value);
-                          onChanged!(value!);
-                        },
-                      ),
-                      const Text("2"),
-                      Radio<Grade>(
-                        value: Grade.familiar,
-                        groupValue: formState.value,
-                        onChanged: (value) {
-                          formState.didChange(value);
-                          onChanged!(value!);
-                        },
-                      ),
-                      const Text("3"),
-                      Radio<Grade>(
-                        value: Grade.proficient,
-                        groupValue: formState.value,
-                        onChanged: (value) {
-                          formState.didChange(value);
-                          onChanged!(value!);
-                        },
-                      ),
-                      const Text("4"),
-                      Radio<Grade>(
-                        value: Grade.expert,
-                        groupValue: formState.value,
-                        onChanged: (value) {
-                          formState.didChange(value);
-                          onChanged!(value!);
-                        },
-                      ),
+                      // Wrap(
+                      //   direction: Axis.horizontal,
+                      //   crossAxisAlignment: WrapCrossAlignment.center,
+                      //   children: [
+                      //     Text("None"),
+                      //     Radio<AdQual>(
+                      //       value: AdQual.none,
+                      //       groupValue: _adQual,
+                      //       onChanged: (AdQual? value) {
+                      //         setState(() {
+                      //           _adQual = value!;
+                      //         });
+                      //         widget.onChanged(_adQual);
+                      //       },
+                      //     ),
+                      //   ],
+                      // ),
+                      Wrap(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            const Text("NG"),
+                            Radio<Grade>(
+                              value: Grade.noGrade,
+                              groupValue: formState.value,
+                              onChanged: (value) {
+                                formState.didChange(value);
+                                onChanged!(value!);
+                              },
+                            ),
+                          ]),
+                      Wrap(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            const Text("0"),
+                            Radio<Grade>(
+                              value: Grade.unsatisfactory,
+                              groupValue: formState.value,
+                              onChanged: (value) {
+                                formState.didChange(value);
+                                onChanged!(value!);
+                              },
+                            ),
+                          ]),
+                      Wrap(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            const Text("1"),
+                            Radio<Grade>(
+                              value: Grade.introductory,
+                              groupValue: formState.value,
+                              onChanged: (value) {
+                                formState.didChange(value);
+                                onChanged!(value!);
+                              },
+                            ),
+                          ]),
+                      Wrap(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            const Text("2"),
+                            Radio<Grade>(
+                              value: Grade.familiar,
+                              groupValue: formState.value,
+                              onChanged: (value) {
+                                formState.didChange(value);
+                                onChanged!(value!);
+                              },
+                            ),
+                          ]),
+                      Wrap(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            const Text("3"),
+                            Radio<Grade>(
+                              value: Grade.proficient,
+                              groupValue: formState.value,
+                              onChanged: (value) {
+                                formState.didChange(value);
+                                onChanged!(value!);
+                              },
+                            ),
+                          ]),
+                      Wrap(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            const Text("4"),
+                            Radio<Grade>(
+                              value: Grade.expert,
+                              groupValue: formState.value,
+                              onChanged: (value) {
+                                formState.didChange(value);
+                                onChanged!(value!);
+                              },
+                            ),
+                          ]),
                     ],
                   ),
                   formState.hasError
