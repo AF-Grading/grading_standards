@@ -79,6 +79,16 @@ List<CTSItem> ctsItems = [
       Grade.familiar,
       "Demonstrates proper procedures for full flap assault landing on a runway certified for assault operations IAW AFI 13-217 or a runway marked appropriately for practice assault operations.",
       "Maintains smooth approach path. Maintains constant control of flight path vector or made positive corrections. Touches down on centerline within the marked zone within the published sink rate limitations. Maintains runway centerline during rollout. Airspeed +/- 5 kts."),
+  CTSItem(
+      "Semi Prepared Runway Operations",
+      Grade.familiar,
+      "Plans and flies mission into a threat environment that includes at least 3 of the following types of threats: IR, ADA, RF, airborne, jamming, passive detection, and/or CBRNE threats. Applies to formation threat maneuvers.",
+      "a. Performs SPRO landing procedures and follows guidance in TO 1C-17A-1 and TO 1C-17A-1-1. b. Calculates landing and predicted takeoff weight in flight before landing. Ensures weights follow guidance in TO 1C-17A-1 and TO 1C-17A-1-1. c. Performs applicable ground checklist IAW TO 1C- 17A-1 (i.e. Dusty Airfield Environmental Procedure). d. Perform alternate takeoff procedures and guidance in TO 1C-17A-1 and TO 1C-17A-1-1."),
+  CTSItem(
+      "Pre-emptive / Reactive Tactics",
+      Grade.familiar,
+      "Plans and flies mission into a threat environment that includes at least 3 of the following types of threats: IR, ADA, RF, airborne, jamming, passive detection, and/or CBRNE threats. Applies to formation threat maneuvers.",
+      "Pre-emptive: Demonstrates ability to formulate a plan of action to avoid lethal range and/or detection of given threat system. Adequately analyzes and degrades all threats ensuring effective mitigation; maintains briefed ALR. IP Only: Demonstrates ability to instruct appropriate tactics to avoid threats and exposure. b. Reactive: Demonstrates ability to acquire potential threats, applies effective lookout techniques for all phases of flight, and executes the proper reactive maneuver in a timely manner in order to defeat a given immediate threat."),
 ];
 
 // For calling with new GradeSheets
