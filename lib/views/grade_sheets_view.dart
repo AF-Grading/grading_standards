@@ -60,7 +60,6 @@ class GradeSheetsView extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => GradeSheetPage(
-                                              //isEditing: true,
                                               gradeSheet: gradeSheet)),
                                     );
                                   },

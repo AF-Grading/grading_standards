@@ -1,14 +1,19 @@
 import 'package:app_prototype/models/CurrentUser.dart';
 import 'package:app_prototype/models/cts_list.dart';
+import 'package:app_prototype/pages/grade_sheet_page.dart';
+import 'package:app_prototype/widgets/grade_radio_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../models/grade_enums.dart';
 import '../models/grade_sheet.dart';
+import '../models/grade_sheets.dart';
 import '../models/user.dart';
 import '../models/users.dart';
+import '../widgets/date_picker.dart';
 import '../widgets/day_night_form_field.dart';
+import '../widgets/grades_card.dart';
 import '../widgets/search_users_form_field.dart';
 import '../widgets/sortie_type_form_field.dart';
 import '../widgets/weather_form_field.dart';
@@ -30,7 +35,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
   User? _student;
   User? _instructor;
   int? _missionNum;
-  late List<GradeItem> _grades;
+  final List<GradeItem> _grades = [];
   Grade? _overall;
   //final AdQual adQual;
   //final PilotQual pilotQual;
@@ -43,23 +48,42 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
   String? _profile; //unsure what this means
   String? _overallComments;
   String? _recommendations;
+  final TextEditingController _overallC = TextEditingController();
+  final TextEditingController _missionN = TextEditingController();
 
   @override
   void initState() {
     _isEditing = widget.gradeSheet != null ? true : false;
-    _instructor = widget.gradeSheet?.instructor;
-    _student = widget.gradeSheet?.student;
-    _missionNum = widget.gradeSheet?.missionNum;
-    _grades = widget.gradeSheet?.grades != null
-        ? widget.gradeSheet!.grades
-        : baseGradeItems;
-    _overall = widget.gradeSheet?.overall;
-    _weather = widget.gradeSheet?.weather;
-    _dayNight = widget.gradeSheet?.dayNight;
-    _sortieType = widget.gradeSheet?.sortieType;
-    _profile = widget.gradeSheet?.profile;
-    _overallComments = widget.gradeSheet?.overallComments;
-    _recommendations = widget.gradeSheet?.recommendations;
+    if (_isEditing) {
+      _instructor = widget.gradeSheet?.instructor;
+      _student = widget.gradeSheet?.student;
+      _missionNum = widget.gradeSheet?.missionNum;
+      if (widget.gradeSheet?.grades != null) {
+        for (GradeItem item in widget.gradeSheet!.grades) {
+          _grades.add(item);
+        }
+      } else {
+        for (GradeItem item in baseGradeItems) {
+          _grades.add(GradeItem(name: item.name, grade: Grade.noGrade));
+        }
+      }
+      _overall = widget.gradeSheet?.overall;
+      _weather = widget.gradeSheet?.weather;
+      _dayNight = widget.gradeSheet?.dayNight;
+      _sortieType = widget.gradeSheet?.sortieType;
+      _profile = widget.gradeSheet?.profile;
+      _overallComments = widget.gradeSheet?.overallComments;
+      _recommendations = widget.gradeSheet?.recommendations;
+      _startTime = widget.gradeSheet?.startTime;
+      _endTime = widget.gradeSheet?.endTime;
+
+      //_overallC. = widget.gradeSheet.overallComments ;
+    } else {
+      for (GradeItem item in baseGradeItems) {
+        _grades.add(GradeItem(name: item.name, grade: Grade.noGrade));
+      }
+    }
+
     super.initState();
   }
 
@@ -76,7 +100,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
               Card(
                 child: ExpansionTile(
                   initiallyExpanded: true,
-                  title: const Text("Overall"),
+                  title: const Text("General"),
                   children: [
                     _student != null
                         ? Row(
@@ -99,7 +123,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             labelText: "Student Name",
                             users: context.watch<Users>().users,
                             validator: (value) {
-                              if (value!.isEmpty) {
+                              if (value != null) {
                                 return "Please select a student from dropdown";
                               } else {
                                 return null;
@@ -137,7 +161,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             labelText: "Instructor Name",
                             users: context.watch<Users>().users,
                             validator: (value) {
-                              if (value!.isEmpty) {
+                              if (value != null) {
                                 return "Please select an instructor from dropdown";
                               } else {
                                 return null;
@@ -153,6 +177,40 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                               });
                             },
                           ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: _overallC,
+                        initialValue: _overallComments,
+                        decoration: const InputDecoration(
+                          labelText: "Overall Comments",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter comments";
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _overallComments == value;
+                          });
+                        },
+                      ),
+                    ),
+                    GradeRadiosFormField(
+                      initialValue: _overall,
+                      validator: (value) {
+                        if (value == null || value == Grade.noSelection) {
+                          return "Please select a value";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) => setState(() {
+                        _overall = value;
+                      }),
+                    ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -206,7 +264,10 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                         children: [
                           Expanded(
                             child: TextFormField(
-                                initialValue: _missionNum.toString(),
+                                controller: _missionN,
+                                initialValue: _missionNum != null
+                                    ? _missionNum!.toString()
+                                    : null,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly
@@ -220,9 +281,11 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                                   }
                                   return null;
                                 },
-                                onChanged: (value) => setState(() {
-                                      _missionNum == int.tryParse(value) ?? 0;
-                                    })),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _missionNum == int.tryParse(value);
+                                  });
+                                }),
                           ),
                           Expanded(
                             child: TextFormField(
@@ -269,16 +332,160 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                                 _profile = value;
                               })),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        initialValue: _recommendations,
+                        decoration: const InputDecoration(
+                          labelText: "Recommendations",
+                        ),
+
+                        /*validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter comments";
+                          }
+                          return null;
+                        },*/
+                        onChanged: (value) => setState(() {
+                          _recommendations == value;
+                        }),
+                      ),
+                    ),
+                    DatePicker(
+                        date: _startTime,
+                        onChanged: (value) => setState(() {
+                              _startTime = value;
+                            })),
+                    DatePicker(
+                        date: _endTime,
+                        onChanged: (value) => setState(() {
+                              _endTime = value;
+                            })),
+                    // TODO validate this for negative numbers
+                    Text(
+                        "Duration: ${_endTime != null && _startTime != null ? _endTime!.difference(_startTime!).toString() : null}")
                   ],
                 ),
               ),
               Card(
                 child: ExpansionTile(
-                  title: Text("Grade Items"),
+                  title: const Text("Grade Items"),
+                  children: _grades
+                      .map(
+                        (item) => Card(
+                          child: Wrap(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      var ctsItem = ctsItems.firstWhere(
+                                          (ctsItem) =>
+                                              item.name == ctsItem.name);
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          title: Text(ctsItem.name),
+                                          content: Text(ctsItem.standards),
+                                          actions: <Widget>[
+                                            TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Back to grading'),
+                                                child: const Text(
+                                                    "Back to grading"))
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    child: Text(item.name),
+                                  ),
+                                ),
+                              ),
+                              GradeRadiosFormField(
+                                  initialValue: item.grade,
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value == Grade.noSelection) {
+                                      return "Please select a value";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  onChanged: (grade) => setState(() {
+                                        item.grade = grade;
+                                      })),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  initialValue: item.comments,
+                                  decoration: const InputDecoration(
+                                    labelText: "Comments",
+                                  ),
+                                  onChanged: (comment) {
+                                    setState(() {
+                                      item.comments = comment;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
               )
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            if (_key.currentState!.validate()) {
+              String id = context.read<GradeSheets>().updateById(
+                    GradeSheet(
+                      id: _isEditing ? widget.gradeSheet!.id : null,
+                      instructor: _instructor!,
+                      student: _student!,
+                      missionNum: int.tryParse(_missionN.text) ??
+                          0, //_missionNum != null ? _missionNum! : 0,
+                      grades: _grades,
+                      overall: _overall!,
+                      weather: _weather!,
+                      dayNight: _dayNight!,
+                      sortieType: _sortieType!,
+                      startTime: _startTime!,
+                      endTime: _endTime!,
+                      sortieNumber: _sortieNumber!,
+                      profile: _profile!,
+                      overallComments: _overallC.text, //_overallComments!,
+                      recommendations:
+                          _recommendations != null ? _recommendations! : "",
+                      length: _endTime!.difference(_startTime!).toString(),
+                    ),
+                  );
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Grade Sheet Added"),
+                ),
+              );
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GradeSheetPage(
+                    gradeSheet: context
+                        .read<GradeSheets>()
+                        .gradeSheets
+                        .firstWhere((sheet) => sheet.id == id),
+                  ),
+                ),
+              );
+            }
+          },
+          child: const Icon(Icons.save),
         ),
       ),
     );

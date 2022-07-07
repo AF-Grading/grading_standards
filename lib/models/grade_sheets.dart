@@ -341,6 +341,15 @@ class GradeSheets extends ChangeNotifier {
     notifyListeners();
   }
 
+  String updateById(GradeSheet gradeSheet) {
+    int index = _gradeSheets.indexWhere((sheet) => sheet.id == gradeSheet.id);
+    index == -1
+        ? _gradeSheets.add(gradeSheet)
+        : _gradeSheets.replaceRange(index, index + 1, [gradeSheet]);
+    notifyListeners();
+    return gradeSheet.id;
+  }
+
   void addSheet(GradeSheet sheet) {
     _gradeSheets.add(
       GradeSheet(

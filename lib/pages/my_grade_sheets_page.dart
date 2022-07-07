@@ -32,15 +32,14 @@ class MyGradeSheetsPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder:
-                          (context) => /*AddEditGradeSheetPage(
-                        instructor:
+                      builder: (context) => const AddEditGradeSheetPage(
+                          /*instructor:
                             context.watch<CurrentUser>().permission.index < 3
                                 ? context.watch<CurrentUser>().user
-                                : null,
-                      ),*/
-                              //TODO: NOT A GOOD PRACTICE TO PASS MODEL WITH DATA LIKE THIS
-                              EditGradeSheetPage(
+                                : null,*/
+                          ),
+                      //TODO: NOT A GOOD PRACTICE TO PASS MODEL WITH DATA LIKE THIS
+                      /*EditGradeSheetPage(
                         isEditing: true,
                         gradeSheet: GradeSheet(
                             // TODO get
@@ -68,7 +67,7 @@ class MyGradeSheetsPage extends StatelessWidget {
                             sortieNumber: 0,
                             length: "",
                             weather: Weather.noSelection),
-                      ),
+                      ),*/
                     ),
                   );
                 },
