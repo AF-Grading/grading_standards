@@ -18,8 +18,8 @@ class SortieTypeFormField extends FormField<SortieType> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Wrap(
+                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       const Text("Sortie Type: "),
                       const Text("local"),

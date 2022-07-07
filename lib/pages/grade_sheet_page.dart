@@ -4,6 +4,8 @@ import '../models/grade_enums.dart';
 import '/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
 
+import 'add_edit_grade_sheet_page.dart';
+
 class GradeSheetPage extends StatelessWidget {
   const GradeSheetPage({Key? key, required this.gradeSheet}) : super(key: key);
 
@@ -23,8 +25,7 @@ class GradeSheetPage extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditGradeSheetPage(
-                    isEditing: true,
+                  builder: (context) => AddEditGradeSheetPage(
                     gradeSheet: gradeSheet,
                   ),
                 ),
