@@ -13,7 +13,6 @@ import '../models/user.dart';
 import '../models/users.dart';
 import '../widgets/date_picker.dart';
 import '../widgets/day_night_form_field.dart';
-import '../widgets/grades_card.dart';
 import '../widgets/search_users_form_field.dart';
 import '../widgets/sortie_type_form_field.dart';
 import '../widgets/weather_form_field.dart';
@@ -31,53 +30,36 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   late bool _isEditing;
+  bool _dateError = false;
 
-  User? _student;
-  User? _instructor;
-  int? _missionNum;
+  late User? _student = widget.gradeSheet?.student;
+  late User? _instructor = widget.gradeSheet?.instructor;
   final List<GradeItem> _grades = [];
-  Grade? _overall;
-  //final AdQual adQual;
-  //final PilotQual pilotQual;
-  Weather? _weather;
-  DayNight? _dayNight;
-  SortieType? _sortieType;
-  DateTime? _startTime;
-  DateTime? _endTime;
-  int? _sortieNumber; // 1-20
-  String? _profile; //unsure what this means
-  String? _overallComments;
-  String? _recommendations;
-  final TextEditingController _overallC = TextEditingController();
-  final TextEditingController _missionN = TextEditingController();
+  late Grade? _overall = widget.gradeSheet?.overall;
+  late Weather? _weather = widget.gradeSheet?.weather;
+  late DayNight? _dayNight = widget.gradeSheet?.dayNight;
+  late SortieType? _sortieType = widget.gradeSheet?.sortieType;
+  late DateTime? _startTime = widget.gradeSheet?.startTime ?? DateTime.now();
+  late DateTime? _endTime = widget.gradeSheet?.endTime ?? DateTime.now();
+  late final TextEditingController _overallC =
+      TextEditingController(text: widget.gradeSheet?.overallComments);
+  late final TextEditingController _missionN =
+      TextEditingController(text: widget.gradeSheet?.missionNum.toString());
+  late final TextEditingController _sortieNum =
+      TextEditingController(text: widget.gradeSheet?.sortieNumber.toString());
+  late final TextEditingController _sortiePro =
+      TextEditingController(text: widget.gradeSheet?.profile);
+  late final TextEditingController _reccs =
+      TextEditingController(text: widget.gradeSheet?.recommendations);
 
   @override
   void initState() {
     _isEditing = widget.gradeSheet != null ? true : false;
-    if (_isEditing) {
-      _instructor = widget.gradeSheet?.instructor;
-      _student = widget.gradeSheet?.student;
-      _missionNum = widget.gradeSheet?.missionNum;
-      if (widget.gradeSheet?.grades != null) {
-        for (GradeItem item in widget.gradeSheet!.grades) {
-          _grades.add(item);
-        }
-      } else {
-        for (GradeItem item in baseGradeItems) {
-          _grades.add(GradeItem(name: item.name, grade: Grade.noGrade));
-        }
-      }
-      _overall = widget.gradeSheet?.overall;
-      _weather = widget.gradeSheet?.weather;
-      _dayNight = widget.gradeSheet?.dayNight;
-      _sortieType = widget.gradeSheet?.sortieType;
-      _profile = widget.gradeSheet?.profile;
-      _overallComments = widget.gradeSheet?.overallComments;
-      _recommendations = widget.gradeSheet?.recommendations;
-      _startTime = widget.gradeSheet?.startTime;
-      _endTime = widget.gradeSheet?.endTime;
 
-      //_overallC. = widget.gradeSheet.overallComments ;
+    if (widget.gradeSheet?.grades != null) {
+      for (GradeItem item in widget.gradeSheet!.grades) {
+        _grades.add(item);
+      }
     } else {
       for (GradeItem item in baseGradeItems) {
         _grades.add(GradeItem(name: item.name, grade: Grade.noGrade));
@@ -138,7 +120,6 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                               });
                             },
                           ),
-                    //context.watch<CurrentUser>().user.permission.index > 2
                     _instructor != null
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -181,7 +162,6 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         controller: _overallC,
-                        initialValue: _overallComments,
                         decoration: const InputDecoration(
                           labelText: "Overall Comments",
                         ),
@@ -190,11 +170,6 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             return "Please enter comments";
                           }
                           return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            _overallComments == value;
-                          });
                         },
                       ),
                     ),
@@ -210,7 +185,6 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                         _overall = value;
                       }),
                     ),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -264,53 +238,42 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                         children: [
                           Expanded(
                             child: TextFormField(
-                                controller: _missionN,
-                                initialValue: _missionNum != null
-                                    ? _missionNum!.toString()
-                                    : null,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                decoration: const InputDecoration(
-                                  labelText: "Mission Number",
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "Please enter a number";
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  setState(() {
-                                    _missionNum == int.tryParse(value);
-                                  });
-                                }),
+                              controller: _missionN,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              decoration: const InputDecoration(
+                                labelText: "Mission Number",
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter a number";
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                           Expanded(
                             child: TextFormField(
-                                initialValue: _sortieNumber != null
-                                    ? _sortieNumber.toString()
-                                    : "",
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                decoration: const InputDecoration(
-                                  labelText: "Sortie Number",
-                                ),
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.isEmpty ||
-                                      int.tryParse(value)! < 0 ||
-                                      int.tryParse(value)! > 20) {
-                                    return "Please enter a number, 0-20";
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) => setState(() {
-                                      _sortieNumber = int.tryParse(value) ?? 0;
-                                    })),
+                              controller: _sortieNum,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              decoration: const InputDecoration(
+                                labelText: "Sortie Number",
+                              ),
+                              validator: (value) {
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    int.tryParse(value)! < 0 ||
+                                    int.tryParse(value)! > 20) {
+                                  return "Please enter a number, 0-20";
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -318,41 +281,29 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
-                          initialValue: _profile,
-                          decoration: const InputDecoration(
-                            labelText: "Sortie Profile",
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please enter a value";
-                            }
-                            return null;
-                          },
-                          onChanged: (value) => setState(() {
-                                _profile = value;
-                              })),
+                        controller: _sortiePro,
+                        decoration: const InputDecoration(
+                          labelText: "Sortie Profile",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter a value";
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
-                        initialValue: _recommendations,
+                        controller: _reccs,
                         decoration: const InputDecoration(
                           labelText: "Recommendations",
                         ),
-
-                        /*validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter comments";
-                          }
-                          return null;
-                        },*/
-                        onChanged: (value) => setState(() {
-                          _recommendations == value;
-                        }),
                       ),
                     ),
                     DatePicker(
-                        date: _startTime,
+                        date: _startTime ?? DateTime.now(),
                         onChanged: (value) => setState(() {
                               _startTime = value;
                             })),
@@ -361,12 +312,24 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                         onChanged: (value) => setState(() {
                               _endTime = value;
                             })),
-                    // TODO validate this for negative numbers
-                    Text(
-                        "Duration: ${_endTime != null && _startTime != null ? _endTime!.difference(_startTime!).toString() : null}")
+                    _endTime != null && _startTime != null
+                        ? _endTime!.difference(_startTime!).inSeconds > 0
+                            ? Text(
+                                "Duration: ${_endTime!.difference(_startTime!).toString()}",
+                              )
+                            : Text(
+                                "Duration: ${_endTime!.difference(_startTime!).toString()}",
+                                style: const TextStyle(color: Colors.red))
+                        : Text(
+                            "Duration: ",
+                            style: _dateError
+                                ? const TextStyle(color: Colors.red)
+                                : null,
+                          ),
                   ],
                 ),
               ),
+              // TODO if all the grades are no grade, disallow continuing
               Card(
                 child: ExpansionTile(
                   title: const Text("Grade Items"),
@@ -443,46 +406,58 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (_key.currentState!.validate()) {
-              String id = context.read<GradeSheets>().updateById(
-                    GradeSheet(
-                      id: _isEditing ? widget.gradeSheet!.id : null,
-                      instructor: _instructor!,
-                      student: _student!,
-                      missionNum: int.tryParse(_missionN.text) ??
-                          0, //_missionNum != null ? _missionNum! : 0,
-                      grades: _grades,
-                      overall: _overall!,
-                      weather: _weather!,
-                      dayNight: _dayNight!,
-                      sortieType: _sortieType!,
-                      startTime: _startTime!,
-                      endTime: _endTime!,
-                      sortieNumber: _sortieNumber!,
-                      profile: _profile!,
-                      overallComments: _overallC.text, //_overallComments!,
-                      recommendations:
-                          _recommendations != null ? _recommendations! : "",
-                      length: _endTime!.difference(_startTime!).toString(),
-                    ),
-                  );
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Grade Sheet Added"),
-                ),
-              );
-              Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GradeSheetPage(
-                    gradeSheet: context
-                        .read<GradeSheets>()
-                        .gradeSheets
-                        .firstWhere((sheet) => sheet.id == id),
+              if (_endTime == null ||
+                  _startTime == null ||
+                  _endTime!.difference(_startTime!).inSeconds <= 0) {
+                setState(() {
+                  _dateError = true;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Date Must be Greater than 0"),
                   ),
-                ),
-              );
+                );
+              } else {
+                String id = context.read<GradeSheets>().updateById(
+                      GradeSheet(
+                        id: _isEditing ? widget.gradeSheet!.id : null,
+                        instructor: _instructor!,
+                        student: _student!,
+                        missionNum: int.tryParse(_missionN.text) ??
+                            0, //_missionNum != null ? _missionNum! : 0,
+                        grades: _grades,
+                        overall: _overall!,
+                        weather: _weather!,
+                        dayNight: _dayNight!,
+                        sortieType: _sortieType!,
+                        startTime: _startTime!,
+                        endTime: _endTime!,
+                        sortieNumber: int.tryParse(_sortieNum.text) ?? 0,
+                        profile: _sortiePro.text,
+                        overallComments: _overallC.text, //_overallComments!,
+                        recommendations: _reccs.text,
+                        length: _endTime!.difference(_startTime!).toString(),
+                      ),
+                    );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Grade Sheet Added"),
+                  ),
+                );
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GradeSheetPage(
+                      gradeSheet: context
+                          .read<GradeSheets>()
+                          .gradeSheets
+                          .firstWhere((sheet) => sheet.id == id),
+                    ),
+                  ),
+                );
+              }
             }
           },
           child: const Icon(Icons.save),
