@@ -52,4 +52,13 @@ class Users with ChangeNotifier {
 
   User userByName(String name) =>
       _users.firstWhere((user) => user.name == name);
+
+  String updateById(User gradeSheet) {
+    int index = _users.indexWhere((sheet) => sheet.id == gradeSheet.id);
+    index == -1
+        ? _users.add(gradeSheet)
+        : _users.replaceRange(index, index + 1, [gradeSheet]);
+    notifyListeners();
+    return gradeSheet.id;
+  }
 }

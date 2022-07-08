@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/users.dart';
+import 'add_edit_user_page.dart';
 import 'user_page.dart';
 
 class UsersPage extends StatelessWidget {
@@ -11,7 +12,25 @@ class UsersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Users"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Users"),
+            GestureDetector(
+              child: const Icon(
+                Icons.add,
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddEditUserPage(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: context
