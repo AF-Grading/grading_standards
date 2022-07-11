@@ -100,6 +100,15 @@ class _UserLoginPageState extends State<UserLoginPage> {
                     }).then(
                       (value) {
                         if (_error == "") {
+                          // Find the userSetting document associated with the
+                          // authenticated email
+                          context
+                              .read<ApplicationState>()
+                              .fetchCurrentUserSettings(_email)
+                              .then((value) => context
+                                  .read<CurrentUser>()
+                                  .userSetting = value);
+
                           for (User user in Users().users) {
                             if (user.email == _email &&
                                 user.password == _password) {

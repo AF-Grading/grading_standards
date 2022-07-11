@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'user.dart';
-import 'users.dart';
+import 'user_setting.dart';
 
 class CurrentUser extends ChangeNotifier {
-
   late final User _currentUser;
+  late final UserSetting _userSetting;
 
   set setUser(User value) {
     _currentUser = value;
     notifyListeners();
   }
 
+  set userSetting(UserSetting value) {
+    _userSetting = value;
+    notifyListeners();
+  }
+
   User get user => _currentUser;
 
-  Permission get permission => _currentUser.permission;
+  Permission get permission =>
+      _userSetting.permission; //_currentUser.permission;
 
   // we might not need this logout thing, since we can just pheonix the whole thing
 

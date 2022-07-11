@@ -1,3 +1,6 @@
+import 'dart:html';
+
+import 'package:app_prototype/models/user_setting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -48,6 +51,24 @@ class ApplicationState extends ChangeNotifier {
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'userId': FirebaseAuth.instance.currentUser!.uid,
     });
+  }
+
+  Future<UserSetting> fetchCurrentUserSettings(String email) {
+    if (_loginState != ApplicationLoginState.loggedIn) {
+      throw Exception('Must be logged in');
+    }
+
+    return FirebaseFirestore.instance
+        .collection('Users')
+        .withConverter(
+            fromFirestore: UserSetting.fromFirestore,
+            toFirestore: (UserSetting userSetting, _) =>
+                userSetting.toFirestore())
+        .where("email", isEqualTo: email)
+        .get()
+        .then(
+          (value) => value.docs.first.data(),
+        );
   }
 
   ApplicationLoginState _loginState = ApplicationLoginState.loggedOut;
