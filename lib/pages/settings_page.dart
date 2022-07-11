@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 
+import '../models/application_state.dart';
+
 class SettingsPage extends StatelessWidget {
   final dark_mode_icon = CupertinoIcons.moon_circle;
 
@@ -36,6 +38,7 @@ class SettingsPage extends StatelessWidget {
             children: [
               ElevatedButton(
                   onPressed: () {
+                    context.read<ApplicationState>().signOut();
                     Phoenix.rebirth(context);
                   },
                   child: Text("Log Out")),

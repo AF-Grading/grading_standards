@@ -6,6 +6,14 @@ import 'package:flutter/material.dart';
 import '../firebase_options.dart';
 import 'grade_sheet.dart';
 
+enum ApplicationLoginState {
+  loggedOut,
+  emailAddress,
+  register,
+  password,
+  loggedIn,
+}
+
 class ApplicationState extends ChangeNotifier {
   ApplicationState() {
     init();
@@ -16,20 +24,20 @@ class ApplicationState extends ChangeNotifier {
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    /*FirebaseAuth.instance.userChanges().listen((user) {
+    FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
         _loginState = ApplicationLoginState.loggedIn;
       } else {
         _loginState = ApplicationLoginState.loggedOut;
       }
       notifyListeners();
-    });*/
+    });
   }
 
   Future<DocumentReference> addGradeSheet(GradeSheet gradeSheet) {
-    /*if (_loginState != ApplicationLoginState.loggedIn) {
+    if (_loginState != ApplicationLoginState.loggedIn) {
       throw Exception('Must be logged in');
-    }*/
+    }
 
     return FirebaseFirestore.instance
         .collection('Gradesheets')
@@ -38,11 +46,11 @@ class ApplicationState extends ChangeNotifier {
       'student': gradeSheet.student.name,
       'instructor': gradeSheet.instructor.name,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
-      //'name': FirebaseAuth.instance.currentUser!.displayName,
-      //'userId': FirebaseAuth.instance.currentUser!.uid,
+      'name': FirebaseAuth.instance.currentUser!.displayName,
+      'userId': FirebaseAuth.instance.currentUser!.uid,
     });
   }
-/*
+
   ApplicationLoginState _loginState = ApplicationLoginState.loggedOut;
   ApplicationLoginState get loginState => _loginState;
 
@@ -110,5 +118,4 @@ class ApplicationState extends ChangeNotifier {
   void signOut() {
     FirebaseAuth.instance.signOut();
   }
-  */
 }

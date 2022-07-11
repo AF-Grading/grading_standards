@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:provider/provider.dart';
 
+import '../models/application_state.dart';
 import '../models/user.dart';
 import '../models/users.dart';
 import '/models/CurrentUser.dart';
@@ -19,6 +20,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
   String _email = "";
   String _password = "";
   bool _logInFail = false;
+  String _error = "";
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,12 @@ class _UserLoginPageState extends State<UserLoginPage> {
                 size: 300,
                 //color: Colors.white,
               ),
+              _error == ""
+                  ? Container()
+                  : Text(
+                      _error,
+                      style: const TextStyle(color: Colors.red),
+                    ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextFormField(
@@ -82,27 +90,40 @@ class _UserLoginPageState extends State<UserLoginPage> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    for (User user in Users().users) {
-                      if (user.email == _email && user.password == _password) {
-                        setState(() {
-                          _logInFail = false;
-                        });
+                    // Firebase Auth
+                    context
+                        .read<ApplicationState>()
+                        .signInWithEmailAndPassword(_email, _password, (e) {
+                      setState(() {
+                        _error = "Unable to login";
+                      });
+                    }).then(
+                      (value) {
+                        if (_error == "") {
+                          for (User user in Users().users) {
+                            if (user.email == _email &&
+                                user.password == _password) {
+                              setState(() {
+                                _logInFail = false;
+                              });
 
-                        CurrentUser().setUser = user;
+                              CurrentUser().setUser = user;
 
-                        context.read<CurrentUser>().setUser = user;
+                              context.read<CurrentUser>().setUser = user;
 
-                        // print(context.watch<CurrentUser>().user.email);
-
-                        if (user.permission.index >= Permission.student.index) {
-                          Navigator.popAndPushNamed(context, '/home');
+                              if (user.permission.index >=
+                                  Permission.student.index) {
+                                Navigator.popAndPushNamed(context, '/home');
+                              }
+                            } else {
+                              setState(() {
+                                _logInFail = true;
+                              });
+                            }
+                          }
                         }
-                      } else {
-                        setState(() {
-                          _logInFail = true;
-                        });
-                      }
-                    }
+                      },
+                    );
                   },
                   child: const Text('Login')),
             ]),

@@ -15,19 +15,18 @@ import 'theme/dark_mode.dart';
 import 'theme/light_mode.dart';
 import 'pages/user_log_in_page.dart';
 
-Future<void> main() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+void main() {
   runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => ApplicationState()),
-      ChangeNotifierProvider(create: (context) => GradeSheets()),
-      ChangeNotifierProvider(create: (context) => CurrentFlight()),
-      ChangeNotifierProvider(create: (context) => Users()),
-      ChangeNotifierProvider(create: (context) => ThemeChange()),
-      ChangeNotifierProvider(create: (context) => CurrentUser())
-    ], child: Phoenix(child: MyApp())),
+    Phoenix(
+      child: MultiProvider(providers: [
+        ChangeNotifierProvider(create: (context) => ApplicationState()),
+        ChangeNotifierProvider(create: (context) => GradeSheets()),
+        ChangeNotifierProvider(create: (context) => CurrentFlight()),
+        ChangeNotifierProvider(create: (context) => Users()),
+        ChangeNotifierProvider(create: (context) => ThemeChange()),
+        ChangeNotifierProvider(create: (context) => CurrentUser())
+      ], child: MyApp()),
+    ),
   );
 }
 
