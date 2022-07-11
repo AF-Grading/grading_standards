@@ -1,5 +1,6 @@
 import 'package:app_prototype/models/CurrentUser.dart';
 import 'package:app_prototype/models/individual_report.dart';
+import 'package:app_prototype/models/user.dart';
 import 'package:app_prototype/pages/home_page_old.dart';
 import 'package:app_prototype/theme/dark_mode.dart';
 import 'package:app_prototype/theme/light_mode.dart';
@@ -34,6 +35,54 @@ void main() {
     ], child: Phoenix(child: MyApp())),
   );
 }
+
+
+// class Test extends StatefulWidget {
+//   @override
+//   _MyAppState createState() => _MyAppState();
+// }
+
+// class _MyAppState extends State<Test> {
+//   @override
+//   //  MyApp({Key? key}) : super(key: key);
+//   // This widget is the root of your application.
+
+//   @override
+//   Widget build(BuildContext context) {
+//     context.read<CurrentUser>().setUser = User(
+//       name: "test",
+//       rank: Rank.secondLt,
+//       squad: '',
+//       id: '',
+//       email: "test",
+//       password: "test",
+//       permission: Permission.wing_training,
+//     );
+//     return MaterialApp(
+//       theme: light_theme,
+//       darkTheme: dark_theme,
+//       initialRoute: '/',
+//       routes: {
+//         '/': (context) => Consumer<ThemeChange>(
+//                 builder: (context, value, child) => MaterialApp(
+//                   title: 'Flutter Demo',
+//                   // themeMode: ThemeMode.light,
+//                   theme: light_theme,
+//                   darkTheme: dark_theme,
+//                   // themeMode: value.mode,
+//                   themeMode: context.watch<ThemeChange>().mode,
+//                   home: HomePageOld(
+//                       title: "Flying Standards",
+//                       permission:
+//                           context.watch<CurrentUser>().permission.index),
+//                 ),
+//               ),
+
+//       },
+//       // home: UserLoginView(),
+//     );
+//   }
+// }
 
 class MyApp extends StatefulWidget {
   @override

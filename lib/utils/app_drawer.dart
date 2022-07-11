@@ -23,9 +23,13 @@ class _AppDrawerState extends State<AppDrawer> {
         DrawerHeader(
           decoration: BoxDecoration(
             // not really sure why this isn't changing
-            color: context.watch<ThemeChange>().mode == ThemeMode.dark
-                ? primaryDarkBlue
-                : primaryBlue,
+            // color: context.watch<ThemeChange>().mode == ThemeMode.dark
+            //     ? primaryDarkBlue
+            //     : primaryBlue,
+
+            // TODO why is this not working?
+
+            color: Theme.of(context).colorScheme.primary,
           ),
           child: Text(
             context.watch<CurrentUser>().user.name,
