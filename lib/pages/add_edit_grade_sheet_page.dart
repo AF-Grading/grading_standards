@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../models/application_state.dart';
 import '../models/grade_enums.dart';
 import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
@@ -439,6 +440,11 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                         length: _endTime!.difference(_startTime!).toString(),
                       ),
                     );
+
+                context
+                    .read<ApplicationState>()
+                    .addGradeSheet(context.read<GradeSheets>().gradeSheets[0]);
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Grade Sheet Added"),

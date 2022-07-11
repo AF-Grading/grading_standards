@@ -1,36 +1,32 @@
-import 'package:app_prototype/models/CurrentUser.dart';
-import 'package:app_prototype/models/individual_report.dart';
-import 'package:app_prototype/pages/home_page_old.dart';
-import 'package:app_prototype/theme/dark_mode.dart';
-import 'package:app_prototype/theme/light_mode.dart';
-import 'package:app_prototype/views/individual_reports_view.dart';
-import 'package:app_prototype/pages/user_log_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+// internal imports
+import 'models/application_state.dart';
 import 'models/grade_sheets.dart';
 import 'models/current_flight.dart';
 import 'models/theme_change.dart';
 import 'models/users.dart';
-import 'pages/home_page.dart';
+import 'models/CurrentUser.dart';
+import 'pages/home_page_old.dart';
+import 'theme/dark_mode.dart';
+import 'theme/light_mode.dart';
+import 'pages/user_log_in_page.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiProvider(providers: [
-      ChangeNotifierProvider(
-        create: (context) => GradeSheets(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => CurrentFlight(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => Users(),
-      ),
+      ChangeNotifierProvider(create: (context) => ApplicationState()),
+      ChangeNotifierProvider(create: (context) => GradeSheets()),
+      ChangeNotifierProvider(create: (context) => CurrentFlight()),
+      ChangeNotifierProvider(create: (context) => Users()),
       ChangeNotifierProvider(create: (context) => ThemeChange()),
-      ChangeNotifierProvider(
-        create: (context) => CurrentUser(),
-      )
+      ChangeNotifierProvider(create: (context) => CurrentUser())
     ], child: Phoenix(child: MyApp())),
   );
 }
