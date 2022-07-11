@@ -9,7 +9,7 @@ import 'models/grade_sheets.dart';
 import 'models/current_flight.dart';
 import 'models/theme_change.dart';
 import 'models/users.dart';
-import 'models/CurrentUser.dart';
+import 'models/current_user.dart';
 import 'pages/home_page_old.dart';
 import 'theme/dark_mode.dart';
 import 'theme/light_mode.dart';

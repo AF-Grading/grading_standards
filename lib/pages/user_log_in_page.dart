@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../models/application_state.dart';
 import '../models/user.dart';
 import '../models/users.dart';
-import '/models/CurrentUser.dart';
+import '../models/current_user.dart';
 
 class UserLoginPage extends StatefulWidget {
   const UserLoginPage({Key? key}) : super(key: key);

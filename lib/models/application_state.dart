@@ -46,7 +46,6 @@ class ApplicationState extends ChangeNotifier {
       'student': gradeSheet.student.name,
       'instructor': gradeSheet.instructor.name,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
-      'name': FirebaseAuth.instance.currentUser!.displayName,
       'userId': FirebaseAuth.instance.currentUser!.uid,
     });
   }

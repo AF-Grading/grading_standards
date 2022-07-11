@@ -13,7 +13,7 @@ import '../widgets/day_night_form_field.dart';
 import '../widgets/search_users_form_field.dart';
 import '../widgets/sortie_type_form_field.dart';
 import '../widgets/weather_form_field.dart';
-import '/models/CurrentUser.dart';
+import '../models/current_user.dart';
 import '/models/cts_list.dart';
 import '/pages/grade_sheet_page.dart';
 import '/widgets/grade_radio_form_field.dart';

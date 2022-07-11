@@ -4,7 +4,7 @@ import 'package:app_prototype/pages/grade_sheet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/CurrentUser.dart';
+import '../../models/current_user.dart';
 import '../../models/grade_sheets.dart';
 import '../../theme/dark_mode.dart';
 import '../../theme/light_mode.dart';
@@ -83,9 +83,9 @@ class _StudentViewPageState extends State<StudentViewPage> {
         child: ListView(children: [
           DrawerHeader(
             decoration: BoxDecoration(
-               color: context.watch<ThemeChange>().mode == ThemeMode.dark
-                    ? primaryDarkBlue
-                    : primaryBlue,
+              color: context.watch<ThemeChange>().mode == ThemeMode.dark
+                  ? primaryDarkBlue
+                  : primaryBlue,
             ),
             child: Text(
               context.watch<CurrentUser>().user.name,

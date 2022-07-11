@@ -12,7 +12,7 @@ import 'package:app_prototype/views/training_shop_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/CurrentUser.dart';
+import '../models/current_user.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
