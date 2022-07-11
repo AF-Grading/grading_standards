@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../models/grade_enums.dart';
+import '../models/user.dart';
 
-class SortieTypeFormField extends FormField<SortieType> {
-  SortieTypeFormField(
+class RankFormField extends FormField<Rank> {
+  RankFormField(
       {Key? key,
-      SortieType? initialValue,
-      ValueChanged<SortieType>? onChanged,
-      FormFieldValidator<SortieType>? validator})
+      Rank? initialValue,
+      ValueChanged<Rank>? onChanged,
+      FormFieldValidator<Rank>? validator})
       : super(
           key: key,
-          initialValue: initialValue,
           // if the user does not select a value, display an error
+          initialValue: initialValue,
           validator: validator,
           builder: (formState) {
             return Padding(
@@ -21,73 +21,54 @@ class SortieTypeFormField extends FormField<SortieType> {
                   Wrap(
                     //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Text("Sortie Type: "),
-                      const Text("local"),
-                      Radio<SortieType>(
-                        value: SortieType.local,
+                      const Text("Second Lt."),
+                      Radio<Rank>(
+                        value: Rank.secondLt,
                         groupValue: formState.value,
                         onChanged: (value) {
                           formState.didChange(value);
                           onChanged!(value!);
                         },
                       ),
-                      const Text("ims"),
-                      Radio<SortieType>(
-                        value: SortieType.ims,
+                      const Text("First Lt."),
+                      Radio<Rank>(
+                        value: Rank.firstLt,
                         groupValue: formState.value,
                         onChanged: (value) {
                           formState.didChange(value);
                           onChanged!(value!);
                         },
                       ),
-                      const Text("mission"),
-                      Radio<SortieType>(
-                        value: SortieType.mission,
+                      const Text("Capt."),
+                      Radio<Rank>(
+                        value: Rank.capt,
                         groupValue: formState.value,
                         onChanged: (value) {
                           formState.didChange(value);
                           onChanged!(value!);
                         },
                       ),
-                      const Text("ost"),
-                      Radio<SortieType>(
-                        value: SortieType.ost,
+                      const Text("Maj."),
+                      Radio<Rank>(
+                        value: Rank.maj,
                         groupValue: formState.value,
                         onChanged: (value) {
                           formState.didChange(value);
                           onChanged!(value!);
                         },
                       ),
-                      const Text("instmtSim"),
-                      Radio<SortieType>(
-                        value: SortieType.instmtSim,
+                      const Text("Lt. Col"),
+                      Radio<Rank>(
+                        value: Rank.ltCol,
                         groupValue: formState.value,
                         onChanged: (value) {
                           formState.didChange(value);
                           onChanged!(value!);
                         },
                       ),
-                      const Text("tacticsSim"),
-                      Radio<SortieType>(
-                        value: SortieType.tacticsSim,
-                        groupValue: formState.value,
-                        onChanged: (value) {
-                          formState.didChange(value);
-                          onChanged!(value!);
-                        },
-                      ),
-                      const Text("mmp"),
-                      Radio<SortieType>(
-                        value: SortieType.mmp,
-                        groupValue: formState.value,
-                        onChanged: (value) {
-                          formState.didChange(value);
-                          onChanged!(value!);
-                        },
-                      ),
-                      const Text("lfe"),
-                      Radio<SortieType>(
-                        value: SortieType.lfe,
+                      const Text("Col."),
+                      Radio<Rank>(
+                        value: Rank.colonel,
                         groupValue: formState.value,
                         onChanged: (value) {
                           formState.didChange(value);

@@ -17,16 +17,22 @@ class User {
       required this.squad,
       String? id,
       required this.email,
-      required this.password,
+      String? password,
       Permission? permission})
       : id = id ?? UniqueKey().toString(),
-        permission = permission ?? Permission.student;
+        permission = permission ?? Permission.student,
+        password = password ?? "changeme";
 }
 
 enum Rank { secondLt, firstLt, capt, maj, ltCol, colonel }
 
 // User Permission.length
-enum Permission { student, instructor, training_shop, wing_training,}
+enum Permission {
+  student,
+  instructor,
+  training_shop,
+  wing_training,
+}
 
 //wing_training have rights to everything and can grant perssions to other users
 
