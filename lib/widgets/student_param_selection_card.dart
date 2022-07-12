@@ -303,95 +303,62 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                     ),
               // We will come back tomorrow to fix this
 
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //     const Text("Preselect Grading Paramaters:"),
-              //     DropdownButton(
-              //       items: [
-              //         DropdownMenuItem(
-              //           value: GradingParams.freeSelect,
-              //           child: const Text("Free Select"),
-              //         ),
-              //         DropdownMenuItem(
-              //           value: GradingParams.all,
-              //           child: const Text("CTS"),
-              //         ),
-              //         DropdownMenuItem(
-              //           value: GradingParams.formationAndAirdop,
-              //           child: const Text("CTS Plus"),
-              //         ),
-              //         DropdownMenuItem(
-              //           value: GradingParams.none,
-              //           child: const Text("None"),
-              //         ),
-              //       ],
-              //       onChanged: (GradingParams? value) {
-              //         setState(() {
-              //           _gradingParams = value!;
-              //           // set all params to true
-              //           _selectedParams.forEach((key, value) {
-              //             _selectedParams[key] = true;
-              //           });
-              //         });
-              //         context.read<CurrentFlight>().updateParamsByStudent(
-              //             widget.gradeSheet.student, _selectedParams);
-              //       },
-              //     ),
-              //     const Text("Free Select"),
-              //     Radio<GradingParams>(
-              //       value: GradingParams.freeSelect,
-              //       groupValue: _gradingParams,
-              //       onChanged: (GradingParams? value) {
-              //         setState(() {
-              //           _gradingParams = value!;
-              //         });
-              //       },
-              //     ),
-              //     const Text("All"),
-              //     Radio<GradingParams>(
-              //       value: GradingParams.all,
-              //       groupValue: _gradingParams,
-              //       onChanged: (GradingParams? value) {
-              //         setState(() {
-              //           _gradingParams = value!;
-              //           // set all params to true
-              //           _selectedParams.forEach((key, value) {
-              //             _selectedParams[key] = true;
-              //           });
-              //         });
-              //         context.read<CurrentFlight>().updateParamsByStudent(
-              //             widget.gradeSheet.student, _selectedParams);
-              //       },
-              //     ),
-              //     const Text("Formation and Airdrop"),
-              //     Radio<GradingParams>(
-              //       value: GradingParams.formationAndAirdop,
-              //       groupValue: _gradingParams,
-              //       onChanged: (GradingParams? value) {
-              //         setState(() {
-              //           _gradingParams = value!;
-              //         });
-              //       },
-              //     ),
-              //     const Text("None"),
-              //     Radio<GradingParams>(
-              //       value: GradingParams.none,
-              //       groupValue: _gradingParams,
-              //       onChanged: (GradingParams? value) {
-              //         setState(() {
-              //           _gradingParams = value!;
-              //           // set all params to false
-              //           _selectedParams.forEach((key, value) {
-              //             _selectedParams[key] = false;
-              //           });
-              //         });
-              //         context.read<CurrentFlight>().updateParamsByStudent(
-              //             widget.gradeSheet.student, _selectedParams);
-              //       },
-              //     ),
-              //   ],
-              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Text("Preselect Grading Paramaters:"),
+                  DropdownButton(
+                    items: [
+                      DropdownMenuItem(
+                        value: GradingParams.freeSelect,
+                        child: const Text("Free Select"),
+                      ),
+                      DropdownMenuItem(
+                        value: GradingParams.all,
+                        child: const Text("All"),
+                      ),
+                      DropdownMenuItem(
+                        value: GradingParams.formationAndAirdop,
+                        child: const Text("Formation and Airdrop"),
+                      ),
+                      DropdownMenuItem(
+                        value: GradingParams.none,
+                        child: const Text("None"),
+                      ),
+                    ],
+                    value: _gradingParams,
+                    onChanged: (GradingParams? value) {
+                      if (value == GradingParams.all) {
+                        setState(() {
+                          _gradingParams = value!;
+                          // set all params to true
+                          _selectedParams.forEach((key, value) {
+                            _selectedParams[key] = true;
+                          });
+                        });
+                      } else if (value == GradingParams.formationAndAirdop) {
+                        setState(() {
+                          _gradingParams = value!;
+                        });
+                      } else if (value == GradingParams.none) {
+                        setState(() {
+                          _gradingParams = value!;
+                          // set all params to false
+                          _selectedParams.forEach((key, value) {
+                            _selectedParams[key] = false;
+                          });
+                        });
+                      } else {
+                        setState(() {
+                          _gradingParams = value!;
+                        });
+                      }
+                      context.read<CurrentFlight>().updateParamsByStudent(
+                          widget.gradeSheet.student, _selectedParams);
+                    },
+                  ),
+                ],
+              ),
               SizedBox(
                 height: 400,
                 child: GridView.builder(
