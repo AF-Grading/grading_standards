@@ -56,6 +56,27 @@ class ApplicationState extends ChangeNotifier {
         .add(userSetting.toFirestore());
   }
 
+  Future<void> editUserSetting(UserSetting userSetting) {
+    if (_loginState != ApplicationLoginState.loggedIn) {
+      throw Exception('Must be logged in');
+    }
+    // yikes: uses where to get email, then updates
+    return FirebaseFirestore.instance
+        .collection('Users')
+        .withConverter(
+            fromFirestore: UserSetting.fromFirestore,
+            toFirestore: (UserSetting setting, _) => setting.toFirestore())
+        .where("email", isEqualTo: userSetting.email)
+        .get()
+        .then((value) => FirebaseFirestore.instance
+            .collection('Users')
+            .withConverter(
+                fromFirestore: UserSetting.fromFirestore,
+                toFirestore: (UserSetting setting, _) => setting.toFirestore())
+            .doc(value.docs[0].id)
+            .update(userSetting.toFirestore()));
+  }
+
   Future<UserSetting> fetchCurrentUserSettings(String email) {
     if (_loginState != ApplicationLoginState.loggedIn) {
       throw Exception('Must be logged in');
@@ -79,6 +100,15 @@ class ApplicationState extends ChangeNotifier {
 
   String? _email;
   String? get email => _email;
+  Stream<List<UserSetting>> get users {
+    if (_loginState != ApplicationLoginState.loggedIn) {
+      throw Exception('Must be logged in');
+    }
+    return FirebaseFirestore.instance.collection('Users').snapshots().map(
+        (docs) => docs.docs
+            .map((doc) => UserSetting.fromFirestore(doc, null))
+            .toList());
+  }
 
   void startLoginFlow() {
     _loginState = ApplicationLoginState.emailAddress;

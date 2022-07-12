@@ -77,6 +77,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                         },
                       ),
               ),
+              // TODO disallow email edits
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -172,7 +173,6 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                         email: _email.text,
                         permission: _permission,
                       ));
-                  // TODO add userSettings to DB
                   Navigator.pop(context);
                 } else {
                   setState(() {
@@ -184,7 +184,19 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                   });
                 }
               } else {
-                // TODO change userSettings from DB
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("User Edited"),
+                  ),
+                );
+                context.read<ApplicationState>().editUserSetting(UserSetting(
+                      name: _name.text,
+                      rank: _rank!,
+                      squad: _squad.text,
+                      email: _email.text,
+                      permission: _permission,
+                    ));
+                Navigator.pop(context);
               }
             }
           },

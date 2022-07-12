@@ -8,6 +8,7 @@ import 'models/application_state.dart';
 import 'models/grade_sheets.dart';
 import 'models/current_flight.dart';
 import 'models/theme_change.dart';
+import 'models/user_setting.dart';
 import 'models/users.dart';
 import 'models/current_user.dart';
 import 'pages/home_page_old.dart';
@@ -28,7 +29,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => CurrentFlight()),
         ChangeNotifierProvider(create: (context) => Users()),
         ChangeNotifierProvider(create: (context) => ThemeChange()),
-        ChangeNotifierProvider(create: (context) => CurrentUser())
+        ChangeNotifierProvider(create: (context) => CurrentUser()),
       ], child: MyApp()),
     ),
   );

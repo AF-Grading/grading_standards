@@ -69,6 +69,26 @@ extension RankFromString on String {
   }
 }
 
+extension RanktoString on Rank {
+  String? get pretty {
+    switch (this) {
+      case Rank.secondLt:
+        return "Second Lieutenant";
+      case Rank.firstLt:
+        return "First Lieutenant";
+      case Rank.capt:
+        return "Captain";
+      case Rank.maj:
+        return "Major";
+      case Rank.ltCol:
+        return "Lieutenant Colonel";
+      case Rank.colonel:
+        return "Colonel";
+    }
+    return null;
+  }
+}
+
 // User Permission.length
 
 // converts a string into an enum value
