@@ -173,6 +173,9 @@ class GradeSheetPage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+
+                        // TODO: change expanded to flexible for listtiles casue they fat
+
                         Expanded(
                           child: SizedBox(
                             height: dist,
