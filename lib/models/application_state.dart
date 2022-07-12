@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:app_prototype/models/user_setting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,21 +46,15 @@ class ApplicationState extends ChangeNotifier {
     });
   }
 
-  /*Future<DocumentReference> addUserSetting(UserSetting userSetting) {
+  Future<DocumentReference> addUserSetting(UserSetting userSetting) {
     if (_loginState != ApplicationLoginState.loggedIn) {
       throw Exception('Must be logged in');
     }
 
     return FirebaseFirestore.instance
-        .collection('Gradesheets')
-        .add(<String, dynamic>{
-      'id': gradeSheet.id,
-      'student': gradeSheet.student.name,
-      'instructor': gradeSheet.instructor.name,
-      'timestamp': DateTime.now().millisecondsSinceEpoch,
-      'userId': FirebaseAuth.instance.currentUser!.uid,
-    });
-  }*/
+        .collection('Users')
+        .add(userSetting.toFirestore());
+  }
 
   Future<UserSetting> fetchCurrentUserSettings(String email) {
     if (_loginState != ApplicationLoginState.loggedIn) {
@@ -112,7 +104,7 @@ class ApplicationState extends ChangeNotifier {
     }
   }
 
-  Future<void> signInWithEmailAndPassword(
+  Future<bool> signInWithEmailAndPassword(
     String email,
     String password,
     void Function(FirebaseAuthException e) errorCallback,
@@ -127,8 +119,10 @@ class ApplicationState extends ChangeNotifier {
         _loginState = ApplicationLoginState.loggedIn;
         notifyListeners();
       });
+      return true;
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
+      return false;
     }
   }
 
@@ -137,17 +131,14 @@ class ApplicationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> registerAccount(
-      String email,
-      String displayName,
-      String password,
-      void Function(FirebaseAuthException e) errorCallback) async {
+  Future<String> register(String email, String password) async {
     try {
-      var credential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      await credential.user!.updateDisplayName(displayName);
+      return "";
     } on FirebaseAuthException catch (e) {
-      errorCallback(e);
+      return e.code;
+      //return false;
     }
   }
 

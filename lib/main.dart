@@ -16,6 +16,8 @@ import 'theme/light_mode.dart';
 import 'pages/user_log_in_page.dart';
 
 Future<void> main() async {
+  // ensures the initapp function runs
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(

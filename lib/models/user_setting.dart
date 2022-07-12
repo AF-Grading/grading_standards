@@ -46,7 +46,7 @@ class UserSetting {
   }
 }
 
-enum Rank { secondLt, firstLt, capt, maj, ltCol, colonel }
+//enum Rank { secondLt, firstLt, capt, maj, ltCol, colonel }
 
 // converts a string into an enum value
 extension RankFromString on String {
