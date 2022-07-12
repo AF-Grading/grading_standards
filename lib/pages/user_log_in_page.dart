@@ -107,29 +107,32 @@ class _UserLoginPageState extends State<UserLoginPage> {
                               .fetchCurrentUserSettings(_email)
                               .then((value) => context
                                   .read<CurrentUser>()
-                                  .userSetting = value);
+                                  .userSetting = value)
+                              .then(
+                            (value) {
+                              for (User user in Users().users) {
+                                if (user.email == _email &&
+                                    user.password == _password) {
+                                  setState(() {
+                                    _logInFail = false;
+                                  });
 
-                          for (User user in Users().users) {
-                            if (user.email == _email &&
-                                user.password == _password) {
-                              setState(() {
-                                _logInFail = false;
-                              });
+                                  CurrentUser().setUser = user;
 
-                              CurrentUser().setUser = user;
+                                  context.read<CurrentUser>().setUser = user;
 
-                              context.read<CurrentUser>().setUser = user;
-
-                              if (user.permission.index >=
-                                  Permission.student.index) {
-                                Navigator.popAndPushNamed(context, '/home');
+                                  if (user.permission.index >=
+                                      Permission.student.index) {
+                                    Navigator.popAndPushNamed(context, '/home');
+                                  }
+                                } else {
+                                  setState(() {
+                                    _logInFail = true;
+                                  });
+                                }
                               }
-                            } else {
-                              setState(() {
-                                _logInFail = true;
-                              });
-                            }
-                          }
+                            },
+                          );
                         }
                       },
                     );

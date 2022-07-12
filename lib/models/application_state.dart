@@ -21,12 +21,7 @@ class ApplicationState extends ChangeNotifier {
   ApplicationState() {
     init();
   }
-
   Future<void> init() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
         _loginState = ApplicationLoginState.loggedIn;
@@ -52,6 +47,22 @@ class ApplicationState extends ChangeNotifier {
       'userId': FirebaseAuth.instance.currentUser!.uid,
     });
   }
+
+  /*Future<DocumentReference> addUserSetting(UserSetting userSetting) {
+    if (_loginState != ApplicationLoginState.loggedIn) {
+      throw Exception('Must be logged in');
+    }
+
+    return FirebaseFirestore.instance
+        .collection('Gradesheets')
+        .add(<String, dynamic>{
+      'id': gradeSheet.id,
+      'student': gradeSheet.student.name,
+      'instructor': gradeSheet.instructor.name,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'userId': FirebaseAuth.instance.currentUser!.uid,
+    });
+  }*/
 
   Future<UserSetting> fetchCurrentUserSettings(String email) {
     if (_loginState != ApplicationLoginState.loggedIn) {
@@ -107,10 +118,15 @@ class ApplicationState extends ChangeNotifier {
     void Function(FirebaseAuthException e) errorCallback,
   ) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
         email: email,
         password: password,
-      );
+      )
+          .then((value) {
+        _loginState = ApplicationLoginState.loggedIn;
+        notifyListeners();
+      });
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
     }

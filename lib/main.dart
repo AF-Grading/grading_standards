@@ -15,7 +15,9 @@ import 'theme/dark_mode.dart';
 import 'theme/light_mode.dart';
 import 'pages/user_log_in_page.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(
     Phoenix(
       child: MultiProvider(providers: [
