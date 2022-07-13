@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'grade_enums.dart';
@@ -40,6 +41,59 @@ class GradeSheet {
     this.isDraft = true,
     String? id,
   }) : id = id ?? UniqueKey().toString();
+
+  factory GradeSheet.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return GradeSheet(
+      instructorId: data?['instructorId'],
+      studentId: data?['studentId'],
+      missionNum: data?['missionNum'],
+      grades: data?['grades'] is Iterable
+          ? (data?['grades'] as Iterable)
+              .map((gradeItem) => GradeItem(
+                  name: gradeItem?['name'],
+                  grade: (gradeItem?['grade'] as String).grade!,
+                  comments: gradeItem?['comments']))
+              .toList()
+          : [],
+      overall: (data?['overall'] as String).grade!,
+      adQual: (data?['adQual'] as String).adQual!,
+      pilotQual: (data?['pilotQual'] as String).pilotQual!,
+      weather: (data?['weather'] as String).weather!,
+      sortieType: (data?['sortieType'] as String).sortieType!,
+      dayNight: (data?['dayNight'] as String).dayNight!,
+      startTime: DateTime.fromMillisecondsSinceEpoch(data?['startTime']),
+      endTime: DateTime.fromMillisecondsSinceEpoch(data?['endTime']),
+      profile: data?['profile'],
+      overallComments: data?['overallComments'],
+      recommendations: data?['recommendations'],
+      id: data?['id'],
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      "instructorId": instructorId,
+      "studentId": studentId,
+      "missionNum": missionNum,
+      "grades": grades.map((e) => e.toFirestore()).toList(),
+      "overall": overall.name,
+      "adQual": adQual.name,
+      "pilotQual": pilotQual.name,
+      "weather": weather.name,
+      "sortieType": sortieType.name,
+      "dayNight": dayNight.name,
+      "startTime": startTime.millisecondsSinceEpoch,
+      "endTime": endTime.millisecondsSinceEpoch,
+      "profile": profile,
+      "overallComments": overallComments,
+      "recommendations": recommendations,
+      "id": id
+    };
+  }
 }
 
 class GradeItem {
@@ -52,4 +106,18 @@ class GradeItem {
     required this.grade,
     this.comments = '',
   });
+
+  Map<String, dynamic> toFirestore() {
+    return {"name": name, "grade": grade.name, "comments": comments};
+  }
+
+  factory GradeItem.unMap(
+    Map<String, dynamic> snapshot,
+  ) {
+    return GradeItem(
+      name: snapshot['name'],
+      grade: (snapshot['grade'] as String).grade!,
+      comments: snapshot['comments'],
+    );
+  }
 }

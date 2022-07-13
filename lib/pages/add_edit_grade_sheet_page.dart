@@ -115,7 +115,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                                 _student = context
                                     .read<Users>()
                                     .users
-                                    .firstWhere((user) => user.email == student)
+                                    .firstWhere((user) => user.name == student)
                                     .email;
                               });
                             },
@@ -154,7 +154,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                                     .read<Users>()
                                     .users
                                     .firstWhere(
-                                        (user) => user.email == instructor)
+                                        (user) => user.name == instructor)
                                     .email;
                               });
                             },
@@ -398,29 +398,27 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                   ),
                 );
               } else {
-                String id = context.read<GradeSheets>().updateById(
-                      GradeSheet(
-                        id: _isEditing ? widget.gradeSheet!.id : null,
-                        instructorId: _instructor!,
-                        studentId: _student!,
-                        missionNum: int.tryParse(_missionN.text) ??
-                            0, //_missionNum != null ? _missionNum! : 0,
-                        grades: _grades,
-                        overall: _overall!,
-                        weather: _weather!,
-                        dayNight: _dayNight!,
-                        sortieType: _sortieType!,
-                        startTime: _startTime!,
-                        endTime: _endTime!,
-                        profile: _sortiePro.text,
-                        overallComments: _overallC.text, //_overallComments!,
-                        recommendations: _reccs.text,
-                      ),
-                    );
+                GradeSheet gradeSheet = GradeSheet(
+                  id: _isEditing ? widget.gradeSheet!.id : null,
+                  instructorId: _instructor!,
+                  studentId: _student!,
+                  missionNum: int.tryParse(_missionN.text) ??
+                      0, //_missionNum != null ? _missionNum! : 0,
+                  grades: _grades,
+                  overall: _overall!,
+                  weather: _weather!,
+                  dayNight: _dayNight!,
+                  sortieType: _sortieType!,
+                  startTime: _startTime!,
+                  endTime: _endTime!,
+                  profile: _sortiePro.text,
+                  overallComments: _overallC.text, //_overallComments!,
+                  recommendations: _reccs.text,
+                );
 
-                context
-                    .read<ApplicationState>()
-                    .addGradeSheet(context.read<GradeSheets>().gradeSheets[0]);
+                String id = context.read<GradeSheets>().updateById(gradeSheet);
+
+                context.read<ApplicationState>().addGradeSheet(gradeSheet);
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

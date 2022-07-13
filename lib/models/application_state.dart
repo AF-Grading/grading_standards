@@ -37,13 +37,7 @@ class ApplicationState extends ChangeNotifier {
 
     return FirebaseFirestore.instance
         .collection('Gradesheets')
-        .add(<String, dynamic>{
-      'id': gradeSheet.id,
-      'student': gradeSheet.studentId,
-      'instructor': gradeSheet.instructorId,
-      'timestamp': DateTime.now().millisecondsSinceEpoch,
-      'userId': FirebaseAuth.instance.currentUser!.uid,
-    });
+        .add(gradeSheet.toFirestore());
   }
 
   Future<DocumentReference> addUserSetting(UserSetting userSetting) {
@@ -107,6 +101,16 @@ class ApplicationState extends ChangeNotifier {
     return FirebaseFirestore.instance.collection('Users').snapshots().map(
         (docs) => docs.docs
             .map((doc) => UserSetting.fromFirestore(doc, null))
+            .toList());
+  }
+
+  Stream<List<GradeSheet>> get gradeSheets {
+    if (_loginState != ApplicationLoginState.loggedIn) {
+      throw Exception('Must be logged in');
+    }
+    return FirebaseFirestore.instance.collection('Gradesheets').snapshots().map(
+        (docs) => docs.docs
+            .map((doc) => GradeSheet.fromFirestore(doc, null))
             .toList());
   }
 
