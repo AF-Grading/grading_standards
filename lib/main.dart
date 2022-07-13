@@ -8,7 +8,6 @@ import 'models/application_state.dart';
 import 'models/grade_sheets.dart';
 import 'models/current_flight.dart';
 import 'models/theme_change.dart';
-import 'models/user_setting.dart';
 import 'models/users.dart';
 import 'models/current_user.dart';
 import 'pages/home_page_old.dart';
@@ -34,53 +33,6 @@ Future<void> main() async {
     ),
   );
 }
-
-// class Test extends StatefulWidget {
-//   @override
-//   _MyAppState createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<Test> {
-//   @override
-//   //  MyApp({Key? key}) : super(key: key);
-//   // This widget is the root of your application.
-
-//   @override
-//   Widget build(BuildContext context) {
-//     context.read<CurrentUser>().setUser = User(
-//       name: "test",
-//       rank: Rank.secondLt,
-//       squad: '',
-//       id: '',
-//       email: "test",
-//       password: "test",
-//       permission: Permission.wing_training,
-//     );
-//     return MaterialApp(
-//       theme: light_theme,
-//       darkTheme: dark_theme,
-//       initialRoute: '/',
-//       routes: {
-//         '/': (context) => Consumer<ThemeChange>(
-//                 builder: (context, value, child) => MaterialApp(
-//                   title: 'Flutter Demo',
-//                   // themeMode: ThemeMode.light,
-//                   theme: light_theme,
-//                   darkTheme: dark_theme,
-//                   // themeMode: value.mode,
-//                   themeMode: context.watch<ThemeChange>().mode,
-//                   home: HomePageOld(
-//                       title: "Flying Standards",
-//                       permission:
-//                           context.watch<CurrentUser>().permission.index),
-//                 ),
-//               ),
-
-//       },
-//       // home: UserLoginView(),
-//     );
-//   }
-// }
 
 class MyApp extends StatefulWidget {
   @override

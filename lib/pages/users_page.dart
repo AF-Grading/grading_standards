@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../models/application_state.dart';
 import '../models/user.dart';
 import '../models/user_setting.dart';
-import '../models/users.dart';
 import 'add_edit_user_page.dart';
 import 'user_page.dart';
 
@@ -36,47 +35,32 @@ class UsersPage extends StatelessWidget {
           ),
         ),
         body: StreamProvider<List<UserSetting>>(
-            create: (_) => context.read<ApplicationState>().users,
-            initialData: const [],
-            child: Consumer<List<UserSetting>>(
-              builder: (context, userStream, child) {
-                return Column(
-                  children: userStream
-                      .map(
-                        (user) => ListTile(
-                          title: Text("${user.rank.pretty} ${user.name}"),
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => UserPage(
-                                    user: User(
-                                        name: user.name,
-                                        rank: user.rank,
-                                        email: user.email,
-                                        permission: user.permission,
-                                        squad: user.squad))),
-                          ),
+          create: (_) => context.read<ApplicationState>().users,
+          initialData: const [],
+          child: Consumer<List<UserSetting>>(
+            builder: (context, userStream, child) {
+              return Column(
+                children: userStream
+                    .map(
+                      (user) => ListTile(
+                        title: Text("${user.rank.pretty} ${user.name}"),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UserPage(
+                                  user: User(
+                                      name: user.name,
+                                      rank: user.rank,
+                                      email: user.email,
+                                      permission: user.permission,
+                                      squad: user.squad))),
                         ),
-                      )
-                      .toList(),
-                );
-              },
-            ))
-
-        /*Column(
-        children: context
-            .watch<Users>()
-            .users
-            .map((user) => ListTile(
-                  title: Text(user.name),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => UserPage(user: user)),
-                  ),
-                ))
-            .toList(),*/
-
-        );
+                      ),
+                    )
+                    .toList(),
+              );
+            },
+          ),
+        ));
   }
 }

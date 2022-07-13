@@ -62,38 +62,38 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: _isEditing
-                    ? Text(_name.text)
-                    : TextFormField(
-                        controller: _name,
-                        decoration: const InputDecoration(
-                          labelText: "Name",
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return "Please enter a name";
-                          }
-                          return null;
-                        },
-                      ),
+                child: TextFormField(
+                  controller: _name,
+                  decoration: const InputDecoration(
+                    labelText: "Name",
+                  ),
+                  validator: (value) {
+                    if (value == "") {
+                      return "Please enter a name";
+                    }
+                    return null;
+                  },
+                ),
               ),
               // TODO disallow email edits
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: _email,
-                  decoration: const InputDecoration(
-                    labelText: "Email",
-                  ),
-                  validator: _validator,
-                  onChanged: (_) {
-                    // get rid of any db errors after the user starts
-                    // altering this text
-                    setState(() {
-                      _error = "";
-                    });
-                  },
-                ),
+                child: _isEditing
+                    ? Text(_email.text)
+                    : TextFormField(
+                        controller: _email,
+                        decoration: const InputDecoration(
+                          labelText: "Email",
+                        ),
+                        validator: _validator,
+                        onChanged: (_) {
+                          // get rid of any db errors after the user starts
+                          // altering this text
+                          setState(() {
+                            _error = "";
+                          });
+                        },
+                      ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
