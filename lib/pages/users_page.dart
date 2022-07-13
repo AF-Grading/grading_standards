@@ -34,11 +34,7 @@ class UsersPage extends StatelessWidget {
             ],
           ),
         ),
-        body: /*StreamProvider<List<UserSetting>>(
-          create: (_) => context.read<ApplicationState>().users,
-          initialData: const [],
-          child:*/
-            Consumer<List<UserSetting>>(
+        body: Consumer<List<UserSetting>>(
           builder: (context, userStream, child) {
             return Column(
               children: userStream

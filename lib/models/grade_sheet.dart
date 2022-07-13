@@ -105,11 +105,12 @@ class GradeSheet {
         Weather: ${weather.name}
         Day/Night: ${dayNight.name}
         Length: ${endTime.difference(startTime).inSeconds}
+        
         .PS.|GRADE| EVENT | COMMENTS\n''';
 
-    for (GradeItem item in grades) {
+    for (int i = 0; i < grades.length; i++) {
       myString +=
-          "_?_|__${item.grade.index - 2}___| ${item.name} ${item.comments}\n";
+          "_?_|__${grades[i].grade.index - 2}___| ${i + 1}. ${grades[i].name} ${grades[i].comments}\n";
     }
 
     myString += '''\n OVERALL GRADE: ${overall.index - 2}

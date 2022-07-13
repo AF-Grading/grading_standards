@@ -1,4 +1,3 @@
-import 'package:app_prototype/pages/edit_gradesheet_page.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +18,14 @@ class GradeSheetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<List<UserSetting>>(
       builder: (BuildContext context, stream, Widget? child) {
+        if (stream.isEmpty) {
+          return Scaffold(
+            appBar: AppBar(),
+            body: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
         String instructor = stream
             .where((usetting) => usetting.email == gradeSheet.instructorId)
             .first
@@ -76,7 +83,7 @@ class GradeSheetPage extends StatelessWidget {
                                 height: dist,
                                 child: ListTile(
                                     leading: const Text("Student"),
-                                    title: Text(gradeSheet.studentId)),
+                                    title: Text(student)),
                               ),
                             ),
                             Expanded(
