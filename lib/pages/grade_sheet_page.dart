@@ -19,7 +19,7 @@ class GradeSheetPage extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Instructor: ${gradeSheet.instructor.name}"),
+            Text("Instructor: ${gradeSheet.instructorId}"),
             GestureDetector(
               child: const Icon(Icons.edit),
               onTap: () => Navigator.push(
@@ -52,7 +52,7 @@ class GradeSheetPage extends StatelessWidget {
                             height: dist,
                             child: ListTile(
                                 leading: const Text("Student"),
-                                title: Text(gradeSheet.student.name)),
+                                title: Text(gradeSheet.studentId)),
                           ),
                         ),
                         Expanded(
@@ -64,29 +64,6 @@ class GradeSheetPage extends StatelessWidget {
                             ),
                           ),
                         )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                              height: dist,
-                              child: ListTile(
-                                  leading: const Text("Sortie Number"),
-                                  title: Text(
-                                      gradeSheet.sortieNumber.toString()))),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                              height: dist,
-                              child: ListTile(
-                                  leading: const Text("Flight Duration"),
-                                  title: Text(gradeSheet.length))),
-                        ),
                       ],
                     ),
                   ),

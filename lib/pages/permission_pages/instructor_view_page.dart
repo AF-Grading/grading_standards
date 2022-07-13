@@ -5,7 +5,7 @@ import 'package:app_prototype/theme/light_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/CurrentUser.dart';
+import '../../models/current_user.dart';
 import '../../models/grade_sheets.dart';
 import '../../views/individual_reports_view.dart';
 import '../../views/new_flight_view.dart';

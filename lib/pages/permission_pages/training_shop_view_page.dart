@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/CurrentUser.dart';
+import '../../models/current_user.dart';
 import '../../models/theme_change.dart';
 import '../../theme/dark_mode.dart';
 import '../../theme/light_mode.dart';
@@ -40,7 +40,7 @@ class _TrainingShopViewState extends State<TrainingShopViewPage> {
           child: ListView(children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                 color: context.watch<ThemeChange>().mode == ThemeMode.dark
+                color: context.watch<ThemeChange>().mode == ThemeMode.dark
                     ? primaryDarkBlue
                     : primaryBlue,
               ),

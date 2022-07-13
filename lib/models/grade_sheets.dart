@@ -10,20 +10,8 @@ class GradeSheets extends ChangeNotifier {
   // TODO inject users so there is only one instance of each user
   final List<GradeSheet> _gradeSheets = [
     GradeSheet(
-        instructor: User(
-            name: "Captain Underpants",
-            rank: Rank.capt,
-            squad: "4th Airlift",
-            id: "1",
-            email: '',
-            password: ''),
-        student: User(
-            name: "1st Lieutenant Dan",
-            rank: Rank.firstLt,
-            squad: "4th Airlift",
-            id: "2",
-            email: '',
-            password: ''),
+        instructorId: "cu@spaceforce.mil",
+        studentId: "dandandan@spaceforce.mil",
         missionNum: 12303,
         grades: [
           GradeItem(
@@ -60,25 +48,11 @@ class GradeSheets extends ChangeNotifier {
         dayNight: DayNight.night,
         startTime: DateTime(2021, 4),
         endTime: DateTime(2021, 4),
-        sortieNumber: 2,
         overallComments: "Danny is doing a fine job!",
-        length: "2 hours",
         weather: Weather.imc),
     GradeSheet(
-        instructor: User(
-            name: "Captain Underpants",
-            rank: Rank.capt,
-            squad: "4th Airlift",
-            id: "1",
-            email: '',
-            password: ''),
-        student: User(
-            name: "1st Lieutenant Dan",
-            rank: Rank.firstLt,
-            squad: "4th Airlift",
-            id: "2",
-            email: '',
-            password: ''),
+        instructorId: "cu@spaceforce.mil",
+        studentId: "dandandan@spaceforce.mil",
         missionNum: 12303,
         grades: [
           GradeItem(
@@ -103,25 +77,11 @@ class GradeSheets extends ChangeNotifier {
         dayNight: DayNight.night,
         startTime: DateTime(2021, 4),
         endTime: DateTime(2021, 5),
-        sortieNumber: 2,
         overallComments: "Danny is doing an okay job!",
-        length: "2 hours",
         weather: Weather.imc),
     GradeSheet(
-        instructor: User(
-            name: "Captain Underpants",
-            rank: Rank.capt,
-            squad: "4th Airlift",
-            id: "1",
-            email: '',
-            password: ''),
-        student: User(
-            name: "1st Lieutenant Dan",
-            rank: Rank.firstLt,
-            squad: "4th Airlift",
-            id: "2",
-            email: '',
-            password: ''),
+        instructorId: "cu@spaceforce.mil",
+        studentId: "dandandan@spaceforce.mil",
         missionNum: 12303,
         grades: [
           GradeItem(
@@ -146,24 +106,10 @@ class GradeSheets extends ChangeNotifier {
         dayNight: DayNight.night,
         startTime: DateTime(2022, 5),
         endTime: DateTime(2022, 5),
-        sortieNumber: 2,
-        length: "2 hours",
         weather: Weather.vmc),
     GradeSheet(
-        instructor: User(
-            name: "Captain Underpants",
-            rank: Rank.capt,
-            squad: "4th Airlift",
-            id: "1",
-            email: '',
-            password: ''),
-        student: User(
-            name: "1st Lieutenant Dan",
-            rank: Rank.firstLt,
-            squad: "4th Airlift",
-            id: "2",
-            email: '',
-            password: ''),
+        instructorId: "cu@spaceforce.mil",
+        studentId: "dandandan@spaceforce.mil",
         missionNum: 12303,
         grades: [
           GradeItem(
@@ -189,24 +135,10 @@ class GradeSheets extends ChangeNotifier {
         dayNight: DayNight.night,
         startTime: DateTime(2022, 5),
         endTime: DateTime(2022, 6),
-        sortieNumber: 2,
-        length: "2 hours",
         weather: Weather.imc),
     GradeSheet(
-        instructor: User(
-            name: "Captain Underpants",
-            rank: Rank.capt,
-            squad: "4th Airlift",
-            id: "1",
-            email: '',
-            password: ''),
-        student: User(
-            name: "2nd Lieutenant Kinger",
-            rank: Rank.secondLt,
-            squad: "4th Airlift",
-            id: "3",
-            email: '',
-            password: ''),
+        instructorId: "cu@spaceforce.mil",
+        studentId: "king@af.mil",
         missionNum: 12300,
         grades: [
           GradeItem(
@@ -231,26 +163,11 @@ class GradeSheets extends ChangeNotifier {
         dayNight: DayNight.night,
         startTime: DateTime.now(),
         endTime: DateTime.now(),
-        sortieNumber: 2,
-        length: "2 hours",
         isDraft: false,
         weather: Weather.imc),
     GradeSheet(
-        instructor: User(
-            name: "1st Lieutenant Dan",
-            rank: Rank.firstLt,
-            squad: "4th Airlift",
-            id: "2",
-            email: '',
-            password: ''),
-        student: User(
-          name: "Airman Schmuckatelli",
-          rank: Rank.secondLt,
-          squad: "7th Airlift",
-          id: "4",
-          email: "as@gmail.com",
-          password: '123456',
-        ),
+        instructorId: "dandandan@spaceforce.mil",
+        studentId: "shucks@af.mil",
         missionNum: 12300,
         grades: [
           GradeItem(
@@ -275,25 +192,11 @@ class GradeSheets extends ChangeNotifier {
         dayNight: DayNight.night,
         startTime: DateTime(2022, 7),
         endTime: DateTime(2022, 8),
-        sortieNumber: 2,
-        length: "2 hours",
         isDraft: false,
         weather: Weather.imc),
     GradeSheet(
-        instructor: User(
-            name: "1st Lieutenant Dan",
-            rank: Rank.firstLt,
-            squad: "4th Airlift",
-            id: "2",
-            email: '',
-            password: ''),
-        student: User(
-            name: "2nd Lieutenant Kinger",
-            rank: Rank.secondLt,
-            squad: "4th Airlift",
-            id: "3",
-            email: '',
-            password: ''),
+        instructorId: "dandandan@spaceforce.mil",
+        studentId: "king@af.mil",
         missionNum: 12300,
         grades: [
           GradeItem(
@@ -318,8 +221,6 @@ class GradeSheets extends ChangeNotifier {
         dayNight: DayNight.night,
         startTime: DateTime(2022, 7),
         endTime: DateTime(2022, 8),
-        sortieNumber: 2,
-        length: "2 hours",
         isDraft: false,
         weather: Weather.imc),
   ];
@@ -353,8 +254,8 @@ class GradeSheets extends ChangeNotifier {
   void addSheet(GradeSheet sheet) {
     _gradeSheets.add(
       GradeSheet(
-        instructor: sheet.instructor,
-        student: sheet.student,
+        instructorId: sheet.instructorId,
+        studentId: sheet.studentId,
         missionNum: sheet.missionNum,
         grades: sheet.grades,
         overall: sheet.overall,
@@ -362,8 +263,6 @@ class GradeSheets extends ChangeNotifier {
         dayNight: sheet.dayNight,
         startTime: sheet.startTime,
         endTime: sheet.endTime,
-        sortieNumber: sheet.sortieNumber,
-        length: sheet.length,
         adQual: sheet.adQual,
         pilotQual: sheet.pilotQual,
         weather: sheet.weather,

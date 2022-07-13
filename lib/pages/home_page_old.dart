@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //internal imports
-import '/models/CurrentUser.dart';
+import '../models/current_user.dart';
 import '/models/current_flight.dart';
 import '/models/grade_sheets.dart';
 import 'training_shop_page.dart';

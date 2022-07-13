@@ -34,9 +34,8 @@ class CurrentFlight extends ChangeNotifier {
   final List<GradeSheet> _gradeSheets = [
     GradeSheet(
       // TODO find this by current user instead
-      instructor: Users().user,
-      student:
-          User(name: "1", rank: Rank.capt, squad: "", email: '', password: ''),
+      instructorId: "",
+      studentId: "1",
       missionNum: 0,
       grades: baseGradeItems,
       overall: Grade.noSelection,
@@ -46,8 +45,6 @@ class CurrentFlight extends ChangeNotifier {
       dayNight: DayNight.day,
       startTime: DateTime.now(),
       endTime: DateTime.now(),
-      sortieNumber: 0,
-      length: "0",
     ),
   ];
 
@@ -71,7 +68,7 @@ class CurrentFlight extends ChangeNotifier {
   List<User> get filteredUsers => Users()
       .users
       .where((user) =>
-          _gradeSheets.indexWhere((sheet) => sheet.student.id == user.id) == -1)
+          _gradeSheets.indexWhere((sheet) => sheet.studentId == user.id) == -1)
       .toList();
 
   // Setters
@@ -109,7 +106,7 @@ class CurrentFlight extends ChangeNotifier {
   // Methods
 
   int index(String student) {
-    return _gradeSheets.indexWhere((element) => element.student == student);
+    return _gradeSheets.indexWhere((element) => element.studentId == student);
   }
 
   void end() {
@@ -135,23 +132,23 @@ class CurrentFlight extends ChangeNotifier {
   }
 
   void update(GradeSheet gradeSheet) {
-    int index =
-        _gradeSheets.indexWhere((sheet) => sheet.student == gradeSheet.student);
+    int index = _gradeSheets
+        .indexWhere((sheet) => sheet.studentId == gradeSheet.studentId);
     index == -1
         ? _gradeSheets.add(gradeSheet)
         : _gradeSheets.replaceRange(index, index + 1, [gradeSheet]);
     notifyListeners();
   }
 
-  void updateByStudent(User student, GradeSheet sheet) {
+  void updateByStudent(String student, GradeSheet sheet) {
     int index =
-        _gradeSheets.indexWhere((sheets) => sheets.student.id == student.id);
+        _gradeSheets.indexWhere((sheets) => sheets.studentId == student);
     index == -1
         ? _gradeSheets.add(sheet)
         : _gradeSheets.replaceRange(index, index + 1, [
             GradeSheet(
-              instructor: sheet.instructor,
-              student: sheet.student,
+              instructorId: sheet.instructorId,
+              studentId: sheet.studentId,
               missionNum: sheet.missionNum,
               grades: sheet.grades,
               overall: sheet.overall,
@@ -159,11 +156,6 @@ class CurrentFlight extends ChangeNotifier {
               dayNight: sheet.dayNight,
               startTime: sheet.startTime,
               endTime: sheet.endTime,
-              sortieNumber: sheet.sortieNumber,
-              length: ((_end.millisecondsSinceEpoch -
-                          _start.millisecondsSinceEpoch) ~/
-                      1000)
-                  .toString(),
               adQual: sheet.adQual,
               pilotQual: sheet.pilotQual,
               weather: sheet.weather,
@@ -177,9 +169,9 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateParamsByStudent(User student, Map<String, bool> params) {
+  void updateParamsByStudent(String student, Map<String, bool> params) {
     GradeSheet gradeSheet =
-        _gradeSheets.firstWhere((sheet) => sheet.student.id == student.id);
+        _gradeSheets.firstWhere((sheet) => sheet.studentId == student);
 
     List<GradeItem> items = [];
     for (GradeItem item in gradeSheet.grades) {
@@ -193,8 +185,8 @@ class CurrentFlight extends ChangeNotifier {
     }
 
     GradeSheet newSheet = GradeSheet(
-        instructor: gradeSheet.instructor,
-        student: gradeSheet.student,
+        instructorId: gradeSheet.instructorId,
+        studentId: gradeSheet.studentId,
         missionNum: gradeSheet.missionNum,
         grades: items,
         overall: gradeSheet.overall,
@@ -202,8 +194,6 @@ class CurrentFlight extends ChangeNotifier {
         dayNight: gradeSheet.dayNight,
         startTime: gradeSheet.startTime,
         endTime: gradeSheet.endTime,
-        sortieNumber: gradeSheet.sortieNumber,
-        length: gradeSheet.length,
         weather: gradeSheet.weather);
 
     updateByStudent(student, newSheet);
@@ -211,9 +201,9 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateByGradeItem(User student, GradeItem item) {
+  void updateByGradeItem(String student, GradeItem item) {
     GradeSheet gradeSheet =
-        _gradeSheets.firstWhere((sheet) => sheet.student.id == student.id);
+        _gradeSheets.firstWhere((sheet) => sheet.studentId == student);
 
     int index = gradeSheet.grades
         .indexWhere((gradeItem) => gradeItem.name == item.name);
@@ -251,13 +241,9 @@ class CurrentFlight extends ChangeNotifier {
     _gradeSheets.clear();
     _gradeSheets.add(GradeSheet(
       // TODO find this by current user instead
-      instructor: Users().user,
-      student: User(
-          name: "1",
-          rank: Rank.capt,
-          squad: "",
-          email: 'test@gmail.com',
-          password: 'test@gmail.com'),
+      instructorId: Users().user.email,
+      studentId: "1",
+
       missionNum: 0,
       grades: baseGradeItems,
       overall: Grade.noSelection,
@@ -267,8 +253,6 @@ class CurrentFlight extends ChangeNotifier {
       dayNight: DayNight.day,
       startTime: DateTime.now(),
       endTime: DateTime.now(),
-      sortieNumber: 0,
-      length: "0",
     ));
     notifyListeners();
   }
@@ -288,8 +272,8 @@ class CurrentFlight extends ChangeNotifier {
       GradeSheet sheet = _gradeSheets[i];
       _gradeSheets.replaceRange(i, i + 1, [
         GradeSheet(
-          instructor: sheet.instructor,
-          student: sheet.student,
+          instructorId: sheet.instructorId,
+          studentId: sheet.studentId,
           missionNum: _missionNum,
           grades: sheet.grades,
           overall: sheet.overall,
@@ -297,8 +281,6 @@ class CurrentFlight extends ChangeNotifier {
           dayNight: _dayNight,
           startTime: _start,
           endTime: _end,
-          sortieNumber: _sortieNum,
-          length: _end.difference(_start).toString(),
           adQual: sheet.adQual,
           pilotQual: sheet.pilotQual,
           weather: _weather,
@@ -344,13 +326,8 @@ class CurrentFlight extends ChangeNotifier {
         ? _gradeSheets.add(
             GradeSheet(
               // TODO find this by current user instead
-              instructor: Users().user,
-              student: User(
-                  name: "${gradeSheets.length + 1}",
-                  rank: Rank.capt,
-                  squad: "",
-                  email: '',
-                  password: ''),
+              instructorId: Users().user.email,
+              studentId: "${gradeSheets.length + 1}",
               missionNum: 0,
               grades: baseGradeItems,
               overall: Grade.noSelection,
@@ -360,8 +337,6 @@ class CurrentFlight extends ChangeNotifier {
               dayNight: DayNight.day,
               startTime: DateTime.now(),
               endTime: DateTime.now(),
-              sortieNumber: 0,
-              length: "0",
             ),
           )
         : message = "Max Students added";
@@ -384,7 +359,7 @@ class CurrentFlight extends ChangeNotifier {
 
   int ensureUnique(User student) {
     return _gradeSheets.indexWhere(
-      (element) => element.student == student.name,
+      (element) => element.studentId == student.name,
     );
   }
 }
