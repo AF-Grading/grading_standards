@@ -1,37 +1,29 @@
 import 'package:flutter/cupertino.dart';
 
 import 'grade_enums.dart';
-import 'user.dart';
 
 class GradeSheet {
-  final String id; // = UniqueKey().toString();
-  final User instructor; //to be taken from a shared database
-  final User student; //to be taken from a shared database
+  final String id;
+  final String instructorId;
+  final String studentId;
   final int missionNum;
   final List<GradeItem> grades;
   final Grade overall;
-  // part of formation and airdrop events
-  final AdQual adQual;
+  final AdQual adQual; //TODO does this need to be on gsheet?
   final PilotQual pilotQual;
   final Weather weather;
   final SortieType sortieType;
-  final DayNight dayNight; //seems redundant to date
-  // TODO convert to start and end time, and have a length num come from it automatically
+  final DayNight dayNight;
   final DateTime startTime;
   final DateTime endTime;
-  // int length = startTime - endTime;
-  //DateTime date;
-  final int sortieNumber; // 1-20
-  // user could press start and stop button to generate length
-  final String length; //perhaps a time value instead of string
-  final String profile; //unsure what this means
+  final String profile;
   final String overallComments;
   final String recommendations;
   final bool isDraft;
 
   GradeSheet({
-    required this.instructor,
-    required this.student,
+    required this.instructorId,
+    required this.studentId,
     required this.missionNum,
     required this.grades,
     required this.overall,
@@ -42,8 +34,6 @@ class GradeSheet {
     required this.dayNight,
     required this.startTime,
     required this.endTime,
-    required this.sortieNumber,
-    required this.length,
     this.profile = '',
     this.overallComments = '',
     this.recommendations = '',

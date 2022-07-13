@@ -39,8 +39,8 @@ class ApplicationState extends ChangeNotifier {
         .collection('Gradesheets')
         .add(<String, dynamic>{
       'id': gradeSheet.id,
-      'student': gradeSheet.student.name,
-      'instructor': gradeSheet.instructor.name,
+      'student': gradeSheet.studentId,
+      'instructor': gradeSheet.instructorId,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'userId': FirebaseAuth.instance.currentUser!.uid,
     });

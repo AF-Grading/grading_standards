@@ -33,8 +33,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
   late bool _isEditing;
   bool _dateError = false;
 
-  late User? _student = widget.gradeSheet?.student;
-  late User? _instructor = widget.gradeSheet?.instructor;
+  late String? _student = widget.gradeSheet?.studentId;
+  late String? _instructor = widget.gradeSheet?.instructorId;
   final List<GradeItem> _grades = [];
   late Grade? _overall = widget.gradeSheet?.overall;
   late Weather? _weather = widget.gradeSheet?.weather;
@@ -46,8 +46,6 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
       TextEditingController(text: widget.gradeSheet?.overallComments);
   late final TextEditingController _missionN =
       TextEditingController(text: widget.gradeSheet?.missionNum.toString());
-  late final TextEditingController _sortieNum =
-      TextEditingController(text: widget.gradeSheet?.sortieNumber.toString());
   late final TextEditingController _sortiePro =
       TextEditingController(text: widget.gradeSheet?.profile);
   late final TextEditingController _reccs =
@@ -90,7 +88,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               const Text("Student:"),
-                              Text(_student!.name),
+                              Text(_student!),
                               !_isEditing
                                   ? ElevatedButton(
                                       onPressed: () {
@@ -117,7 +115,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                                 _student = context
                                     .read<Users>()
                                     .users
-                                    .firstWhere((user) => user.name == student);
+                                    .firstWhere((user) => user.email == student)
+                                    .email;
                               });
                             },
                           ),
@@ -126,7 +125,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               const Text("Instructor: "),
-                              Text(_instructor!.name),
+                              Text(_instructor!),
                               // only certain permissions can select an instructor that isnt themselves
                               context.watch<CurrentUser>().permission.index > 2
                                   ? ElevatedButton(
@@ -155,7 +154,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                                     .read<Users>()
                                     .users
                                     .firstWhere(
-                                        (user) => user.name == instructor);
+                                        (user) => user.email == instructor)
+                                    .email;
                               });
                             },
                           ),
@@ -250,27 +250,6 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return "Please enter a number";
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _sortieNum,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              decoration: const InputDecoration(
-                                labelText: "Sortie Number",
-                              ),
-                              validator: (value) {
-                                if (value == null ||
-                                    value.isEmpty ||
-                                    int.tryParse(value)! < 0 ||
-                                    int.tryParse(value)! > 20) {
-                                  return "Please enter a number, 0-20";
                                 }
                                 return null;
                               },
@@ -422,8 +401,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                 String id = context.read<GradeSheets>().updateById(
                       GradeSheet(
                         id: _isEditing ? widget.gradeSheet!.id : null,
-                        instructor: _instructor!,
-                        student: _student!,
+                        instructorId: _instructor!,
+                        studentId: _student!,
                         missionNum: int.tryParse(_missionN.text) ??
                             0, //_missionNum != null ? _missionNum! : 0,
                         grades: _grades,
@@ -433,11 +412,9 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                         sortieType: _sortieType!,
                         startTime: _startTime!,
                         endTime: _endTime!,
-                        sortieNumber: int.tryParse(_sortieNum.text) ?? 0,
                         profile: _sortiePro.text,
                         overallComments: _overallC.text, //_overallComments!,
                         recommendations: _reccs.text,
-                        length: _endTime!.difference(_startTime!).toString(),
                       ),
                     );
 

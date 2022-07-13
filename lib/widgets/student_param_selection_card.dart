@@ -33,36 +33,28 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
     return Card(
       child: ExpansionTile(
         title: hasErrors
-            ? Text("Student: ${widget.gradeSheet.student.name}",
+            ? Text("Student: ${widget.gradeSheet.studentId}",
                 style: const TextStyle(color: Colors.red))
-            : Text("Student: ${widget.gradeSheet.student.name}"),
+            : Text("Student: ${widget.gradeSheet.studentId}"),
         initiallyExpanded: true,
         children: [
-          int.tryParse(widget.gradeSheet.student.name) == null
+          int.tryParse(widget.gradeSheet.studentId) == null
               ? ElevatedButton(
-                  onPressed: () => context
-                      .read<CurrentFlight>()
-                      .updateByStudent(
-                          widget.gradeSheet.student,
+                  onPressed: () =>
+                      context.read<CurrentFlight>().updateByStudent(
+                          widget.gradeSheet.studentId,
                           GradeSheet(
-                              instructor: widget.gradeSheet.instructor,
-                              student: User(
-                                  name: "0",
-                                  rank: Rank.firstLt,
-                                  squad: "4th Airlift",
-                                  id: "0",
-                                  email: '',
-                                  password: ''),
-                              missionNum: widget.gradeSheet.missionNum,
-                              grades: widget.gradeSheet.grades,
-                              overall: widget.gradeSheet.overall,
-                              sortieType: widget.gradeSheet.sortieType,
-                              dayNight: widget.gradeSheet.dayNight,
-                              startTime: widget.gradeSheet.startTime,
-                              endTime: widget.gradeSheet.endTime,
-                              sortieNumber: widget.gradeSheet.sortieNumber,
-                              weather: widget.gradeSheet.weather,
-                              length: widget.gradeSheet.length)),
+                            instructorId: widget.gradeSheet.instructorId,
+                            studentId: "0",
+                            missionNum: widget.gradeSheet.missionNum,
+                            grades: widget.gradeSheet.grades,
+                            overall: widget.gradeSheet.overall,
+                            sortieType: widget.gradeSheet.sortieType,
+                            dayNight: widget.gradeSheet.dayNight,
+                            startTime: widget.gradeSheet.startTime,
+                            endTime: widget.gradeSheet.endTime,
+                            weather: widget.gradeSheet.weather,
+                          )),
                   child: const Text("Select a different student"))
               : SearchUsersFormField(
                   labelText: "Student Name",
@@ -70,11 +62,11 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                   users: context.watch<CurrentFlight>().filteredUsers,
                   validator: (value) {
                     // A bit of a bruteish method
-                    if (widget.gradeSheet.student.name == "1" ||
-                        widget.gradeSheet.student.name == "2" ||
-                        widget.gradeSheet.student.name == "3" ||
-                        widget.gradeSheet.student.name == "4" ||
-                        widget.gradeSheet.student.name == "0") {
+                    if (widget.gradeSheet.studentId == "1" ||
+                        widget.gradeSheet.studentId == "2" ||
+                        widget.gradeSheet.studentId == "3" ||
+                        widget.gradeSheet.studentId == "4" ||
+                        widget.gradeSheet.studentId == "0") {
                       setState(() {
                         hasErrors = true;
                       });
@@ -88,20 +80,20 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                   },
                   onSaved: (student) {
                     context.read<CurrentFlight>().updateByStudent(
-                        widget.gradeSheet.student,
+                        widget.gradeSheet.studentId,
                         GradeSheet(
-                            instructor: widget.gradeSheet.instructor,
-                            student: context.read<Users>().userByName(student),
-                            missionNum: widget.gradeSheet.missionNum,
-                            grades: widget.gradeSheet.grades,
-                            overall: widget.gradeSheet.overall,
-                            sortieType: widget.gradeSheet.sortieType,
-                            dayNight: widget.gradeSheet.dayNight,
-                            startTime: widget.gradeSheet.startTime,
-                            endTime: widget.gradeSheet.endTime,
-                            weather: widget.gradeSheet.weather,
-                            sortieNumber: widget.gradeSheet.sortieNumber,
-                            length: widget.gradeSheet.length));
+                          instructorId: widget.gradeSheet.instructorId,
+                          studentId:
+                              context.read<Users>().userByName(student).email,
+                          missionNum: widget.gradeSheet.missionNum,
+                          grades: widget.gradeSheet.grades,
+                          overall: widget.gradeSheet.overall,
+                          sortieType: widget.gradeSheet.sortieType,
+                          dayNight: widget.gradeSheet.dayNight,
+                          startTime: widget.gradeSheet.startTime,
+                          endTime: widget.gradeSheet.endTime,
+                          weather: widget.gradeSheet.weather,
+                        ));
                     setState(() {
                       hasErrors = false;
                     });
@@ -134,7 +126,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                     });
                   });
                   context.read<CurrentFlight>().updateParamsByStudent(
-                      widget.gradeSheet.student, _selectedParams);
+                      widget.gradeSheet.studentId, _selectedParams);
                 },
               ),
               const Text("Formation and Airdrop"),
@@ -160,7 +152,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                     });
                   });
                   context.read<CurrentFlight>().updateParamsByStudent(
-                      widget.gradeSheet.student, _selectedParams);
+                      widget.gradeSheet.studentId, _selectedParams);
                 },
               ),
             ],
@@ -202,7 +194,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                           _gradingParams = GradingParams.freeSelect;
                         });
                         context.read<CurrentFlight>().updateParamsByStudent(
-                            widget.gradeSheet.student, _selectedParams);
+                            widget.gradeSheet.studentId, _selectedParams);
                       },
                     ),
                   ),

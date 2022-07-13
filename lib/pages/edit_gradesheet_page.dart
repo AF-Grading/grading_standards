@@ -43,7 +43,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
         ? Scaffold(
             appBar: AppBar(
               title: Text(
-                  "Edit Grade Sheet    instructor: ${_gradeSheet.instructor}"),
+                  "Edit Grade Sheet    instructor: ${_gradeSheet.instructorId}"),
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
@@ -71,8 +71,7 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: TextFormField(
-                                    initialValue:
-                                        widget.gradeSheet.student.name,
+                                    initialValue: widget.gradeSheet.studentId,
                                     decoration: const InputDecoration(
                                         labelText: "Student",
                                         contentPadding:
@@ -111,47 +110,6 @@ class _EditGradeSheetPageState extends State<EditGradeSheetPage> {
                                   ),
                                 ),
                               )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Flexible(
-                                flex: 1,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    initialValue: widget.gradeSheet.sortieNumber
-                                        .toString(),
-                                    decoration: const InputDecoration(
-                                        labelText: "Sortie Number",
-                                        contentPadding:
-                                            const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 0)),
-                                    onChanged: (value) => setState(() {
-                                      //_gradeSheet.sortieNumber =
-                                      //int.parse(value);
-                                    }),
-                                  ),
-                                ),
-                              ),
-                              Flexible(
-                                flex: 1,
-                                // consider some sort of time picker here
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    initialValue: _gradeSheet.length,
-                                    decoration: const InputDecoration(
-                                        labelText: "Length",
-                                        contentPadding:
-                                            const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 0)),
-                                    onChanged: (value) => setState(() {
-                                      //_gradeSheet.length = value;
-                                    }),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                           Row(

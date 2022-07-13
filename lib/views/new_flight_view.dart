@@ -72,30 +72,6 @@ class NewFlightView extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      Expanded(
-                        child: TextFormField(
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          decoration: const InputDecoration(
-                            labelText: "Sortie Number",
-                          ),
-                          validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                int.tryParse(value)! < 0 ||
-                                int.tryParse(value)! > 20) {
-                              return "Please enter a number, 0-20";
-                            }
-                            return null;
-                          },
-                          onChanged: (value) =>
-                              // tryparse needed because of empty string else error
-                              context.read<CurrentFlight>().sortieNum =
-                                  int.tryParse(value) ?? 0,
-                        ),
-                      ),
                       DayNightFormField(validator: (value) {
                         if (value == null) {
                           return "Please select a value";
