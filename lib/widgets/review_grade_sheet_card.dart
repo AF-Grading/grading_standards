@@ -15,7 +15,7 @@ class ReviewGradeSheetCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ExpansionTile(
-        title: Text(gradeSheet.student.name),
+        title: Text(gradeSheet.studentId),
         initiallyExpanded: true,
         children: [
           OverallCard(
@@ -25,7 +25,7 @@ class ReviewGradeSheetCard extends StatelessWidget {
           ),
           GradesCard(
             title: "Graded Items",
-            student: gradeSheet.student,
+            student: gradeSheet.studentId,
             grades: gradeSheet.grades
                 .where((item) => item.grade != Grade.noGrade)
                 .toList(),
@@ -34,7 +34,7 @@ class ReviewGradeSheetCard extends StatelessWidget {
           GradesCard(
             title: "Ungraded",
             initiallyExpanded: false,
-            student: gradeSheet.student,
+            student: gradeSheet.studentId,
             grades: gradeSheet.grades
                 .where((item) => item.grade == Grade.noGrade)
                 .toList(),

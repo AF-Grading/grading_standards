@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 
 class User {
   final String email;
-  final String password;
-  final String id; //= UniqueKey().toString();
+  final String password; // TODO delete, handled by auth
+  final String id; //= UniqueKey().toString(); TODO delete in favor of email
   final String name;
   final String squad;
   final Rank rank;

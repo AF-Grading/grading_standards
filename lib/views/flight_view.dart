@@ -55,7 +55,7 @@ class _FlightViewState extends State<FlightView>
                 });
               }),
           GradesCard(
-              student: widget.gradeSheet.student,
+              student: widget.gradeSheet.studentId,
               grades: _selectedGrades,
               title: "Grades",
               hasErrors: (hasError) {
@@ -64,7 +64,7 @@ class _FlightViewState extends State<FlightView>
                 });
               }),
           GradesCard(
-              student: widget.gradeSheet.student,
+              student: widget.gradeSheet.studentId,
               grades: _unselectedGrades,
               title: "Unused Grades",
               initiallyExpanded: false,

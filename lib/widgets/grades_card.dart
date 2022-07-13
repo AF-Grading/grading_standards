@@ -20,7 +20,7 @@ class GradesCard extends StatelessWidget {
   }) : super(key: key);
 
   //final GradeSheet gradeSheet;
-  final User student;
+  final String student;
   final List<GradeItem> grades;
   final String? title;
   final bool initiallyExpanded;
@@ -35,8 +35,7 @@ class GradesCard extends StatelessWidget {
         children: grades
             .map(
               (item) => ListTile(
-                leading:
-                SizedBox(
+                leading: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: GestureDetector(
                     onTap: () {

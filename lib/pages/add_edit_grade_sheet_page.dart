@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../models/application_state.dart';
 import '../models/grade_enums.dart';
 import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
@@ -12,7 +13,7 @@ import '../widgets/day_night_form_field.dart';
 import '../widgets/search_users_form_field.dart';
 import '../widgets/sortie_type_form_field.dart';
 import '../widgets/weather_form_field.dart';
-import '/models/CurrentUser.dart';
+import '../models/current_user.dart';
 import '/models/cts_list.dart';
 import '/pages/grade_sheet_page.dart';
 import '/widgets/grade_radio_form_field.dart';
@@ -32,8 +33,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
   late bool _isEditing;
   bool _dateError = false;
 
-  late User? _student = widget.gradeSheet?.student;
-  late User? _instructor = widget.gradeSheet?.instructor;
+  late String? _student = widget.gradeSheet?.studentId;
+  late String? _instructor = widget.gradeSheet?.instructorId;
   final List<GradeItem> _grades = [];
   late Grade? _overall = widget.gradeSheet?.overall;
   late Weather? _weather = widget.gradeSheet?.weather;
@@ -45,8 +46,6 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
       TextEditingController(text: widget.gradeSheet?.overallComments);
   late final TextEditingController _missionN =
       TextEditingController(text: widget.gradeSheet?.missionNum.toString());
-  late final TextEditingController _sortieNum =
-      TextEditingController(text: widget.gradeSheet?.sortieNumber.toString());
   late final TextEditingController _sortiePro =
       TextEditingController(text: widget.gradeSheet?.profile);
   late final TextEditingController _reccs =
@@ -89,7 +88,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               const Text("Student:"),
-                              Text(_student!.name),
+                              Text(_student!),
                               !_isEditing
                                   ? ElevatedButton(
                                       onPressed: () {
@@ -116,7 +115,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                                 _student = context
                                     .read<Users>()
                                     .users
-                                    .firstWhere((user) => user.name == student);
+                                    .firstWhere((user) => user.name == student)
+                                    .email;
                               });
                             },
                           ),
@@ -125,7 +125,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               const Text("Instructor: "),
-                              Text(_instructor!.name),
+                              Text(_instructor!),
                               // only certain permissions can select an instructor that isnt themselves
                               context.watch<CurrentUser>().permission.index > 2
                                   ? ElevatedButton(
@@ -154,7 +154,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                                     .read<Users>()
                                     .users
                                     .firstWhere(
-                                        (user) => user.name == instructor);
+                                        (user) => user.name == instructor)
+                                    .email;
                               });
                             },
                           ),
@@ -249,27 +250,6 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return "Please enter a number";
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _sortieNum,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              decoration: const InputDecoration(
-                                labelText: "Sortie Number",
-                              ),
-                              validator: (value) {
-                                if (value == null ||
-                                    value.isEmpty ||
-                                    int.tryParse(value)! < 0 ||
-                                    int.tryParse(value)! > 20) {
-                                  return "Please enter a number, 0-20";
                                 }
                                 return null;
                               },
@@ -418,27 +398,28 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                   ),
                 );
               } else {
-                String id = context.read<GradeSheets>().updateById(
-                      GradeSheet(
-                        id: _isEditing ? widget.gradeSheet!.id : null,
-                        instructor: _instructor!,
-                        student: _student!,
-                        missionNum: int.tryParse(_missionN.text) ??
-                            0, //_missionNum != null ? _missionNum! : 0,
-                        grades: _grades,
-                        overall: _overall!,
-                        weather: _weather!,
-                        dayNight: _dayNight!,
-                        sortieType: _sortieType!,
-                        startTime: _startTime!,
-                        endTime: _endTime!,
-                        sortieNumber: int.tryParse(_sortieNum.text) ?? 0,
-                        profile: _sortiePro.text,
-                        overallComments: _overallC.text, //_overallComments!,
-                        recommendations: _reccs.text,
-                        length: _endTime!.difference(_startTime!).toString(),
-                      ),
-                    );
+                GradeSheet gradeSheet = GradeSheet(
+                  id: _isEditing ? widget.gradeSheet!.id : null,
+                  instructorId: _instructor!,
+                  studentId: _student!,
+                  missionNum: int.tryParse(_missionN.text) ??
+                      0, //_missionNum != null ? _missionNum! : 0,
+                  grades: _grades,
+                  overall: _overall!,
+                  weather: _weather!,
+                  dayNight: _dayNight!,
+                  sortieType: _sortieType!,
+                  startTime: _startTime!,
+                  endTime: _endTime!,
+                  profile: _sortiePro.text,
+                  overallComments: _overallC.text, //_overallComments!,
+                  recommendations: _reccs.text,
+                );
+
+                String id = context.read<GradeSheets>().updateById(gradeSheet);
+
+                context.read<ApplicationState>().addGradeSheet(gradeSheet);
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Grade Sheet Added"),

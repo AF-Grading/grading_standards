@@ -84,30 +84,6 @@ class ReviewGradeSheetGeneralCard extends StatelessWidget {
                             int.tryParse(value) ?? 0,
                   ),
                 ),
-                Expanded(
-                  child: TextFormField(
-                    initialValue:
-                        context.read<CurrentFlight>().sortieNum.toString(),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: const InputDecoration(
-                      labelText: "Sortie Number",
-                    ),
-                    validator: (value) {
-                      if (value == null ||
-                          value.isEmpty ||
-                          int.tryParse(value)! < 0 ||
-                          int.tryParse(value)! > 20) {
-                        return "Please enter a number, 0-20";
-                      }
-                      return null;
-                    },
-                    onChanged: (value) =>
-                        // tryparse needed because of empty string else error
-                        context.read<CurrentFlight>().sortieNum =
-                            int.tryParse(value) ?? 0,
-                  ),
-                ),
               ],
             ),
           ),

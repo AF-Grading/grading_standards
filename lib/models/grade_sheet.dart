@@ -1,37 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'grade_enums.dart';
-import 'user.dart';
 
 class GradeSheet {
-  final String id; // = UniqueKey().toString();
-  final User instructor; //to be taken from a shared database
-  final User student; //to be taken from a shared database
+  final String id;
+  final String instructorId;
+  final String studentId;
   final int missionNum;
   final List<GradeItem> grades;
   final Grade overall;
-  // part of formation and airdrop events
-  final AdQual adQual;
+  final AdQual adQual; //TODO does this need to be on gsheet?
   final PilotQual pilotQual;
   final Weather weather;
   final SortieType sortieType;
-  final DayNight dayNight; //seems redundant to date
-  // TODO convert to start and end time, and have a length num come from it automatically
+  final DayNight dayNight;
   final DateTime startTime;
   final DateTime endTime;
-  // int length = startTime - endTime;
-  //DateTime date;
-  final int sortieNumber; // 1-20
-  // user could press start and stop button to generate length
-  final String length; //perhaps a time value instead of string
-  final String profile; //unsure what this means
+  final String profile;
   final String overallComments;
   final String recommendations;
   final bool isDraft;
 
   GradeSheet({
-    required this.instructor,
-    required this.student,
+    required this.instructorId,
+    required this.studentId,
     required this.missionNum,
     required this.grades,
     required this.overall,
@@ -42,14 +35,65 @@ class GradeSheet {
     required this.dayNight,
     required this.startTime,
     required this.endTime,
-    required this.sortieNumber,
-    required this.length,
     this.profile = '',
     this.overallComments = '',
     this.recommendations = '',
     this.isDraft = true,
     String? id,
   }) : id = id ?? UniqueKey().toString();
+
+  factory GradeSheet.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return GradeSheet(
+      instructorId: data?['instructorId'],
+      studentId: data?['studentId'],
+      missionNum: data?['missionNum'],
+      grades: data?['grades'] is Iterable
+          ? (data?['grades'] as Iterable)
+              .map((gradeItem) => GradeItem(
+                  name: gradeItem?['name'],
+                  grade: (gradeItem?['grade'] as String).grade!,
+                  comments: gradeItem?['comments']))
+              .toList()
+          : [],
+      overall: (data?['overall'] as String).grade!,
+      adQual: (data?['adQual'] as String).adQual!,
+      pilotQual: (data?['pilotQual'] as String).pilotQual!,
+      weather: (data?['weather'] as String).weather!,
+      sortieType: (data?['sortieType'] as String).sortieType!,
+      dayNight: (data?['dayNight'] as String).dayNight!,
+      startTime: DateTime.fromMillisecondsSinceEpoch(data?['startTime']),
+      endTime: DateTime.fromMillisecondsSinceEpoch(data?['endTime']),
+      profile: data?['profile'],
+      overallComments: data?['overallComments'],
+      recommendations: data?['recommendations'],
+      id: data?['id'],
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      "instructorId": instructorId,
+      "studentId": studentId,
+      "missionNum": missionNum,
+      "grades": grades.map((e) => e.toFirestore()).toList(),
+      "overall": overall.name,
+      "adQual": adQual.name,
+      "pilotQual": pilotQual.name,
+      "weather": weather.name,
+      "sortieType": sortieType.name,
+      "dayNight": dayNight.name,
+      "startTime": startTime.millisecondsSinceEpoch,
+      "endTime": endTime.millisecondsSinceEpoch,
+      "profile": profile,
+      "overallComments": overallComments,
+      "recommendations": recommendations,
+      "id": id
+    };
+  }
 }
 
 class GradeItem {
@@ -62,4 +106,18 @@ class GradeItem {
     required this.grade,
     this.comments = '',
   });
+
+  Map<String, dynamic> toFirestore() {
+    return {"name": name, "grade": grade.name, "comments": comments};
+  }
+
+  factory GradeItem.unMap(
+    Map<String, dynamic> snapshot,
+  ) {
+    return GradeItem(
+      name: snapshot['name'],
+      grade: (snapshot['grade'] as String).grade!,
+      comments: snapshot['comments'],
+    );
+  }
 }

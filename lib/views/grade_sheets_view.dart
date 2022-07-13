@@ -1,4 +1,4 @@
-import 'package:app_prototype/models/CurrentUser.dart';
+import 'package:app_prototype/models/current_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,13 +20,13 @@ class GradeSheetsView extends StatelessWidget {
         final List<GradeSheet> gradeSheets = isInstructor
             ? gradeSheetsModel.gradeSheets
                 .where((gradesheet) =>
-                    gradesheet.instructor.id ==
-                    context.watch<CurrentUser>().user.id)
+                    gradesheet.instructorId ==
+                    context.watch<CurrentUser>().user.email)
                 .toList()
             : gradeSheetsModel.gradeSheets
                 .where((gradesheet) =>
-                    gradesheet.student.id ==
-                    context.watch<CurrentUser>().user.id)
+                    gradesheet.studentId ==
+                    context.watch<CurrentUser>().user.email)
                 .toList();
         final missionNumbers = gradeSheetsModel.missionNumbers
             .where((number) =>
@@ -50,7 +50,7 @@ class GradeSheetsView extends StatelessWidget {
                                   missionNumbers[index])
                               .map(
                                 (gradeSheet) => ListTile(
-                                  leading: Text(gradeSheet.student.name),
+                                  leading: Text(gradeSheet.studentId),
                                   title: Text(gradeSheet.startTime
                                       .toString()
                                       .substring(0, 10)),

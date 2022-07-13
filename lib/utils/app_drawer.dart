@@ -1,8 +1,9 @@
-import 'package:app_prototype/models/CurrentUser.dart';
+import 'package:app_prototype/models/current_user.dart';
 import 'package:app_prototype/models/theme_change.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../pages/all_grade_sheets_page.dart';
 import '../pages/my_grade_sheets_page.dart';
 import '../pages/reference_materials_page.dart';
 import '../pages/settings_page.dart';
@@ -48,6 +49,17 @@ class _AppDrawerState extends State<AppDrawer> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const MyGradeSheetsPage()),
+              );
+            },
+          ),
+        if (context.watch<CurrentUser>().permission.index > 2)
+          ListTile(
+            title: const Text('All Grade Sheets'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AllGradeSheetsPage()),
               );
             },
           ),
