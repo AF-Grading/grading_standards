@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/foundation.dart';
 
 import 'user.dart';

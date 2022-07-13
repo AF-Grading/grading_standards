@@ -8,6 +8,7 @@ import 'models/application_state.dart';
 import 'models/grade_sheets.dart';
 import 'models/current_flight.dart';
 import 'models/theme_change.dart';
+import 'models/user_setting.dart';
 import 'models/users.dart';
 import 'models/current_user.dart';
 import 'pages/home_page_old.dart';
@@ -56,17 +57,25 @@ class _MyAppState extends State<MyApp> {
                 return true;
               },
               child: Consumer<ThemeChange>(
-                builder: (context, value, child) => MaterialApp(
-                  title: 'Flutter Demo',
-                  // themeMode: ThemeMode.light,
-                  theme: light_theme,
-                  darkTheme: dark_theme,
-                  // themeMode: value.mode,
-                  themeMode: context.watch<ThemeChange>().mode,
-                  home: HomePageOld(
-                      title: "Flying Standards",
-                      permission:
-                          context.watch<CurrentUser>().permission.index),
+                builder: (context, value, child) => MultiProvider(
+                  providers: [
+                    StreamProvider<List<UserSetting>>(
+                      create: (_) => context.read<ApplicationState>().users,
+                      initialData: const [],
+                    )
+                  ],
+                  child: MaterialApp(
+                    title: 'Flutter Demo',
+                    // themeMode: ThemeMode.light,
+                    theme: light_theme,
+                    darkTheme: dark_theme,
+                    // themeMode: value.mode,
+                    themeMode: context.watch<ThemeChange>().mode,
+                    home: HomePageOld(
+                        title: "Flying Standards",
+                        permission:
+                            context.watch<CurrentUser>().permission.index),
+                  ),
                 ),
               ),
             ),

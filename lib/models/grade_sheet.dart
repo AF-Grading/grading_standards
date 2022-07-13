@@ -94,6 +94,30 @@ class GradeSheet {
       "id": id
     };
   }
+
+  String copy(String instructorName, String studentName) {
+    String myString = '''INSTRUCTOR NAME: $instructorName
+        STUDENT NAME: $studentName
+        PILOT QUAL:$pilotQual"
+        PROFILE: $profile
+        Sortie Type: ${sortieType.name}
+        DATE(S): ${startTime.day}-${startTime.month}-${startTime.year}
+        Weather: ${weather.name}
+        Day/Night: ${dayNight.name}
+        Length: ${endTime.difference(startTime).inSeconds}
+        .PS.|GRADE| EVENT | COMMENTS\n''';
+
+    for (GradeItem item in grades) {
+      myString +=
+          "_?_|__${item.grade.index - 2}___| ${item.name} ${item.comments}\n";
+    }
+
+    myString += '''\n OVERALL GRADE: ${overall.index - 2}
+
+    RECOMMENDATION / NEXT: $recommendations''';
+
+    return myString;
+  }
 }
 
 class GradeItem {

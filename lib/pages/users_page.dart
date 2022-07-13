@@ -34,33 +34,34 @@ class UsersPage extends StatelessWidget {
             ],
           ),
         ),
-        body: StreamProvider<List<UserSetting>>(
+        body: /*StreamProvider<List<UserSetting>>(
           create: (_) => context.read<ApplicationState>().users,
           initialData: const [],
-          child: Consumer<List<UserSetting>>(
-            builder: (context, userStream, child) {
-              return Column(
-                children: userStream
-                    .map(
-                      (user) => ListTile(
-                        title: Text("${user.rank.pretty} ${user.name}"),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => UserPage(
-                                  user: User(
-                                      name: user.name,
-                                      rank: user.rank,
-                                      email: user.email,
-                                      permission: user.permission,
-                                      squad: user.squad))),
-                        ),
+          child:*/
+            Consumer<List<UserSetting>>(
+          builder: (context, userStream, child) {
+            return Column(
+              children: userStream
+                  .map(
+                    (user) => ListTile(
+                      title: Text("${user.rank.pretty} ${user.name}"),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UserPage(
+                                user: User(
+                                    name: user.name,
+                                    rank: user.rank,
+                                    email: user.email,
+                                    permission: user.permission,
+                                    squad: user.squad))),
                       ),
-                    )
-                    .toList(),
-              );
-            },
-          ),
+                    ),
+                  )
+                  .toList(),
+            );
+          },
+          //),
         ));
   }
 }
