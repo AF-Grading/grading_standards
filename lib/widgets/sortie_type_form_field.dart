@@ -122,7 +122,7 @@ Widget _buildWide(
 
 Widget _buildNarrow(
     FormFieldState<SortieType> formState, ValueChanged<SortieType>? onChanged) {
-  SortieType dropdownValue = SortieType.local;
+  SortieType dropdownValue = SortieType.noSelection;
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Column(
@@ -133,6 +133,8 @@ Widget _buildNarrow(
             Text("Sorties Type:"),
             DropdownButton(
                 items: [
+                  DropdownMenuItem(
+                      child: Text(""), value: SortieType.noSelection),
                   DropdownMenuItem(
                       child: Text("local"), value: SortieType.local),
                   DropdownMenuItem(child: Text("ims"), value: SortieType.ims),
