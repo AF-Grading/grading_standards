@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/application_state.dart';
 import '../models/current_flight.dart';
 import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
@@ -43,6 +44,8 @@ class ReviewFlightPage extends StatelessWidget {
             for (GradeSheet sheet
                 in context.read<CurrentFlight>().gradeSheets) {
               context.read<GradeSheets>().addSheet(sheet);
+              // TODO if no internet, make sure sheet is draft and dont add
+              context.read<ApplicationState>().addGradeSheet(sheet);
             }
             context.read<CurrentFlight>().clear();
             // gets rid of all the flight pages and pushes the home page
