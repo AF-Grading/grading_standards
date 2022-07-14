@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                     children: [
                       Text(widget.title),
                       const OfflineChecker(),
-                      const SyncButton(),
+                      //const SyncButton(),
                     ]),
                 bottom: widget.permission == 1
                     ? TabBar(
