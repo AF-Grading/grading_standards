@@ -66,19 +66,16 @@ Widget _buildWide(
 
 Widget _buildNarrow(
     FormFieldState<DayNight> formState, ValueChanged<DayNight>? onChanged) {
-  DayNight dropdownValue = DayNight.noSelection;
+  //DayNight dropdownValue = DayNight.noSelection;
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Column(
       children: [
         Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           const Text("Time of Day: "),
-          DropdownButton(
-            items: [
-                DropdownMenuItem(
-                  value: DayNight.noSelection,
-                  child: Text(""),
-                ),
+          DropdownButton<DayNight>(
+            value: formState.value,
+            items: const [
               DropdownMenuItem(
                 value: DayNight.day,
                 child: Text("Day"),
@@ -88,11 +85,10 @@ Widget _buildNarrow(
                 child: Text("Night"),
               ),
             ],
-            value: dropdownValue,
             onChanged: (DayNight? newValue) {
               formState.didChange(newValue);
               onChanged!(newValue!);
-              dropdownValue = newValue;
+              //dropdownValue = newValue;
             },
           ),
         ]),

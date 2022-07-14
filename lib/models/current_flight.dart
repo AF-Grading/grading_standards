@@ -19,9 +19,9 @@ class CurrentFlight extends ChangeNotifier {
   //bool
   // Overall section
 
-  Weather _weather = Weather.noSelection;
-  DayNight _dayNight = DayNight.noSelection;
-  SortieType _sortieType = SortieType.noSelection;
+  Weather? _weather; //= Weather.noSelection;
+  DayNight? _dayNight; // = DayNight.noSelection;
+  SortieType? _sortieType; // = SortieType.noSelection;
   int _missionNum = 0;
   int _sortieNum = 0;
   String _profile = "";
@@ -38,7 +38,7 @@ class CurrentFlight extends ChangeNotifier {
       studentId: "1",
       missionNum: 0,
       grades: baseGradeItems,
-      overall: Grade.noSelection,
+      //overall:
       weather: Weather.imc,
       pilotQual: PilotQual.fpc,
       sortieType: SortieType.ims,
@@ -56,9 +56,9 @@ class CurrentFlight extends ChangeNotifier {
   GlobalKey<FormState> get flightKey => _flightKey;
 
   List<GradeSheet> get gradeSheets => _gradeSheets;
-  Weather get weather => _weather;
-  DayNight get dayNight => _dayNight;
-  SortieType get sortieType => _sortieType;
+  Weather? get weather => _weather;
+  DayNight? get dayNight => _dayNight;
+  SortieType? get sortieType => _sortieType;
   int get missionNum => _missionNum;
   int get sortieNum => _sortieNum;
   String get profile => _profile;
@@ -73,7 +73,7 @@ class CurrentFlight extends ChangeNotifier {
 
   // Setters
 
-  set weather(Weather value) {
+  set weather(Weather? value) {
     _weather = value;
     notifyListeners();
   }
@@ -83,12 +83,12 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
-  set dayNight(DayNight value) {
+  set dayNight(DayNight? value) {
     _dayNight = value;
     notifyListeners();
   }
 
-  set sortieType(SortieType value) {
+  set sortieType(SortieType? value) {
     _sortieType = value;
     notifyListeners();
   }
@@ -176,7 +176,7 @@ class CurrentFlight extends ChangeNotifier {
     List<GradeItem> items = [];
     for (GradeItem item in gradeSheet.grades) {
       if (params[item.name] == true) {
-        items.add(GradeItem(name: item.name, grade: Grade.noSelection));
+        items.add(GradeItem(name: item.name));
         //item.grade = Grade.noSelection;
       } else {
         items.add(GradeItem(name: item.name, grade: Grade.noGrade));
@@ -208,7 +208,15 @@ class CurrentFlight extends ChangeNotifier {
     int index = gradeSheet.grades
         .indexWhere((gradeItem) => gradeItem.name == item.name);
 
-    gradeSheet.grades.replaceRange(index, index + 1, [item]);
+    // item.grade or item.comments will be null depending on what was changed
+    GradeItem newItem = GradeItem(
+        name: item.name,
+        grade: item.grade ?? gradeSheet.grades[index].grade,
+        comments: item.comments != ""
+            ? item.comments
+            : gradeSheet.grades[index].comments);
+
+    gradeSheet.grades.replaceRange(index, index + 1, [newItem]);
 
     notifyListeners();
   }
@@ -230,9 +238,10 @@ class CurrentFlight extends ChangeNotifier {
     //bool
     // Overall section
 
-    _weather = Weather.noSelection;
-    _dayNight = DayNight.noSelection;
-    _sortieType = SortieType.noSelection;
+    _weather = null; //Weather.noSelection;
+    _dayNight = null; //DayNight.noSelection;
+    _sortieType = null;
+    //SortieType.noSelection;
     _missionNum = 0;
     _sortieNum = 0;
     _profile = "";
@@ -246,7 +255,7 @@ class CurrentFlight extends ChangeNotifier {
 
       missionNum: 0,
       grades: baseGradeItems,
-      overall: Grade.noSelection,
+      overall: null, // Grade.noSelection,
       weather: Weather.imc,
       pilotQual: PilotQual.fpc,
       sortieType: SortieType.ims,
@@ -277,13 +286,13 @@ class CurrentFlight extends ChangeNotifier {
           missionNum: _missionNum,
           grades: sheet.grades,
           overall: sheet.overall,
-          sortieType: _sortieType,
-          dayNight: _dayNight,
+          sortieType: _sortieType!,
+          dayNight: _dayNight!,
           startTime: _start,
           endTime: _end,
           adQual: sheet.adQual,
           pilotQual: sheet.pilotQual,
-          weather: _weather,
+          weather: _weather!,
           profile: _profile,
           overallComments: sheet.overallComments,
           recommendations: sheet.recommendations,
@@ -330,8 +339,8 @@ class CurrentFlight extends ChangeNotifier {
               studentId: "${gradeSheets.length + 1}",
               missionNum: 0,
               grades: baseGradeItems,
-              overall: Grade.noSelection,
-              weather: Weather.noSelection,
+              //overall: Grade.noSelection,
+              //weather: Weather.noSelection,
               pilotQual: PilotQual.fpc,
               sortieType: SortieType.ims,
               dayNight: DayNight.day,

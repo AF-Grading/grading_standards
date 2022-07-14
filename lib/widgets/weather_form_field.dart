@@ -69,26 +69,21 @@ Widget _buildWide(
 
 Widget _buildNarrow(
     FormFieldState<Weather> formState, ValueChanged<Weather>? onChanged) {
-  // I'll add a null field, if y'all mind the auto vmc option
-
-  Weather dropdownValue = Weather.noSelection;
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Column(
       children: [
         Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           const Text("Weather:"),
-          DropdownButton(
+          DropdownButton<Weather>(
             items: const [
-              DropdownMenuItem(child: Text(""), value: Weather.noSelection),
-              DropdownMenuItem(child: Text("VMC"), value: Weather.vmc),
-              DropdownMenuItem(child: Text("IMC"), value: Weather.imc),
+              DropdownMenuItem(value: Weather.vmc, child: Text("VMC")),
+              DropdownMenuItem(value: Weather.imc, child: Text("IMC")),
             ],
-            value: dropdownValue,
-            onChanged: (Weather? newValue) {
+            value: formState.value,
+            onChanged: (newValue) {
               formState.didChange(newValue);
               onChanged!(newValue!);
-              dropdownValue = newValue;
             },
           ),
         ]),

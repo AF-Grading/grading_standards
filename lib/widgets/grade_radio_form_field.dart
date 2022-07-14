@@ -133,27 +133,24 @@ Widget _buildWide(
   );
 }
 
-Widget _buildNarrow(FormFieldState<Grade> formState, ValueChanged<Grade>? onChanged) {
-  // I am not sure why it is not showing up the new one when it's changed
-  
-  Grade? dropdownValue = Grade.noGrade;
+Widget _buildNarrow(
+    FormFieldState<Grade> formState, ValueChanged<Grade>? onChanged) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Column(
       children: [
-        DropdownButton(
+        DropdownButton<Grade>(
           items: const [
-            DropdownMenuItem(child: Text("NG"), value: Grade.noGrade),
-            DropdownMenuItem(child: Text("1"), value: Grade.introductory),
-            DropdownMenuItem(child: Text("2"), value: Grade.familiar),
-            DropdownMenuItem(child: Text("3"), value: Grade.proficient),
-            DropdownMenuItem(child: Text("4"), value: Grade.expert),
+            DropdownMenuItem(value: Grade.noGrade, child: Text("NG")),
+            DropdownMenuItem(value: Grade.introductory, child: Text("1")),
+            DropdownMenuItem(value: Grade.familiar, child: Text("2")),
+            DropdownMenuItem(value: Grade.proficient, child: Text("3")),
+            DropdownMenuItem(value: Grade.expert, child: Text("4")),
           ],
-          value: dropdownValue,
+          value: formState.value,
           onChanged: (Grade? newValue) {
             formState.didChange(newValue);
             onChanged!(newValue!);
-            dropdownValue = newValue;
           },
         ),
         formState.hasError

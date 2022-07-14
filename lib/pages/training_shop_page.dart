@@ -1,13 +1,10 @@
 import 'package:app_prototype/models/grade_sheet.dart';
-import 'package:app_prototype/models/individual_report.dart';
-import 'package:app_prototype/pages/edit_gradesheet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import '../models/grade_enums.dart';
 import '../models/training_shop.dart';
-import '/models/user.dart';
+import 'grade_sheet_page.dart';
 
 class TrainingShopPage extends StatelessWidget {
   const TrainingShopPage({
@@ -101,7 +98,7 @@ class TrainingShopPage extends StatelessWidget {
                                               child: ListTile(
                                                   title: Text(item.name),
                                                   trailing: Text(
-                                                      "${item.grade.index - 2}")),
+                                                      "${item.grade!.index - 2}")),
                                             ))
                                         .toList(),
                                   )
@@ -124,7 +121,7 @@ class TrainingShopPage extends StatelessWidget {
                                               child: ListTile(
                                                   title: Text(item.name),
                                                   trailing: Text(
-                                                      "${item.grade.index - 2}")),
+                                                      "${item.grade!.index - 2}")),
                                             ))
                                         .toList(),
                                   )
@@ -200,7 +197,7 @@ class TrainingShopPage extends StatelessWidget {
                         ),
                         for (GradeSheet sheet in gradeSheets)
                           ListTile(
-                            trailing: Text("Grade ${sheet.overall.index - 2}"),
+                            trailing: Text("Grade ${sheet.overall!.index - 2}"),
                             title: Text(sheet.instructorId),
                             subtitle: Text(sheet.studentId),
                             leading: Text(
@@ -208,8 +205,7 @@ class TrainingShopPage extends StatelessWidget {
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditGradeSheetPage(
-                                  isEditing: false,
+                                builder: (context) => GradeSheetPage(
                                   gradeSheet: sheet,
                                 ),
                               ),
@@ -284,7 +280,7 @@ class TrainingShopPage extends StatelessWidget {
                                           child: ListTile(
                                               title: Text(item.name),
                                               trailing: Text(
-                                                  "${item.grade.index - 2}")),
+                                                  "${item.grade!.index - 2}")),
                                         ))
                                     .toList(),
                               )
@@ -310,7 +306,7 @@ class TrainingShopPage extends StatelessWidget {
                                           child: ListTile(
                                               title: Text(item.name),
                                               trailing: Text(
-                                                  "${item.grade.index - 2}")),
+                                                  "${item.grade!.index - 2}")),
                                         ))
                                     .toList(),
                               )
@@ -382,7 +378,7 @@ class TrainingShopPage extends StatelessWidget {
                         ),
                         for (GradeSheet sheet in gradeSheets)
                           ListTile(
-                            trailing: Text("Grade ${sheet.overall.index - 2}"),
+                            trailing: Text("Grade ${sheet.overall!.index - 2}"),
                             title: Text(sheet.instructorId),
                             subtitle: Text(sheet.studentId),
                             leading: Text(
@@ -390,8 +386,7 @@ class TrainingShopPage extends StatelessWidget {
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditGradeSheetPage(
-                                  isEditing: false,
+                                builder: (context) => GradeSheetPage(
                                   gradeSheet: sheet,
                                 ),
                               ),

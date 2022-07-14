@@ -1,5 +1,3 @@
-import 'package:app_prototype/pages/edit_gradesheet_page.dart';
-
 import '../models/grade_enums.dart';
 import '/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
@@ -80,13 +78,14 @@ class GradeSheetPage extends StatelessWidget {
                                       child: ListTile(
                                           leading: const Text("Weather:"),
                                           title:
-                                              Text(gradeSheet.weather.name))),
+                                              Text(gradeSheet.weather!.name))),
                                 ),
                                 Expanded(
                                   child: SizedBox(
                                       height: dist,
                                       child: ListTile(
-                                          leading: const Text("Sortie Profile:"),
+                                          leading:
+                                              const Text("Sortie Profile:"),
                                           title: Text(gradeSheet.profile))),
                                 ),
                               ],
@@ -103,7 +102,7 @@ class GradeSheetPage extends StatelessWidget {
                                     child: ListTile(
                                       leading: const Text("Overall Grade:"),
                                       title: Text(
-                                          "${gradeSheet.overall.index - 2}"),
+                                          "${gradeSheet.overall!.index - 2}"),
                                     ),
                                   ),
                                 ),
@@ -156,7 +155,7 @@ class GradeSheetPage extends StatelessWidget {
                               children: [
                                 // TODO: change expanded to flexible for listtiles casue they fat
 
-                                Expanded(
+                                /*Expanded(
                                   child: SizedBox(
                                     height: dist,
                                     child: ListTile(
@@ -168,8 +167,8 @@ class GradeSheetPage extends StatelessWidget {
                                           : gradeSheet.pilotQual.name),
                                     ),
                                   ),
-                                ),
-                                Expanded(
+                                ),*/
+                                /*Expanded(
                                   child: SizedBox(
                                       height: dist,
                                       child: ListTile(
@@ -181,7 +180,7 @@ class GradeSheetPage extends StatelessWidget {
                                             ? ""
                                             : gradeSheet.adQual.name),
                                       )),
-                                ),
+                                ),*/
                                 Expanded(
                                     child: SizedBox(
                                         height: dist,
@@ -203,7 +202,7 @@ class GradeSheetPage extends StatelessWidget {
                         children: gradeSheet.grades
                             .where((item) => item.grade != Grade.noGrade)
                             .map((item) => ListTile(
-                                  leading: Text("${item.grade.index - 2}"),
+                                  leading: Text("${item.grade!.index - 2}"),
                                   title: Text(item.name),
                                   subtitle: Text(item.comments),
                                 ))
@@ -262,7 +261,7 @@ class GradeSheetPage extends StatelessWidget {
                                       child: ListTile(
                                           leading: const Text("Weather:"),
                                           title:
-                                              Text(gradeSheet.weather.name))),
+                                              Text(gradeSheet.weather!.name))),
                                 ),
                               ],
                             ),
@@ -276,7 +275,8 @@ class GradeSheetPage extends StatelessWidget {
                                   child: SizedBox(
                                       height: dist,
                                       child: ListTile(
-                                          leading: const Text("Sortie Profile:"),
+                                          leading:
+                                              const Text("Sortie Profile:"),
                                           title: Text(gradeSheet.profile))),
                                 ),
                               ],
@@ -293,7 +293,7 @@ class GradeSheetPage extends StatelessWidget {
                                     child: ListTile(
                                       leading: const Text("Overall Grade:"),
                                       title: Text(
-                                          "${gradeSheet.overall.index - 2}"),
+                                          "${gradeSheet.overall!.index - 2}"),
                                     ),
                                   ),
                                 ),
@@ -362,7 +362,7 @@ class GradeSheetPage extends StatelessWidget {
                               children: [
                                 // TODO: change expanded to flexible for listtiles casue they fat
 
-                                Expanded(
+                                /*Expanded(
                                   child: SizedBox(
                                     height: dist,
                                     child: ListTile(
@@ -374,7 +374,7 @@ class GradeSheetPage extends StatelessWidget {
                                           : gradeSheet.pilotQual.name),
                                     ),
                                   ),
-                                ),
+                                ),*/
                               ],
                             ),
                           ),
@@ -385,7 +385,7 @@ class GradeSheetPage extends StatelessWidget {
                               children: [
                                 // TODO: change expanded to flexible for listtiles casue they fat
 
-                                Expanded(
+                                /*Expanded(
                                   child: SizedBox(
                                       height: dist,
                                       child: ListTile(
@@ -397,7 +397,7 @@ class GradeSheetPage extends StatelessWidget {
                                             ? ""
                                             : gradeSheet.adQual.name),
                                       )),
-                                ),
+                                ),*/
                               ],
                             ),
                           ),
@@ -429,7 +429,7 @@ class GradeSheetPage extends StatelessWidget {
                         children: gradeSheet.grades
                             .where((item) => item.grade != Grade.noGrade)
                             .map((item) => ListTile(
-                                  leading: Text("${item.grade.index - 2}"),
+                                  leading: Text("${item.grade!.index - 2}"),
                                   title: Text(item.name),
                                   subtitle: Text(item.comments),
                                 ))

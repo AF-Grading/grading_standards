@@ -30,7 +30,7 @@ class TrainingShop with ChangeNotifier {
           if (grade.grade != Grade.noGrade) {
             allGradeTimes.update(
                 grade.name, (value) => _gradeSheets[i].endTime);
-            allGrades.update(grade.name, (value) => grade.grade);
+            allGrades.update(grade.name, (value) => grade.grade!);
           }
         }
       }
@@ -49,7 +49,7 @@ class TrainingShop with ChangeNotifier {
         .where((gradeItem) => gradeItem.grade != Grade.noGrade)
         .toList();
 
-    current.sort((a, b) => b.grade.index.compareTo(a.grade.index));
+    current.sort((a, b) => b.grade!.index.compareTo(a.grade!.index));
 
     return current.take(5).toList();
   }
@@ -60,7 +60,7 @@ class TrainingShop with ChangeNotifier {
         .where((gradeItem) => gradeItem.grade != Grade.noGrade)
         .toList();
 
-    current.sort((a, b) => a.grade.index.compareTo(b.grade.index));
+    current.sort((a, b) => a.grade!.index.compareTo(b.grade!.index));
 
     return current.take(5).toList();
   }
@@ -69,7 +69,7 @@ class TrainingShop with ChangeNotifier {
     int total = 0;
     for (GradeSheet sheet in _gradeSheets) {
       // noSelection = -2, noGrade = -1
-      total += sheet.overall.index - 2;
+      total += sheet.overall!.index - 2;
     }
 
     return total / _gradeSheets.length;
@@ -95,7 +95,7 @@ class TrainingShop with ChangeNotifier {
       charts.Series(
         id: "Overall",
         data: _gradeSheets,
-        measureFn: (GradeSheet grade, _) => grade.overall.index - 2,
+        measureFn: (GradeSheet grade, _) => grade.overall!.index - 2,
         domainFn: (GradeSheet time, _) => time.endTime,
       )
     ];
@@ -113,11 +113,10 @@ class TrainingShop with ChangeNotifier {
     };
 
     for (GradeSheet sheet in _gradeSheets) {
-      if (sheet.overall != Grade.noGrade &&
-          sheet.overall != Grade.noSelection) {
+      if (sheet.overall != null && sheet.overall != Grade.noGrade) {
         totalNum[sheet.instructorId] = totalNum[sheet.instructorId]! + 1;
         averages[sheet.instructorId] =
-            averages[sheet.instructorId]! + sheet.overall.index - 2;
+            averages[sheet.instructorId]! + sheet.overall!.index - 2;
       }
     }
 
@@ -149,9 +148,9 @@ class TrainingShop with ChangeNotifier {
 
     for (GradeSheet sheet in _gradeSheets) {
       for (GradeItem item in sheet.grades) {
-        if (item.grade != Grade.noGrade && item.grade != Grade.noSelection) {
+        if (item.grade != Grade.noGrade) {
           totalNum[item.name] = totalNum[item.name]! + 1;
-          averages[item.name] = averages[item.name]! + item.grade.index - 2;
+          averages[item.name] = averages[item.name]! + item.grade!.index - 2;
         }
       }
     }

@@ -92,9 +92,8 @@ List<CTSItem> ctsItems = [
 ];
 
 // For calling with new GradeSheets
-List<GradeItem> baseGradeItems = ctsItems
-    .map((item) => GradeItem(name: item.name, grade: Grade.noSelection))
-    .toList();
+List<GradeItem> baseGradeItems =
+    ctsItems.map((item) => GradeItem(name: item.name)).toList();
 
 List<GradeDescription> gradeDescriptions = [
   GradeDescription("Expert (4)",

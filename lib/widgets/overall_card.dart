@@ -59,7 +59,7 @@ class OverallCard extends StatelessWidget {
             title: GradeRadiosFormField(
               initialValue: gradeSheet.overall,
               validator: (value) {
-                if (value == null || value == Grade.noSelection) {
+                if (value == null) {
                   hasErrors(true);
                   return "Please select a value";
                 } else {

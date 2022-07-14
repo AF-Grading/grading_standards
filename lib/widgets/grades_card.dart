@@ -61,7 +61,7 @@ class GradesCard extends StatelessWidget {
                 title: GradeRadiosFormField(
                   initialValue: item.grade,
                   validator: (value) {
-                    if (value == null || value == Grade.noSelection) {
+                    if (value == null) {
                       return "Please select a value";
                     } else {
                       hasErrors(false);
@@ -73,7 +73,7 @@ class GradesCard extends StatelessWidget {
                             student,
                             GradeItem(
                                 name: item.name,
-                                comments: item.comments,
+                                //comments: item.comments,
                                 grade: grade),
                           ),
                 ),
@@ -88,7 +88,7 @@ class GradesCard extends StatelessWidget {
                           GradeItem(
                             name: item.name,
                             comments: comment,
-                            grade: item.grade,
+                            //grade: item.grade,
                           ),
                         );
                   },

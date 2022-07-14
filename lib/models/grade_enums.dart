@@ -1,5 +1,4 @@
 enum Grade {
-  noSelection,
   noGrade,
   unsatisfactory,
   introductory,
@@ -12,8 +11,6 @@ enum Grade {
 extension GradeFromString on String {
   Grade? get grade {
     switch (this) {
-      case "noSelection":
-        return Grade.noSelection;
       case "noGrade":
         return Grade.noGrade;
       case "unsatisfactory":
@@ -31,13 +28,11 @@ extension GradeFromString on String {
   }
 }
 
-enum AdQual { noSelection, none, ldad, adid, acad, cpad }
+enum AdQual { none, ldad, adid, acad, cpad }
 
 extension AdQualFromString on String {
   AdQual? get adQual {
     switch (this) {
-      case "noSelection":
-        return AdQual.noSelection;
       case "none":
         return AdQual.none;
       case "ldad":
@@ -53,13 +48,11 @@ extension AdQualFromString on String {
   }
 }
 
-enum PilotQual { noSelection, fpq, fpc, mp, ip }
+enum PilotQual { fpq, fpc, mp, ip }
 
 extension PilotQualFromString on String {
   PilotQual? get pilotQual {
     switch (this) {
-      case "noSelection":
-        return PilotQual.noSelection;
       case "fpq":
         return PilotQual.fpq;
       case "fpc":
@@ -73,13 +66,11 @@ extension PilotQualFromString on String {
   }
 }
 
-enum DayNight { noSelection, day, night }
+enum DayNight { day, night }
 
 extension DayNightFromString on String {
   DayNight? get dayNight {
     switch (this) {
-      case "noSelection":
-        return DayNight.noSelection;
       case "day":
         return DayNight.day;
       case "night":
@@ -89,23 +80,11 @@ extension DayNightFromString on String {
   }
 }
 
-enum SortieType {
-  noSelection,
-  local,
-  ims,
-  mission,
-  ost,
-  instmtSim,
-  tacticsSim,
-  mmp,
-  lfe
-}
+enum SortieType { local, ims, mission, ost, instmtSim, tacticsSim, mmp, lfe }
 
 extension SortieTypeFromString on String {
   SortieType? get sortieType {
     switch (this) {
-      case "noSelection":
-        return SortieType.noSelection;
       case "local":
         return SortieType.local;
       case "ims":
@@ -127,13 +106,11 @@ extension SortieTypeFromString on String {
   }
 }
 
-enum Weather { noSelection, vmc, imc }
+enum Weather { vmc, imc }
 
 extension WeatherFromString on String {
   Weather? get weather {
     switch (this) {
-      case "noSelection":
-        return Weather.noSelection;
       case "vmc":
         return Weather.vmc;
       case "imc":

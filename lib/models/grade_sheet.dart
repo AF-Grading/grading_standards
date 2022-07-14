@@ -9,10 +9,10 @@ class GradeSheet {
   final String studentId;
   final int missionNum;
   final List<GradeItem> grades;
-  final Grade overall;
+  final Grade? overall;
   final AdQual adQual; //TODO does this need to be on gsheet?
   final PilotQual pilotQual;
-  final Weather weather;
+  final Weather? weather;
   final SortieType sortieType;
   final DayNight dayNight;
   final DateTime startTime;
@@ -27,10 +27,10 @@ class GradeSheet {
     required this.studentId,
     required this.missionNum,
     required this.grades,
-    required this.overall,
-    this.adQual = AdQual.noSelection,
-    this.pilotQual = PilotQual.noSelection,
-    required this.weather,
+    this.overall,
+    this.adQual = AdQual.none,
+    this.pilotQual = PilotQual.fpc,
+    this.weather,
     required this.sortieType,
     required this.dayNight,
     required this.startTime,
@@ -80,10 +80,10 @@ class GradeSheet {
       "studentId": studentId,
       "missionNum": missionNum,
       "grades": grades.map((e) => e.toFirestore()).toList(),
-      "overall": overall.name,
+      "overall": overall!.name,
       "adQual": adQual.name,
       "pilotQual": pilotQual.name,
-      "weather": weather.name,
+      "weather": weather!.name,
       "sortieType": sortieType.name,
       "dayNight": dayNight.name,
       "startTime": startTime.millisecondsSinceEpoch,
@@ -98,17 +98,17 @@ class GradeSheet {
 
 class GradeItem {
   String name; //foreign key from cts_list.name
-  Grade grade;
+  Grade? grade;
   String comments;
 
   GradeItem({
     required this.name,
-    required this.grade,
+    this.grade,
     this.comments = '',
   });
 
   Map<String, dynamic> toFirestore() {
-    return {"name": name, "grade": grade.name, "comments": comments};
+    return {"name": name, "grade": grade!.name, "comments": comments};
   }
 
   factory GradeItem.unMap(

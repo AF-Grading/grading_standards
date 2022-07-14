@@ -177,7 +177,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                     GradeRadiosFormField(
                       initialValue: _overall,
                       validator: (value) {
-                        if (value == null || value == Grade.noSelection) {
+                        if (value == null) {
                           return "Please select a value";
                         }
                         return null;
@@ -192,8 +192,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                         WeatherFormField(
                             initialValue: _weather,
                             validator: (value) {
-                              if (value == null ||
-                                  value == Weather.noSelection) {
+                              if (value == null) {
                                 return "Please select a value";
                               }
                               return null;
@@ -206,8 +205,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                         DayNightFormField(
                             initialValue: _dayNight,
                             validator: (value) {
-                              if (value == null ||
-                                  value == DayNight.noSelection) {
+                              if (value == null) {
                                 return "Please select a value";
                               }
                               return null;
@@ -222,8 +220,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                     SortieTypeFormField(
                         initialValue: _sortieType,
                         validator: (value) {
-                          if (value == null ||
-                              value == SortieType.noSelection) {
+                          if (value == null) {
                             return "Please select a value";
                           }
                           return null;
@@ -349,8 +346,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                               GradeRadiosFormField(
                                   initialValue: item.grade,
                                   validator: (value) {
-                                    if (value == null ||
-                                        value == Grade.noSelection) {
+                                    if (value == null) {
                                       return "Please select a value";
                                     } else {
                                       return null;

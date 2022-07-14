@@ -37,7 +37,7 @@ class IndividualReport with ChangeNotifier {
           if (grade.grade != Grade.noGrade) {
             allGradeTimes.update(
                 grade.name, (value) => _gradeSheets[i].endTime);
-            allGrades.update(grade.name, (value) => grade.grade);
+            allGrades.update(grade.name, (value) => grade.grade!);
           }
         }
       }
@@ -56,7 +56,7 @@ class IndividualReport with ChangeNotifier {
         .where((gradeItem) => gradeItem.grade != Grade.noGrade)
         .toList();
 
-    current.sort((a, b) => b.grade.index.compareTo(a.grade.index));
+    current.sort((a, b) => b.grade!.index.compareTo(a.grade!.index));
 
     return current.take(5).toList();
   }
@@ -67,7 +67,7 @@ class IndividualReport with ChangeNotifier {
         .where((gradeItem) => gradeItem.grade != Grade.noGrade)
         .toList();
 
-    current.sort((a, b) => a.grade.index.compareTo(b.grade.index));
+    current.sort((a, b) => a.grade!.index.compareTo(b.grade!.index));
 
     return current.take(5).toList();
   }
@@ -76,7 +76,7 @@ class IndividualReport with ChangeNotifier {
     int total = 0;
     for (GradeSheet sheet in _gradeSheets) {
       // noSelection = -2, noGrade = -1
-      total += sheet.overall.index - 2;
+      total += sheet.overall!.index - 2;
     }
 
     return total / _gradeSheets.length;
@@ -102,7 +102,7 @@ class IndividualReport with ChangeNotifier {
       charts.Series(
         id: "Overall",
         data: _gradeSheets,
-        measureFn: (GradeSheet grade, _) => grade.overall.index - 2,
+        measureFn: (GradeSheet grade, _) => grade.overall!.index - 2,
         domainFn: (GradeSheet time, _) => time.endTime,
       )
     ];
@@ -121,9 +121,9 @@ class IndividualReport with ChangeNotifier {
 
     for (GradeSheet sheet in _gradeSheets) {
       for (GradeItem item in sheet.grades) {
-        if (item.grade != Grade.noGrade && item.grade != Grade.noSelection) {
+        if (item.grade != Grade.noGrade) {
           totalNum[item.name] = totalNum[item.name]! + 1;
-          averages[item.name] = averages[item.name]! + item.grade.index - 2;
+          averages[item.name] = averages[item.name]! + item.grade!.index - 2;
         }
       }
     }

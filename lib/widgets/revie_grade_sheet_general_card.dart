@@ -26,7 +26,7 @@ class ReviewGradeSheetGeneralCard extends StatelessWidget {
                 WeatherFormField(
                     initialValue: context.read<CurrentFlight>().weather,
                     validator: (value) {
-                      if (value == null || value == Weather.noSelection) {
+                      if (value == null) {
                         return "Please select a value";
                       }
                       return null;
@@ -37,7 +37,7 @@ class ReviewGradeSheetGeneralCard extends StatelessWidget {
                 DayNightFormField(
                     initialValue: context.read<CurrentFlight>().dayNight,
                     validator: (value) {
-                      if (value == null || value == DayNight.noSelection) {
+                      if (value == null) {
                         return "Please select a value";
                       }
                       return null;
@@ -51,7 +51,7 @@ class ReviewGradeSheetGeneralCard extends StatelessWidget {
           SortieTypeFormField(
               initialValue: context.read<CurrentFlight>().sortieType,
               validator: (value) {
-                if (value == null || value == SortieType.noSelection) {
+                if (value == null) {
                   return "Please select a value";
                 }
                 return null;

@@ -122,7 +122,6 @@ Widget _buildWide(
 
 Widget _buildNarrow(
     FormFieldState<SortieType> formState, ValueChanged<SortieType>? onChanged) {
-  SortieType dropdownValue = SortieType.noSelection;
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Column(
@@ -130,29 +129,26 @@ Widget _buildNarrow(
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text("Sorties Type:"),
+            const Text("Sortie Type:"),
             DropdownButton(
-                items: [
+                items: const [
                   DropdownMenuItem(
-                      child: Text(""), value: SortieType.noSelection),
+                      value: SortieType.local, child: Text("local")),
+                  DropdownMenuItem(value: SortieType.ims, child: Text("ims")),
                   DropdownMenuItem(
-                      child: Text("local"), value: SortieType.local),
-                  DropdownMenuItem(child: Text("ims"), value: SortieType.ims),
+                      value: SortieType.mission, child: Text("mission")),
+                  DropdownMenuItem(value: SortieType.ost, child: Text("ost")),
                   DropdownMenuItem(
-                      child: Text("mission"), value: SortieType.mission),
-                  DropdownMenuItem(child: Text("ost"), value: SortieType.ost),
+                      value: SortieType.instmtSim, child: Text("instmtSim")),
                   DropdownMenuItem(
-                      child: Text("instmtSim"), value: SortieType.instmtSim),
-                  DropdownMenuItem(
-                      child: Text("tacticsSim"), value: SortieType.tacticsSim),
-                  DropdownMenuItem(child: Text("mmp"), value: SortieType.mmp),
-                  DropdownMenuItem(child: Text("lfe"), value: SortieType.lfe),
+                      value: SortieType.tacticsSim, child: Text("tacticsSim")),
+                  DropdownMenuItem(value: SortieType.mmp, child: Text("mmp")),
+                  DropdownMenuItem(value: SortieType.lfe, child: Text("lfe")),
                 ],
-                value: dropdownValue,
+                value: formState.value,
                 onChanged: (SortieType? newValue) {
                   formState.didChange(newValue);
                   onChanged!(newValue!);
-                  dropdownValue = newValue;
                 }),
           ],
         ),
