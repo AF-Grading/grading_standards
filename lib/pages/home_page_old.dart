@@ -1,3 +1,4 @@
+import 'package:app_prototype/widgets/offline_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //internal imports
@@ -65,6 +66,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(widget.title),
+                      const OfflineChecker(),
                       const SyncButton(),
                     ]),
                 bottom: widget.permission == 1

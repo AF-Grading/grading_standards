@@ -19,7 +19,7 @@ class SyncButton extends StatelessWidget {
           context.read<ApplicationState>().addGradeSheet(sheet);
         }
       },
-      child: const Icon(Icons.sync),
+      child: const Icon(Icons.backup),
     );
   }
 }
