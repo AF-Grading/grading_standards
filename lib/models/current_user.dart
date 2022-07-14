@@ -18,6 +18,8 @@ class CurrentUser extends ChangeNotifier {
 
   User get user => _currentUser;
 
+  String get email => _userSetting.email;
+
   Permission get permission =>
       _userSetting.permission; //_currentUser.permission;
 

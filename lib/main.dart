@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 // internal imports
 import 'models/application_state.dart';
+import 'models/grade_sheet.dart';
 import 'models/grade_sheets.dart';
 import 'models/current_flight.dart';
 import 'models/theme_change.dart';
@@ -62,7 +63,12 @@ class _MyAppState extends State<MyApp> {
                     StreamProvider<List<UserSetting>>(
                       create: (_) => context.read<ApplicationState>().users,
                       initialData: const [],
-                    )
+                    ),
+                    StreamProvider<List<GradeSheet>>(
+                      create: (_) =>
+                          context.watch<ApplicationState>().gradeSheets,
+                      initialData: const [],
+                    ),
                   ],
                   child: MaterialApp(
                     title: 'Flutter Demo',

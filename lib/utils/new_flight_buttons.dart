@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/current_flight.dart';
+import '../models/current_user.dart';
 import '../pages/current_flight_page.dart';
 import '../theme/light_mode.dart';
 
@@ -70,6 +71,8 @@ class NewFlightButtons extends StatelessWidget {
                     .newKey
                     .currentState!
                     .validate()) {
+                  context.read<CurrentFlight>().instructorId =
+                      context.read<CurrentUser>().email;
                   Navigator.push(
                     context,
                     MaterialPageRoute(

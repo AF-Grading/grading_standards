@@ -28,6 +28,26 @@ extension GradeFromString on String {
   }
 }
 
+// Converts Grade enum to numbered String
+extension GradetoString on Grade {
+  String get number {
+    switch (this) {
+      case Grade.noGrade:
+        return "NG";
+      case Grade.unsatisfactory:
+        return "0";
+      case Grade.introductory:
+        return "1";
+      case Grade.familiar:
+        return "2";
+      case Grade.proficient:
+        return "3";
+      case Grade.expert:
+        return "4";
+    }
+  }
+}
+
 enum AdQual { none, ldad, adid, acad, cpad }
 
 extension AdQualFromString on String {
