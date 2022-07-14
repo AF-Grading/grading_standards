@@ -102,7 +102,7 @@ class GradeSheet {
         PROFILE: $profile
         Sortie Type: ${sortieType.name}
         DATE(S): ${startTime.day}-${startTime.month}-${startTime.year}
-        Weather: ${weather.name}
+        Weather: ${weather!.name}
         Day/Night: ${dayNight.name}
         Length: ${endTime.difference(startTime).inSeconds}
         
@@ -110,10 +110,10 @@ class GradeSheet {
 
     for (int i = 0; i < grades.length; i++) {
       myString +=
-          "_?_|__${grades[i].grade.index - 2}___| ${i + 1}. ${grades[i].name} ${grades[i].comments}\n";
+          "_?_|__${grades[i].grade!.index - 2}___| ${i + 1}. ${grades[i].name} ${grades[i].comments}\n";
     }
 
-    myString += '''\n OVERALL GRADE: ${overall.index - 2}
+    myString += '''\n OVERALL GRADE: ${overall!.index - 2}
 
     RECOMMENDATION / NEXT: $recommendations''';
 

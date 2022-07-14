@@ -183,30 +183,6 @@ class GradeSheetPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
-                              child: SizedBox(
-                                height: dist,
-                                child: ListTile(
-                                  leading: const Text("Pilot Qualifications"),
-                                  title: Text(gradeSheet.pilotQual ==
-                                          PilotQual.noSelection
-                                      ? ""
-                                      : gradeSheet.pilotQual.name),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: SizedBox(
-                                  height: dist,
-                                  child: ListTile(
-                                    leading: const Text("AD Qualifications"),
-                                    // display emtpy string if not used
-                                    title: Text(
-                                        gradeSheet.adQual == AdQual.noSelection
-                                            ? ""
-                                            : gradeSheet.adQual.name),
-                                  )),
-                            ),
-                            Expanded(
                                 child: SizedBox(
                                     height: dist,
                                     child: ListTile(
