@@ -85,14 +85,14 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                 children: widget.permission == 1
                     ? [
                         //NewGradeSheetView(),
-                        const NewFlightView(),
+                        NewFlightView(),
                         const IndividualReportsView(),
                         TrainingShopPage(
                           gradeSheets: context.watch<GradeSheets>().gradeSheets,
                           squad: context.read<CurrentUser>().user.squad,
                         ),
                       ]
-                    : const [
+                    : [
                         NewFlightView(),
                         IndividualReportsView(),
                         TrainingShopView(),

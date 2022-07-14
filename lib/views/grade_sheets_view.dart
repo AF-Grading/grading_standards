@@ -54,7 +54,7 @@ class GradeSheetsView extends StatelessWidget {
                                   title: Text(gradeSheet.startTime
                                       .toString()
                                       .substring(0, 10)),
-                                  trailing: Text(gradeSheet.overall.name),
+                                  trailing: Text(gradeSheet.overall!.name),
                                   onTap: () {
                                     Navigator.push(
                                       context,
