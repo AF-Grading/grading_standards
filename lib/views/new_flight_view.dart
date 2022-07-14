@@ -156,30 +156,39 @@ class NewFlightView extends StatelessWidget {
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          WeatherFormField(validator: (value) {
-                            if (value == null) {
-                              return "Please select a value";
-                            }
-                            return null;
-                          }, onChanged: (value) {
-                            context.read<CurrentFlight>().weather = value;
-                          }),
-                          SortieTypeFormField(validator: (value) {
-                            if (value == null) {
-                              return "Please select a value";
-                            }
-                            return null;
-                          }, onChanged: (value) {
-                            context.read<CurrentFlight>().sortieType = value;
-                          }),
-                          DayNightFormField(validator: (value) {
-                            if (value == null) {
-                              return "Please select a value";
-                            }
-                            return null;
-                          }, onChanged: (value) {
-                            context.read<CurrentFlight>().dayNight = value;
-                          }),
+                          Container(
+                            width: 120,
+                            child: WeatherFormField(validator: (value) {
+                              if (value == null) {
+                                return "Please select a value";
+                              }
+                              return null;
+                            }, onChanged: (value) {
+                              context.read<CurrentFlight>().weather = value;
+                            }),
+                          ),
+                          Container(
+                            width: 120,
+                            child: SortieTypeFormField(validator: (value) {
+                              if (value == null) {
+                                return "Please select a value";
+                              }
+                              return null;
+                            }, onChanged: (value) {
+                              context.read<CurrentFlight>().sortieType = value;
+                            }),
+                          ),
+                          Container(
+                            width: 120,
+                            child: DayNightFormField(validator: (value) {
+                              if (value == null) {
+                                return "Please select a value";
+                              }
+                              return null;
+                            }, onChanged: (value) {
+                              context.read<CurrentFlight>().dayNight = value;
+                            }),
+                          ),
                         ]),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
