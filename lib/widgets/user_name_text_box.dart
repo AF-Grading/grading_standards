@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/grade_enums.dart';
 import 'package:app_prototype/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,13 @@ class UserNameTextBox extends StatelessWidget {
       // TODO better error handle
       UserSetting user = stream.firstWhere((user) => user.email == email,
           orElse: () => UserSetting(
-              email: "", name: "No User", rank: Rank.capt, squad: "yo"));
+                email: "",
+                name: "No User",
+                rank: Rank.capt,
+                squad: "yo",
+                adQual: AdQual.acad,
+                pilotQual: PilotQual.fpc,
+              ));
       return Text("${user.rank.pretty} ${user.name}");
     }));
   }

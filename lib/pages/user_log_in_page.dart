@@ -20,7 +20,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
   String _email = "";
   String _password = "";
   bool _logInFail = false;
-  String _error = "";
+  String? _error = "";
   String? _validator(String? value) {
     if (value == "") {
       return "Please type an email";
@@ -53,7 +53,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
               _error == ""
                   ? Container()
                   : Text(
-                      _error,
+                      _error!,
                       style: const TextStyle(color: Colors.red),
                     ),
               Padding(
@@ -107,7 +107,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                         .signInWithEmailAndPassword(_email, _password, (e) {
                       setState(() {
                         //_error
-                        _error = "Unable to login";
+                        _error = e.message;
                       });
                     });
                     if (await withoutErrors) {
@@ -118,7 +118,15 @@ class _UserLoginPageState extends State<UserLoginPage> {
                               context.read<CurrentUser>().userSetting = value)
                           .then(
                         (value) {
-                          for (User user in Users().users) {
+                          if (value.permission.index >=
+                              Permission.student.index) {
+                            Navigator.popAndPushNamed(context, '/home');
+                          } else {
+                            setState(() {
+                              _logInFail = true;
+                            });
+                          }
+                          /*for (User user in Users().users) {
                             if (user.email == _email &&
                                 user.password == _password) {
                               setState(() {
@@ -127,18 +135,10 @@ class _UserLoginPageState extends State<UserLoginPage> {
 
                               CurrentUser().setUser = user;
 
-                              context.read<CurrentUser>().setUser = user;
+                              context.read<CurrentUser>().setUser = user;*/
 
-                              if (user.permission.index >=
-                                  Permission.student.index) {
-                                Navigator.popAndPushNamed(context, '/home');
-                              }
-                            } else {
-                              setState(() {
-                                _logInFail = true;
-                              });
-                            }
-                          }
+                          // }
+                          // }
                         },
                       );
                     } else {

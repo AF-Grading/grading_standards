@@ -27,7 +27,7 @@ class TrainingShopPage extends StatelessWidget {
           appBar: AppBar(title: Text(squad)),
           body: SingleChildScrollView(
             child: Column(
-                children: MediaQuery.of(context).size.width > 600
+                children: MediaQuery.of(context).size.width > 900
                     ? [
                         // build wide
 

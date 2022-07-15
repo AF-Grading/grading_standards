@@ -45,11 +45,13 @@ class UsersPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => UserPage(
-                                user: User(
+                                user: UserSetting(
                                     name: user.name,
                                     rank: user.rank,
                                     email: user.email,
                                     permission: user.permission,
+                                    pilotQual: user.pilotQual,
+                                    adQual: user.adQual,
                                     squad: user.squad))),
                       ),
                     ),

@@ -29,7 +29,7 @@ class IndividualReportPage extends StatelessWidget {
           appBar: AppBar(title: Text(user.name)),
           body: SingleChildScrollView(
             child: Column(
-                children: MediaQuery.of(context).size.width > 600
+                children: MediaQuery.of(context).size.width > 900
                     ?
 
                     // build wide

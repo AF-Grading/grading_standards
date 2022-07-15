@@ -414,7 +414,13 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
 
                 String id = context.read<GradeSheets>().updateById(gradeSheet);
 
-                context.read<ApplicationState>().addGradeSheet(gradeSheet);
+                _isEditing
+                    ? context
+                        .read<ApplicationState>()
+                        .editGradeSheet(gradeSheet)
+                    : context
+                        .read<ApplicationState>()
+                        .addGradeSheet(gradeSheet);
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
