@@ -69,6 +69,27 @@ class ApplicationState extends ChangeNotifier {
             .update(userSetting.toFirestore()));
   }
 
+  Future<void> editGradeSheet(GradeSheet gradeSheet) {
+    if (_loginState != ApplicationLoginState.loggedIn) {
+      throw Exception('Must be logged in');
+    }
+    // yikes: uses where to get email, then updates
+    return FirebaseFirestore.instance
+        .collection('Gradesheets')
+        .withConverter(
+            fromFirestore: GradeSheet.fromFirestore,
+            toFirestore: (GradeSheet setting, _) => setting.toFirestore())
+        .where("id", isEqualTo: gradeSheet.id)
+        .get()
+        .then((value) => FirebaseFirestore.instance
+            .collection('Gradesheets')
+            .withConverter(
+                fromFirestore: GradeSheet.fromFirestore,
+                toFirestore: (GradeSheet setting, _) => setting.toFirestore())
+            .doc(value.docs[0].id)
+            .update(gradeSheet.toFirestore()));
+  }
+
   Future<UserSetting> fetchCurrentUserSettings(String email) {
     if (_loginState != ApplicationLoginState.loggedIn) {
       throw Exception('Must be logged in');
