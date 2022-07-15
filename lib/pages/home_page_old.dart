@@ -1,3 +1,4 @@
+import 'package:app_prototype/widgets/offline_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //internal imports
@@ -11,6 +12,7 @@ import '/views/individual_reports_view.dart';
 import '/views/new_flight_view.dart';
 import '/views/training_shop_view.dart';
 import '../views/grade_sheets_view.dart';
+import '/widgets/buttons/sync_button.dart';
 
 class HomePageOld extends StatefulWidget {
   const HomePageOld({Key? key, required this.title, required this.permission})
@@ -60,7 +62,13 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
             )
           : Scaffold(
               appBar: AppBar(
-                title: Text(widget.title),
+                title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(widget.title),
+                      const OfflineChecker(),
+                      //const SyncButton(),
+                    ]),
                 bottom: widget.permission == 1
                     ? TabBar(
                         controller: _controller,

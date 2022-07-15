@@ -142,6 +142,7 @@ Widget _buildNarrow(
         DropdownButton<Grade>(
           items: const [
             DropdownMenuItem(value: Grade.noGrade, child: Text("NG")),
+            DropdownMenuItem(value: Grade.unsatisfactory, child: Text("0")),
             DropdownMenuItem(value: Grade.introductory, child: Text("1")),
             DropdownMenuItem(value: Grade.familiar, child: Text("2")),
             DropdownMenuItem(value: Grade.proficient, child: Text("3")),

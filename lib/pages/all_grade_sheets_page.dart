@@ -11,31 +11,28 @@ class AllGradeSheetsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<GradeSheet>>(
-        create: (_) => context.watch<ApplicationState>().gradeSheets,
-        initialData: const [],
-        child: Scaffold(
-            appBar: AppBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("All Grade Sheets"),
-                  GestureDetector(
-                    child: const Icon(
-                      Icons.add,
+    return Scaffold(
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text("All Grade Sheets"),
+              GestureDetector(
+                child: const Icon(
+                  Icons.add,
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddEditGradeSheetPage(),
                     ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AddEditGradeSheetPage(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                  );
+                },
               ),
-            ),
-            body: const AllGradeSheetsView()));
+            ],
+          ),
+        ),
+        body: const AllGradeSheetsView());
   }
 }

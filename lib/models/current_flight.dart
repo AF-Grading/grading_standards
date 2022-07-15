@@ -18,7 +18,7 @@ class CurrentFlight extends ChangeNotifier {
   GlobalKey<FormState> _reviewKey = GlobalKey<FormState>();
   //bool
   // Overall section
-
+  String? _instructorId;
   Weather? _weather; //= Weather.noSelection;
   DayNight? _dayNight; // = DayNight.noSelection;
   SortieType? _sortieType; // = SortieType.noSelection;
@@ -72,6 +72,11 @@ class CurrentFlight extends ChangeNotifier {
       .toList();
 
   // Setters
+
+  set instructorId(String? value) {
+    _instructorId = value;
+    notifyListeners();
+  }
 
   set weather(Weather? value) {
     _weather = value;
@@ -237,7 +242,7 @@ class CurrentFlight extends ChangeNotifier {
 
     //bool
     // Overall section
-
+    _instructorId = null;
     _weather = null; //Weather.noSelection;
     _dayNight = null; //DayNight.noSelection;
     _sortieType = null;
@@ -281,7 +286,7 @@ class CurrentFlight extends ChangeNotifier {
       GradeSheet sheet = _gradeSheets[i];
       _gradeSheets.replaceRange(i, i + 1, [
         GradeSheet(
-          instructorId: sheet.instructorId,
+          instructorId: _instructorId!,
           studentId: sheet.studentId,
           missionNum: _missionNum,
           grades: sheet.grades,

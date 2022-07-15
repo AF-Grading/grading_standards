@@ -17,7 +17,6 @@ class UserSetting {
       required this.squad,
       String? id,
       required this.email,
-      String? password,
       Permission? permission})
       : permission = permission ?? Permission.student;
 

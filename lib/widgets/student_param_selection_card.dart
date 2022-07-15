@@ -139,6 +139,14 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                         onChanged: (GradingParams? value) {
                           setState(() {
                             _gradingParams = value!;
+                            // set all params to false except airdrop
+                            for (CTSItem item in ctsItems) {
+                              if (item.isAirdrop) {
+                                _selectedParams[item.name] = true;
+                              } else {
+                                _selectedParams[item.name] = false;
+                              }
+                            }
                           });
                         },
                       ),
@@ -165,9 +173,9 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: const Text("Grading Paramaters:")),
+                          const Padding(
+                              padding: EdgeInsets.only(right: 8.0),
+                              child: Text("Grading Paramaters:")),
                           DropdownButton(
                             items: const [
                               DropdownMenuItem(
@@ -201,6 +209,14 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                                   GradingParams.formationAndAirdop) {
                                 setState(() {
                                   _gradingParams = value!;
+                                  // set all params to false except airdrop
+                                  for (CTSItem item in ctsItems) {
+                                    if (item.isAirdrop) {
+                                      _selectedParams[item.name] = true;
+                                    } else {
+                                      _selectedParams[item.name] = false;
+                                    }
+                                  }
                                 });
                               } else if (value == GradingParams.none) {
                                 setState(() {

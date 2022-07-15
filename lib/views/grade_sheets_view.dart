@@ -1,10 +1,9 @@
-import 'package:app_prototype/models/current_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/grade_sheet.dart';
-import '../models/grade_sheets.dart';
-import '../pages/grade_sheet_page.dart';
+import '/models/current_user.dart';
+import '/models/grade_sheet.dart';
+import '/widgets/grade_sheet_list_tile.dart';
 
 class GradeSheetsView extends StatelessWidget {
   const GradeSheetsView({Key? key, required this.isInstructor})
@@ -14,21 +13,24 @@ class GradeSheetsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GradeSheets>(
-      builder: (context, gradeSheetsModel, _) {
+    return Consumer<List<GradeSheet>>(
+      builder: (context, gradeSheetsStream, _) {
         // if the viewer is an instructor, see student gradesheets
         final List<GradeSheet> gradeSheets = isInstructor
-            ? gradeSheetsModel.gradeSheets
+            ? gradeSheetsStream
                 .where((gradesheet) =>
                     gradesheet.instructorId ==
                     context.watch<CurrentUser>().user.email)
                 .toList()
-            : gradeSheetsModel.gradeSheets
+            : gradeSheetsStream
                 .where((gradesheet) =>
                     gradesheet.studentId ==
                     context.watch<CurrentUser>().user.email)
                 .toList();
-        final missionNumbers = gradeSheetsModel.missionNumbers
+        final missionNumbers = gradeSheetsStream
+            .map((gradeSheet) => gradeSheet.missionNum)
+            .toSet()
+            .toList()
             .where((number) =>
                 gradeSheets.any((sheet) => sheet.missionNum == number))
             .toList();
@@ -48,23 +50,8 @@ class GradeSheetsView extends StatelessWidget {
                               .where((gradeSheet) =>
                                   gradeSheet.missionNum ==
                                   missionNumbers[index])
-                              .map(
-                                (gradeSheet) => ListTile(
-                                  leading: Text(gradeSheet.studentId),
-                                  title: Text(gradeSheet.startTime
-                                      .toString()
-                                      .substring(0, 10)),
-                                  trailing: Text(gradeSheet.overall!.name),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => GradeSheetPage(
-                                              gradeSheet: gradeSheet)),
-                                    );
-                                  },
-                                ),
-                              )
+                              .map((gradeSheet) =>
+                                  GradeSheetListTile(gradeSheet: gradeSheet))
                               .toList()),
                     ),
                   );
