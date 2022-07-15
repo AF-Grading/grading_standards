@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/grade_enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'user.dart';
@@ -7,6 +8,8 @@ class UserSetting {
   final String name;
   final String squad;
   final Rank rank;
+  final AdQual adQual;
+  final PilotQual pilotQual;
   Permission permission;
 
   //TODO include user settings here
@@ -17,6 +20,8 @@ class UserSetting {
       required this.squad,
       String? id,
       required this.email,
+      required this.adQual,
+      required this.pilotQual,
       Permission? permission})
       : permission = permission ?? Permission.student;
 
@@ -30,6 +35,8 @@ class UserSetting {
       email: data?['email'],
       squad: data?['squad'],
       rank: (data?['rank'] as String).rank!,
+      adQual: (data?['adQual'] as String).adQual!,
+      pilotQual: (data?['pilotQual'] as String).pilotQual!,
       permission: (data?['permission'] as String).permission,
     );
   }
@@ -40,6 +47,8 @@ class UserSetting {
       "email": email,
       "squad": squad,
       "rank": rank.name,
+      "adQual": adQual.name,
+      "pilotQual": pilotQual.name,
       "permission": permission.name,
     };
   }

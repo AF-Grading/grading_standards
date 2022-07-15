@@ -1,3 +1,4 @@
+import 'package:app_prototype/pages/not_logged_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -23,15 +24,19 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
-    Phoenix(
-      child: MultiProvider(providers: [
+    MultiProvider(
+      providers: [
         ChangeNotifierProvider(create: (context) => ApplicationState()),
-        ChangeNotifierProvider(create: (context) => GradeSheets()),
-        ChangeNotifierProvider(create: (context) => CurrentFlight()),
-        ChangeNotifierProvider(create: (context) => Users()),
-        ChangeNotifierProvider(create: (context) => ThemeChange()),
-        ChangeNotifierProvider(create: (context) => CurrentUser()),
-      ], child: MyApp()),
+      ],
+      child: Phoenix(
+        child: MultiProvider(providers: [
+          ChangeNotifierProvider(create: (context) => GradeSheets()),
+          ChangeNotifierProvider(create: (context) => CurrentFlight()),
+          ChangeNotifierProvider(create: (context) => Users()),
+          ChangeNotifierProvider(create: (context) => ThemeChange()),
+          ChangeNotifierProvider(create: (context) => CurrentUser()),
+        ], child: MyApp()),
+      ),
     ),
   );
 }
@@ -52,39 +57,42 @@ class _MyAppState extends State<MyApp> {
       darkTheme: dark_theme,
       initialRoute: '/',
       routes: {
-        '/': (context) => UserLoginPage(),
-        '/home': (context) => WillPopScope(
-              onWillPop: () async {
-                return true;
-              },
-              child: Consumer<ThemeChange>(
-                builder: (context, value, child) => MultiProvider(
-                  providers: [
-                    StreamProvider<List<UserSetting>>(
-                      create: (_) => context.read<ApplicationState>().users,
-                      initialData: const [],
+        '/': (context) => const UserLoginPage(),
+        '/home': (context) => context.watch<ApplicationState>().loginState ==
+                ApplicationLoginState.loggedIn
+            ? WillPopScope(
+                onWillPop: () async {
+                  return true;
+                },
+                child: Consumer<ThemeChange>(
+                  builder: (context, value, child) => MultiProvider(
+                    providers: [
+                      StreamProvider<List<UserSetting>>(
+                        create: (_) => context.read<ApplicationState>().users,
+                        initialData: const [],
+                      ),
+                      StreamProvider<List<GradeSheet>>(
+                        create: (_) =>
+                            context.watch<ApplicationState>().gradeSheets,
+                        initialData: const [],
+                      ),
+                    ],
+                    child: MaterialApp(
+                      title: 'Flutter Demo',
+                      // themeMode: ThemeMode.light,
+                      theme: light_theme,
+                      darkTheme: dark_theme,
+                      // themeMode: value.mode,
+                      themeMode: context.watch<ThemeChange>().mode,
+                      home: HomePageOld(
+                          title: "Flying Standards",
+                          permission:
+                              context.watch<CurrentUser>().permission.index),
                     ),
-                    StreamProvider<List<GradeSheet>>(
-                      create: (_) =>
-                          context.watch<ApplicationState>().gradeSheets,
-                      initialData: const [],
-                    ),
-                  ],
-                  child: MaterialApp(
-                    title: 'Flutter Demo',
-                    // themeMode: ThemeMode.light,
-                    theme: light_theme,
-                    darkTheme: dark_theme,
-                    // themeMode: value.mode,
-                    themeMode: context.watch<ThemeChange>().mode,
-                    home: HomePageOld(
-                        title: "Flying Standards",
-                        permission:
-                            context.watch<CurrentUser>().permission.index),
                   ),
                 ),
-              ),
-            ),
+              )
+            : const NotLoggedInPage(),
       },
       // home: UserLoginView(),
     );

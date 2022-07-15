@@ -5,13 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/application_state.dart';
+import '../models/grade_enums.dart';
 import '../models/user.dart';
+import '../widgets/ad_qual_form_field.dart';
 import '../widgets/permission_form_field.dart';
+import '../widgets/pilot_qual_form_field.dart';
 
 class AddEditUserPage extends StatefulWidget {
   const AddEditUserPage({Key? key, this.user}) : super(key: key);
 
-  final User? user;
+  final UserSetting? user;
 
   @override
   State<AddEditUserPage> createState() => _AddEditUserPageState();
@@ -41,6 +44,8 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
       TextEditingController(text: widget.user?.squad);
   late Permission? _permission = widget.user?.permission;
   late Rank? _rank = widget.user?.rank;
+  late AdQual? _adQual = widget.user?.adQual;
+  late PilotQual? _pilotQual = widget.user?.pilotQual;
 
   @override
   void initState() {
@@ -124,6 +129,34 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                   });
                 },
               ),
+              AdQualFormField(
+                initialValue: _adQual,
+                validator: (value) {
+                  if (value == null) {
+                    return "Please select a value";
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  setState(() {
+                    _adQual = value;
+                  });
+                },
+              ),
+              PilotQualFormField(
+                initialValue: _pilotQual,
+                validator: (value) {
+                  if (value == null) {
+                    return "Please select a value";
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  setState(() {
+                    _pilotQual = value;
+                  });
+                },
+              ),
               PermissionFormField(
                 initialValue: _permission,
                 validator: (value) {
@@ -150,9 +183,9 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                     .read<ApplicationState>()
                     .register(_email.text, "password");
                 if (await code == "") {
-                  String id = context.read<Users>().updateById(
+                  /*String id = context.read<Users>().updateById(
                         User(
-                          id: widget.user?.id,
+                          //id: widget.user?.id,
                           name: _name.text,
                           rank: _rank!,
                           squad: _squad.text,
@@ -160,7 +193,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                           permission: _permission,
                           password: widget.user?.password,
                         ),
-                      );
+                      );*/
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("User Added"),
@@ -171,6 +204,8 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                         rank: _rank!,
                         squad: _squad.text,
                         email: _email.text,
+                        adQual: _adQual!,
+                        pilotQual: _pilotQual!,
                         permission: _permission,
                       ));
                   Navigator.pop(context);
@@ -194,6 +229,8 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                       rank: _rank!,
                       squad: _squad.text,
                       email: _email.text,
+                      adQual: _adQual!,
+                      pilotQual: _pilotQual!,
                       permission: _permission,
                     ));
                 Navigator.pop(context);

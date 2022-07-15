@@ -3,20 +3,22 @@ import 'user.dart';
 import 'user_setting.dart';
 
 class CurrentUser extends ChangeNotifier {
-  late final User _currentUser;
+  //late final User _currentUser;
   late final UserSetting _userSetting;
 
-  set setUser(User value) {
+  /*set setUser(User value) {
     _currentUser = value;
     notifyListeners();
-  }
+  }*/
 
   set userSetting(UserSetting value) {
     _userSetting = value;
     notifyListeners();
   }
 
-  User get user => _currentUser;
+  UserSetting get user => _userSetting;
+
+  //User get user => _currentUser;
 
   String get email => _userSetting.email;
 
