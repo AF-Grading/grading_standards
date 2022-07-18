@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCvIo2571RJfOcK_3rwjp1EtgPiZXtSzes',
-    appId: '1:199522760172:android:062515a251c23e2c2c7cc9',
+    appId: '1:199522760172:android:a7b3c7916d00631b2c7cc9',
     messagingSenderId: '199522760172',
     projectId: 'grading-standards',
     storageBucket: 'grading-standards.appspot.com',

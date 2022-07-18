@@ -1,8 +1,10 @@
 import 'package:app_prototype/widgets/grades_card.dart';
 import 'package:app_prototype/widgets/overall_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/grade_enums.dart';
+import '../models/user_setting.dart';
 import '/models/grade_sheet.dart';
 
 class FlightView extends StatefulWidget {
@@ -55,7 +57,8 @@ class _FlightViewState extends State<FlightView>
                 });
               }),
           GradesCard(
-              student: widget.gradeSheet.studentId,
+              student: context.watch<List<UserSetting>>().firstWhere(
+                  (user) => user.email == widget.gradeSheet.studentId),
               grades: _selectedGrades,
               title: "Grades",
               hasErrors: (hasError) {
@@ -64,7 +67,8 @@ class _FlightViewState extends State<FlightView>
                 });
               }),
           GradesCard(
-              student: widget.gradeSheet.studentId,
+              student: context.watch<List<UserSetting>>().firstWhere(
+                  (user) => user.email == widget.gradeSheet.studentId),
               grades: _unselectedGrades,
               title: "Unused Grades",
               initiallyExpanded: false,

@@ -7,6 +7,7 @@ import '../models/grade_enums.dart';
 import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
 import '../models/user.dart';
+import '../models/user_setting.dart';
 import '../models/users.dart';
 import '../widgets/date_picker.dart';
 import '../widgets/day_night_form_field.dart';
@@ -102,7 +103,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                           )
                         : SearchUsersFormField(
                             labelText: "Student Name",
-                            users: context.watch<Users>().users,
+                            users: context.watch<List<UserSetting>>(),
                             validator: (value) {
                               if (value != null) {
                                 return "Please select a student from dropdown";
@@ -140,7 +141,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                           )
                         : SearchUsersFormField(
                             labelText: "Instructor Name",
-                            users: context.watch<Users>().users,
+                            users: context.watch<List<UserSetting>>(),
                             validator: (value) {
                               if (value != null) {
                                 return "Please select an instructor from dropdown";
