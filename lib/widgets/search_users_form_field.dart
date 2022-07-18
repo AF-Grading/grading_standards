@@ -48,7 +48,7 @@ class SearchUsersFormField extends FormField<String> {
                                       onTap: () => onSaved!(item.email),
 
                                       //() => formState.didChange(item.name),
-                                      child: Text(item.email)),
+                                      child: Text(item.name)),
                                 )
                                 .toList()
                             : [],

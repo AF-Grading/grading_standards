@@ -72,7 +72,7 @@ class _EditableADQualState extends State<EditableADQual> {
             children: [
               Text("adip"),
               Radio<AdQual>(
-                value: AdQual.adid,
+                value: AdQual.adip,
                 groupValue: _adQual,
                 onChanged: (AdQual? value) {
                   setState(() {

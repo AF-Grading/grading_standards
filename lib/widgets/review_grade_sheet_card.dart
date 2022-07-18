@@ -1,8 +1,10 @@
 import 'package:app_prototype/widgets/overall_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/grade_enums.dart';
 import '../models/grade_sheet.dart';
+import '../models/user_setting.dart';
 import 'grades_card.dart';
 
 class ReviewGradeSheetCard extends StatelessWidget {
@@ -25,7 +27,9 @@ class ReviewGradeSheetCard extends StatelessWidget {
           ),
           GradesCard(
             title: "Graded Items",
-            student: gradeSheet.studentId,
+            student: context
+                .watch<List<UserSetting>>()
+                .firstWhere((user) => user.email == gradeSheet.studentId),
             grades: gradeSheet.grades
                 .where((item) => item.grade != Grade.noGrade)
                 .toList(),
@@ -34,7 +38,9 @@ class ReviewGradeSheetCard extends StatelessWidget {
           GradesCard(
             title: "Ungraded",
             initiallyExpanded: false,
-            student: gradeSheet.studentId,
+            student: context
+                .watch<List<UserSetting>>()
+                .firstWhere((user) => user.email == gradeSheet.studentId),
             grades: gradeSheet.grades
                 .where((item) => item.grade == Grade.noGrade)
                 .toList(),
