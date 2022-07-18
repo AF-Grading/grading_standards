@@ -1,8 +1,10 @@
+import 'package:app_prototype/widgets/user_name_text_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/cts_list.dart';
 import '../models/user.dart';
+import '../models/user_setting.dart';
 import '../models/users.dart';
 import '../views/new_grade_sheet_view.dart';
 import '/models/current_flight.dart';
@@ -33,9 +35,17 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
     return Card(
       child: ExpansionTile(
         title: hasErrors
-            ? Text("Student: ${widget.gradeSheet.studentId}",
+            ? UserNameTextBox(
+                email: widget.gradeSheet.studentId,
+                extras: "Student:",
                 style: const TextStyle(color: Colors.red))
-            : Text("Student: ${widget.gradeSheet.studentId}"),
+
+            ///Text("Student: ${widget.gradeSheet.studentId}",
+            //style: const TextStyle(color: Colors.red))
+            : UserNameTextBox(
+                email: widget.gradeSheet.studentId,
+                extras: "Student:",
+              ), //Text("Student: ${widget.gradeSheet.studentId}"),
         initiallyExpanded: true,
         children: [
           int.tryParse(widget.gradeSheet.studentId) == null
@@ -59,7 +69,13 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
               : SearchUsersFormField(
                   labelText: "Student Name",
                   //obtains list of users that filters out already used students
-                  users: context.watch<CurrentFlight>().filteredUsers,
+                  users: context
+                      .watch<List<UserSetting>>()
+                      .where((user) =>
+                          context.watch<CurrentFlight>().gradeSheets.indexWhere(
+                              (sheet) => sheet.studentId == user.email) ==
+                          -1)
+                      .toList(),
                   validator: (value) {
                     // A bit of a bruteish method
                     if (widget.gradeSheet.studentId == "1" ||
@@ -83,8 +99,10 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                         widget.gradeSheet.studentId,
                         GradeSheet(
                           instructorId: widget.gradeSheet.instructorId,
-                          studentId:
-                              context.read<Users>().userByName(student).email,
+                          studentId: context
+                              .read<List<UserSetting>>()
+                              .firstWhere((user) => user.email == student)
+                              .email,
                           missionNum: widget.gradeSheet.missionNum,
                           grades: widget.gradeSheet.grades,
                           overall: widget.gradeSheet.overall,

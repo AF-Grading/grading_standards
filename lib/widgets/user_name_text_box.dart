@@ -6,14 +6,17 @@ import 'package:provider/provider.dart';
 import '../models/user_setting.dart';
 
 class UserNameTextBox extends StatelessWidget {
-  const UserNameTextBox({Key? key, required this.email}) : super(key: key);
+  const UserNameTextBox(
+      {Key? key, required this.email, this.extras, this.style})
+      : super(key: key);
 
   final String email;
+  final String? extras;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<List<UserSetting>>(builder: ((context, stream, child) {
-      // TODO better error handle
       UserSetting user = stream.firstWhere((user) => user.email == email,
           orElse: () => UserSetting(
                 email: "",
@@ -23,7 +26,15 @@ class UserNameTextBox extends StatelessWidget {
                 adQual: AdQual.acad,
                 pilotQual: PilotQual.fpc,
               ));
-      return Text("${user.rank.pretty} ${user.name}");
+      return user.email == ""
+          ? Text(
+              "${this.extras} ${this.email}",
+              style: this.style,
+            )
+          : Text(
+              "${this.extras} ${user.rank.pretty} ${user.name}",
+              style: this.style,
+            );
     }));
   }
 }
