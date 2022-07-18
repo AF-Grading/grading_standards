@@ -7,6 +7,78 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:199522760172:android:a7b3c7916d00631b2c7cc9",
+        "android_client_info": {
+          "package_name": "com.af.grading_standards"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199522760172-t3mvdr4hu5jjffog8utm2jkjpb8ck8cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvIo2571RJfOcK_3rwjp1EtgPiZXtSzes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199522760172-t3mvdr4hu5jjffog8utm2jkjpb8ck8cn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "199522760172-sbqa2dqh7t8ght1q7bqcriv97ttonsmj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.appPrototype"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199522760172:android:ca0e6564f0166d592c7cc9",
+        "android_client_info": {
+          "package_name": "com.example.af_grading_standards"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199522760172-t3mvdr4hu5jjffog8utm2jkjpb8ck8cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvIo2571RJfOcK_3rwjp1EtgPiZXtSzes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199522760172-t3mvdr4hu5jjffog8utm2jkjpb8ck8cn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "199522760172-sbqa2dqh7t8ght1q7bqcriv97ttonsmj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.appPrototype"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:199522760172:android:062515a251c23e2c2c7cc9",
         "android_client_info": {
           "package_name": "com.example.app_prototype"
