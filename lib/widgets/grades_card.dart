@@ -60,33 +60,29 @@ class GradesCard extends StatelessWidget {
                     child: Text(item.name),
                   ),
                 ),
-                title: Row(
-                  children: [
-                    PassingScoreTextField(
-                      ctsItem: ctsItems
-                          .firstWhere((ctsItem) => item.name == ctsItem.name),
-                      student: student,
-                    ),
-                    GradeRadiosFormField(
-                      initialValue: item.grade,
-                      validator: (value) {
-                        if (value == null) {
-                          return "Please select a value";
-                        } else {
-                          hasErrors(false);
-                          return null;
-                        }
-                      },
-                      onChanged: (grade) =>
-                          context.read<CurrentFlight>().updateByGradeItem(
-                                student.email,
-                                GradeItem(
-                                    name: item.name,
-                                    //comments: item.comments,
-                                    grade: grade),
-                              ),
-                    ),
-                  ],
+                trailing: PassingScoreTextField(
+                  ctsItem: ctsItems
+                      .firstWhere((ctsItem) => item.name == ctsItem.name),
+                  student: student,
+                ),
+                title: GradeRadiosFormField(
+                  initialValue: item.grade,
+                  validator: (value) {
+                    if (value == null) {
+                      return "Please select a value";
+                    } else {
+                      hasErrors(false);
+                      return null;
+                    }
+                  },
+                  onChanged: (grade) =>
+                      context.read<CurrentFlight>().updateByGradeItem(
+                            student.email,
+                            GradeItem(
+                                name: item.name,
+                                //comments: item.comments,
+                                grade: grade),
+                          ),
                 ),
                 subtitle: TextFormField(
                   initialValue: item.comments,
