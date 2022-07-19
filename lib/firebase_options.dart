@@ -63,12 +63,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCjDj0occLt7OoLOTA7MB0DuHro38OjPy8',
-    appId: '1:199522760172:ios:b133ee60f33656732c7cc9',
+    appId: '1:199522760172:ios:431a08a39e1989e22c7cc9',
     messagingSenderId: '199522760172',
     projectId: 'grading-standards',
     storageBucket: 'grading-standards.appspot.com',
-    iosClientId: '199522760172-sbqa2dqh7t8ght1q7bqcriv97ttonsmj.apps.googleusercontent.com',
-    iosBundleId: 'com.example.appPrototype',
+    iosClientId: '199522760172-tef8dr7kdetvcvgm06qs1uv2la2idmb2.apps.googleusercontent.com',
+    iosBundleId: 'com.af.AF-Grading-Standards',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(

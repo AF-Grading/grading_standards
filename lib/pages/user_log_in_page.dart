@@ -1,10 +1,10 @@
+import 'package:app_prototype/pages/phone_verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:provider/provider.dart';
 
 import '../models/application_state.dart';
 import '../models/user.dart';
-import '../models/users.dart';
 import '../models/current_user.dart';
 
 class UserLoginPage extends StatefulWidget {
@@ -120,12 +120,21 @@ class _UserLoginPageState extends State<UserLoginPage> {
                         (value) {
                           if (value.permission.index >=
                               Permission.student.index) {
-                            Navigator.popAndPushNamed(context, '/home');
+                            //TODO bring it back
+                            //Navigator.popAndPushNamed(context, '/home');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const PhoneVerificationPage(),
+                              ),
+                            );
                           } else {
                             setState(() {
                               _logInFail = true;
                             });
                           }
+
                           /*for (User user in Users().users) {
                             if (user.email == _email &&
                                 user.password == _password) {

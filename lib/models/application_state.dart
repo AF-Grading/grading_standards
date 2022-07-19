@@ -1,7 +1,9 @@
 import 'package:app_prototype/models/user_setting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:otp/otp.dart';
 
 import 'grade_sheet.dart';
 
@@ -145,6 +147,7 @@ class ApplicationState extends ChangeNotifier {
     try {
       var methods =
           await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+
       if (methods.contains('password')) {
         _loginState = ApplicationLoginState.password;
       } else {
@@ -178,6 +181,38 @@ class ApplicationState extends ChangeNotifier {
       return false;
     }
   }
+
+  otp() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: '+1 610 806 6677',
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        print("nice bro");
+        await FirebaseAuth.instance.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {},
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+  }
+
+  otp2(String key) {
+    String stringy = OTP.generateTOTPCodeString(
+        "Secret!", DateTime.now().millisecondsSinceEpoch);
+    print(stringy);
+  }
+
+  /*otp() async {
+    await FirebaseAuth.instance.signInWithPhoneNumber('+1 610 806 6677');
+    /*await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: '+1 610 806 6677',
+      verificationCompleted: (PhoneAuthCredential credential) {
+        print("nice bro");
+      },
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {},
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );*/
+  }*/
 
   void cancelRegistration() {
     _loginState = ApplicationLoginState.emailAddress;

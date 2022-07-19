@@ -22,6 +22,8 @@ class CurrentUser extends ChangeNotifier {
 
   String get email => _userSetting.email;
 
+  String? get secret => null;
+
   Permission get permission =>
       _userSetting.permission; //_currentUser.permission;
 
