@@ -12,6 +12,7 @@ enum ApplicationLoginState {
   emailAddress,
   register,
   password,
+  firstFactor,
   loggedIn,
 }
 
@@ -182,37 +183,11 @@ class ApplicationState extends ChangeNotifier {
     }
   }
 
-  otp() async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: '+1 610 806 6677',
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        print("nice bro");
-        await FirebaseAuth.instance.signInWithCredential(credential);
-      },
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {},
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
-  }
-
   otp2(String key) {
     String stringy = OTP.generateTOTPCodeString(
         "Secret!", DateTime.now().millisecondsSinceEpoch);
     print(stringy);
   }
-
-  /*otp() async {
-    await FirebaseAuth.instance.signInWithPhoneNumber('+1 610 806 6677');
-    /*await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: '+1 610 806 6677',
-      verificationCompleted: (PhoneAuthCredential credential) {
-        print("nice bro");
-      },
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {},
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );*/
-  }*/
 
   void cancelRegistration() {
     _loginState = ApplicationLoginState.emailAddress;
@@ -223,6 +198,7 @@ class ApplicationState extends ChangeNotifier {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       return "";
     } on FirebaseAuthException catch (e) {
       return e.code;

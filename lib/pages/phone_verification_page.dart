@@ -17,6 +17,7 @@ class PhoneVerificationPage extends StatefulWidget {
 }
 
 class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
+  // Generate a unique key
   String _myKey = Uuid().v1();
   String _totp = "";
   late String _keyKey;
@@ -24,6 +25,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
 
   @override
   void initState() {
+    // convert the unique key to the typcial format used by Authenticator apps
     _keyKey = base32.encodeString(_myKey);
     super.initState();
   }

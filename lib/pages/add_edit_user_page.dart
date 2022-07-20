@@ -208,6 +208,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                         pilotQual: _pilotQual!,
                         permission: _permission,
                       ));
+
                   Navigator.pop(context);
                 } else {
                   setState(() {
