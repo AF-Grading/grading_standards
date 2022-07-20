@@ -41,6 +41,8 @@ dependencies:
   cloud_firestore: ^3.2.1
   firebase_auth: ^3.4.1
   flutter_offline: ^2.1.0
+  amplify_flutter: ^0.6.2
+  amplify_datastore: ^0.6.2
 
 dev_dependencies:
   flutter_test:
