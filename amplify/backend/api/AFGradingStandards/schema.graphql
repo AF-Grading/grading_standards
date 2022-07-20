@@ -1,0 +1,27 @@
+enum Grade {
+  NOGRADE
+  UNSATISFACTORY
+  INTRODUCTORY
+  FAMILIAR
+  PROFICIENT
+  EXPERT
+}
+
+type GradeSheet @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  instructorId: ID
+  studentId: ID
+  missionNum: Int
+  grades: AWSJSON
+  grade: Grade
+  adQual: String
+  pilotQual: String
+  weather: String
+  sortieType: String
+  dayNight: String
+  startTime: AWSDateTime
+  endTime: AWSDateTime
+  profile: String
+  overallComments: String
+  recommendations: String
+}
