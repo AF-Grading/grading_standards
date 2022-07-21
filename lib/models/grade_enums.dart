@@ -48,7 +48,7 @@ extension GradetoString on Grade {
   }
 }
 
-enum AdQual { none, ldad, adid, acad, cpad }
+enum AdQual { none, ldad, adip, acad, cpad }
 
 extension AdQualFromString on String {
   AdQual? get adQual {
@@ -57,8 +57,8 @@ extension AdQualFromString on String {
         return AdQual.none;
       case "ldad":
         return AdQual.ldad;
-      case "adid":
-        return AdQual.adid;
+      case "adip":
+        return AdQual.adip;
       case "acad":
         return AdQual.acad;
       case "cpad":

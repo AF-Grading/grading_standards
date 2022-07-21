@@ -1,4 +1,5 @@
 import 'package:app_prototype/models/grade_sheet.dart';
+import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +8,7 @@ import '../models/current_flight.dart';
 import '../models/grade_enums.dart';
 import '../models/user.dart';
 import 'grade_radio_form_field.dart';
+import 'passing_score_text_field.dart';
 
 class GradesCard extends StatelessWidget {
   const GradesCard({
@@ -20,7 +22,7 @@ class GradesCard extends StatelessWidget {
   }) : super(key: key);
 
   //final GradeSheet gradeSheet;
-  final String student;
+  final UserSetting student;
   final List<GradeItem> grades;
   final String? title;
   final bool initiallyExpanded;
@@ -58,6 +60,11 @@ class GradesCard extends StatelessWidget {
                     child: Text(item.name),
                   ),
                 ),
+                trailing: PassingScoreTextField(
+                  ctsItem: ctsItems
+                      .firstWhere((ctsItem) => item.name == ctsItem.name),
+                  student: student,
+                ),
                 title: GradeRadiosFormField(
                   initialValue: item.grade,
                   validator: (value) {
@@ -70,7 +77,7 @@ class GradesCard extends StatelessWidget {
                   },
                   onChanged: (grade) =>
                       context.read<CurrentFlight>().updateByGradeItem(
-                            student,
+                            student.email,
                             GradeItem(
                                 name: item.name,
                                 //comments: item.comments,
@@ -84,7 +91,7 @@ class GradesCard extends StatelessWidget {
                   ),
                   onChanged: (comment) {
                     context.read<CurrentFlight>().updateByGradeItem(
-                          student,
+                          student.email,
                           GradeItem(
                             name: item.name,
                             comments: comment,

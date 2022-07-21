@@ -30,10 +30,9 @@ class GradeSheetPage extends StatelessWidget {
             .where((usetting) => usetting.email == gradeSheet.instructorId)
             .first
             .name;
-        String student = stream
+        UserSetting student = stream
             .where((usetting) => usetting.email == gradeSheet.studentId)
-            .first
-            .name;
+            .first;
         return Scaffold(
           appBar: AppBar(
             title: Row(
@@ -83,7 +82,7 @@ class GradeSheetPage extends StatelessWidget {
                                 height: dist,
                                 child: ListTile(
                                     leading: const Text("Student"),
-                                    title: Text(student)),
+                                    title: Text(student.name)),
                               ),
                             ),
                             Expanded(

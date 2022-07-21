@@ -1,6 +1,8 @@
+import 'package:app_prototype/models/user_setting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'cts_list.dart';
 import 'grade_enums.dart';
 
 class GradeSheet {
@@ -95,27 +97,59 @@ class GradeSheet {
     };
   }
 
-  String copy(String instructorName, String studentName) {
+  String copy(String instructorName, UserSetting student) {
+    String getScore(CTSItem ctsItem) {
+      if (ctsItem.isAirdrop) {
+        AirDropTableDescription ad =
+            airDropDescriptions.firstWhere((ad) => ad.id == ctsItem.id);
+        switch (student.adQual) {
+          case AdQual.none:
+            return "";
+          case AdQual.ldad:
+            return ad.ldad.toString();
+          case AdQual.adip:
+            return ad.adip.toString();
+          case AdQual.acad:
+            return ad.acad.toString();
+          case AdQual.cpad:
+            return ad.cpad.toString();
+        }
+      } else {
+        TableDescription td =
+            tableDescriptions.firstWhere((td) => td.id == ctsItem.id);
+        switch (student.pilotQual) {
+          case PilotQual.fpc:
+            return td.fpc.toString();
+          case PilotQual.fpq:
+            return td.fpq.toString();
+          case PilotQual.ip:
+            return td.ip.toString();
+          case PilotQual.mp:
+            return td.mp.toString();
+        }
+      }
+    }
+
     String myString = '''INSTRUCTOR NAME: $instructorName
-        STUDENT NAME: $studentName
-        PILOT QUAL:$pilotQual"
-        PROFILE: $profile
-        Sortie Type: ${sortieType.name}
-        DATE(S): ${startTime.day}-${startTime.month}-${startTime.year}
-        Weather: ${weather!.name}
-        Day/Night: ${dayNight.name}
-        Length: ${endTime.difference(startTime).inSeconds}
+STUDENT NAME: ${student.name}
+PILOT QUAL: ${pilotQual.name.toUpperCase()}
+PROFILE: $profile
+Sortie Type: ${sortieType.name.toUpperCase()}
+DATE(S): ${startTime.day}-${startTime.month}-${startTime.year}
+Weather: ${weather!.name}
+Day/Night: ${dayNight.name}
+Length: ${endTime.difference(startTime).inSeconds}
         
-        .PS.|GRADE| EVENT | COMMENTS\n''';
+.PS.|GRADE| EVENT | COMMENTS\n''';
 
     for (int i = 0; i < grades.length; i++) {
       myString +=
-          "_?_|__${grades[i].grade!.index - 2}___| ${i + 1}. ${grades[i].name} ${grades[i].comments}\n";
+          "_${getScore(ctsItems[i])}|__${grades[i].grade!.index - 1}___| ${i + 1}. ${grades[i].name} ${grades[i].comments}\n";
     }
 
     myString += '''\n OVERALL GRADE: ${overall!.index - 2}
 
-    RECOMMENDATION / NEXT: $recommendations''';
+RECOMMENDATION / NEXT: $recommendations''';
 
     return myString;
   }
