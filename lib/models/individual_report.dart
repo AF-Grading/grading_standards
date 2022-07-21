@@ -96,36 +96,8 @@ class IndividualReport with ChangeNotifier {
     return comment;
   }
 
+  // returns the time sereis char of the average of the student at the specific date
   List<charts.Series<AverageGradeSheet, DateTime>> get overallChart {
-    //List<Grade> grades = [for (GradeSheet sheet in _gradeSheets) sheet.overall];
-
-    // we need to find the average of the gradesheets in that specific day
-
-    // _gradeSheets.forEach((element) {
-    //   if (average_time_sheets.containsKey(
-    //       ((element.endTime).difference(DateTime(1970)).inHours / 24)
-    //           .round())) {
-    //     average_time_sheets.update(
-    //       ((element.endTime).difference(DateTime(1970)).inHours / 24).round(),
-    //       (value) {
-    //         return [value[0] + element.overall!.index, value[1] + 1];
-    //       },
-    //       ifAbsent: () => [
-    //         ((element.endTime).difference(DateTime(1970)).inHours / 24).round(),
-    //         1
-    //       ],
-    //     );
-    //   }
-    // });
-
-    // average_time_sheets.forEach((key, value) {
-    //   average_time_sheets.update(
-    //     key,
-    //     (value) {
-    //       return [value[0] / value[1], value[1]];
-    //     },
-    //   );
-    // });
     Map<DateTime, List<GradeSheet>> average_time_sheets = {};
 
     _gradeSheets.forEach((element) {
