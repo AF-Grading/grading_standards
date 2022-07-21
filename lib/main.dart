@@ -21,6 +21,7 @@ import 'models/theme_change.dart';
 import 'models/user_setting.dart';
 import 'models/users.dart';
 import 'models/current_user.dart';
+import 'pages/auth/not_authorized_page.dart';
 import 'pages/home_page_old.dart';
 import 'theme/dark_mode.dart';
 import 'theme/light_mode.dart';
@@ -43,7 +44,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (context) => CurrentFlight()),
           ChangeNotifierProvider(create: (context) => Users()),
           ChangeNotifierProvider(create: (context) => ThemeChange()),
-          ChangeNotifierProvider(create: (context) => CurrentUser()),
+          //ChangeNotifierProvider(create: (context) => CurrentUser()),
         ], child: MyApp()),
       ),
     ),
@@ -87,49 +88,78 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: light_theme,
-      darkTheme: dark_theme,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const RegisterPage(), //UserLoginPage(),
-        '/home': (context) => context.watch<ApplicationState>().loginState ==
-                ApplicationLoginState.loggedIn
-            ? WillPopScope(
-                onWillPop: () async {
-                  return true;
-                },
-                child: Consumer<ThemeChange>(
-                  builder: (context, value, child) => MultiProvider(
-                    providers: [
-                      StreamProvider<List<UserSetting>>(
-                        create: (_) => context.read<ApplicationState>().users,
-                        initialData: const [],
+    return Consumer<AWSState>(
+      builder: (context, appState, child) {
+        return MaterialApp(
+          theme: light_theme,
+          darkTheme: dark_theme,
+          initialRoute: appState.state == CurrentState.loggedIn ? '/home' : '/',
+          routes: {
+            '/': (context) => const UserLoginPage(),
+            '/home': (context) => context
+                        .watch<ApplicationState>()
+                        .loginState ==
+                    ApplicationLoginState.loggedIn
+                ? WillPopScope(
+                    onWillPop: () async {
+                      return true;
+                    },
+                    child: /*Consumer<ThemeChange>(
+                          builder: (context, value, child) =>*/
+                        MultiProvider(
+                      providers: [
+                        StreamProvider<List<UserSetting>>(
+                          create: (_) => context.read<ApplicationState>().users,
+                          initialData: const [],
+                        ),
+                        FutureProvider<User?>(
+                          initialData: null,
+                          create: (context) => appState.currentUser,
+                        )
+                        //create: (context) =>
+                        //CurrentUser(user: appState.currentUser)),
+
+                        /*StreamProvider<List<GradeSheet>>(
+                          create: (_) =>
+                              context.watch<ApplicationState>().gradeSheets,
+                          initialData: const [],
+                        ),*/
+                      ],
+                      child: Consumer<User?>(
+                        builder: ((context, currentUser, child) {
+                          //User? user = currentUser.user;
+                          return currentUser != null
+                              ? MaterialApp(
+                                  title: 'AF Grading Standards',
+                                  // themeMode: ThemeMode.light,
+                                  theme: light_theme,
+                                  darkTheme: dark_theme,
+                                  // themeMode: value.mode,
+                                  themeMode: currentUser.themeMode!.themeMode!,
+                                  home: HomePageOld(
+                                    title: "Flying Standards",
+                                    permission: 4, //user!.permission!.length,
+                                  ),
+                                )
+                              : MaterialApp(
+                                  title: 'AF Grading Standards',
+                                  // themeMode: ThemeMode.light,
+                                  theme: light_theme,
+                                  darkTheme: dark_theme,
+                                  // themeMode: value.mode,
+                                  //themeMode: context.watch<CurrentUser>().theme,
+                                  home: const NotAuthorizedPage(),
+                                );
+                        }),
                       ),
-                      /*StreamProvider<List<GradeSheet>>(
-                        create: (_) =>
-                            context.watch<ApplicationState>().gradeSheets,
-                        initialData: const [],
-                      ),*/
-                    ],
-                    child: MaterialApp(
-                      title: 'Flutter Demo',
-                      // themeMode: ThemeMode.light,
-                      theme: light_theme,
-                      darkTheme: dark_theme,
-                      // themeMode: value.mode,
-                      themeMode: context.watch<ThemeChange>().mode,
-                      home: HomePageOld(
-                          title: "Flying Standards",
-                          permission:
-                              context.watch<CurrentUser>().permission.index),
                     ),
-                  ),
-                ),
-              )
-            : const NotLoggedInPage(),
+                    //),
+                  )
+                : const NotLoggedInPage(),
+          },
+          // home: UserLoginView(),
+        );
       },
-      // home: UserLoginView(),
     );
   }
 }

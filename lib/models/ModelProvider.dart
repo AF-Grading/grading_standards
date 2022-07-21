@@ -21,17 +21,19 @@
 
 import 'package:amplify_core/amplify_core.dart';
 import 'GradeSheet.dart';
+import 'Squadron.dart';
 import 'User.dart';
 
 export 'Grade.dart';
 export 'GradeSheet.dart';
+export 'Squadron.dart';
 export 'User.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "05fe0de5145fd750aa8d3d3a61c1e2bd";
+  String version = "6c9d87170dc2eea15a10192a6bccee83";
   @override
-  List<ModelSchema> modelSchemas = [GradeSheet.schema, User.schema];
+  List<ModelSchema> modelSchemas = [GradeSheet.schema, Squadron.schema, User.schema];
   static final ModelProvider _instance = ModelProvider();
   @override
   List<ModelSchema> customTypeSchemas = [];
@@ -42,6 +44,8 @@ class ModelProvider implements ModelProviderInterface {
     switch(modelName) {
       case "GradeSheet":
         return GradeSheet.classType;
+      case "Squadron":
+        return Squadron.classType;
       case "User":
         return User.classType;
       default:

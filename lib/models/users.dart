@@ -1,6 +1,7 @@
 import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/foundation.dart';
 
+import 'grade_enums.dart';
 import 'user.dart';
 
 // fake backend

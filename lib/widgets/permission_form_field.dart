@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/grade_enums.dart';
 import '../models/user.dart';
 
 class PermissionFormField extends FormField<Permission> {

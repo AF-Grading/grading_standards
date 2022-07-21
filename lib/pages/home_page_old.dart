@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                         const IndividualReportsView(),
                         TrainingShopPage(
                           gradeSheets: context.watch<GradeSheets>().gradeSheets,
-                          squad: context.read<CurrentUser>().user.squad,
+                          squad: context.read<CurrentUser>().user!.squadronID,
                         ),
                       ]
                     : [

@@ -1,13 +1,19 @@
+type Squadron @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  Users: [User] @hasMany(indexName: "bySquadron", fields: ["id"])
+}
+
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
-  email: String
+  email: String!
   name: String
-  squad: String
   rank: String
   adQual: String
   pilotQual: String
   permission: String
-  themeMod: String
+  themeMode: String
+  squadronID: ID! @index(name: "bySquadron")
 }
 
 enum Grade {

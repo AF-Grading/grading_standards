@@ -25,13 +25,13 @@ class SettingsPage extends StatelessWidget {
             size: 300,
           ),
           Text(
-            context.watch<CurrentUser>().user.name,
+            context.watch<CurrentUser>().user!.name!,
           ),
           Text(
-            "email:    " + context.watch<CurrentUser>().user.email,
+            "email:    " + context.watch<CurrentUser>().user!.email,
           ),
           Text(
-            "squadron:    " + context.watch<CurrentUser>().user.squad,
+            "squadron:    " + context.watch<CurrentUser>().user!.squadronID,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

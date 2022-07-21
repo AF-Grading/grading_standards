@@ -30,12 +30,12 @@ class User extends Model {
   final String id;
   final String? _email;
   final String? _name;
-  final String? _squad;
   final String? _rank;
   final String? _adQual;
   final String? _pilotQual;
   final String? _permission;
-  final String? _themeMod;
+  final String? _themeMode;
+  final String? _squadronID;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -47,16 +47,21 @@ class User extends Model {
     return id;
   }
   
-  String? get email {
-    return _email;
+  String get email {
+    try {
+      return _email!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
   
   String? get name {
     return _name;
-  }
-  
-  String? get squad {
-    return _squad;
   }
   
   String? get rank {
@@ -75,8 +80,21 @@ class User extends Model {
     return _permission;
   }
   
-  String? get themeMod {
-    return _themeMod;
+  String? get themeMode {
+    return _themeMode;
+  }
+  
+  String get squadronID {
+    try {
+      return _squadronID!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
   
   TemporalDateTime? get createdAt {
@@ -87,19 +105,19 @@ class User extends Model {
     return _updatedAt;
   }
   
-  const User._internal({required this.id, email, name, squad, rank, adQual, pilotQual, permission, themeMod, createdAt, updatedAt}): _email = email, _name = name, _squad = squad, _rank = rank, _adQual = adQual, _pilotQual = pilotQual, _permission = permission, _themeMod = themeMod, _createdAt = createdAt, _updatedAt = updatedAt;
+  const User._internal({required this.id, required email, name, rank, adQual, pilotQual, permission, themeMode, required squadronID, createdAt, updatedAt}): _email = email, _name = name, _rank = rank, _adQual = adQual, _pilotQual = pilotQual, _permission = permission, _themeMode = themeMode, _squadronID = squadronID, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory User({String? id, String? email, String? name, String? squad, String? rank, String? adQual, String? pilotQual, String? permission, String? themeMod}) {
+  factory User({String? id, required String email, String? name, String? rank, String? adQual, String? pilotQual, String? permission, String? themeMode, required String squadronID}) {
     return User._internal(
       id: id == null ? UUID.getUUID() : id,
       email: email,
       name: name,
-      squad: squad,
       rank: rank,
       adQual: adQual,
       pilotQual: pilotQual,
       permission: permission,
-      themeMod: themeMod);
+      themeMode: themeMode,
+      squadronID: squadronID);
   }
   
   bool equals(Object other) {
@@ -113,12 +131,12 @@ class User extends Model {
       id == other.id &&
       _email == other._email &&
       _name == other._name &&
-      _squad == other._squad &&
       _rank == other._rank &&
       _adQual == other._adQual &&
       _pilotQual == other._pilotQual &&
       _permission == other._permission &&
-      _themeMod == other._themeMod;
+      _themeMode == other._themeMode &&
+      _squadronID == other._squadronID;
   }
   
   @override
@@ -132,12 +150,12 @@ class User extends Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("email=" + "$_email" + ", ");
     buffer.write("name=" + "$_name" + ", ");
-    buffer.write("squad=" + "$_squad" + ", ");
     buffer.write("rank=" + "$_rank" + ", ");
     buffer.write("adQual=" + "$_adQual" + ", ");
     buffer.write("pilotQual=" + "$_pilotQual" + ", ");
     buffer.write("permission=" + "$_permission" + ", ");
-    buffer.write("themeMod=" + "$_themeMod" + ", ");
+    buffer.write("themeMode=" + "$_themeMode" + ", ");
+    buffer.write("squadronID=" + "$_squadronID" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -145,45 +163,45 @@ class User extends Model {
     return buffer.toString();
   }
   
-  User copyWith({String? id, String? email, String? name, String? squad, String? rank, String? adQual, String? pilotQual, String? permission, String? themeMod}) {
+  User copyWith({String? id, String? email, String? name, String? rank, String? adQual, String? pilotQual, String? permission, String? themeMode, String? squadronID}) {
     return User._internal(
       id: id ?? this.id,
       email: email ?? this.email,
       name: name ?? this.name,
-      squad: squad ?? this.squad,
       rank: rank ?? this.rank,
       adQual: adQual ?? this.adQual,
       pilotQual: pilotQual ?? this.pilotQual,
       permission: permission ?? this.permission,
-      themeMod: themeMod ?? this.themeMod);
+      themeMode: themeMode ?? this.themeMode,
+      squadronID: squadronID ?? this.squadronID);
   }
   
   User.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
       _email = json['email'],
       _name = json['name'],
-      _squad = json['squad'],
       _rank = json['rank'],
       _adQual = json['adQual'],
       _pilotQual = json['pilotQual'],
       _permission = json['permission'],
-      _themeMod = json['themeMod'],
+      _themeMode = json['themeMode'],
+      _squadronID = json['squadronID'],
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'email': _email, 'name': _name, 'squad': _squad, 'rank': _rank, 'adQual': _adQual, 'pilotQual': _pilotQual, 'permission': _permission, 'themeMod': _themeMod, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'email': _email, 'name': _name, 'rank': _rank, 'adQual': _adQual, 'pilotQual': _pilotQual, 'permission': _permission, 'themeMode': _themeMode, 'squadronID': _squadronID, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
   static final QueryField ID = QueryField(fieldName: "user.id");
   static final QueryField EMAIL = QueryField(fieldName: "email");
   static final QueryField NAME = QueryField(fieldName: "name");
-  static final QueryField SQUAD = QueryField(fieldName: "squad");
   static final QueryField RANK = QueryField(fieldName: "rank");
   static final QueryField ADQUAL = QueryField(fieldName: "adQual");
   static final QueryField PILOTQUAL = QueryField(fieldName: "pilotQual");
   static final QueryField PERMISSION = QueryField(fieldName: "permission");
-  static final QueryField THEMEMOD = QueryField(fieldName: "themeMod");
+  static final QueryField THEMEMODE = QueryField(fieldName: "themeMode");
+  static final QueryField SQUADRONID = QueryField(fieldName: "squadronID");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "User";
     modelSchemaDefinition.pluralName = "Users";
@@ -203,18 +221,12 @@ class User extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: User.EMAIL,
-      isRequired: false,
+      isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: User.NAME,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: User.SQUAD,
       isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
@@ -244,8 +256,14 @@ class User extends Model {
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: User.THEMEMOD,
+      key: User.THEMEMODE,
       isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: User.SQUADRONID,
+      isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     

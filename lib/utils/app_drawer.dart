@@ -33,7 +33,7 @@ class _AppDrawerState extends State<AppDrawer> {
             color: Theme.of(context).colorScheme.primary,
           ),
           child: Text(
-            context.watch<CurrentUser>().user.name,
+            context.watch<CurrentUser>().user!.name!,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 24,

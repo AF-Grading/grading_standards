@@ -139,3 +139,10 @@ extension WeatherFromString on String {
     return null;
   }
 }
+
+enum Permission {
+  student,
+  instructor,
+  training_shop,
+  wing_training,
+}
