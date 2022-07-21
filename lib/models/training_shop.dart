@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:timer_builder/timer_builder.dart';
 
 import 'cts_list.dart';
 import 'grade_enums.dart';
@@ -88,15 +89,57 @@ class TrainingShop with ChangeNotifier {
     return comment;
   }
 
-  List<charts.Series<GradeSheet, DateTime>> get overallChart {
+  List<charts.Series<AverageGradeSheet, DateTime>> get overallChart {
     //List<Grade> grades = [for (GradeSheet sheet in _gradeSheets) sheet.overall];
 
-    List<charts.Series<GradeSheet, DateTime>> series = [
+    // we need to first find the individual squadrons
+
+    // current thought process is to go through all of the individuals and
+    //find the studentID, then find that individual base on their email (since studentID are the individuals email)
+    //then find the squdron of that individual, and then find all the individuals in that squadron
+    //then find all of their gradesheets
+
+    // algorithm for finding the average of all the grade sheets
+
+    Map<DateTime, List<GradeSheet>> average_time_sheets = {};
+
+    _gradeSheets.forEach((element) {
+      average_time_sheets.update(
+        alignDateTime(element.endTime, const Duration(days: 1)),
+        ((value) {
+          value.add(element);
+          return value;
+        }),
+        ifAbsent: () => [element],
+      );
+    });
+
+    // print(average_time_sheets);
+
+    List<AverageGradeSheet> score_sheets = [];
+
+    average_time_sheets.forEach((key, value) {
+      double temp = 0;
+      value.forEach((element) {
+        // print("index value ${element.overall!.index}");
+        temp += element.overall!.index - 1;
+      });
+      // print("temp value " + temp.toString());
+      // print("length of value " + value.length.toString());
+      AverageGradeSheet temp_sheet =
+          AverageGradeSheet(key, temp / value.length);
+
+      score_sheets.add(temp_sheet);
+    });
+
+    // print(score_sheets);
+
+    List<charts.Series<AverageGradeSheet, DateTime>> series = [
       charts.Series(
         id: "Overall",
-        data: _gradeSheets,
-        measureFn: (GradeSheet grade, _) => grade.overall!.index - 2,
-        domainFn: (GradeSheet time, _) => time.endTime,
+        data: score_sheets,
+        measureFn: (AverageGradeSheet sheet, _) => sheet.average,
+        domainFn: (AverageGradeSheet sheet, _) => sheet.date,
       )
     ];
 
@@ -195,4 +238,10 @@ class AverageGrade {
   String name;
   double average;
   AverageGrade(this.name, this.average);
+}
+
+class AverageGradeSheet {
+  DateTime date;
+  double average;
+  AverageGradeSheet(this.date, this.average);
 }
