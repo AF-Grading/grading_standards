@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:amplify_api/amplify_api.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:app_prototype/amplifyconfiguration.dart';
@@ -18,6 +22,7 @@ class AllGradeSheetsPage extends StatefulWidget {
 }
 
 class _AllGradeSheetsPageState extends State<AllGradeSheetsPage> {
+  late StreamSubscription<QuerySnapshot<GradeSheet>> _subscription;
   // loading ui state - initially set to a loading state
   bool _isLoading = true;
 
@@ -28,6 +33,8 @@ class _AllGradeSheetsPageState extends State<AllGradeSheetsPage> {
   // amplify plugins
   final _dataStorePlugin =
       AmplifyDataStore(modelProvider: ModelProvider.instance);
+  final AmplifyAPI _apiPlugin = AmplifyAPI();
+  final AmplifyAuthCognito _authPlugin = AmplifyAuthCognito();
 
   @override
   void initState() {
@@ -48,16 +55,19 @@ class _AllGradeSheetsPageState extends State<AllGradeSheetsPage> {
     await _configureAmplify();
 
     // after configuring Amplify, update loading ui state to loaded state
-    setState(() {
-      _isLoading = false;
+    _subscription = Amplify.DataStore.observeQuery(GradeSheet.classType)
+        .listen((QuerySnapshot<GradeSheet> snapshot) {
+      setState(() {
+        if (_isLoading) _isLoading = false;
+        _gradesheets = snapshot.items;
+      });
     });
   }
 
   Future<void> _configureAmplify() async {
     try {
       // add Amplify plugins
-      await Amplify.addPlugins([_dataStorePlugin]);
-
+      await Amplify.addPlugins([_dataStorePlugin, _apiPlugin, _authPlugin]);
       // configure Amplify
       //
       // note that Amplify cannot be configured more than once!
