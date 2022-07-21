@@ -1,5 +1,7 @@
+import 'package:app_prototype/models/aws_state.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
 import '../models/application_state.dart';
@@ -101,6 +103,18 @@ class _UserLoginPageState extends State<UserLoginPage> {
               ),
               ElevatedButton(
                   onPressed: () async {
+                    final signInSuccess = await context
+                        .read<AWSState>()
+                        .signInWithPhoneVerification(_email, _password);
+
+                    if (signInSuccess) {
+                      print("yay3");
+                      context.read<AWSState>().state =
+                          CurrentState.confirmSignIn;
+                    } else {
+                      print("nay3");
+                    }
+
                     // Firebase Auth
                     Future<bool> withoutErrors = context
                         .read<ApplicationState>()
@@ -110,6 +124,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                         _error = e.message;
                       });
                     });
+
                     if (await withoutErrors) {
                       context
                           .read<ApplicationState>()
@@ -146,6 +161,11 @@ class _UserLoginPageState extends State<UserLoginPage> {
                     }
                   },
                   child: const Text('Login')),
+
+                context.watch<AWSState>().state == CurrentState.confirmSignIn ? Pinput(length: 6,
+                onCompleted: (pin) async {
+                  context.read<AWSState>().
+                },) : Container(),
             ]),
           ),
         ),

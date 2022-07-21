@@ -7,14 +7,15 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "auth": {
-        "AFGradingStandards": {
+        "afgradingstandards963361aa963361aa": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "UserPoolId": "string",
             "UserPoolArn": "string",
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
-            "AppClientID": "string"
+            "AppClientID": "string",
+            "CreatedSNSRole": "string"
         }
     }
 }

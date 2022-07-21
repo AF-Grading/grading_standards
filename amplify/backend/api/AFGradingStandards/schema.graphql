@@ -1,3 +1,15 @@
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  email: String
+  name: String
+  squad: String
+  rank: String
+  adQual: String
+  pilotQual: String
+  permission: String
+  themeMod: String
+}
+
 enum Grade {
   NOGRADE
   UNSATISFACTORY
@@ -25,3 +37,4 @@ type GradeSheet @model @auth(rules: [{allow: public}]) {
   overallComments: String
   recommendations: String
 }
+ 

@@ -1,4 +1,12 @@
+import 'package:amplify_api/amplify_api.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_datastore/amplify_datastore.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:app_prototype/amplifyconfiguration.dart';
+import 'package:app_prototype/models/ModelProvider.dart';
+import 'package:app_prototype/models/aws_state.dart';
 import 'package:app_prototype/pages/not_logged_in_page.dart';
+import 'package:app_prototype/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -27,6 +35,7 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ApplicationState()),
+        ChangeNotifierProvider(create: (context) => AWSState()),
       ],
       child: Phoenix(
         child: MultiProvider(providers: [
@@ -47,7 +56,33 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final _dataStorePlugin =
+      AmplifyDataStore(modelProvider: ModelProvider.instance);
+  final AmplifyAPI _apiPlugin = AmplifyAPI();
+  final AmplifyAuthCognito _authPlugin = AmplifyAuthCognito();
+
   @override
+  initState() {
+    // TODO: implement initState
+    super.initState();
+    _configureAmplify();
+  }
+
+  Future<void> _configureAmplify() async {
+    try {
+      // add Amplify plugins
+      await Amplify.addPlugins([_dataStorePlugin, _apiPlugin, _authPlugin]);
+      // configure Amplify
+      //
+      // note that Amplify cannot be configured more than once!
+      await Amplify.configure(amplifyconfig);
+    } catch (e) {
+      // error handling can be improved for sure!
+      // but this will be sufficient for the purposes of this tutorial
+      print('An error occurred while configuring Amplify: $e');
+    }
+  }
+
   //  MyApp({Key? key}) : super(key: key);
   // This widget is the root of your application.
   @override
@@ -57,7 +92,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: dark_theme,
       initialRoute: '/',
       routes: {
-        '/': (context) => const UserLoginPage(),
+        '/': (context) => const RegisterPage(), //UserLoginPage(),
         '/home': (context) => context.watch<ApplicationState>().loginState ==
                 ApplicationLoginState.loggedIn
             ? WillPopScope(
@@ -71,11 +106,11 @@ class _MyAppState extends State<MyApp> {
                         create: (_) => context.read<ApplicationState>().users,
                         initialData: const [],
                       ),
-                      StreamProvider<List<GradeSheet>>(
+                      /*StreamProvider<List<GradeSheet>>(
                         create: (_) =>
                             context.watch<ApplicationState>().gradeSheets,
                         initialData: const [],
-                      ),
+                      ),*/
                     ],
                     child: MaterialApp(
                       title: 'Flutter Demo',

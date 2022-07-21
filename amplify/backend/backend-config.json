@@ -23,7 +23,7 @@
     }
   },
   "auth": {
-    "AFGradingStandards": {
+    "afgradingstandards963361aa963361aa": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -33,17 +33,14 @@
         "usernameAttributes": [
           "EMAIL"
         ],
-        "signupAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": [
-            "REQUIRES_LOWERCASE",
-            "REQUIRES_NUMBERS",
-            "REQUIRES_SYMBOLS",
-            "REQUIRES_UPPERCASE"
-          ]
+          "passwordPolicyCharacters": []
         },
-        "mfaConfiguration": "OFF",
+        "mfaConfiguration": "ON",
         "mfaTypes": [
           "SMS"
         ],

@@ -10,6 +10,11 @@
       "StackName": "amplify-afgradingstandards-staging-195238",
       "StackId": "arn:aws:cloudformation:us-east-1:574991907120:stack/amplify-afgradingstandards-staging-195238/8252ffb0-0865-11ed-855a-1269ecf5e7ff",
       "AmplifyAppId": "d15be1kj5wgufr"
+    },
+    "categories": {
+      "auth": {
+        "afgradingstandards963361aa963361aa": {}
+      }
     }
   }
 }
