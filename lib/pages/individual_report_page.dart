@@ -80,9 +80,17 @@ class IndividualReportPage extends StatelessWidget {
                                 SizedBox(
                                   width: 300,
                                   height: 300,
-                                  child: charts.TimeSeriesChart(context
-                                      .watch<IndividualReport>()
-                                      .overallChart),
+                                  child: charts.TimeSeriesChart(
+                                    context
+                                        .watch<IndividualReport>()
+                                        .overallChart,
+                                    defaultRenderer: new charts
+                                        .BarRendererConfig<DateTime>(),
+                                    // animate: true,
+                                    // defaultRenderer: new charts
+                                    //     .BarRendererConfig<DateTime>(),
+                                    // defaultInteractions: false,
+                                  ),
                                 ),
                               ],
                             ),
@@ -281,9 +289,13 @@ class IndividualReportPage extends StatelessWidget {
                               SizedBox(
                                 width: 300,
                                 height: 300,
-                                child: charts.TimeSeriesChart(context
-                                    .watch<IndividualReport>()
-                                    .overallChart),
+                                child: charts.TimeSeriesChart(
+                                  context
+                                      .watch<IndividualReport>()
+                                      .overallChart,
+                                  defaultRenderer:
+                                      new charts.BarRendererConfig<DateTime>(),
+                                ),
                               ),
                             ],
                           ),

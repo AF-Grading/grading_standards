@@ -66,6 +66,7 @@ class TrainingShopPage extends StatelessWidget {
                                   height: 300,
                                   child: charts.TimeSeriesChart(
                                     context.watch<TrainingShop>().overallChart,
+                                    defaultRenderer: new charts.BarRendererConfig<DateTime>(),
                                     //domainAxis: charts.DateTimeAxisSpec(),
                                   ),
                                 ),
@@ -252,6 +253,7 @@ class TrainingShopPage extends StatelessWidget {
                                 height: 300,
                                 child: charts.TimeSeriesChart(
                                   context.watch<TrainingShop>().overallChart,
+                                  defaultRenderer: new charts.BarRendererConfig<DateTime>(),
                                   //domainAxis: charts.DateTimeAxisSpec(),
                                 ),
                               ),

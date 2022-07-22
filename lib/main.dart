@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/Squadrons.dart';
 import 'package:app_prototype/pages/not_logged_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -74,6 +75,11 @@ class _MyAppState extends State<MyApp> {
                       StreamProvider<List<GradeSheet>>(
                         create: (_) =>
                             context.watch<ApplicationState>().gradeSheets,
+                        initialData: const [],
+                      ),
+                      StreamProvider<List<Squadron>>(
+                        create: (_) =>
+                            context.watch<ApplicationState>().squads,
                         initialData: const [],
                       ),
                     ],
