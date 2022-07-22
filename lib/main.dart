@@ -23,6 +23,7 @@ import 'models/users.dart';
 import 'models/current_user.dart';
 import 'pages/auth/not_authorized_page.dart';
 import 'pages/home_page_old.dart';
+import 'pages/spash_page.dart';
 import 'theme/dark_mode.dart';
 import 'theme/light_mode.dart';
 import 'pages/user_log_in_page.dart';
@@ -63,6 +64,8 @@ class _MyAppState extends State<MyApp> {
   final AmplifyAuthCognito _authPlugin = AmplifyAuthCognito();
   AuthSession _initialState = AuthSession(isSignedIn: false);
 
+  bool _isLoading = true;
+
   @override
   initState() {
     // TODO: implement initState
@@ -91,10 +94,16 @@ class _MyAppState extends State<MyApp> {
 
       setState(() {
         _initialState = session;
+        print("no longer loading");
+        _isLoading = false;
       });
     } catch (e) {
       // error handling can be improved for sure!
       // but this will be sufficient for the purposes of this tutorial
+      setState(() {
+        print("no longer loading");
+        _isLoading = false;
+      });
       print('An error occurred while configuring Amplify: $e');
     }
   }
@@ -103,39 +112,42 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Consumer<AWSState>(
-      builder: (context, appState, child) {
-        return MaterialApp(
-          theme: light_theme,
-          darkTheme: dark_theme,
-          themeMode: context.watch<CurrentUser>().user != null
-              ? context.watch<CurrentUser>().user!.themeMode!.themeMode!
-              : ThemeMode.system,
-          //initialRoute: _initialState.isSignedIn ? '/home' : '/',
+    return _isLoading
+        ? SplashPage()
+        : Consumer<AWSState>(
+            builder: (context, appState, child) {
+              return MaterialApp(
+                theme: light_theme,
+                darkTheme: dark_theme,
+                themeMode: context.watch<CurrentUser>().user != null
+                    ? context.watch<CurrentUser>().user!.themeMode!.themeMode!
+                    : ThemeMode.system,
+                //initialRoute: _initialState.isSignedIn ? '/home' : '/',
 
-          home: _initialState.isSignedIn
-              ? MultiProvider(
-                  providers: [
-                    StreamProvider<List<UserSetting>>(
-                      create: (_) => context.read<ApplicationState>().users,
-                      initialData: const [],
-                    ),
-                    StreamProvider<List<User>>(
-                      create: (_) => appState.users,
-                      initialData: const [],
-                    ),
-                    /*FutureProvider<Stream<User>>(
+                home: appState.state == CurrentState.loggedIn
+                    ? MultiProvider(
+                        providers: [
+                          StreamProvider<List<UserSetting>>(
+                            create: (_) =>
+                                context.read<ApplicationState>().users,
+                            initialData: const [],
+                          ),
+                          StreamProvider<List<User>>(
+                            create: (_) => appState.users,
+                            initialData: const [],
+                          ),
+                          /*FutureProvider<Stream<User>>(
                         create: (context) =>
                             context.read<AWSState>().currentUser,
                         initialData: null)*/
-                  ],
-                  child: HomePageOld(
-                    title: "Flying Standards",
-                    permission: 4, //user!.permission!.length,
-                  ),
-                )
-              : const UserLoginPage(),
-          /*routes: {
+                        ],
+                        child: HomePageOld(
+                          title: "Flying Standards",
+                          permission: 4, //user!.permission!.length,
+                        ),
+                      )
+                    : const UserLoginPage(),
+                /*routes: {
             '/home': (context) => //appState.state == CurrentState.loggedIn
                 WillPopScope(
                   onWillPop: () async {
@@ -194,9 +206,9 @@ class _MyAppState extends State<MyApp> {
                 ),
             '/': (context) => const UserLoginPage()
           },*/
-          // home: UserLoginView(),
-        );
-      },
-    );
+                // home: UserLoginView(),
+              );
+            },
+          );
   }
 }

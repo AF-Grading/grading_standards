@@ -73,6 +73,8 @@ flutter_icons:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/ic_launcher-playstore.png
   fonts:
     - family: Cambo
       fonts:

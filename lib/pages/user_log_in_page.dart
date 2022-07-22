@@ -1,3 +1,4 @@
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:app_prototype/models/aws_state.dart';
 import 'package:app_prototype/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +6,10 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
+import '../models/User.dart';
 import '../models/application_state.dart';
 import '../models/grade_enums.dart';
-import '../models/user.dart';
+//import '../models/user.dart';
 import '../models/users.dart';
 import '../models/current_user.dart';
 
@@ -103,79 +105,91 @@ class _UserLoginPageState extends State<UserLoginPage> {
                   },
                 ),
               ),
-              ElevatedButton(
-                  onPressed: () async {
-                    final signInSuccess = await context
-                        .read<AWSState>()
-                        .signInWithPhoneVerification(_email, _password);
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      onPressed: () async {
+                        final signInSuccess = await context
+                            .read<AWSState>()
+                            .signInWithPhoneVerification(_email, _password,
+                                (e) {
+                          setState(() {
+                            _error = e.message;
+                          });
+                        });
 
-                    context.read<AWSState>().state = CurrentState.confirmSignIn;
-                    if (signInSuccess) {
-                      print("yay3");
-                    } else {
-                      print("nay3");
-                    }
+                        if (signInSuccess) {
+                          print("yay3");
+                          context.read<AWSState>().state =
+                              CurrentState.confirmSignIn;
+                        } else {
+                          // _error = signInSuccess.toString();
+                        }
 
-                    // Firebase Auth
-                    /*Future<bool> withoutErrors = context
-                        .read<ApplicationState>()
-                        .signInWithEmailAndPassword(_email, _password, (e) {
-                      setState(() {
-                        //_error
-                        _error = e.message;
-                      });
-                    });
+                        // Firebase Auth
+                        /*Future<bool> withoutErrors = context
+                            .read<ApplicationState>()
+                            .signInWithEmailAndPassword(_email, _password, (e) {
+                          setState(() {
+                            //_error
+                            _error = e.message;
+                          });
+                        });
 
-                    if (await withoutErrors) {
-                      context
-                          .read<ApplicationState>()
-                          .fetchCurrentUserSettings(_email)
-                          .then((value) =>
-                              context.read<CurrentUser>().userSetting = value)
-                          .then(
-                        (value) {
-                          if (value.permission.index >=
-                              Permission.student.index) {
-                            Navigator.popAndPushNamed(context, '/home');
-                          } else {
-                            setState(() {
-                              _logInFail = true;
-                            });
-                          }
-                          /*for (User user in Users().users) {
-                            if (user.email == _email &&
-                                user.password == _password) {
-                              setState(() {
-                                _logInFail = false;
-                              });
+                        if (await withoutErrors) {
+                          context
+                              .read<ApplicationState>()
+                              .fetchCurrentUserSettings(_email)
+                              .then((value) =>
+                                  context.read<CurrentUser>().userSetting = value)
+                              .then(
+                            (value) {
+                              if (value.permission.index >=
+                                  Permission.student.index) {
+                                Navigator.popAndPushNamed(context, '/home');
+                              } else {
+                                setState(() {
+                                  _logInFail = true;
+                                });
+                              }
+                              /*for (User user in Users().users) {
+                                if (user.email == _email &&
+                                    user.password == _password) {
+                                  setState(() {
+                                    _logInFail = false;
+                                  });
 
-                              CurrentUser().setUser = user;
+                                  CurrentUser().setUser = user;
 
-                              context.read<CurrentUser>().setUser = user;*/
+                                  context.read<CurrentUser>().setUser = user;*/
 
-                          // }
-                          // }
-                        },
+                              // }
+                              // }
+                            },
+                          );
+                        } else {
+                          _formKey.currentState!.validate();
+                        }*/
+                      },
+                      child: const Text('Login')),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterPage(),
+                        ),
                       );
-                    } else {
-                      _formKey.currentState!.validate();
-                    }*/
-                  },
-                  child: const Text('Login')),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RegisterPage(),
+                    },
+                    child: Text(
+                      "Or sign up",
+                      style: TextStyle(color: Colors.blue),
                     ),
-                  );
-                },
-                child: Text(
-                  "Or sign up",
-                  style: TextStyle(color: Colors.blue),
-                ),
+                  ),
+                ],
               ),
+
               context.watch<AWSState>().state == CurrentState.confirmSignIn
                   ? Pinput(
                       length: 6,
@@ -193,8 +207,14 @@ class _UserLoginPageState extends State<UserLoginPage> {
                             _error = e.message;
                           });
                         });
-                        /*if (await withoutErrors) {
-                          context
+                        if (await withoutErrors) {
+                          await Amplify.DataStore.observeQuery(User.classType)
+                              .listen((QuerySnapshot<User> snapshot) {
+                            context.read<CurrentUser>().setUser = snapshot.items
+                                .firstWhere((user) => user.email == _email);
+                          });
+
+                          /*context
                               .read<ApplicationState>()
                               .fetchCurrentUserSettings(_email)
                               .then((value) => context
@@ -224,19 +244,14 @@ class _UserLoginPageState extends State<UserLoginPage> {
                               // }
                               // }
                             },
-                          );
+                          );*/
                         } else {
                           _formKey.currentState!.validate();
-                        }*/
+                        }
                       },
                     )
                   : Container(),
               // TODO: remove; for testing purposes only
-              ElevatedButton(
-                  onPressed: () {
-                    context.read<AWSState>().signOut();
-                  },
-                  child: Text("Sign Out"))
             ]),
           ),
         ),

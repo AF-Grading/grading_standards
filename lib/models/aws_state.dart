@@ -130,18 +130,29 @@ class AWSState with ChangeNotifier {
   Future<bool> signInWithPhoneVerification(
     String username,
     String password,
+    void Function(AuthException e) errorCallback,
   ) async {
-    SignInResult res = await Amplify.Auth.signIn(
-      username: username,
-      password: password,
-    );
-    return res.isSignedIn;
+    try {
+      await Amplify.Auth.signIn(
+        username: username,
+        password: password,
+      );
+      return true;
+    } on AuthException catch (e) {
+      errorCallback(e);
+      return false;
+    }
   }
 
   Future<bool> confirmSignInPhoneVerification(String otpCode) async {
     SignInResult res = await Amplify.Auth.confirmSignIn(
       confirmationValue: otpCode,
     );
+
+    if (res.isSignedIn) {
+      _state = CurrentState.loggedIn;
+      notifyListeners();
+    }
     return res.isSignedIn;
   }
 
