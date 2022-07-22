@@ -39,9 +39,9 @@ class AdQualFormField extends FormField<AdQual> {
                           onChanged!(value!);
                         },
                       ),
-                      const Text("adid"),
+                      const Text("adip"),
                       Radio<AdQual>(
-                        value: AdQual.adid,
+                        value: AdQual.adip,
                         groupValue: formState.value,
                         onChanged: (value) {
                           formState.didChange(value);
