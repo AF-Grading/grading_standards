@@ -44,7 +44,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (context) => CurrentFlight()),
           ChangeNotifierProvider(create: (context) => Users()),
           ChangeNotifierProvider(create: (context) => ThemeChange()),
-          //ChangeNotifierProvider(create: (context) => CurrentUser()),
+          ChangeNotifierProvider(create: (context) => CurrentUser()),
         ], child: MyApp()),
       ),
     ),
@@ -61,6 +61,7 @@ class _MyAppState extends State<MyApp> {
       AmplifyDataStore(modelProvider: ModelProvider.instance);
   final AmplifyAPI _apiPlugin = AmplifyAPI();
   final AmplifyAuthCognito _authPlugin = AmplifyAuthCognito();
+  AuthSession _initialState = AuthSession(isSignedIn: false);
 
   @override
   initState() {
@@ -77,6 +78,20 @@ class _MyAppState extends State<MyApp> {
       //
       // note that Amplify cannot be configured more than once!
       await Amplify.configure(amplifyconfig);
+      final session = await Amplify.Auth.fetchAuthSession();
+
+      if (session.isSignedIn) {
+        final AuthUser authUser = await Amplify.Auth.getCurrentUser();
+        await Amplify.DataStore.observeQuery(User.classType)
+            .listen((QuerySnapshot<User> snapshot) {
+          context.read<CurrentUser>().setUser = snapshot.items
+              .firstWhere((user) => user.email == authUser.username);
+        });
+      }
+
+      setState(() {
+        _initialState = session;
+      });
     } catch (e) {
       // error handling can be improved for sure!
       // but this will be sufficient for the purposes of this tutorial
@@ -93,70 +108,92 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           theme: light_theme,
           darkTheme: dark_theme,
-          initialRoute: appState.state == CurrentState.loggedIn ? '/home' : '/',
-          routes: {
-            '/': (context) => const UserLoginPage(),
-            '/home': (context) => context
-                        .watch<ApplicationState>()
-                        .loginState ==
-                    ApplicationLoginState.loggedIn
-                ? WillPopScope(
-                    onWillPop: () async {
-                      return true;
-                    },
-                    child: /*Consumer<ThemeChange>(
-                          builder: (context, value, child) =>*/
-                        MultiProvider(
-                      providers: [
-                        StreamProvider<List<UserSetting>>(
-                          create: (_) => context.read<ApplicationState>().users,
-                          initialData: const [],
-                        ),
-                        FutureProvider<User?>(
-                          initialData: null,
-                          create: (context) => appState.currentUser,
-                        )
-                        //create: (context) =>
-                        //CurrentUser(user: appState.currentUser)),
+          themeMode: context.watch<CurrentUser>().user != null
+              ? context.watch<CurrentUser>().user!.themeMode!.themeMode!
+              : ThemeMode.system,
+          //initialRoute: _initialState.isSignedIn ? '/home' : '/',
 
-                        /*StreamProvider<List<GradeSheet>>(
+          home: _initialState.isSignedIn
+              ? MultiProvider(
+                  providers: [
+                    StreamProvider<List<UserSetting>>(
+                      create: (_) => context.read<ApplicationState>().users,
+                      initialData: const [],
+                    ),
+                    StreamProvider<List<User>>(
+                      create: (_) => appState.users,
+                      initialData: const [],
+                    ),
+                    /*FutureProvider<Stream<User>>(
+                        create: (context) =>
+                            context.read<AWSState>().currentUser,
+                        initialData: null)*/
+                  ],
+                  child: HomePageOld(
+                    title: "Flying Standards",
+                    permission: 4, //user!.permission!.length,
+                  ),
+                )
+              : const UserLoginPage(),
+          /*routes: {
+            '/home': (context) => //appState.state == CurrentState.loggedIn
+                WillPopScope(
+                  onWillPop: () async {
+                    return true;
+                  },
+                  child: /*Consumer<ThemeChange>(
+                          builder: (context, value, child) =>*/
+                      MultiProvider(
+                    providers: [
+                      StreamProvider<List<UserSetting>>(
+                        create: (_) => context.read<ApplicationState>().users,
+                        initialData: const [],
+                      ),
+                      FutureProvider<User?>(
+                        initialData: null,
+                        create: (context) => appState.currentUser,
+                      )
+                      //create: (context) =>
+                      //CurrentUser(user: appState.currentUser)),
+
+                      /*StreamProvider<List<GradeSheet>>(
                           create: (_) =>
                               context.watch<ApplicationState>().gradeSheets,
                           initialData: const [],
                         ),*/
-                      ],
-                      child: Consumer<User?>(
-                        builder: ((context, currentUser, child) {
-                          //User? user = currentUser.user;
-                          return currentUser != null
-                              ? MaterialApp(
-                                  title: 'AF Grading Standards',
-                                  // themeMode: ThemeMode.light,
-                                  theme: light_theme,
-                                  darkTheme: dark_theme,
-                                  // themeMode: value.mode,
-                                  themeMode: currentUser.themeMode!.themeMode!,
-                                  home: HomePageOld(
-                                    title: "Flying Standards",
-                                    permission: 4, //user!.permission!.length,
-                                  ),
-                                )
-                              : MaterialApp(
-                                  title: 'AF Grading Standards',
-                                  // themeMode: ThemeMode.light,
-                                  theme: light_theme,
-                                  darkTheme: dark_theme,
-                                  // themeMode: value.mode,
-                                  //themeMode: context.watch<CurrentUser>().theme,
-                                  home: const NotAuthorizedPage(),
-                                );
-                        }),
-                      ),
+                    ],
+                    child: Consumer<User?>(
+                      builder: ((context, currentUser, child) {
+                        //User? user = currentUser.user;
+                        return currentUser != null
+                            ? MaterialApp(
+                                title: 'AF Grading Standards',
+                                // themeMode: ThemeMode.light,
+                                theme: light_theme,
+                                darkTheme: dark_theme,
+                                // themeMode: value.mode,
+                                themeMode: currentUser.themeMode!.themeMode!,
+                                home: HomePageOld(
+                                  title: "Flying Standards",
+                                  permission: 4, //user!.permission!.length,
+                                ),
+                              )
+                            : MaterialApp(
+                                title: 'AF Grading Standards',
+                                // themeMode: ThemeMode.light,
+                                theme: light_theme,
+                                darkTheme: dark_theme,
+                                // themeMode: value.mode,
+                                //themeMode: context.watch<CurrentUser>().theme,
+                                home: const NotAuthorizedPage(),
+                              );
+                      }),
                     ),
-                    //),
-                  )
-                : const NotLoggedInPage(),
-          },
+                  ),
+                  //),
+                ),
+            '/': (context) => const UserLoginPage()
+          },*/
           // home: UserLoginView(),
         );
       },

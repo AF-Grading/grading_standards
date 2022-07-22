@@ -1,23 +1,31 @@
+import 'dart:async';
+
+import 'package:amplify_api/model_subscriptions.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:app_prototype/models/User.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 enum CurrentState { loggedOut, verifyPhone, confirmSignIn, loggedIn }
 
 class AWSState with ChangeNotifier {
-  AWSState() {
-    init();
-  }
+  /*AWSState() {
+    //init();
+  }*/
 
-  Future<void> init() async {
+  /*Future<void> init() async {
     final session = await Amplify.Auth.fetchAuthSession();
+
+    print("We in here");
+    print(session);
 
     if (session.isSignedIn) {
       _state = CurrentState.loggedIn;
+      print("logged it");
       notifyListeners();
     }
-  }
+  }*/
 
   CurrentState _state = CurrentState.loggedOut;
 
@@ -31,18 +39,53 @@ class AWSState with ChangeNotifier {
     }
   }
 
-  Future<User?> get currentUser async {
-    if (_state == CurrentState.loggedIn) {
-      final authUser = await Amplify.Auth.getCurrentUser();
-      User? user;
-      await Amplify.DataStore.observeQuery(User.classType)
-          .listen((QuerySnapshot<User> snapshot) {
-        user = snapshot.items.firstWhere((user) => user.email == authUser);
-      });
+  get authUser async {
+    return await Amplify.Auth.getCurrentUser();
+  }
 
-      return user;
-    }
-    return null;
+  Future<Stream<User>> get currentUser async {
+    //if (_state == CurrentState.loggedIn) {
+    final authUser = await Amplify.Auth.getCurrentUser();
+    return Amplify.DataStore.observeQuery(User.classType).map((event) =>
+        event.items.firstWhere((user) =>
+            user.name ==
+            authUser
+                .username)); //await Amplify.DataStore.observeQuery(User.classType).first;
+    /*.listen((QuerySnapshot<User> snapshot) {
+      user =
+          snapshot.items.firstWhere((user) => user.email == authUser.username);
+      //print("In it $user");
+    });*/
+
+    //if (ha.onDone(() {})) {}
+    //print(authUser.username);
+    //return user.items.firstWhere((user) => user.email == authUser.username);
+    //}
+    //return null;
+  }
+
+  Stream<List<User>> get users {
+    return Amplify.DataStore.observeQuery(User.classType)
+        .map((event) => event.items.toList());
+  }
+
+  /*Stream<User?> get currentUser async* {
+    final AuthUser authUser = await Amplify.Auth.getCurrentUser();
+    User? user; //Amplify.DataStore.observeQuery(User.classType).map((event) =>
+    //event.items.firstWhere((user) => user.name == authUser.username));
+
+    await Amplify.DataStore.observeQuery(User.classType)
+        .listen((QuerySnapshot<User> snapshot) {
+      user =
+          snapshot.items.firstWhere((user) => user.email == authUser.username);
+      //print("In it $user");
+    });
+    yield user;
+  }*/
+
+  Future<void> updateUserTheme(User user, ThemeMode themeMode) async {
+    final updatedUser = user.copyWith(themeMode: themeMode.name);
+    await Amplify.DataStore.save(updatedUser);
   }
 
   set state(CurrentState state) {

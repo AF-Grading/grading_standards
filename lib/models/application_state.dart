@@ -114,9 +114,9 @@ class ApplicationState extends ChangeNotifier {
   String? _email;
   String? get email => _email;
   Stream<List<UserSetting>> get users {
-    if (_loginState != ApplicationLoginState.loggedIn) {
-      throw Exception('Must be logged in');
-    }
+    //if (_loginState != ApplicationLoginState.loggedIn) {
+    //  throw Exception('Must be logged in');
+    //}
     return FirebaseFirestore.instance.collection('Users').snapshots().map(
         (docs) => docs.docs
             .map((doc) => UserSetting.fromFirestore(doc, null))

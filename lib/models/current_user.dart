@@ -5,30 +5,30 @@ import 'package:flutter/material.dart';
 import 'user_setting.dart';
 
 class CurrentUser extends ChangeNotifier {
-  CurrentUser({required this.user});
+  CurrentUser();
 
-  final User? user;
+  User? _user;
 
   //late final User _currentUser;
-  late final UserSetting _userSetting;
+  //late final UserSetting _userSetting;
 
-  /*set setUser(User value) {
-    _currentUser = value;
-    notifyListeners();
-  }*/
-
-  ThemeMode get theme => user!.themeMode!.themeMode!;
-
-  set userSetting(UserSetting value) {
-    _userSetting = value;
+  set setUser(User value) {
+    _user = value;
     notifyListeners();
   }
 
+  ThemeMode get theme => _user!.themeMode!.themeMode!;
+
+  //set userSetting(UserSetting value) {
+  // _userSetting = value;
+  // notifyListeners();
+  //}
+
   // UserSetting get user => _userSetting;
 
-  //User get user => _currentUser;
+  User? get user => _user;
 
-  String get email => _userSetting.email;
+  //String get email => _userSetting.email;
 
   Permission get permission => Permission.wing_training;
   //    _userSetting.permission; //_currentUser.permission;

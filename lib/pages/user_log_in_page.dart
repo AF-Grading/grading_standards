@@ -193,7 +193,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                             _error = e.message;
                           });
                         });
-                        if (await withoutErrors) {
+                        /*if (await withoutErrors) {
                           context
                               .read<ApplicationState>()
                               .fetchCurrentUserSettings(_email)
@@ -227,7 +227,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                           );
                         } else {
                           _formKey.currentState!.validate();
-                        }
+                        }*/
                       },
                     )
                   : Container(),

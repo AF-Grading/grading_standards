@@ -72,7 +72,7 @@ class NewFlightButtons extends StatelessWidget {
                     .currentState!
                     .validate()) {
                   context.read<CurrentFlight>().instructorId =
-                      context.read<CurrentUser>().email;
+                      context.read<CurrentUser>().user!.email;
                   Navigator.push(
                     context,
                     MaterialPageRoute(
