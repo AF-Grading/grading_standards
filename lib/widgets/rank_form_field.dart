@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/user.dart';
+import '../models/grade_enums.dart';
 
 class RankFormField extends FormField<Rank> {
   RankFormField(

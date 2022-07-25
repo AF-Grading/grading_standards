@@ -7,6 +7,8 @@ enum Grade {
   expert
 }
 
+enum Rank { secondLt, firstLt, capt, maj, ltCol, colonel }
+
 // converts a string into an enum value
 extension GradeFromString on String {
   Grade? get grade {

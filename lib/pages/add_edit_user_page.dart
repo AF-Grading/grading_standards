@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/application_state.dart';
+import '../models/aws_state.dart';
 import '../models/grade_enums.dart';
-import '../models/user.dart';
+import '../models/User.dart';
 import '../widgets/ad_qual_form_field.dart';
 import '../widgets/permission_form_field.dart';
 import '../widgets/pilot_qual_form_field.dart';
@@ -14,7 +15,7 @@ import '../widgets/pilot_qual_form_field.dart';
 class AddEditUserPage extends StatefulWidget {
   const AddEditUserPage({Key? key, this.user}) : super(key: key);
 
-  final UserSetting? user;
+  final User? user;
 
   @override
   State<AddEditUserPage> createState() => _AddEditUserPageState();
@@ -40,18 +41,32 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
       TextEditingController(text: widget.user?.name);
   late final TextEditingController _email =
       TextEditingController(text: widget.user?.email);
-  late final TextEditingController _squad =
-      TextEditingController(text: widget.user?.squad);
-  late Permission? _permission = widget.user?.permission;
-  late Rank? _rank = widget.user?.rank;
-  late AdQual? _adQual = widget.user?.adQual;
-  late PilotQual? _pilotQual = widget.user?.pilotQual;
+  //late final TextEditingController _squad; // =
+  //TextEditingController(text: context.read<AWSState>().getSquad(widget.user?.squadronID));
+  String _squad = "";
+  late Permission? _permission = widget.user?.permission?.permission;
+  late Rank? _rank = widget.user?.rank?.rank;
+  late AdQual? _adQual = widget.user?.adQual?.adQual;
+  late PilotQual? _pilotQual = widget.user?.pilotQual?.pilotQual;
 
   @override
   void initState() {
     _isEditing = widget.user != null ? true : false;
-
+    getSquad();
     super.initState();
+  }
+
+  getSquad() async {
+    if (widget.user != null) {
+      final squad =
+          await context.read<AWSState>().getSquad(widget.user!.squadronID);
+      setState(() {
+        _squad = squad;
+      });
+
+      //_squad =
+      //TextEditingController(text: squad);
+    }
   }
 
   @override
@@ -103,7 +118,8 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  controller: _squad,
+                  //controller: _squad,
+                  initialValue: _squad,
                   decoration: const InputDecoration(
                     labelText: "Squadron",
                   ),
@@ -202,7 +218,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                   context.read<ApplicationState>().addUserSetting(UserSetting(
                         name: _name.text,
                         rank: _rank!,
-                        squad: _squad.text,
+                        squad: _squad,
                         email: _email.text,
                         adQual: _adQual!,
                         pilotQual: _pilotQual!,
@@ -227,7 +243,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                 context.read<ApplicationState>().editUserSetting(UserSetting(
                       name: _name.text,
                       rank: _rank!,
-                      squad: _squad.text,
+                      squad: _squad,
                       email: _email.text,
                       adQual: _adQual!,
                       pilotQual: _pilotQual!,

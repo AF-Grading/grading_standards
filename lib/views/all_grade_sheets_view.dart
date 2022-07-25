@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/grade_sheet.dart';
+//import '../models/grade_sheet.dart';
+import '../models/GradeSheet.dart';
 import '../widgets/grade_sheet_list_tile.dart';
 
 class AllGradeSheetsView extends StatelessWidget {

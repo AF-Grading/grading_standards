@@ -23,8 +23,8 @@ class UserLoginPage extends StatefulWidget {
 class _UserLoginPageState extends State<UserLoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _email = "";
-  String _password = "";
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
   bool _logInFail = false;
   String? _error = "";
   String? _validator(String? value) {
@@ -47,213 +47,159 @@ class _UserLoginPageState extends State<UserLoginPage> {
       body: SingleChildScrollView(
         child: Center(
           child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: _formKey,
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Icon(
-                Icons.person,
-                size: 300,
-                //color: Colors.white,
-              ),
-              _error == ""
-                  ? Container()
-                  : Text(
-                      _error!,
-                      style: const TextStyle(color: Colors.red),
-                    ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextFormField(
-                  validator:
-                      _validator /*MultiValidator([
-                    EmailValidator(errorText: "Not a valid email"),
-                    RequiredValidator(errorText: "Email is required"),
-                  ])*/
-                  ,
-                  initialValue: "",
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    border: const OutlineInputBorder(),
-                    errorText:
-                        _logInFail ? "Email or password is incorrect" : null,
-                    // labelStyle: TextStyle(color: Colors.white),
-                  ),
-                  //style: TextStyle(color: Colors.white),
-                  onChanged: (value) {
-                    _email = value;
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextFormField(
-                  validator: MinLengthValidator(1,
-                      errorText: "Password must be at least 1 characters"),
-                  initialValue: "",
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: const OutlineInputBorder(),
-                    errorText:
-                        _logInFail ? "Email or password is incorrect" : null,
-                    //labelStyle: TextStyle(color: Colors.white),
-                  ),
-                  //style: TextStyle(color: Colors.white),
-                  onChanged: (value) {
-                    _password = value;
-                  },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: () async {
-                        final signInSuccess = await context
-                            .read<AWSState>()
-                            .signInWithPhoneVerification(_email, _password,
-                                (e) {
-                          setState(() {
-                            _error = e.message;
-                          });
-                        });
-
-                        if (signInSuccess) {
-                          print("yay3");
-                          context.read<AWSState>().state =
-                              CurrentState.confirmSignIn;
-                        } else {
-                          // _error = signInSuccess.toString();
-                        }
-
-                        // Firebase Auth
-                        /*Future<bool> withoutErrors = context
-                            .read<ApplicationState>()
-                            .signInWithEmailAndPassword(_email, _password, (e) {
-                          setState(() {
-                            //_error
-                            _error = e.message;
-                          });
-                        });
-
-                        if (await withoutErrors) {
-                          context
-                              .read<ApplicationState>()
-                              .fetchCurrentUserSettings(_email)
-                              .then((value) =>
-                                  context.read<CurrentUser>().userSetting = value)
-                              .then(
-                            (value) {
-                              if (value.permission.index >=
-                                  Permission.student.index) {
-                                Navigator.popAndPushNamed(context, '/home');
-                              } else {
-                                setState(() {
-                                  _logInFail = true;
-                                });
-                              }
-                              /*for (User user in Users().users) {
-                                if (user.email == _email &&
-                                    user.password == _password) {
-                                  setState(() {
-                                    _logInFail = false;
-                                  });
-
-                                  CurrentUser().setUser = user;
-
-                                  context.read<CurrentUser>().setUser = user;*/
-
-                              // }
-                              // }
-                            },
-                          );
-                        } else {
-                          _formKey.currentState!.validate();
-                        }*/
-                      },
-                      child: const Text('Login')),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RegisterPage(),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _formKey,
+              child: context.watch<AWSState>().state ==
+                      CurrentState.confirmSignIn
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                              "A verification text has been sent to the phone number on file."),
                         ),
-                      );
-                    },
-                    child: Text(
-                      "Or sign up",
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ),
-                ],
-              ),
+                        Pinput(
+                          length: 6,
+                          autofocus: true,
+                          androidSmsAutofillMethod:
+                              AndroidSmsAutofillMethod.smsUserConsentApi,
+                          onCompleted: (pin) async {
+                            final res = await context
+                                .read<AWSState>()
+                                .confirmSignInPhoneVerification(pin);
 
-              context.watch<AWSState>().state == CurrentState.confirmSignIn
-                  ? Pinput(
-                      length: 6,
-                      onCompleted: (pin) async {
-                        final res = context
-                            .read<AWSState>()
-                            .confirmSignInPhoneVerification(pin);
-                        print(res);
-
-                        Future<bool> withoutErrors = context
-                            .read<ApplicationState>()
-                            .signInWithEmailAndPassword(_email, _password, (e) {
-                          setState(() {
-                            //_error
-                            _error = e.message;
-                          });
-                        });
-                        if (await withoutErrors) {
-                          await Amplify.DataStore.observeQuery(User.classType)
-                              .listen((QuerySnapshot<User> snapshot) {
-                            context.read<CurrentUser>().setUser = snapshot.items
-                                .firstWhere((user) => user.email == _email);
-                          });
-
-                          /*context
-                              .read<ApplicationState>()
-                              .fetchCurrentUserSettings(_email)
-                              .then((value) => context
-                                  .read<CurrentUser>()
-                                  .userSetting = value)
-                              .then(
-                            (value) {
-                              if (value.permission.index >=
-                                  Permission.student.index) {
-                                Navigator.popAndPushNamed(context, '/home');
-                              } else {
-                                setState(() {
-                                  _logInFail = true;
-                                });
-                              }
-                              /*for (User user in Users().users) {
-                            if (user.email == _email &&
-                                user.password == _password) {
+                            /*bool withoutErrors = await context
+                                .read<ApplicationState>()
+                                .signInWithEmailAndPassword(
+                                    _email.text, _password.text, (e) {
                               setState(() {
-                                _logInFail = false;
+                                //_error
+                                _error = e.message;
                               });
-
-                              CurrentUser().setUser = user;
-
-                              context.read<CurrentUser>().setUser = user;*/
-
-                              // }
-                              // }
-                            },
-                          );*/
-                        } else {
-                          _formKey.currentState!.validate();
-                        }
-                      },
+                            });*/
+                            /*if (res) {
+                              await Amplify.DataStore.observeQuery(
+                                      User.classType)
+                                  .listen((QuerySnapshot<User> snapshot) {
+                                context.read<CurrentUser>().setUser = snapshot
+                                    .items
+                                    .firstWhere((user) => user.email == _email);
+                                context.read<AWSState>().state =
+                                    CurrentState.loggedIn;
+                              });
+                            } else {
+                              _formKey.currentState!.validate();
+                            }*/
+                          },
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            context
+                                .read<AWSState>()
+                                .signInWithPhoneVerification(
+                                    _email.text, _password.text, (e) {
+                              setState(() {
+                                _error = e.message;
+                              });
+                            });
+                          },
+                          child: Text(
+                            "Resend Code",
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                      ],
                     )
-                  : Container(),
-              // TODO: remove; for testing purposes only
-            ]),
-          ),
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                          const Icon(
+                            Icons.person,
+                            size: 300,
+                            //color: Colors.white,
+                          ),
+                          _error == ""
+                              ? Container()
+                              : Text(
+                                  _error!,
+                                  style: const TextStyle(color: Colors.red),
+                                ),
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: TextFormField(
+                              validator: MultiValidator([
+                                EmailValidator(errorText: "Not a valid email"),
+                                RequiredValidator(
+                                    errorText: "Email is required"),
+                              ]),
+                              controller: _email,
+                              decoration: InputDecoration(
+                                labelText: 'Email',
+                                border: const OutlineInputBorder(),
+                                errorText: _logInFail
+                                    ? "Email or password is incorrect"
+                                    : null,
+                              ),
+                              textInputAction: TextInputAction.next,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: TextFormField(
+                              controller: _password,
+                              validator: MinLengthValidator(6,
+                                  errorText:
+                                      "Password must be at least 6 characters"),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                border: const OutlineInputBorder(),
+                                errorText: _logInFail
+                                    ? "Email or password is incorrect"
+                                    : null,
+                              ),
+                              textInputAction: TextInputAction.done,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    final signInSuccess = await context
+                                        .read<AWSState>()
+                                        .signInWithPhoneVerification(
+                                            _email.text, _password.text, (e) {
+                                      setState(() {
+                                        _error = e.message;
+                                      });
+                                    });
+
+                                    if (signInSuccess) {
+                                      context.read<AWSState>().state =
+                                          CurrentState.confirmSignIn;
+                                    }
+                                  },
+                                  child: const Text('Login')),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterPage(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "Or sign up",
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ])),
         ),
       ),
     );

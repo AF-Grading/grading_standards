@@ -1,8 +1,10 @@
-import 'package:app_prototype/models/grade_sheet.dart';
+//import 'package:app_prototype/models/grade_sheet.dart';
+import 'package:app_prototype/pages/spash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../models/GradeSheet.dart';
 import '../pages/grade_sheet_page.dart';
 import 'user_name_text_box.dart';
 
@@ -16,19 +18,20 @@ class GradeSheetListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Text(
-        "${gradeSheet.overall!.index - 1}",
+        "${gradeSheet.grade!.index - 1}",
       ),
       title: UserNameTextBox(
-        email: gradeSheet.studentId,
+        email: gradeSheet.studentId!,
       ),
       trailing: Text(
-          "${gradeSheet.startTime.day}-${gradeSheet.startTime.month}-${gradeSheet.startTime.year}"),
+          "${gradeSheet.startTime!.toString()}"), //-${gradeSheet.startTime.month}-${gradeSheet.startTime.year}"),
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => GradeSheetPage(gradeSheet: gradeSheet),
-          ),
+              builder: (context) =>
+                  SplashPage() //GradeSheetPage(gradeSheet: gradeSheet),
+              ),
         );
       },
     );

@@ -26,8 +26,6 @@ class User {
         password = password ?? "changeme";
 }
 
-enum Rank { secondLt, firstLt, capt, maj, ltCol, colonel }
-
 // User Permission.length
 
 //wing_training have rights to everything and can grant perssions to other users

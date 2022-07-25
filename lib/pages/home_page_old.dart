@@ -2,6 +2,8 @@ import 'package:app_prototype/widgets/offline_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //internal imports
+import '../models/GradeSheet.dart';
+import '../models/aws_state.dart';
 import '../models/current_user.dart';
 import '/models/current_flight.dart';
 import '/models/grade_sheets.dart';

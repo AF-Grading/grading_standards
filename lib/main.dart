@@ -5,6 +5,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:app_prototype/amplifyconfiguration.dart';
 import 'package:app_prototype/models/ModelProvider.dart';
 import 'package:app_prototype/models/aws_state.dart';
+import 'package:app_prototype/models/grade_sheets_2.dart';
 import 'package:app_prototype/pages/not_logged_in_page.dart';
 import 'package:app_prototype/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ import 'models/users.dart';
 import 'models/current_user.dart';
 import 'pages/auth/not_authorized_page.dart';
 import 'pages/home_page_old.dart';
+import 'pages/signed_in_page.dart';
 import 'pages/spash_page.dart';
 import 'theme/dark_mode.dart';
 import 'theme/light_mode.dart';
@@ -46,6 +48,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (context) => Users()),
           ChangeNotifierProvider(create: (context) => ThemeChange()),
           ChangeNotifierProvider(create: (context) => CurrentUser()),
+          ChangeNotifierProvider(create: (context) => GradeSheets2()),
         ], child: MyApp()),
       ),
     ),
@@ -68,7 +71,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   initState() {
-    // TODO: implement initState
     super.initState();
     _configureAmplify();
   }
@@ -83,6 +85,7 @@ class _MyAppState extends State<MyApp> {
       await Amplify.configure(amplifyconfig);
       final session = await Amplify.Auth.fetchAuthSession();
 
+      // TODO Remove this
       if (session.isSignedIn) {
         final AuthUser authUser = await Amplify.Auth.getCurrentUser();
         await Amplify.DataStore.observeQuery(User.classType)
@@ -93,8 +96,10 @@ class _MyAppState extends State<MyApp> {
       }
 
       setState(() {
-        _initialState = session;
-        print("no longer loading");
+        //_initialState = session;
+        if (session.isSignedIn) {
+          context.read<AWSState>().state = CurrentState.loggedIn;
+        }
         _isLoading = false;
       });
     } catch (e) {
@@ -108,107 +113,8 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  //  MyApp({Key? key}) : super(key: key);
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return _isLoading
-        ? SplashPage()
-        : Consumer<AWSState>(
-            builder: (context, appState, child) {
-              return MaterialApp(
-                theme: light_theme,
-                darkTheme: dark_theme,
-                themeMode: context.watch<CurrentUser>().user != null
-                    ? context.watch<CurrentUser>().user!.themeMode!.themeMode!
-                    : ThemeMode.system,
-                //initialRoute: _initialState.isSignedIn ? '/home' : '/',
-
-                home: appState.state == CurrentState.loggedIn
-                    ? MultiProvider(
-                        providers: [
-                          StreamProvider<List<UserSetting>>(
-                            create: (_) =>
-                                context.read<ApplicationState>().users,
-                            initialData: const [],
-                          ),
-                          StreamProvider<List<User>>(
-                            create: (_) => appState.users,
-                            initialData: const [],
-                          ),
-                          /*FutureProvider<Stream<User>>(
-                        create: (context) =>
-                            context.read<AWSState>().currentUser,
-                        initialData: null)*/
-                        ],
-                        child: HomePageOld(
-                          title: "Flying Standards",
-                          permission: 4, //user!.permission!.length,
-                        ),
-                      )
-                    : const UserLoginPage(),
-                /*routes: {
-            '/home': (context) => //appState.state == CurrentState.loggedIn
-                WillPopScope(
-                  onWillPop: () async {
-                    return true;
-                  },
-                  child: /*Consumer<ThemeChange>(
-                          builder: (context, value, child) =>*/
-                      MultiProvider(
-                    providers: [
-                      StreamProvider<List<UserSetting>>(
-                        create: (_) => context.read<ApplicationState>().users,
-                        initialData: const [],
-                      ),
-                      FutureProvider<User?>(
-                        initialData: null,
-                        create: (context) => appState.currentUser,
-                      )
-                      //create: (context) =>
-                      //CurrentUser(user: appState.currentUser)),
-
-                      /*StreamProvider<List<GradeSheet>>(
-                          create: (_) =>
-                              context.watch<ApplicationState>().gradeSheets,
-                          initialData: const [],
-                        ),*/
-                    ],
-                    child: Consumer<User?>(
-                      builder: ((context, currentUser, child) {
-                        //User? user = currentUser.user;
-                        return currentUser != null
-                            ? MaterialApp(
-                                title: 'AF Grading Standards',
-                                // themeMode: ThemeMode.light,
-                                theme: light_theme,
-                                darkTheme: dark_theme,
-                                // themeMode: value.mode,
-                                themeMode: currentUser.themeMode!.themeMode!,
-                                home: HomePageOld(
-                                  title: "Flying Standards",
-                                  permission: 4, //user!.permission!.length,
-                                ),
-                              )
-                            : MaterialApp(
-                                title: 'AF Grading Standards',
-                                // themeMode: ThemeMode.light,
-                                theme: light_theme,
-                                darkTheme: dark_theme,
-                                // themeMode: value.mode,
-                                //themeMode: context.watch<CurrentUser>().theme,
-                                home: const NotAuthorizedPage(),
-                              );
-                      }),
-                    ),
-                  ),
-                  //),
-                ),
-            '/': (context) => const UserLoginPage()
-          },*/
-                // home: UserLoginView(),
-              );
-            },
-          );
+    return _isLoading ? SplashPage() : SignedInPage();
   }
 }

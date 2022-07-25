@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:amplify_api/model_subscriptions.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:app_prototype/models/ModelProvider.dart';
 import 'package:app_prototype/models/User.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +70,20 @@ class AWSState with ChangeNotifier {
         .map((event) => event.items.toList());
   }
 
+  Stream<List<GradeSheet>> get gradeSheets {
+    return Amplify.DataStore.observeQuery(GradeSheet.classType)
+        .map((event) => event.items.toList());
+  }
+
+  Future<String> getSquad(String squadronID) async {
+    final squad = await Amplify.DataStore.query(
+      Squadron.classType,
+      where: Squadron.ID.eq(squadronID),
+    );
+
+    return squad.first.name;
+  }
+
   /*Stream<User?> get currentUser async* {
     final AuthUser authUser = await Amplify.Auth.getCurrentUser();
     User? user; //Amplify.DataStore.observeQuery(User.classType).map((event) =>
@@ -97,6 +112,7 @@ class AWSState with ChangeNotifier {
     required String email,
     required String password,
     required String phoneNumber,
+    required void Function(AuthException e) errorCallback,
   }) async {
     try {
       //Map<String, String> userAttributes = {'name': name};
@@ -111,10 +127,14 @@ class AWSState with ChangeNotifier {
           },
         ),
       );
+      if (res.isSignUpComplete) {
+        _state = CurrentState.verifyPhone;
+        notifyListeners();
+      }
       return res.isSignUpComplete;
-    } catch (e) {
-      print(e.toString());
-      rethrow;
+    } on AuthException catch (e) {
+      errorCallback(e);
+      return false;
     }
   }
 
@@ -124,6 +144,7 @@ class AWSState with ChangeNotifier {
       username: username,
       confirmationCode: otpCode,
     );
+
     return res.isSignUpComplete;
   }
 
