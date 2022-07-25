@@ -24,6 +24,7 @@ class TrainingShopView extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => TrainingShopPage(
+                    instructor: false,
                       squad: context.watch<List<Squadron>>()[index].squad,
                       gradeSheets:
                           context.watch<List<GradeSheet>>().where((element) {

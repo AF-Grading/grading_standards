@@ -2,7 +2,10 @@ import 'package:app_prototype/widgets/offline_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //internal imports
+import '../models/Squadrons.dart';
 import '../models/current_user.dart';
+import '../models/grade_sheet.dart';
+import '../models/user_setting.dart';
 import '/models/current_flight.dart';
 import '/models/grade_sheets.dart';
 import 'training_shop_page.dart';
@@ -72,10 +75,10 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                 bottom: widget.permission == 1
                     ? TabBar(
                         controller: _controller,
-                        tabs: const [
+                        tabs: [
                           Tab(text: 'New Flight'),
                           Tab(text: 'Individual Reports'),
-                          Tab(text: 'Squadron View'),
+                          Tab(text: context.read<CurrentUser>().user.squad),
                         ],
                       )
                     : TabBar(
@@ -96,7 +99,33 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                         NewFlightView(),
                         const IndividualReportsView(),
                         TrainingShopPage(
-                          gradeSheets: context.watch<GradeSheets>().gradeSheets,
+                          instructor: true,
+                          gradeSheets: context
+                              .watch<List<GradeSheet>>()
+                              .where((element) {
+                            //find the studentID, then find that individual base on their email (since studentID are the individuals email)
+                            //then find the squdron of that individual, and then find all the individuals in that squadron
+                            //then find all of their gradesheets
+
+                            bool returnVar = false;
+                            try {
+                              context
+                                  .watch<List<UserSetting>>()
+                                  .forEach((user) {
+                                if (user.email == element.studentId) {
+                                  if (user.squad ==
+                                      context.read<CurrentUser>().user.squad) {
+                                    returnVar = true;
+                                    throw "";
+                                  }
+                                }
+                              });
+                            } catch (e) {
+                              print(e);
+                            }
+
+                            return returnVar;
+                          }).toList(),
                           squad: context.read<CurrentUser>().user.squad,
                         ),
                       ]
