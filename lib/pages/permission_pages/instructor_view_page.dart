@@ -95,6 +95,7 @@ class _InstructorViewPageState extends State<InstructorViewPage> {
             // or view of the people that is in this instructors squadron
 
             TrainingShopPage(
+              instructor: false,
               gradeSheets: context.watch<GradeSheets>().gradeSheets,
               squad: context.read<CurrentUser>().user.squad,
             ),
