@@ -67,16 +67,18 @@ class TrainingShopPage extends StatelessWidget {
                                           .map((item) {
                                         String instructor_email = item.name;
                                         String real_name = "";
+                                        String? rank = "";
                                         context
                                             .watch<List<UserSetting>>()
                                             .forEach((user) {
                                           if (user.email == instructor_email) {
+                                            rank = user.rank.pretty;
                                             real_name = user.name;
                                           }
                                         });
 
                                         return Text(
-                                            "${real_name}: ${item.average.toStringAsPrecision(3)}");
+                                            "${rank} ${real_name}: ${item.average.toStringAsPrecision(3)}");
                                       }).toList(),
                                     )
                                   ],
@@ -275,16 +277,18 @@ class TrainingShopPage extends StatelessWidget {
                                         .map((item) {
                                       String instructor_email = item.name;
                                       String real_name = "";
+                                      String? rank = "";
                                       context
                                           .watch<List<UserSetting>>()
                                           .forEach((user) {
                                         if (user.email == instructor_email) {
                                           real_name = user.name;
+                                          rank = user.rank.pretty;
                                         }
                                       });
 
                                       return Text(
-                                          "${real_name}: ${item.average.toStringAsPrecision(3)}");
+                                          "${rank} ${real_name}: ${item.average.toStringAsPrecision(3)}");
                                     }).toList(),
                                   )
                                 ],
