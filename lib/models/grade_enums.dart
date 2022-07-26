@@ -100,6 +100,17 @@ extension DayNightFromString on String {
   }
 }
 
+extension DayNightToString on DayNight {
+  String get prettyDayNight {
+    switch (this) {
+      case DayNight.day:
+        return "Day";
+      case DayNight.night:
+        return "Night";
+    }
+  }
+}
+
 enum SortieType { local, ims, mission, ost, instmtSim, tacticsSim, mmp, lfe }
 
 extension SortieTypeFromString on String {
@@ -123,6 +134,29 @@ extension SortieTypeFromString on String {
         return SortieType.lfe;
     }
     return null;
+  }
+}
+
+extension SortieTypeToString on SortieType {
+  String get prettySortie {
+    switch (this) {
+      case SortieType.local:
+        return "Local";
+      case SortieType.ims:
+        return "IMS";
+      case SortieType.mission:
+        return "Mission";
+      case SortieType.ost:
+        return "OST";
+      case SortieType.instmtSim:
+        return "ISS";
+      case SortieType.tacticsSim:
+        return "Tactics Sim";
+      case SortieType.mmp:
+        return "MMP";
+      case SortieType.lfe:
+        return "JFE";
+    }
   }
 }
 

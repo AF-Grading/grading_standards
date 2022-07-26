@@ -61,7 +61,7 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                       .currentState!
                       .validate()) {
                     context.read<CurrentFlight>().end();
-
+                    Navigator.pop(context);
                     Navigator.push(
                         context,
                         MaterialPageRoute(

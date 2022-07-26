@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/current_flight.dart';
 import 'package:app_prototype/widgets/grades_card.dart';
 import 'package:app_prototype/widgets/overall_card.dart';
 import 'package:flutter/material.dart';
