@@ -68,6 +68,23 @@ extension AdQualFromString on String {
   }
 }
 
+extension AdQualToString on AdQual {
+  String get pretty {
+    switch (this) {
+      case AdQual.none:
+        return "None";
+      case AdQual.acad:
+        return "ACAD";
+      case AdQual.adip:
+        return "ADIP";
+      case AdQual.cpad:
+        return "CPAD";
+      case AdQual.ldad:
+        return "LDAD";
+    }
+  }
+}
+
 enum PilotQual { fpq, fpc, mp, ip }
 
 extension PilotQualFromString on String {
@@ -83,6 +100,21 @@ extension PilotQualFromString on String {
         return PilotQual.ip;
     }
     return null;
+  }
+}
+
+extension PilotQualToString on PilotQual {
+  String get pretty {
+    switch (this) {
+      case PilotQual.fpc:
+        return "FPC";
+      case PilotQual.fpq:
+        return "FPQ";
+      case PilotQual.ip:
+        return "IP";
+      case PilotQual.mp:
+        return "MP";
+    }
   }
 }
 

@@ -34,6 +34,23 @@ enum Permission {
   wing_training,
 }
 
+extension PermissionToString on Permission {
+  String get pretty {
+    switch (this) {
+      case Permission.student:
+        return "Student";
+      case Permission.instructor:
+        return "Instructor";
+      case Permission.training_shop:
+        return "Training Shop";
+      case Permission.wing_training:
+        return "Wing Training";
+    }
+  }
+}
+
+
+
 //wing_training have rights to everything and can grant perssions to other users
 
 //trainig shop have rights to add/edit/remove user accounts in their squadron and can grant perssions to other users for training shop rights
