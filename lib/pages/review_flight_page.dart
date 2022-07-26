@@ -1,3 +1,4 @@
+import 'package:app_prototype/pages/home_page_old.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,7 @@ class ReviewFlightPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           if (context
               .read<CurrentFlight>()
               .reviewKey
@@ -44,11 +45,12 @@ class ReviewFlightPage extends StatelessWidget {
             for (GradeSheet sheet
                 in context.read<CurrentFlight>().gradeSheets) {
               context.read<GradeSheets>().addSheet(sheet);
-              // TODO if no internet, make sure sheet is draft and dont add
               context.read<ApplicationState>().addGradeSheet(sheet);
             }
-            context.read<CurrentFlight>().clear();
             // gets rid of all the flight pages and pushes the home page
+            // TODO throws an error: popped
+            context.read<CurrentFlight>().clear();
+
             Navigator.popUntil(
               context,
               ModalRoute.withName('/'),

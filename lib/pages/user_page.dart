@@ -1,3 +1,5 @@
+import 'package:app_prototype/models/grade_enums.dart';
+import 'package:app_prototype/models/user.dart';
 import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +9,7 @@ class UserPage extends StatelessWidget {
   const UserPage({Key? key, required this.user}) : super(key: key);
 
   final UserSetting user;
+  final double spaceBetween = 150;
 
   @override
   Widget build(BuildContext context) {
@@ -36,36 +39,75 @@ class UserPage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          //mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Name: ${user.name}"),
+              child: Row(
+                children: [
+                  SizedBox(width: spaceBetween, child: Text("Name: ")),
+                  Text("${user.name}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Email: ${user.email}"),
+              child: Row(
+                children: [
+                  SizedBox(width: spaceBetween, child: Text("Email: ")),
+                  Text("${user.email}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Squadron: ${user.squad}"),
+              child: Row(
+                children: [
+                  SizedBox(width: spaceBetween, child: Text("Squadron: ")),
+                  Text("${user.squad}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Rank: ${user.rank.pretty}"),
+              child: Row(
+                children: [
+                  SizedBox(width: spaceBetween, child: Text("Rank: ")),
+                  Text("${user.rank.pretty}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Pilot Qual: ${user.pilotQual.name}"),
+              child: Row(
+                children: [
+                  SizedBox(
+                      width: spaceBetween,
+                      child: Text("Pilot Qualification: ")),
+                  Text("${user.pilotQual.pretty}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Ad Qual: ${user.adQual.name}"),
+              child: Row(
+                children: [
+                  SizedBox(
+                      width: spaceBetween,
+                      child: Text("Airdrop Qualification: ")),
+                  Text("${user.adQual.pretty}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Permissions: ${user.permission.name}"),
+              child: Row(
+                children: [
+                  SizedBox(width: spaceBetween, child: Text("Permissions: ")),
+                  Text("${user.permission.pretty}"),
+                ],
+              ),
             ),
           ],
         ),
