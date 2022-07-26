@@ -144,7 +144,8 @@ class ReferenceMaterialsPages extends StatelessWidget {
                       children: const [
                         Padding(
                           padding: EdgeInsets.only(right: 8.0),
-                          child: SizedBox(width: 150, child: Text("CTSItem")),
+                          child:
+                              SizedBox(width: 150, child: Text("Pilot Item")),
                         ),
                         Text("FPC"),
                         Text("FPQ"),
@@ -178,7 +179,8 @@ class ReferenceMaterialsPages extends StatelessWidget {
                       children: const [
                         Padding(
                           padding: EdgeInsets.only(right: 8.0),
-                          child: SizedBox(width: 100, child: Text("CTSItem")),
+                          child:
+                              SizedBox(width: 100, child: Text("Airdrop Item")),
                         ),
                         Text("CPAD"),
                         Text("ACAD"),
