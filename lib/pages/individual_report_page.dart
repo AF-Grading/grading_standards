@@ -328,6 +328,10 @@ class IndividualReportPage extends StatelessWidget {
                                   "Top",
                                   style: TextStyle(fontSize: 28),
                                 ),
+                                const Text(
+                                  "(Category Over Time)",
+                                  style: TextStyle(fontSize: 10),
+                                ),
                                 Column(
                                   children: context
                                       .watch<IndividualReport>()
@@ -352,6 +356,10 @@ class IndividualReportPage extends StatelessWidget {
                                 const Text(
                                   "Bottom",
                                   style: TextStyle(fontSize: 28),
+                                ),
+                                const Text(
+                                  "(Category Over Time)",
+                                  style: TextStyle(fontSize: 10),
                                 ),
                                 Column(
                                   children: context

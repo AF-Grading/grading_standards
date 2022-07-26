@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 import '../models/cts_list.dart';
@@ -12,25 +14,27 @@ class ProficencyGradePopup extends StatelessWidget {
         showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
-            title: const Text("Proficiency Grade and Description"),
+            title: const Text("Proficiency Description"),
             content: SingleChildScrollView(
               child: Column(
                 children: gradeDescriptions
                     .map((gD) => Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Row(
+                          child: Column(
                             children: [
+                              // Padding(
+                              // padding: const EdgeInsets.only(right: 8.0),
+                              // child:
                               Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: SizedBox(
-                                    width: 130,
-                                    child: Text("${gD.proficiencyGrade}")),
+                                padding: EdgeInsets.only(bottom: 10.0),
+                                child: Text("${gD.proficiencyGrade}")),
+                              // ),
+                              Text(
+                                "${gD.description}",
                               ),
-                              Expanded(
-                                child: Text(
-                                  "${gD.description}",
-                                ),
-                              ),
+                              Divider(
+                                thickness: 2,
+                              )
                             ],
                           ),
                         ))
@@ -45,7 +49,13 @@ class ProficencyGradePopup extends StatelessWidget {
           ),
         );
       },
-      child: const Text("Grade Description"),
+      child: MediaQuery.of(context).size.width > 600
+          ? const Text(
+              "Grade Description",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )
+          : const Text("Grade Description",
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
     );
   }
 }

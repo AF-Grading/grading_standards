@@ -30,6 +30,7 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool keyBoardIsOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return Form(
       key: context.read<CurrentFlight>().flightKey,
       child: context.watch<CurrentFlight>().gradeSheets.length == 1
@@ -42,6 +43,7 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                     ProficencyGradePopup(),
                   ],
                 ),
+                
               ),
               body: FlightView(
                 index: 0,
@@ -53,23 +55,26 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                 },
                 //selectedParams: widget.selectedParams,
               ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  if (context
-                      .read<CurrentFlight>()
-                      .flightKey
-                      .currentState!
-                      .validate()) {
-                    context.read<CurrentFlight>().end();
+              floatingActionButton: Visibility(
+                visible: !keyBoardIsOpen,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    if (context
+                        .read<CurrentFlight>()
+                        .flightKey
+                        .currentState!
+                        .validate()) {
+                      context.read<CurrentFlight>().end();
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ReviewFlightPage()));
-                  }
-                },
-                tooltip: 'Increment',
-                child: const Text("Review"),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ReviewFlightPage()));
+                    }
+                  },
+                  tooltip: 'Increment',
+                  child: const Text("Review"),
+                ),
               ),
             )
           : DefaultTabController(
@@ -131,22 +136,25 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                       },
                     )
                 ]),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () {
-                    if (context
-                        .read<CurrentFlight>()
-                        .flightKey
-                        .currentState!
-                        .validate()) {
-                      context.read<CurrentFlight>().end();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ReviewFlightPage()));
-                    }
-                  },
-                  tooltip: 'Increment',
-                  child: const Text("Review"),
+                floatingActionButton: Visibility(
+                  visible: !keyBoardIsOpen,
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      if (context
+                          .read<CurrentFlight>()
+                          .flightKey
+                          .currentState!
+                          .validate()) {
+                        context.read<CurrentFlight>().end();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ReviewFlightPage()));
+                      }
+                    },
+                    tooltip: 'Increment',
+                    child: const Text("Review"),
+                  ),
                 ),
               ), // This trailing comma makes auto-formatting nicer for build methods.
             ),

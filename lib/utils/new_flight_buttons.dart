@@ -11,6 +11,7 @@ class NewFlightButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool keyBoardIsOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return Wrap(
       direction: Axis.horizontal,
       //mainAxisAlignment: MainAxisAlignment.end,
@@ -19,32 +20,12 @@ class NewFlightButtons extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Theme(
             data: Theme.of(context).copyWith(backgroundColor: primaryYellow),
-            child: FloatingActionButton(
-              heroTag: "subtract student",
-              onPressed: () {
-                String? message = context.read<CurrentFlight>().subtract();
-                if (message != null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(message),
-                    ),
-                  );
-                }
-              },
-              tooltip: "Subtract Student",
-              child: const Icon(Icons.remove),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Theme(
-            data: Theme.of(context).copyWith(backgroundColor: primaryYellow),
-            child: FloatingActionButton(
-                heroTag: "add student",
-                tooltip: "Add Student",
+            child: Visibility(
+              visible: !keyBoardIsOpen,
+              child: FloatingActionButton(
+                heroTag: "subtract student",
                 onPressed: () {
-                  String? message = context.read<CurrentFlight>().add();
+                  String? message = context.read<CurrentFlight>().subtract();
                   if (message != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -53,36 +34,65 @@ class NewFlightButtons extends StatelessWidget {
                     );
                   }
                 },
-                child: const Icon(Icons.add)),
+                tooltip: "Subtract Student",
+                child: const Icon(Icons.remove),
+              ),
+            ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Theme(
             data: Theme.of(context).copyWith(backgroundColor: primaryYellow),
-            child: FloatingActionButton(
-              heroTag: "start flight",
-              // TODO if already pressed, instead have a resume flight button
-              tooltip: "Start Flight",
-              child: const Icon(Icons.airplanemode_active),
-              onPressed: () {
-                if (context
-                    .read<CurrentFlight>()
-                    .newKey
-                    .currentState!
-                    .validate()) {
-                  context.read<CurrentFlight>().instructorId =
-                      context.read<CurrentUser>().email;
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CurrentFlightPage(),
-                    ),
-                  );
-                  // TODO if in a flight, dont do this
-                  context.read<CurrentFlight>().start();
-                }
-              },
+            child: Visibility(
+              visible: !keyBoardIsOpen,
+              child: FloatingActionButton(
+                  heroTag: "add student",
+                  tooltip: "Add Student",
+                  onPressed: () {
+                    String? message = context.read<CurrentFlight>().add();
+                    if (message != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(message),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Icon(Icons.add)),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Theme(
+            data: Theme.of(context).copyWith(backgroundColor: primaryYellow),
+            child: Visibility(
+              visible: !keyBoardIsOpen,
+              child: FloatingActionButton(
+                heroTag: "start flight",
+                // TODO if already pressed, instead have a resume flight button
+                tooltip: "Start Flight",
+                child: const Icon(Icons.airplanemode_active),
+                onPressed: () {
+                  if (context
+                      .read<CurrentFlight>()
+                      .newKey
+                      .currentState!
+                      .validate()) {
+                    context.read<CurrentFlight>().instructorId =
+                        context.read<CurrentUser>().email;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CurrentFlightPage(),
+                      ),
+                    );
+                    // TODO if in a flight, dont do this
+                    context.read<CurrentFlight>().start();
+                  }
+                },
+              ),
             ),
           ),
         ),

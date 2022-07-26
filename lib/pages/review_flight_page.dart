@@ -14,6 +14,7 @@ class ReviewFlightPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool keyBoardIsOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Review Flight"),
@@ -33,30 +34,33 @@ class ReviewFlightPage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (context
-              .read<CurrentFlight>()
-              .reviewKey
-              .currentState!
-              .validate()) {
-            context.read<CurrentFlight>().updateAll();
-            for (GradeSheet sheet
-                in context.read<CurrentFlight>().gradeSheets) {
-              context.read<GradeSheets>().addSheet(sheet);
-              // TODO if no internet, make sure sheet is draft and dont add
-              context.read<ApplicationState>().addGradeSheet(sheet);
+      floatingActionButton: Visibility(
+        visible: !keyBoardIsOpen,
+        child: FloatingActionButton(
+          onPressed: () {
+            if (context
+                .read<CurrentFlight>()
+                .reviewKey
+                .currentState!
+                .validate()) {
+              context.read<CurrentFlight>().updateAll();
+              for (GradeSheet sheet
+                  in context.read<CurrentFlight>().gradeSheets) {
+                context.read<GradeSheets>().addSheet(sheet);
+                // TODO if no internet, make sure sheet is draft and dont add
+                context.read<ApplicationState>().addGradeSheet(sheet);
+              }
+              context.read<CurrentFlight>().clear();
+              // gets rid of all the flight pages and pushes the home page
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName('/'),
+              );
             }
-            context.read<CurrentFlight>().clear();
-            // gets rid of all the flight pages and pushes the home page
-            Navigator.popUntil(
-              context,
-              ModalRoute.withName('/'),
-            );
-          }
-        },
-        //tooltip: 'Increment',
-        child: const Text("Finish"),
+          },
+          //tooltip: 'Increment',
+          child: const Text("Finish"),
+        ),
       ),
     );
   }
