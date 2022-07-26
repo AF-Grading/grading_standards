@@ -161,7 +161,8 @@ class GradeSheetPage extends StatelessWidget {
                                     height: dist,
                                     child: ListTile(
                                       leading: const Text("Day/Night"),
-                                      title: Text(gradeSheet.dayNight.name),
+                                      title: Text(
+                                          gradeSheet.dayNight.prettyDayNight),
                                     ))),
                             Expanded(
                               child: SizedBox(
@@ -185,8 +186,9 @@ class GradeSheetPage extends StatelessWidget {
                                 child: SizedBox(
                                     height: dist,
                                     child: ListTile(
-                                      leading: const Text("Sortie Type"),
-                                      title: Text(gradeSheet.sortieType.name),
+                                      leading: const Text("Sortie Type:"),
+                                      title: Text(
+                                          gradeSheet.sortieType.prettySortie),
                                     ))),
                           ],
                         ),

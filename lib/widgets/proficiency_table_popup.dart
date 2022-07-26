@@ -12,7 +12,8 @@ class ProficencyTablePopup extends StatelessWidget {
         showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
-            title: const Text("Proficiency Grade"),
+            title: Text("Proficiency Grade",
+                style: TextStyle(color: Theme.of(context).primaryColor)),
             content: SingleChildScrollView(
               child: Column(
                 children: MediaQuery.of(context).size.width > 600
@@ -98,7 +99,10 @@ class ProficencyTablePopup extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: const [
-                              Text("Table Description", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                              Text("Table Description",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18)),
                               Divider(
                                 thickness: 4,
                                 color: Colors.black,
@@ -159,7 +163,12 @@ class ProficencyTablePopup extends StatelessWidget {
                             children: const [
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                                child: Text("Air Drop Description", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                                child: Text(
+                                  "Air Drop Description",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
                               ),
                               Divider(
                                 thickness: 4,
@@ -173,7 +182,7 @@ class ProficencyTablePopup extends StatelessWidget {
                         // Text("ADIP"),
                         // Text("LDAD"),
                         for (AirDropTableDescription tD in airDropDescriptions)
-                           Padding(
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -214,7 +223,6 @@ class ProficencyTablePopup extends StatelessWidget {
                                 ),
                                 Divider(
                                   thickness: 2,
-
                                 ),
                               ],
                             ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // prefer internal routes to be relative
-import '../theme/light_mode.dart';
 import '/models/current_flight.dart';
 import '/widgets/proficiency_grade_popup.dart';
 import '/widgets/proficiency_table_popup.dart';
@@ -43,7 +42,7 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                     ProficencyGradePopup(),
                   ],
                 ),
-                
+
               ),
               body: FlightView(
                 index: 0,

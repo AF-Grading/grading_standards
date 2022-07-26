@@ -14,10 +14,71 @@ class ProficencyGradePopup extends StatelessWidget {
         showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
-            title: const Text("Proficiency Description"),
+            title: Text(
+              "Proficiency Description",
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
             content: SingleChildScrollView(
-              child: Column(
-                children: gradeDescriptions
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("${gradeDescriptions[0].proficiencyGrade}", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Text(
+                  "${gradeDescriptions[0].description}",
+                ),
+                Divider(thickness: 2,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("${gradeDescriptions[1].proficiencyGrade}", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Text(
+                  "${gradeDescriptions[1].description}",
+                ),
+                Divider(thickness: 2,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("${gradeDescriptions[2].proficiencyGrade}", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Text(
+                  "${gradeDescriptions[2].description}",
+                ),
+                Divider(thickness: 2,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("${gradeDescriptions[3].proficiencyGrade}", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Text(
+                  "${gradeDescriptions[3].description}",
+                ),
+                Divider(thickness: 2,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("${gradeDescriptions[4].proficiencyGrade}", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Text(
+                  "${gradeDescriptions[4].description}",
+                ),
+                Divider(thickness: 2,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("${gradeDescriptions[5].proficiencyGrade}", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Text(
+                  "${gradeDescriptions[5].description}",
+                ),
+                Divider(thickness: 2,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("${gradeDescriptions[6].proficiencyGrade}", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Text(
+                  "${gradeDescriptions[6].description}",
+                ),
+                Divider(thickness: 2,),
+              ]
+
+                  /*gradeDescriptions
                     .map((gD) => Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -32,14 +93,15 @@ class ProficencyGradePopup extends StatelessWidget {
                               Text(
                                 "${gD.description}",
                               ),
+                              Divider(thickness: 2,),
                               Divider(
                                 thickness: 2,
                               )
                             ],
                           ),
                         ))
-                    .toList(),
-              ),
+                    .toList(),*/
+                  ),
             ),
             actions: <Widget>[
               TextButton(

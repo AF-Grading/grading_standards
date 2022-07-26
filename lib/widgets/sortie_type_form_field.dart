@@ -34,8 +34,8 @@ Widget _buildWide(
         Wrap(
           //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const Text("Sortie Type: "),
-            const Text("local"),
+            const Text("Sortie Type:"),
+            const Text("Local"),
             Radio<SortieType>(
               value: SortieType.local,
               groupValue: formState.value,
@@ -44,7 +44,7 @@ Widget _buildWide(
                 onChanged!(value!);
               },
             ),
-            const Text("ims"),
+            const Text("IMS"),
             Radio<SortieType>(
               value: SortieType.ims,
               groupValue: formState.value,
@@ -53,7 +53,7 @@ Widget _buildWide(
                 onChanged!(value!);
               },
             ),
-            const Text("mission"),
+            const Text("Mission"),
             Radio<SortieType>(
               value: SortieType.mission,
               groupValue: formState.value,
@@ -62,7 +62,7 @@ Widget _buildWide(
                 onChanged!(value!);
               },
             ),
-            const Text("ost"),
+            const Text("OST"),
             Radio<SortieType>(
               value: SortieType.ost,
               groupValue: formState.value,
@@ -71,7 +71,7 @@ Widget _buildWide(
                 onChanged!(value!);
               },
             ),
-            const Text("instmtSim"),
+            const Text("ISS"),
             Radio<SortieType>(
               value: SortieType.instmtSim,
               groupValue: formState.value,
@@ -80,7 +80,7 @@ Widget _buildWide(
                 onChanged!(value!);
               },
             ),
-            const Text("tacticsSim"),
+            const Text("Tactics Sim"),
             Radio<SortieType>(
               value: SortieType.tacticsSim,
               groupValue: formState.value,
@@ -89,7 +89,7 @@ Widget _buildWide(
                 onChanged!(value!);
               },
             ),
-            const Text("mmp"),
+            const Text("MMP"),
             Radio<SortieType>(
               value: SortieType.mmp,
               groupValue: formState.value,
@@ -98,7 +98,7 @@ Widget _buildWide(
                 onChanged!(value!);
               },
             ),
-            const Text("lfe"),
+            const Text("JFE"),
             Radio<SortieType>(
               value: SortieType.lfe,
               groupValue: formState.value,
@@ -133,17 +133,17 @@ Widget _buildNarrow(
             DropdownButton(
                 items: const [
                   DropdownMenuItem(
-                      value: SortieType.local, child: Text("local")),
-                  DropdownMenuItem(value: SortieType.ims, child: Text("ims")),
+                      value: SortieType.local, child: Text("Local")),
+                  DropdownMenuItem(value: SortieType.ims, child: Text("IMS")),
                   DropdownMenuItem(
-                      value: SortieType.mission, child: Text("mission")),
-                  DropdownMenuItem(value: SortieType.ost, child: Text("ost")),
+                      value: SortieType.mission, child: Text("Mission")),
+                  DropdownMenuItem(value: SortieType.ost, child: Text("OST")),
                   DropdownMenuItem(
-                      value: SortieType.instmtSim, child: Text("instmtSim")),
+                      value: SortieType.instmtSim, child: Text("ISS")),
                   DropdownMenuItem(
-                      value: SortieType.tacticsSim, child: Text("tacticsSim")),
-                  DropdownMenuItem(value: SortieType.mmp, child: Text("mmp")),
-                  DropdownMenuItem(value: SortieType.lfe, child: Text("lfe")),
+                      value: SortieType.tacticsSim, child: Text("Tactics Sim")),
+                  DropdownMenuItem(value: SortieType.mmp, child: Text("MMP")),
+                  DropdownMenuItem(value: SortieType.lfe, child: Text("JFE")),
                 ],
                 value: formState.value,
                 onChanged: (SortieType? newValue) {

@@ -77,16 +77,16 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                         controller: _controller,
                         tabs: [
                           Tab(text: 'New Flight'),
-                          Tab(text: 'Individual Reports'),
-                          Tab(text: context.read<CurrentUser>().user.squad),
+                          Tab(text: 'Reports'),
+                          Tab(text: 'Squad Data'),
                         ],
                       )
                     : TabBar(
                         controller: _controller,
                         tabs: const [
                           Tab(text: 'New Flight'),
-                          Tab(text: 'Individual Reports'),
-                          Tab(text: 'Training Shop'),
+                          Tab(text: 'Reports'),
+                          Tab(text: 'Squad Data'),
                         ],
                       ),
               ),

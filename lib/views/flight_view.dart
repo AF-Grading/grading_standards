@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/current_flight.dart';
 import 'package:app_prototype/widgets/grades_card.dart';
 import 'package:app_prototype/widgets/overall_card.dart';
 import 'package:flutter/material.dart';
@@ -46,17 +47,35 @@ class _FlightViewState extends State<FlightView>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          OverallCard(
+    return CustomScrollView(
+      //body: Column(
+      slivers: [
+        SliverAppBar(
+          // Removes the back button
+          automaticallyImplyLeading: false,
+          // Keeps the text at the Top of the screen
+          pinned: true,
+          elevation: 0,
+          expandedHeight: 80,
+          title: Text("Overall"),
+        ),
+        SliverToBoxAdapter(
+          child: OverallCard(
               gradeSheet: widget.gradeSheet,
               hasErrors: (hasError) {
                 setState(() {
                   widget.hasErrors(hasError);
                 });
               }),
-          GradesCard(
+        ),
+        SliverAppBar(
+          automaticallyImplyLeading: false,
+          pinned: true,
+          expandedHeight: 80,
+          title: Text("Grades"),
+        ),
+        SliverToBoxAdapter(
+          child: GradesCard(
               student: context.watch<List<UserSetting>>().firstWhere(
                   (user) => user.email == widget.gradeSheet.studentId),
               grades: _selectedGrades,
@@ -66,7 +85,17 @@ class _FlightViewState extends State<FlightView>
                   widget.hasErrors(hasError);
                 });
               }),
-          GradesCard(
+        ),
+        _unselectedGrades.isNotEmpty
+            ? SliverAppBar(
+                automaticallyImplyLeading: false,
+                pinned: true,
+                expandedHeight: 80,
+                title: Text("Unselected Grades"),
+              )
+            : SliverToBoxAdapter(),
+        SliverToBoxAdapter(
+          child: GradesCard(
               student: context.watch<List<UserSetting>>().firstWhere(
                   (user) => user.email == widget.gradeSheet.studentId),
               grades: _unselectedGrades,
@@ -77,8 +106,13 @@ class _FlightViewState extends State<FlightView>
                   widget.hasErrors(hasError);
                 });
               }),
-        ],
-      ),
+        ),
+        // Space for the Elevated Button
+        SliverToBoxAdapter(
+          child: SizedBox(height: 100),
+        ),
+      ],
+      //),
     );
   }
 
