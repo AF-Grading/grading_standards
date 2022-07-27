@@ -52,16 +52,14 @@ Widget _buildWide(
               direction: Axis.horizontal,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                Flexible(child: const Text("0")),
-                Flexible(
-                  child: Radio<Grade>(
-                    value: Grade.unsatisfactory,
-                    groupValue: formState.value,
-                    onChanged: (value) {
-                      formState.didChange(value);
-                      onChanged!(value!);
-                    },
-                  ),
+                const Text("0"),
+                Radio<Grade>(
+                  value: Grade.unsatisfactory,
+                  groupValue: formState.value,
+                  onChanged: (value) {
+                    formState.didChange(value);
+                    onChanged!(value!);
+                  },
                 ),
               ]),
           Wrap(
