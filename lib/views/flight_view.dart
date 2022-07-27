@@ -60,7 +60,6 @@ class _FlightViewState extends State<FlightView>
           // Keeps the text at the Top of the screen
           pinned: true,
           elevation: 0,
-          expandedHeight: 80,
           title: _overallError
               ? Text(
                   "Overall",
@@ -89,7 +88,6 @@ class _FlightViewState extends State<FlightView>
           automaticallyImplyLeading: false,
           pinned: true,
           elevation: 0,
-          expandedHeight: 80,
           title: _gradesError
               ? Text(
                   "Grades",
@@ -122,7 +120,6 @@ class _FlightViewState extends State<FlightView>
                 automaticallyImplyLeading: false,
                 elevation: 0,
                 pinned: true,
-                expandedHeight: 80,
                 title: Text("Unselected Grades"),
                 actions: [
                   Padding(

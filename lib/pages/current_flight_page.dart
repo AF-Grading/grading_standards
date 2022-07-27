@@ -25,7 +25,10 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
 
   @override
   void initState() {
-    //for (int i = 0; )
+    // TODO get initial errors working for tabs
+    /*for (int i = 0; i < widget.length; i++) {
+      hasErrors[i] = true;
+    }*/
     super.initState();
   }
 

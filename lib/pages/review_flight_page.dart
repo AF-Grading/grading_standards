@@ -33,7 +33,6 @@ class ReviewFlightPage extends StatelessWidget {
               // Keeps the text at the Top of the screen
               pinned: true,
               elevation: 0,
-              expandedHeight: 80,
               title: Text("General"),
             ),
             SliverToBoxAdapter(
@@ -88,7 +87,6 @@ class ReviewFlightPage extends StatelessWidget {
                 // Keeps the text at the Top of the screen
                 pinned: true,
                 elevation: 0,
-                expandedHeight: 80,
                 title: Text(context
                     .watch<List<UserSetting>>()
                     .firstWhere((user) => user.email == gradeSheet.studentId)
