@@ -40,6 +40,7 @@ class _SignedInPageState extends State<SignedInPage> {
       final session = await Amplify.Auth.fetchAuthSession();
 
       if (session.isSignedIn) {
+        print(" INT VKDFNVK INININININN");
         final AuthUser authUser = await Amplify.Auth.getCurrentUser();
         await Amplify.DataStore.observeQuery(User.classType)
             .listen((QuerySnapshot<User> snapshot) {

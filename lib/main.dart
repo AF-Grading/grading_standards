@@ -9,6 +9,7 @@ import 'package:app_prototype/models/grade_sheets_2.dart';
 import 'package:app_prototype/pages/not_logged_in_page.dart';
 import 'package:app_prototype/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +30,8 @@ import 'pages/spash_page.dart';
 import 'theme/dark_mode.dart';
 import 'theme/light_mode.dart';
 import 'pages/user_log_in_page.dart';
+
+GetIt getIt = GetIt.instance;
 
 Future<void> main() async {
   // ensures the initapp function runs

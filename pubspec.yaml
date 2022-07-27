@@ -47,6 +47,7 @@ dependencies:
   amplify_auth_cognito: ^0.6.2
   pinput: ^2.2.11
   flutter_bloc: ^8.0.1
+  get_it: ^7.2.0
 
 dev_dependencies:
   flutter_test:
