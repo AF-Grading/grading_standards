@@ -96,6 +96,19 @@ class IndividualReport with ChangeNotifier {
     return comment;
   }
 
+  String get mostRecentRecommendation {
+    int newest = 0;
+    String recommendation = '';
+    for (GradeSheet sheet in _gradeSheets) {
+      if (sheet.endTime.millisecondsSinceEpoch > newest) {
+        if (sheet.recommendations != "") recommendation = sheet.recommendations;
+        newest = sheet.endTime.millisecondsSinceEpoch;
+      }
+    }
+
+    return recommendation;
+  }
+
   // returns the time sereis char of the average of the student at the specific date
   List<charts.Series<AverageGradeSheet, DateTime>> get overallChart {
     Map<DateTime, List<GradeSheet>> average_time_sheets = {};
@@ -142,7 +155,6 @@ class IndividualReport with ChangeNotifier {
       for (GradeItem item in baseGradeItems) item.name: 0
     };
     Map<String, double> averages = {
-
       for (GradeItem item in baseGradeItems) item.name: 0
     };
 

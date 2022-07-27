@@ -108,61 +108,61 @@ class TrainingShopPage extends StatelessWidget {
 
                             // TOP FIVE BOTTOM FIVE
 
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Column(
-                                    children: [
-                                      const Text(
-                                        "Top",
-                                        style: TextStyle(fontSize: 28),
-                                      ),
-                                      Column(
-                                        children: context
-                                            .watch<TrainingShop>()
-                                            .bestFive
-                                            .map((item) => SizedBox(
-                                                  // TODO alter to favor relative sizing
-                                                  width: 400,
-                                                  height: 40,
-                                                  child: ListTile(
-                                                      title: Text(item.name),
-                                                      trailing: Text(
-                                                          "${item.grade!.index - 2}")),
-                                                ))
-                                            .toList(),
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      const Text(
-                                        "Bottom",
-                                        style: TextStyle(fontSize: 28),
-                                      ),
-                                      Column(
-                                        children: context
-                                            .watch<TrainingShop>()
-                                            .worstFive
-                                            .map((item) => SizedBox(
-                                                  // TODO alter to favor relative sizing
-                                                  width: 400,
-                                                  height: 40,
-                                                  child: ListTile(
-                                                      title: Text(item.name),
-                                                      trailing: Text(
-                                                          "${item.grade!.index - 2}")),
-                                                ))
-                                            .toList(),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Row(
+                            //     mainAxisAlignment:
+                            //         MainAxisAlignment.spaceEvenly,
+                            //     children: [
+                            //       // Column(
+                            //       //   children: [
+                            //       //     const Text(
+                            //       //       "Top",
+                            //       //       style: TextStyle(fontSize: 28),
+                            //       //     ),
+                            //       //     Column(
+                            //       //       children: context
+                            //       //           .watch<TrainingShop>()
+                            //       //           .bestFive
+                            //       //           .map((item) => SizedBox(
+                            //       //                 // TODO alter to favor relative sizing
+                            //       //                 width: 400,
+                            //       //                 height: 40,
+                            //       //                 child: ListTile(
+                            //       //                     title: Text(item.name),
+                            //       //                     trailing: Text(
+                            //       //                         "${item.grade!.index - 2}")),
+                            //       //               ))
+                            //       //           .toList(),
+                            //       //     )
+                            //       //   ],
+                            //       // ),
+                            //       // Column(
+                            //       //   children: [
+                            //       //     const Text(
+                            //       //       "Bottom",
+                            //       //       style: TextStyle(fontSize: 28),
+                            //       //     ),
+                            //       //     Column(
+                            //       //       children: context
+                            //       //           .watch<TrainingShop>()
+                            //       //           .worstFive
+                            //       //           .map((item) => SizedBox(
+                            //       //                 // TODO alter to favor relative sizing
+                            //       //                 width: 400,
+                            //       //                 height: 40,
+                            //       //                 child: ListTile(
+                            //       //                     title: Text(item.name),
+                            //       //                     trailing: Text(
+                            //       //                         "${item.grade!.index - 2}")),
+                            //       //               ))
+                            //       //           .toList(),
+                            //       //     )
+                            //       //   ],
+                            //       // )
+                            //     ],
+                            //   ),
+                            // ),
 
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -175,6 +175,12 @@ class TrainingShopPage extends StatelessWidget {
                                       const Text(
                                         "Strong",
                                         style: TextStyle(fontSize: 28),
+                                      ),
+                                      const Text(
+                                        "(highest performing 5 categories all time)",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontStyle: FontStyle.italic),
                                       ),
                                       Column(
                                         children: context
@@ -200,6 +206,12 @@ class TrainingShopPage extends StatelessWidget {
                                       const Text(
                                         "Weak",
                                         style: TextStyle(fontSize: 28),
+                                      ),
+                                      const Text(
+                                        "(lowest performing 5 categories all time)",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontStyle: FontStyle.italic),
                                       ),
                                       Column(
                                         children: context
@@ -320,58 +332,58 @@ class TrainingShopPage extends StatelessWidget {
 
                             // TOP FIVE BOTTOM FIVE
 
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "Top",
-                                    style: TextStyle(fontSize: 28),
-                                  ),
-                                  Column(
-                                    children: context
-                                        .watch<TrainingShop>()
-                                        .bestFive
-                                        .map((item) => SizedBox(
-                                              // TODO alter to favor relative sizing
-                                              width: 400,
-                                              height: 40,
-                                              child: ListTile(
-                                                  title: Text(item.name),
-                                                  trailing: Text(
-                                                      "${item.grade!.index - 2}")),
-                                            ))
-                                        .toList(),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "Bottom",
-                                    style: TextStyle(fontSize: 28),
-                                  ),
-                                  Column(
-                                    children: context
-                                        .watch<TrainingShop>()
-                                        .worstFive
-                                        .map((item) => SizedBox(
-                                              // TODO alter to favor relative sizing
-                                              width: 400,
-                                              height: 40,
-                                              child: ListTile(
-                                                  title: Text(item.name),
-                                                  trailing: Text(
-                                                      "${item.grade!.index - 2}")),
-                                            ))
-                                        .toList(),
-                                  )
-                                ],
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
+                            //   child: Column(
+                            //     children: [
+                            //       const Text(
+                            //         "Top",
+                            //         style: TextStyle(fontSize: 28),
+                            //       ),
+                            //       Column(
+                            //         children: context
+                            //             .watch<TrainingShop>()
+                            //             .bestFive
+                            //             .map((item) => SizedBox(
+                            //                   // TODO alter to favor relative sizing
+                            //                   width: 400,
+                            //                   height: 40,
+                            //                   child: ListTile(
+                            //                       title: Text(item.name),
+                            //                       trailing: Text(
+                            //                           "${item.grade!.index - 2}")),
+                            //                 ))
+                            //             .toList(),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
+                            //   child: Column(
+                            //     children: [
+                            //       const Text(
+                            //         "Bottom",
+                            //         style: TextStyle(fontSize: 28),
+                            //       ),
+                            //       Column(
+                            //         children: context
+                            //             .watch<TrainingShop>()
+                            //             .worstFive
+                            //             .map((item) => SizedBox(
+                            //                   // TODO alter to favor relative sizing
+                            //                   width: 400,
+                            //                   height: 40,
+                            //                   child: ListTile(
+                            //                       title: Text(item.name),
+                            //                       trailing: Text(
+                            //                           "${item.grade!.index - 2}")),
+                            //                 ))
+                            //             .toList(),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
 
                             Padding(
                               padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
@@ -380,6 +392,10 @@ class TrainingShopPage extends StatelessWidget {
                                   const Text(
                                     "Strong",
                                     style: TextStyle(fontSize: 28),
+                                  ),
+                                  const Text(
+                                    "(highest performing 5 categories all time)",
+                                    style: TextStyle(fontSize: 12),
                                   ),
                                   Column(
                                     children: context
@@ -406,6 +422,12 @@ class TrainingShopPage extends StatelessWidget {
                                   const Text(
                                     "Weak",
                                     style: TextStyle(fontSize: 28),
+                                  ),
+                                  const Text(
+                                    "(lowest performing 5 categories all time)",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontStyle: FontStyle.italic),
                                   ),
                                   Column(
                                     children: context

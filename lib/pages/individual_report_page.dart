@@ -63,6 +63,17 @@ class IndividualReportPage extends StatelessWidget {
                                         .watch<IndividualReport>()
                                         .mostRecentComment),
                                     const Text(
+                                      "Most Recent Recommendation:",
+                                      style: TextStyle(fontSize: 22),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 0, 0, 30),
+                                      child: Text(context
+                                          .watch<IndividualReport>()
+                                          .mostRecentRecommendation),
+                                    ),
+                                    const Text(
                                       "Ungraded Items:",
                                       style: TextStyle(fontSize: 22),
                                     ),
@@ -121,6 +132,12 @@ class IndividualReportPage extends StatelessWidget {
                                         "Top",
                                         style: TextStyle(fontSize: 28),
                                       ),
+                                      const Text(
+                                        "(most recent best performing 5 category)",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontStyle: FontStyle.italic),
+                                      ),
                                       Column(
                                         children: context
                                             .watch<IndividualReport>()
@@ -143,6 +160,12 @@ class IndividualReportPage extends StatelessWidget {
                                       const Text(
                                         "Bottom",
                                         style: TextStyle(fontSize: 28),
+                                      ),
+                                      const Text(
+                                        "(most recent worst performing 5 category)",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontStyle: FontStyle.italic),
                                       ),
                                       Column(
                                         children: context
@@ -177,6 +200,12 @@ class IndividualReportPage extends StatelessWidget {
                                         "Strong",
                                         style: TextStyle(fontSize: 28),
                                       ),
+                                      const Text(
+                                        "(highest performing 5 categories all time)",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontStyle: FontStyle.italic),
+                                      ),
                                       Column(
                                         children: context
                                             .watch<IndividualReport>()
@@ -201,6 +230,12 @@ class IndividualReportPage extends StatelessWidget {
                                       const Text(
                                         "Weak",
                                         style: TextStyle(fontSize: 28),
+                                      ),
+                                      const Text(
+                                        "(lowest performing 5 categories all time)",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontStyle: FontStyle.italic),
                                       ),
                                       Column(
                                         children: context
@@ -275,27 +310,17 @@ class IndividualReportPage extends StatelessWidget {
                                   .watch<IndividualReport>()
                                   .mostRecentComment),
                             ),
-
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 0, 8, 30),
-                              child: Column(children: [
-                                const Text(
-                                  "Ungraded Items:",
-                                  style: TextStyle(fontSize: 22),
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: context
-                                      .watch<IndividualReport>()
-                                      .currentGrades
-                                      .where(
-                                          (item) => item.grade == Grade.noGrade)
-                                      .map((item) => Text(item.name))
-                                      .toList(),
-                                ),
-                              ]),
+                            const Text(
+                              "Most Recent Recommendation:",
+                              style: TextStyle(fontSize: 22),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
+                              child: Text(context
+                                  .watch<IndividualReport>()
+                                  .mostRecentRecommendation),
+                            ),
+
                             Padding(
                               padding: const EdgeInsets.fromLTRB(8, 0, 8, 30),
                               child: Column(
@@ -319,7 +344,7 @@ class IndividualReportPage extends StatelessWidget {
                               ),
                             ),
 
-                            // TOP FIVE BOTTOM FIVE
+                            //  FIVE BOTTOM FIVE
 
                             Padding(
                               padding: const EdgeInsets.fromLTRB(8, 0, 8, 30),
@@ -329,8 +354,10 @@ class IndividualReportPage extends StatelessWidget {
                                   style: TextStyle(fontSize: 28),
                                 ),
                                 const Text(
-                                  "(Category Over Time)",
-                                  style: TextStyle(fontSize: 10),
+                                  "(most recent best performing 5 category)",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontStyle: FontStyle.italic),
                                 ),
                                 Column(
                                   children: context
@@ -358,8 +385,10 @@ class IndividualReportPage extends StatelessWidget {
                                   style: TextStyle(fontSize: 28),
                                 ),
                                 const Text(
-                                  "(Category Over Time)",
-                                  style: TextStyle(fontSize: 10),
+                                  "(most recent worst performing 5 category)",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontStyle: FontStyle.italic),
                                 ),
                                 Column(
                                   children: context
@@ -387,6 +416,12 @@ class IndividualReportPage extends StatelessWidget {
                                     "Strong",
                                     style: TextStyle(fontSize: 28),
                                   ),
+                                  const Text(
+                                    "(highest performing 5 categories all time)",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontStyle: FontStyle.italic),
+                                  ),
                                   Column(
                                     children: context
                                         .watch<IndividualReport>()
@@ -412,6 +447,12 @@ class IndividualReportPage extends StatelessWidget {
                                   const Text(
                                     "Weak",
                                     style: TextStyle(fontSize: 28),
+                                  ),
+                                  const Text(
+                                    "(lowest performing 5 categories all time)",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontStyle: FontStyle.italic),
                                   ),
                                   Column(
                                     children: context
@@ -457,6 +498,27 @@ class IndividualReportPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
+
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 30, 8, 30),
+                              child: Column(children: [
+                                const Text(
+                                  "Ungraded Items:",
+                                  style: TextStyle(fontSize: 28),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: context
+                                      .watch<IndividualReport>()
+                                      .currentGrades
+                                      .where(
+                                          (item) => item.grade == Grade.noGrade)
+                                      .map((item) => Text(item.name))
+                                      .toList(),
+                                ),
+                              ]),
+                            ),
                           ]
 
                     //Text(context.watch<IndividualReport>().first.student),
