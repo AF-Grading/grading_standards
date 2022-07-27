@@ -129,8 +129,7 @@ class GradeSheetPage extends StatelessWidget {
                                 height: dist,
                                 child: ListTile(
                                   leading: const Text("Overall Grade"),
-                                  title:
-                                      Text("${gradeSheet.overall!.index - 2}"),
+                                  title: Text("${gradeSheet.overall!.number}"),
                                 ),
                               ),
                             ),
@@ -203,7 +202,7 @@ class GradeSheetPage extends StatelessWidget {
                     children: gradeSheet.grades
                         .where((item) => item.grade != Grade.noGrade)
                         .map((item) => ListTile(
-                              leading: Text("${item.grade!.index - 2}"),
+                              leading: Text("${item.grade!.number}"),
                               title: Text(item.name),
                               subtitle: Text(item.comments),
                             ))

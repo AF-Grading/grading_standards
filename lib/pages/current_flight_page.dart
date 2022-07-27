@@ -1,6 +1,8 @@
+import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // prefer internal routes to be relative
+import '../models/user.dart';
 import '/models/current_flight.dart';
 import '/widgets/proficiency_grade_popup.dart';
 import '/widgets/proficiency_table_popup.dart';
@@ -42,7 +44,6 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                     ProficencyGradePopup(),
                   ],
                 ),
-
               ),
               body: FlightView(
                 index: 0,
@@ -97,17 +98,29 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                             ? Tab(
                                 child: Text(
                                   context
-                                      .watch<CurrentFlight>()
-                                      .gradeSheets[i]
-                                      .studentId,
+                                      .watch<List<UserSetting>>()
+                                      .firstWhere((user) =>
+                                          user.email ==
+                                          context
+                                              .watch<CurrentFlight>()
+                                              .gradeSheets[i]
+                                              .studentId)
+                                      .name,
                                   style: const TextStyle(color: Colors.red),
                                 ),
                               )
                             : Tab(
-                                child: Text(context
-                                    .watch<CurrentFlight>()
-                                    .gradeSheets[i]
-                                    .studentId))
+                                child: Text(
+                                context
+                                    .watch<List<UserSetting>>()
+                                    .firstWhere((user) =>
+                                        user.email ==
+                                        context
+                                            .watch<CurrentFlight>()
+                                            .gradeSheets[i]
+                                            .studentId)
+                                    .name,
+                              ))
                     ],
 
                     /*context
@@ -148,7 +161,8 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const ReviewFlightPage()));
+                                builder: (context) =>
+                                    const ReviewFlightPage()));
                       }
                     },
                     tooltip: 'Increment',

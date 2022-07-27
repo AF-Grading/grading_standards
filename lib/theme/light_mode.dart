@@ -18,6 +18,7 @@ ThemeData light_theme = ThemeData(
   //     borderRadius: BorderRadius.circular(10),
   //   ),
   // ),
+  //backgroundColor: Colors.white,
   radioTheme: RadioThemeData(
       fillColor: MaterialStateProperty.resolveWith<Color>((states) {
     if (states.contains(MaterialState.disabled)) {

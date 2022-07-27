@@ -18,7 +18,6 @@ class NewFlightView extends StatelessWidget {
       builder: (context, constraints) {
         if (MediaQuery.of(context).size.width > 600) {
           // build wide
-
           return Column(
             children: [
               // GENERAL

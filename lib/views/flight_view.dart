@@ -51,6 +51,7 @@ class _FlightViewState extends State<FlightView>
       //body: Column(
       slivers: [
         SliverAppBar(
+          backgroundColor: Theme.of(context).backgroundColor,
           // Removes the back button
           automaticallyImplyLeading: false,
           // Keeps the text at the Top of the screen
@@ -69,8 +70,10 @@ class _FlightViewState extends State<FlightView>
               }),
         ),
         SliverAppBar(
+          backgroundColor: Theme.of(context).backgroundColor,
           automaticallyImplyLeading: false,
           pinned: true,
+          elevation: 0,
           expandedHeight: 80,
           title: Text("Grades"),
         ),
@@ -88,7 +91,9 @@ class _FlightViewState extends State<FlightView>
         ),
         _unselectedGrades.isNotEmpty
             ? SliverAppBar(
+                backgroundColor: Theme.of(context).backgroundColor,
                 automaticallyImplyLeading: false,
+                elevation: 0,
                 pinned: true,
                 expandedHeight: 80,
                 title: Text("Unselected Grades"),

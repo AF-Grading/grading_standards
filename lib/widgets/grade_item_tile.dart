@@ -33,8 +33,7 @@ class GradeItemTile extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
                   gradeItem.name,
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 16),
+                  style: TextStyle(fontSize: 16),
                   maxLines: 2,
                 ),
               ),
@@ -59,7 +58,6 @@ class GradeItemTile extends StatelessWidget {
               },
               child: Icon(
                 Icons.info_outline,
-                color: Theme.of(context).primaryColor,
               ),
             ),
             Padding(

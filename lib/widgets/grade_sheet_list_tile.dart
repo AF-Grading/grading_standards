@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/grade_enums.dart';
 import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -16,7 +17,7 @@ class GradeSheetListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Text(
-        "${gradeSheet.overall!.index - 1}",
+        "${gradeSheet.overall!.number}",
       ),
       title: UserNameTextBox(
         email: gradeSheet.studentId,
