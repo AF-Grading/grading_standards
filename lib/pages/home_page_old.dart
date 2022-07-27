@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                         tabs: [
                           Tab(text: 'New Flight'),
                           Tab(text: 'Reports'),
-                          Tab(text: 'Squad Data'),
+                          Tab(text: 'Squads'),
                         ],
                       )
                     : TabBar(
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                         tabs: const [
                           Tab(text: 'New Flight'),
                           Tab(text: 'Reports'),
-                          Tab(text: 'Squad Data'),
+                          Tab(text: 'Squads'),
                         ],
                       ),
               ),

@@ -102,7 +102,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             ],
                           )
                         : SearchUsersFormField(
-                            labelText: "Student Name",
+                            labelText: "Student Name: ",
                             users: context.watch<List<UserSetting>>(),
                             validator: (value) {
                               if (value != null) {
@@ -140,7 +140,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             ],
                           )
                         : SearchUsersFormField(
-                            labelText: "Instructor Name",
+                            labelText: "Instructor Name: ",
                             users: context.watch<List<UserSetting>>(),
                             validator: (value) {
                               if (value != null) {

@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 
 import '../models/application_state.dart';
 import '../models/current_flight.dart';
+import '../models/grade_enums.dart';
 import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
+import '../models/user.dart';
 import '../models/user_setting.dart';
 import '../theme/light_mode.dart';
 import '../widgets/revie_grade_sheet_general_card.dart';
@@ -89,7 +91,14 @@ class ReviewFlightPage extends StatelessWidget {
                 elevation: 0,
                 title: Text(context
                     .watch<List<UserSetting>>()
-                    .firstWhere((user) => user.email == gradeSheet.studentId)
+                    .firstWhere((user) => user.email == gradeSheet.studentId,
+                        orElse: () => UserSetting(
+                            name: "f",
+                            rank: Rank.capt,
+                            squad: "squad",
+                            email: "email",
+                            adQual: AdQual.acad,
+                            pilotQual: PilotQual.fpc))
                     .name),
               ),
               SliverToBoxAdapter(

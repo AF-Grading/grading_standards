@@ -28,6 +28,7 @@ class CurrentFlight extends ChangeNotifier {
   DateTime _start = DateTime.now();
   DateTime _end = DateTime.now();
   static const int max = 4;
+  final List<String> _selectedParams = ["All", "All", "All", "All"];
 
   // Individual Students
 
@@ -70,6 +71,7 @@ class CurrentFlight extends ChangeNotifier {
       .where((user) =>
           _gradeSheets.indexWhere((sheet) => sheet.studentId == user.id) == -1)
       .toList();
+  List<String> get selectedParams => _selectedParams;
 
   // Setters
 

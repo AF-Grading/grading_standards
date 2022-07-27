@@ -1,4 +1,5 @@
 import 'package:app_prototype/models/current_flight.dart';
+import 'package:app_prototype/models/user.dart';
 import 'package:app_prototype/widgets/grades_card.dart';
 import 'package:app_prototype/widgets/overall_card.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +99,14 @@ class _FlightViewState extends State<FlightView>
         SliverToBoxAdapter(
           child: GradesCard(
               student: context.watch<List<UserSetting>>().firstWhere(
-                  (user) => user.email == widget.gradeSheet.studentId),
+                  (user) => user.email == widget.gradeSheet.studentId,
+                  orElse: () => UserSetting(
+                      name: "f",
+                      rank: Rank.capt,
+                      squad: "squad",
+                      email: "email",
+                      adQual: AdQual.acad,
+                      pilotQual: PilotQual.fpc)),
               grades: _selectedGrades,
               title: "Grades",
               hasErrors: (hasError) {
