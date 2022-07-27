@@ -1,6 +1,7 @@
 import 'package:app_prototype/models/cts_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:timer_builder/timer_builder.dart';
 
 import 'grade_enums.dart';
 import 'grade_sheet.dart';
@@ -76,7 +77,7 @@ class IndividualReport with ChangeNotifier {
     int total = 0;
     for (GradeSheet sheet in _gradeSheets) {
       // noSelection = -2, noGrade = -1
-      total += sheet.overall!.index - 2;
+      total += sheet.overall!.index - 1;
     }
 
     return total / _gradeSheets.length;
@@ -95,15 +96,40 @@ class IndividualReport with ChangeNotifier {
     return comment;
   }
 
-  List<charts.Series<GradeSheet, DateTime>> get overallChart {
-    //List<Grade> grades = [for (GradeSheet sheet in _gradeSheets) sheet.overall];
+  // returns the time sereis char of the average of the student at the specific date
+  List<charts.Series<AverageGradeSheet, DateTime>> get overallChart {
+    Map<DateTime, List<GradeSheet>> average_time_sheets = {};
 
-    List<charts.Series<GradeSheet, DateTime>> series = [
+    _gradeSheets.forEach((element) {
+      average_time_sheets.update(
+        alignDateTime(element.endTime, const Duration(days: 1)),
+        ((value) {
+          value.add(element);
+          return value;
+        }),
+        ifAbsent: () => [element],
+      );
+    });
+
+    List<AverageGradeSheet> score_sheets = [];
+
+    average_time_sheets.forEach((key, value) {
+      double temp = 0;
+      value.forEach((element) {
+        temp += element.overall!.index - 2;
+      });
+      AverageGradeSheet temp_sheet =
+          AverageGradeSheet(key, temp / value.length);
+
+      score_sheets.add(temp_sheet);
+    });
+
+    List<charts.Series<AverageGradeSheet, DateTime>> series = [
       charts.Series(
         id: "Overall",
-        data: _gradeSheets,
-        measureFn: (GradeSheet grade, _) => grade.overall!.index - 2,
-        domainFn: (GradeSheet time, _) => time.endTime,
+        data: score_sheets,
+        measureFn: (AverageGradeSheet sheet, _) => sheet.average,
+        domainFn: (AverageGradeSheet sheet, _) => sheet.date,
       )
     ];
 
@@ -116,6 +142,7 @@ class IndividualReport with ChangeNotifier {
       for (GradeItem item in baseGradeItems) item.name: 0
     };
     Map<String, double> averages = {
+
       for (GradeItem item in baseGradeItems) item.name: 0
     };
 
@@ -123,7 +150,7 @@ class IndividualReport with ChangeNotifier {
       for (GradeItem item in sheet.grades) {
         if (item.grade != Grade.noGrade) {
           totalNum[item.name] = totalNum[item.name]! + 1;
-          averages[item.name] = averages[item.name]! + item.grade!.index - 2;
+          averages[item.name] = averages[item.name]! + item.grade!.index - 1;
         }
       }
     }
@@ -168,4 +195,10 @@ class AverageGrade {
   String name;
   double average;
   AverageGrade(this.name, this.average);
+}
+
+class AverageGradeSheet {
+  DateTime date;
+  double average;
+  AverageGradeSheet(this.date, this.average);
 }

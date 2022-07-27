@@ -1,3 +1,5 @@
+import 'package:app_prototype/models/grade_enums.dart';
+//import 'package:app_prototype/models/user.dart';
 import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +34,9 @@ class _UserPageState extends State<UserPage> {
     });
   }
 
+  //final UserSetting user;
+  final double spaceBetween = 150;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,36 +65,75 @@ class _UserPageState extends State<UserPage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          //mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Name: ${widget.user.name}"),
+              child: Row(
+                children: [
+                  SizedBox(width: spaceBetween, child: Text("Name: ")),
+                  Text("${widget.user.name}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Email: ${widget.user.email}"),
+              child: Row(
+                children: [
+                  SizedBox(width: spaceBetween, child: Text("Email: ")),
+                  Text("${widget.user.email}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Squadron: ${_squad}"),
+              child: Row(
+                children: [
+                  SizedBox(width: spaceBetween, child: Text("Squadron: ")),
+                  Text("${_squad}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Rank: ${widget.user.rank}"),
+              child: Row(
+                children: [
+                  SizedBox(width: spaceBetween, child: Text("Rank: ")),
+                  Text("${widget.user.rank}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Pilot Qual: ${widget.user.pilotQual}"),
+              child: Row(
+                children: [
+                  SizedBox(
+                      width: spaceBetween,
+                      child: Text("Pilot Qualification: ")),
+                  Text("${widget.user.pilotQual}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Ad Qual: ${widget.user.adQual}"),
+              child: Row(
+                children: [
+                  SizedBox(
+                      width: spaceBetween,
+                      child: Text("Airdrop Qualification: ")),
+                  Text("${widget.user.adQual}"),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Permissions: ${widget.user.permission}"),
+              child: Row(
+                children: [
+                  SizedBox(width: spaceBetween, child: Text("Permissions: ")),
+                  Text("${widget.user.permission!}"),
+                ],
+              ),
             ),
           ],
         ),

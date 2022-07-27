@@ -2,6 +2,7 @@ import 'package:app_prototype/models/grade_sheets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/grade_sheet.dart';
 import '../models/user.dart';
 import '../models/users.dart';
 import '../pages/individual_report_page.dart';
@@ -31,8 +32,8 @@ class IndividualReportsView extends StatelessWidget {
                       user: user,
                       // pass the gradeSheets that this user is a student of
                       gradeSheets: context
-                          .watch<GradeSheets>()
-                          .gradeSheets
+                          .watch<List<GradeSheet>>()
+                          // .gradeSheets
                           .where((gradeSheet) =>
                               gradeSheet.studentId == user.email)
                           .toList(),

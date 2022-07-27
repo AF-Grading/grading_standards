@@ -23,8 +23,10 @@ class AddEditUserPage extends StatefulWidget {
 
 class _AddEditUserPageState extends State<AddEditUserPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final double _spaceBetween = 150;
 
   late bool _isEditing;
+
   // gathers errors from the database response
   String _error = "";
   String? _validator(String? value) {
@@ -82,41 +84,60 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: _name,
-                  decoration: const InputDecoration(
-                    labelText: "Name",
-                  ),
-                  validator: (value) {
-                    if (value == "") {
-                      return "Please enter a name";
-                    }
-                    return null;
-                  },
+                child: Row(
+                  children: [
+                    SizedBox(width: _spaceBetween, child: const Text("Name: ")),
+                    Flexible(
+                      child: TextFormField(
+                        controller: _name,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Please enter a name";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              // TODO disallow email edits
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: _isEditing
-                    ? Text(_email.text)
-                    : TextFormField(
-                        controller: _email,
-                        decoration: const InputDecoration(
-                          labelText: "Email",
-                        ),
-                        validator: _validator,
-                        onChanged: (_) {
-                          // get rid of any db errors after the user starts
-                          // altering this text
-                          setState(() {
-                            _error = "";
-                          });
-                        },
+                    ? Row(
+                        children: [
+                          SizedBox(
+                              width: _spaceBetween, child: Text("Email: ")),
+                          Text(_email.text),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          SizedBox(
+                              width: _spaceBetween,
+                              child: const Text("Email: ")),
+                          Flexible(
+                            child: TextFormField(
+                              controller: _email,
+                              decoration: const InputDecoration(
+                                labelText: "Email",
+                              ),
+                              validator: _validator,
+                              onChanged: (_) {
+                                // get rid of any db errors after the user starts
+                                // altering this text
+                                setState(() {
+                                  _error = "";
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
+/*
                 child: TextFormField(
                   //controller: _squad,
                   initialValue: _squad,
@@ -128,64 +149,121 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                       return "Please enter a Squadron";
                     }
                     return null;
-                  },
+                  },*/
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: _spaceBetween,
+                      child: const Text("Squadron: "),
+                    ),
+                    Flexible(
+                      child: TextFormField(
+                        //controller: _squad,
+                        initialValue: _squad,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Please enter a Squadron";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              RankFormField(
-                initialValue: _rank,
-                validator: (value) {
-                  if (value == null) {
-                    return "Please select a value";
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _rank = value;
-                  });
-                },
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    SizedBox(width: _spaceBetween, child: const Text("Rank: ")),
+                    RankFormField(
+                      initialValue: _rank,
+                      validator: (value) {
+                        if (value == null) {
+                          return "Please select a value";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _rank = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
-              AdQualFormField(
-                initialValue: _adQual,
-                validator: (value) {
-                  if (value == null) {
-                    return "Please select a value";
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _adQual = value;
-                  });
-                },
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                        width: _spaceBetween,
+                        child: const Text("Airdrop Qualification: ")),
+                    AdQualFormField(
+                      initialValue: _adQual,
+                      validator: (value) {
+                        if (value == null) {
+                          return "Please select a value";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _adQual = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
-              PilotQualFormField(
-                initialValue: _pilotQual,
-                validator: (value) {
-                  if (value == null) {
-                    return "Please select a value";
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _pilotQual = value;
-                  });
-                },
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                        width: _spaceBetween,
+                        child: const Text("Pilot Qualification: ")),
+                    PilotQualFormField(
+                      initialValue: _pilotQual,
+                      validator: (value) {
+                        if (value == null) {
+                          return "Please select a value";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _pilotQual = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
-              PermissionFormField(
-                initialValue: _permission,
-                validator: (value) {
-                  if (value == null) {
-                    return "Please select a value";
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _permission = value;
-                  });
-                },
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                        width: _spaceBetween,
+                        child: const Text("Permissions: ")),
+                    PermissionFormField(
+                      initialValue: _permission,
+                      validator: (value) {
+                        if (value == null) {
+                          return "Please select a value";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _permission = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               )
             ],
           ),

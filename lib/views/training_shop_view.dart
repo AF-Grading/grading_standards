@@ -1,16 +1,12 @@
+import 'package:app_prototype/models/Squadrons.dart';
+import 'package:app_prototype/models/user.dart';
+import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/grade_sheet.dart';
 import '../models/grade_sheets.dart';
 import '../pages/training_shop_page.dart';
-
-// TODO obtain from elsewhere
-List<String> squads = [
-  "62nd Operations Group",
-  "4th Airlift Squadron",
-  "7th Airlift Squadron",
-  "8th Airlift Squadron"
-];
 
 class TrainingShopView extends StatelessWidget {
   const TrainingShopView({Key? key}) : super(key: key);
@@ -18,18 +14,43 @@ class TrainingShopView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: squads.length,
+        itemCount: context.watch<List<Squadron>>().length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Center(child: Text(squads[index])),
+            title: Center(
+                child: Text(context.watch<List<Squadron>>()[index].squad)),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => TrainingShopPage(
-                      squad: squads[index],
-                      // pass the gradeSheets that this user is a student of
-                      gradeSheets: context.watch<GradeSheets>().gradeSheets),
+                    instructor: false,
+                      squad: context.watch<List<Squadron>>()[index].squad,
+                      gradeSheets:
+                          context.watch<List<GradeSheet>>().where((element) {
+                        //find the studentID, then find that individual base on their email (since studentID are the individuals email)
+                        //then find the squdron of that individual, and then find all the individuals in that squadron
+                        //then find all of their gradesheets
+
+                        bool returnVar = false;
+                        try {
+                          context.watch<List<UserSetting>>().forEach((user) {
+                            if (user.email == element.studentId) {
+                              if (user.squad ==
+                                  context
+                                      .watch<List<Squadron>>()[index]
+                                      .squad) {
+                                returnVar = true;
+                                throw "";
+                              }
+                            }
+                          });
+                        } catch (e) {
+                          print(e);
+                        }
+
+                        return returnVar;
+                      }).toList()),
                 ),
               );
             },

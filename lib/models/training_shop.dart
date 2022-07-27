@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:timer_builder/timer_builder.dart';
 
 import 'cts_list.dart';
 import 'grade_enums.dart';
@@ -88,15 +89,40 @@ class TrainingShop with ChangeNotifier {
     return comment;
   }
 
-  List<charts.Series<GradeSheet, DateTime>> get overallChart {
-    //List<Grade> grades = [for (GradeSheet sheet in _gradeSheets) sheet.overall];
+  // returns the time series chart of the average of the current squadron gradesheets
+  List<charts.Series<AverageGradeSheet, DateTime>> get overallChart {
+    Map<DateTime, List<GradeSheet>> average_time_sheets = {};
 
-    List<charts.Series<GradeSheet, DateTime>> series = [
+    _gradeSheets.forEach((element) {
+      average_time_sheets.update(
+        alignDateTime(element.endTime, const Duration(days: 1)),
+        ((value) {
+          value.add(element);
+          return value;
+        }),
+        ifAbsent: () => [element],
+      );
+    });
+
+    List<AverageGradeSheet> score_sheets = [];
+
+    average_time_sheets.forEach((key, value) {
+      double temp = 0;
+      value.forEach((element) {
+        temp += element.overall!.index - 2;
+      });
+      AverageGradeSheet temp_sheet =
+          AverageGradeSheet(key, temp / value.length);
+
+      score_sheets.add(temp_sheet);
+    });
+
+    List<charts.Series<AverageGradeSheet, DateTime>> series = [
       charts.Series(
         id: "Overall",
-        data: _gradeSheets,
-        measureFn: (GradeSheet grade, _) => grade.overall!.index - 2,
-        domainFn: (GradeSheet time, _) => time.endTime,
+        data: score_sheets,
+        measureFn: (AverageGradeSheet sheet, _) => sheet.average,
+        domainFn: (AverageGradeSheet sheet, _) => sheet.date,
       )
     ];
 
@@ -195,4 +221,10 @@ class AverageGrade {
   String name;
   double average;
   AverageGrade(this.name, this.average);
+}
+
+class AverageGradeSheet {
+  DateTime date;
+  double average;
+  AverageGradeSheet(this.date, this.average);
 }

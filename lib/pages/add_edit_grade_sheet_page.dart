@@ -46,7 +46,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
   late final TextEditingController _overallC =
       TextEditingController(text: widget.gradeSheet?.overallComments);
   late final TextEditingController _missionN =
-      TextEditingController(text: widget.gradeSheet?.missionNum.toString());
+      TextEditingController(text: widget.gradeSheet?.missionNum);
   late final TextEditingController _sortiePro =
       TextEditingController(text: widget.gradeSheet?.profile);
   late final TextEditingController _reccs =
@@ -238,10 +238,6 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                           Expanded(
                             child: TextFormField(
                               controller: _missionN,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
                               decoration: const InputDecoration(
                                 labelText: "Mission Number",
                               ),
@@ -399,8 +395,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                   id: _isEditing ? widget.gradeSheet!.id : null,
                   instructorId: _instructor!,
                   studentId: _student!,
-                  missionNum: int.tryParse(_missionN.text) ??
-                      0, //_missionNum != null ? _missionNum! : 0,
+                  missionNum:
+                      _missionN.text, //_missionNum != null ? _missionNum! : 0,
                   grades: _grades,
                   overall: _overall!,
                   weather: _weather!,

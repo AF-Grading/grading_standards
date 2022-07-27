@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/Squadrons.dart';
 import 'package:app_prototype/models/user_setting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -133,6 +134,16 @@ class ApplicationState extends ChangeNotifier {
             .toList());
   }
 
+  Stream<List<Squadron>> get squads {
+    if (_loginState != ApplicationLoginState.loggedIn) {
+      throw Exception('Must be logged in');
+    }
+    return FirebaseFirestore.instance.collection('Squadrons').snapshots().map(
+        (docs) => docs.docs
+            .map((doc) => Squadron.fromFirestore(doc, null))
+            .toList());
+  }
+
   void startLoginFlow() {
     _loginState = ApplicationLoginState.emailAddress;
     notifyListeners();
@@ -199,3 +210,5 @@ class ApplicationState extends ChangeNotifier {
     FirebaseAuth.instance.signOut();
   }
 }
+
+

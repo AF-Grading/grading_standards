@@ -6,6 +6,7 @@ import 'package:app_prototype/amplifyconfiguration.dart';
 import 'package:app_prototype/models/ModelProvider.dart';
 import 'package:app_prototype/models/aws_state.dart';
 import 'package:app_prototype/models/grade_sheets_2.dart';
+import 'package:app_prototype/models/Squadrons.dart';
 import 'package:app_prototype/pages/not_logged_in_page.dart';
 import 'package:app_prototype/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
