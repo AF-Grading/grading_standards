@@ -3,8 +3,10 @@ import 'package:app_prototype/models/individual_report.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../models/grade_enums.dart';
+import '../widgets/stats/stats_buttons.dart';
 import '/models/user.dart';
 import 'grade_sheet_page.dart';
 
@@ -321,6 +323,8 @@ class IndividualReportPage extends StatelessWidget {
                                   .mostRecentRecommendation),
                             ),
 
+                            // this is where the drop down buttons are suppose to be
+                            StatsButtons(),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(8, 0, 8, 30),
                               child: Column(
