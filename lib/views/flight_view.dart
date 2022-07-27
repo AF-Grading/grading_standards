@@ -30,6 +30,9 @@ class _FlightViewState extends State<FlightView>
   late List<GradeItem> _selectedGrades;
   late List<GradeItem> _unselectedGrades;
   bool hasErrors = false;
+  bool _overallError = false;
+  bool _gradesError = false;
+  bool _expandUnselected = false;
 
   @override
   void initState() {
@@ -58,15 +61,27 @@ class _FlightViewState extends State<FlightView>
           pinned: true,
           elevation: 0,
           expandedHeight: 80,
-          title: Text("Overall"),
+          title: _overallError
+              ? Text(
+                  "Overall",
+                  style: TextStyle(color: Colors.red),
+                )
+              : Text("Overall"),
         ),
         SliverToBoxAdapter(
           child: OverallCard(
               gradeSheet: widget.gradeSheet,
               hasErrors: (hasError) {
-                setState(() {
-                  widget.hasErrors(hasError);
-                });
+                if (hasError)
+                  setState(() {
+                    _overallError = true;
+                    widget.hasErrors(hasError);
+                  });
+                else
+                  setState(() {
+                    _overallError = false;
+                    widget.hasErrors(hasError);
+                  });
               }),
         ),
         SliverAppBar(
@@ -75,7 +90,12 @@ class _FlightViewState extends State<FlightView>
           pinned: true,
           elevation: 0,
           expandedHeight: 80,
-          title: Text("Grades"),
+          title: _gradesError
+              ? Text(
+                  "Grades",
+                  style: TextStyle(color: Colors.red),
+                )
+              : Text("Grades"),
         ),
         SliverToBoxAdapter(
           child: GradesCard(
@@ -84,9 +104,16 @@ class _FlightViewState extends State<FlightView>
               grades: _selectedGrades,
               title: "Grades",
               hasErrors: (hasError) {
-                setState(() {
-                  widget.hasErrors(hasError);
-                });
+                if (hasError)
+                  setState(() {
+                    _gradesError = true;
+                    widget.hasErrors(hasError);
+                  });
+                else
+                  setState(() {
+                    _gradesError = false;
+                    widget.hasErrors(hasError);
+                  });
               }),
         ),
         _unselectedGrades.isNotEmpty
@@ -97,21 +124,39 @@ class _FlightViewState extends State<FlightView>
                 pinned: true,
                 expandedHeight: 80,
                 title: Text("Unselected Grades"),
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _expandUnselected = !_expandUnselected;
+                        });
+                      },
+                      child: _expandUnselected
+                          ? Icon(Icons.expand_less)
+                          : Icon(Icons.expand_more),
+                    ),
+                  )
+                ],
               )
             : SliverToBoxAdapter(),
-        SliverToBoxAdapter(
-          child: GradesCard(
-              student: context.watch<List<UserSetting>>().firstWhere(
-                  (user) => user.email == widget.gradeSheet.studentId),
-              grades: _unselectedGrades,
-              title: "Unused Grades",
-              initiallyExpanded: false,
-              hasErrors: (hasError) {
-                setState(() {
-                  widget.hasErrors(hasError);
-                });
-              }),
-        ),
+
+        _expandUnselected
+            ? SliverToBoxAdapter(
+                child: GradesCard(
+                    student: context.watch<List<UserSetting>>().firstWhere(
+                        (user) => user.email == widget.gradeSheet.studentId),
+                    grades: _unselectedGrades,
+                    title: "Unused Grades",
+                    initiallyExpanded: false,
+                    hasErrors: (hasError) {
+                      setState(() {
+                        widget.hasErrors(hasError);
+                      });
+                    }),
+              )
+            : SliverToBoxAdapter(),
         // Space for the Elevated Button
         SliverToBoxAdapter(
           child: SizedBox(height: 100),

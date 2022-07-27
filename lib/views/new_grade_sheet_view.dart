@@ -223,28 +223,9 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const CurrentFlightPage(
-                      /*selectedParams: _selectedParams,
-                    gradeSheets: {
-                      for (User student in _students)
-                        GradeSheet(
-                          // TODO find this by current user instead
-                          instructor: Users().user.name,
-                          student: student.name,
-                          missionNum: _missionNum,
-                          grades: baseGradeItems,
-                          overall: Grade.noGrade,
-                          weather: _weather,
-                          pilotQual: _pilotQual,
-                          sortieType: _sortieType,
-                          dayNight: _dayNight,
-                          startTime: DateTime.now(),
-                          endTime: DateTime.now(),
-                          sortieNumber: _sortieNum,
-                          length: "0",
-                        )
-                    }.toList(),*/
-                      ),
+                  builder: (context) => CurrentFlightPage(
+                    length: context.read<CurrentFlight>().gradeSheets.length,
+                  ),
                 ),
               );
             },

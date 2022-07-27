@@ -10,10 +10,9 @@ import '/pages/review_flight_page.dart';
 import '/views/flight_view.dart';
 
 class CurrentFlightPage extends StatefulWidget {
-  const CurrentFlightPage({
-    Key? key,
-  }) : super(key: key);
+  const CurrentFlightPage({Key? key, required this.length}) : super(key: key);
 
+  final int length;
   //final List<GradeSheet> gradeSheets;
   //final Map<String, bool> selectedParams;
 
@@ -26,6 +25,7 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
 
   @override
   void initState() {
+    //for (int i = 0; )
     super.initState();
   }
 

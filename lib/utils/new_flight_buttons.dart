@@ -85,7 +85,10 @@ class NewFlightButtons extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CurrentFlightPage(),
+                        builder: (context) => CurrentFlightPage(
+                          length:
+                              context.read<CurrentFlight>().gradeSheets.length,
+                        ),
                       ),
                     );
                     // TODO if in a flight, dont do this
