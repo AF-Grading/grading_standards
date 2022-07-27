@@ -10,13 +10,15 @@ class AllGradeSheetsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<List<GradeSheet>>(builder: (context, stream, _) {
-      return Column(
-          children: stream.isEmpty
-              ? [const Text("No Data...")]
-              : stream
-                  .map((gradeSheet) =>
-                      GradeSheetListTile(gradeSheet: gradeSheet))
-                  .toList());
+      return SingleChildScrollView(
+        child: Column(
+            children: stream.isEmpty
+                ? [const Text("No Data...")]
+                : stream
+                    .map((gradeSheet) =>
+                        GradeSheetListTile(gradeSheet: gradeSheet))
+                    .toList()),
+      );
     });
   }
 }

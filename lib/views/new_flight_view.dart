@@ -34,23 +34,18 @@ class NewFlightView extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
                               decoration: const InputDecoration(
                                 labelText: "Mission Number",
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Please enter a number";
+                                  return "Please enter a value";
                                 }
                                 return null;
                               },
-                              onChanged: (value) =>
-                                  // tryparse needed because of empty string else error
-                                  context.read<CurrentFlight>().missionNum =
-                                      int.tryParse(value) ?? 0,
+                              onChanged: (value) => context
+                                  .read<CurrentFlight>()
+                                  .missionNum = value,
                             ),
                           ),
                           WeatherFormField(validator: (value) {
@@ -131,23 +126,18 @@ class NewFlightView extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
                               decoration: const InputDecoration(
                                 labelText: "Mission Number",
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Please enter a number";
+                                  return "Please enter a value";
                                 }
                                 return null;
                               },
-                              onChanged: (value) =>
-                                  // tryparse needed because of empty string else error
-                                  context.read<CurrentFlight>().missionNum =
-                                      int.tryParse(value) ?? 0,
+                              onChanged: (value) => context
+                                  .read<CurrentFlight>()
+                                  .missionNum = value,
                             ),
                           ),
                         ],

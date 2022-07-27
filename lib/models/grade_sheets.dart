@@ -12,7 +12,7 @@ class GradeSheets extends ChangeNotifier {
     GradeSheet(
         instructorId: "cu@spaceforce.mil",
         studentId: "dandandan@spaceforce.mil",
-        missionNum: 12303,
+        missionNum: "12303",
         grades: [
           GradeItem(
             name: "Communication Skills",
@@ -53,7 +53,7 @@ class GradeSheets extends ChangeNotifier {
     GradeSheet(
         instructorId: "cu@spaceforce.mil",
         studentId: "dandandan@spaceforce.mil",
-        missionNum: 12303,
+        missionNum: "12303",
         grades: [
           GradeItem(
             name: "Communication Skills",
@@ -82,7 +82,7 @@ class GradeSheets extends ChangeNotifier {
     GradeSheet(
         instructorId: "cu@spaceforce.mil",
         studentId: "dandandan@spaceforce.mil",
-        missionNum: 12303,
+        missionNum: "12303",
         grades: [
           GradeItem(
             name: "Communication Skills",
@@ -110,7 +110,7 @@ class GradeSheets extends ChangeNotifier {
     GradeSheet(
         instructorId: "cu@spaceforce.mil",
         studentId: "dandandan@spaceforce.mil",
-        missionNum: 12303,
+        missionNum: "12303",
         grades: [
           GradeItem(
             name: "Communication Skills",
@@ -139,7 +139,7 @@ class GradeSheets extends ChangeNotifier {
     GradeSheet(
         instructorId: "cu@spaceforce.mil",
         studentId: "king@af.mil",
-        missionNum: 12300,
+        missionNum: "12300",
         grades: [
           GradeItem(
             name: "Communication Skills",
@@ -168,7 +168,7 @@ class GradeSheets extends ChangeNotifier {
     GradeSheet(
         instructorId: "dandandan@spaceforce.mil",
         studentId: "shucks@af.mil",
-        missionNum: 12300,
+        missionNum: "12300",
         grades: [
           GradeItem(
             name: "Communication Skills",
@@ -197,7 +197,7 @@ class GradeSheets extends ChangeNotifier {
     GradeSheet(
         instructorId: "dandandan@spaceforce.mil",
         studentId: "king@af.mil",
-        missionNum: 12300,
+        missionNum: "12300",
         grades: [
           GradeItem(
             name: "Communication Skills",
@@ -231,7 +231,7 @@ class GradeSheets extends ChangeNotifier {
       _gradeSheets.where((gradeSheet) => gradeSheet.isDraft).toList();
 
   // The .toSet() call is necessary in order to remove duplicates.
-  List<int> get missionNumbers =>
+  List<String> get missionNumbers =>
       _gradeSheets.map((gradeSheet) => gradeSheet.missionNum).toSet().toList();
 
   void update(GradeSheet gradeSheet) {

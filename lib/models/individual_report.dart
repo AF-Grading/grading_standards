@@ -116,7 +116,7 @@ class IndividualReport with ChangeNotifier {
     average_time_sheets.forEach((key, value) {
       double temp = 0;
       value.forEach((element) {
-        temp += element.overall!.index - 1;
+        temp += element.overall!.index - 2;
       });
       AverageGradeSheet temp_sheet =
           AverageGradeSheet(key, temp / value.length);
@@ -142,6 +142,7 @@ class IndividualReport with ChangeNotifier {
       for (GradeItem item in baseGradeItems) item.name: 0
     };
     Map<String, double> averages = {
+
       for (GradeItem item in baseGradeItems) item.name: 0
     };
 

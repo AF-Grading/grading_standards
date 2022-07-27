@@ -22,7 +22,7 @@ class CurrentFlight extends ChangeNotifier {
   Weather? _weather; //= Weather.noSelection;
   DayNight? _dayNight; // = DayNight.noSelection;
   SortieType? _sortieType; // = SortieType.noSelection;
-  int _missionNum = 0;
+  String _missionNum = "";
   int _sortieNum = 0;
   String _profile = "";
   DateTime _start = DateTime.now();
@@ -36,7 +36,7 @@ class CurrentFlight extends ChangeNotifier {
       // TODO find this by current user instead
       instructorId: "",
       studentId: "1",
-      missionNum: 0,
+      missionNum: "",
       grades: baseGradeItems,
       //overall:
       weather: Weather.imc,
@@ -59,7 +59,7 @@ class CurrentFlight extends ChangeNotifier {
   Weather? get weather => _weather;
   DayNight? get dayNight => _dayNight;
   SortieType? get sortieType => _sortieType;
-  int get missionNum => _missionNum;
+  String get missionNum => _missionNum;
   int get sortieNum => _sortieNum;
   String get profile => _profile;
   DateTime get startTime => _start;
@@ -98,7 +98,7 @@ class CurrentFlight extends ChangeNotifier {
     notifyListeners();
   }
 
-  set missionNum(int value) {
+  set missionNum(String value) {
     _missionNum = value;
     notifyListeners();
   }
@@ -247,7 +247,7 @@ class CurrentFlight extends ChangeNotifier {
     _dayNight = null; //DayNight.noSelection;
     _sortieType = null;
     //SortieType.noSelection;
-    _missionNum = 0;
+    _missionNum = "";
     _sortieNum = 0;
     _profile = "";
     _start = DateTime.now();
@@ -258,7 +258,7 @@ class CurrentFlight extends ChangeNotifier {
       instructorId: Users().user.email,
       studentId: "1",
 
-      missionNum: 0,
+      missionNum: "",
       grades: baseGradeItems,
       overall: null, // Grade.noSelection,
       weather: Weather.imc,
@@ -342,7 +342,7 @@ class CurrentFlight extends ChangeNotifier {
               // TODO find this by current user instead
               instructorId: Users().user.email,
               studentId: "${gradeSheets.length + 1}",
-              missionNum: 0,
+              missionNum: "",
               grades: baseGradeItems,
               //overall: Grade.noSelection,
               //weather: Weather.noSelection,

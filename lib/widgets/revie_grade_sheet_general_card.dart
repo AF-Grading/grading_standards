@@ -67,8 +67,6 @@ class ReviewGradeSheetGeneralCard extends StatelessWidget {
                   child: TextFormField(
                     initialValue:
                         context.read<CurrentFlight>().missionNum.toString(),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: const InputDecoration(
                       labelText: "Mission Number",
                     ),
@@ -80,8 +78,7 @@ class ReviewGradeSheetGeneralCard extends StatelessWidget {
                     },
                     onChanged: (value) =>
                         // tryparse needed because of empty string else error
-                        context.read<CurrentFlight>().missionNum =
-                            int.tryParse(value) ?? 0,
+                        context.read<CurrentFlight>().missionNum = value,
                   ),
                 ),
               ],

@@ -29,7 +29,7 @@ class TrainingShopPage extends StatelessWidget {
       create: (context) => TrainingShop(gradeSheets),
       builder: (context, trainingShop) {
         return Scaffold(
-          appBar: instructor ? null :AppBar(title: Text(squad)),
+          appBar: instructor ? null : AppBar(title: Text(squad)),
           body: SingleChildScrollView(
             child: gradeSheets.length == 0
                 ? Container(
@@ -67,16 +67,18 @@ class TrainingShopPage extends StatelessWidget {
                                           .map((item) {
                                         String instructor_email = item.name;
                                         String real_name = "";
+                                        String? rank = "";
                                         context
                                             .watch<List<UserSetting>>()
                                             .forEach((user) {
                                           if (user.email == instructor_email) {
+                                            rank = user.rank.pretty;
                                             real_name = user.name;
                                           }
                                         });
 
                                         return Text(
-                                            "${real_name}: ${item.average.toStringAsPrecision(3)}");
+                                            "${rank} ${real_name}: ${item.average.toStringAsPrecision(3)}");
                                       }).toList(),
                                     )
                                   ],
@@ -272,9 +274,22 @@ class TrainingShopPage extends StatelessWidget {
                                     children: context
                                         .watch<TrainingShop>()
                                         .avgPerInstructor
-                                        .map((item) => Text(
-                                            "${item.name}: ${item.average.toStringAsPrecision(3)}"))
-                                        .toList(),
+                                        .map((item) {
+                                      String instructor_email = item.name;
+                                      String real_name = "";
+                                      String? rank = "";
+                                      context
+                                          .watch<List<UserSetting>>()
+                                          .forEach((user) {
+                                        if (user.email == instructor_email) {
+                                          real_name = user.name;
+                                          rank = user.rank.pretty;
+                                        }
+                                      });
+
+                                      return Text(
+                                          "${rank} ${real_name}: ${item.average.toStringAsPrecision(3)}");
+                                    }).toList(),
                                   )
                                 ],
                               ),

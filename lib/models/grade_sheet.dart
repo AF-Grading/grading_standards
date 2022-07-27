@@ -9,7 +9,7 @@ class GradeSheet {
   final String id;
   final String instructorId;
   final String studentId;
-  final int missionNum;
+  final String missionNum;
   final List<GradeItem> grades;
   final Grade? overall;
   final AdQual adQual; //TODO does this need to be on gsheet?
@@ -139,7 +139,7 @@ DATE(S): ${startTime.day}-${startTime.month}-${startTime.year}
 Weather: ${weather!.name}
 Day/Night: ${dayNight.name}
 Length: ${endTime.difference(startTime).inSeconds}
-        
+
 .PS.|GRADE| EVENT | COMMENTS\n''';
 
     for (int i = 0; i < grades.length; i++) {
