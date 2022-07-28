@@ -54,7 +54,7 @@ class OverallCard extends StatelessWidget {
         //ListTile(
         //leading: const Text("Overall"),
         GradeRadiosFormField(
-          initialValue: gradeSheet.overall,
+          //initialValue: Grade//gradeSheet.overall,
           validator: (value) {
             if (value == null) {
               hasErrors(true);
@@ -72,7 +72,7 @@ class OverallCard extends StatelessWidget {
                 studentId: gradeSheet.studentId,
                 missionNum: gradeSheet.missionNum,
                 grades: gradeSheet.grades,
-                overall: overall,
+                //overall: overall,
                 sortieType: gradeSheet.sortieType,
                 dayNight: gradeSheet.dayNight,
                 startTime: gradeSheet.startTime,

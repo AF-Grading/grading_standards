@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/grade_enums.dart';
+import '../models/DayNight.dart';
 
 class DayNightFormField extends FormField<DayNight> {
   DayNightFormField(
@@ -35,7 +35,7 @@ Widget _buildWide(
           children: [
             const Text("Day"),
             Radio<DayNight>(
-              value: DayNight.day,
+              value: DayNight.DAY,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -44,7 +44,7 @@ Widget _buildWide(
             ),
             const Text("Night"),
             Radio<DayNight>(
-              value: DayNight.night,
+              value: DayNight.NIGHT,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -77,11 +77,11 @@ Widget _buildNarrow(
             value: formState.value,
             items: const [
               DropdownMenuItem(
-                value: DayNight.day,
+                value: DayNight.DAY,
                 child: Text("Day"),
               ),
               DropdownMenuItem(
-                value: DayNight.night,
+                value: DayNight.NIGHT,
                 child: Text("Night"),
               ),
             ],

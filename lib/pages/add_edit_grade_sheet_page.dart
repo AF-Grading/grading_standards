@@ -1,10 +1,19 @@
+import 'package:app_prototype/models/cts_items.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../models/CTSItem.dart';
+import '../models/DayNight.dart';
+import '../models/Grade.dart';
+import '../models/GradeItem.dart';
+import '../models/GradeSheet.dart';
+import '../models/SortieType.dart';
+import '../models/Weather.dart';
 import '../models/application_state.dart';
-import '../models/grade_enums.dart';
-import '../models/grade_sheet.dart';
+//import '../models/grade_enums.dart';
+//import '../models/grade_sheet.dart';
+import '../models/aws_state.dart';
 import '../models/grade_sheets.dart';
 import '../models/user.dart';
 import '../models/user_setting.dart';
@@ -15,7 +24,7 @@ import '../widgets/search_users_form_field.dart';
 import '../widgets/sortie_type_form_field.dart';
 import '../widgets/weather_form_field.dart';
 import '../models/current_user.dart';
-import '/models/cts_list.dart';
+//import '/models/cts_list.dart';
 import '/pages/grade_sheet_page.dart';
 import '/widgets/grade_radio_form_field.dart';
 
@@ -34,15 +43,22 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
   late bool _isEditing;
   bool _dateError = false;
 
+  late Map<String, Grade> _grades;
+  late Map<String, String> _comments;
+
   late String? _student = widget.gradeSheet?.studentId;
   late String? _instructor = widget.gradeSheet?.instructorId;
-  final List<GradeItem> _grades = [];
-  late Grade? _overall = widget.gradeSheet?.overall;
+  //final List<GradeItem> _grades = [];
+  late Grade? _overall = widget.gradeSheet?.overallGrade;
   late Weather? _weather = widget.gradeSheet?.weather;
   late DayNight? _dayNight = widget.gradeSheet?.dayNight;
   late SortieType? _sortieType = widget.gradeSheet?.sortieType;
-  late DateTime? _startTime = widget.gradeSheet?.startTime ?? DateTime.now();
-  late DateTime? _endTime = widget.gradeSheet?.endTime ?? DateTime.now();
+  late DateTime? _startTime = widget.gradeSheet?.startTime != null
+      ? DateTime.fromMillisecondsSinceEpoch(widget.gradeSheet!.startTime!)
+      : DateTime.now();
+  late DateTime? _endTime = widget.gradeSheet?.endTime != null
+      ? DateTime.fromMillisecondsSinceEpoch(widget.gradeSheet!.endTime!)
+      : DateTime.now();
   late final TextEditingController _overallC =
       TextEditingController(text: widget.gradeSheet?.overallComments);
   late final TextEditingController _missionN =
@@ -56,13 +72,14 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
   void initState() {
     _isEditing = widget.gradeSheet != null ? true : false;
 
-    if (widget.gradeSheet?.grades != null) {
-      for (GradeItem item in widget.gradeSheet!.grades) {
-        _grades.add(item);
-      }
+    if (_isEditing) {
+      /*_grades =
+          context.read<GradeItems>().findGradesBySheet(widget.gradeSheet!.id);*/
     } else {
-      for (GradeItem item in baseGradeItems) {
-        _grades.add(GradeItem(name: item.name, grade: Grade.noGrade));
+      for (CTSItem item in context.read<CtsItems>().ctsItems) {
+        _grades[item.name] = Grade.NOGRADE;
+        _comments[item.name] = "";
+        //_grades.add(GradeItem(name: item.name, grade: Grade.NOGRADE));
       }
     }
 
@@ -307,7 +324,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
               Card(
                 child: ExpansionTile(
                   title: const Text("Grade Items"),
-                  children: _grades
+                  children: context
+                      .read<List<CTSItem>>() //_grades
                       .map(
                         (item) => Card(
                           child: Wrap(
@@ -317,15 +335,12 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                                 child: Center(
                                   child: GestureDetector(
                                     onTap: () {
-                                      var ctsItem = ctsItems.firstWhere(
-                                          (ctsItem) =>
-                                              item.name == ctsItem.name);
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) =>
                                             AlertDialog(
-                                          title: Text(ctsItem.name),
-                                          content: Text(ctsItem.standards),
+                                          title: Text(item.name),
+                                          content: Text(item.standards),
                                           actions: <Widget>[
                                             TextButton(
                                                 onPressed: () => Navigator.pop(
@@ -341,7 +356,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                                 ),
                               ),
                               GradeRadiosFormField(
-                                  initialValue: item.grade,
+                                  initialValue: _grades[item.name],
                                   validator: (value) {
                                     if (value == null) {
                                       return "Please select a value";
@@ -350,18 +365,21 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                                     }
                                   },
                                   onChanged: (grade) => setState(() {
-                                        item.grade = grade;
+                                        //item.grade = grade;
+                                        _grades[item.name] = grade;
                                       })),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
-                                  initialValue: item.comments,
+                                  initialValue:
+                                      _comments[item.name], //item.comments,
                                   decoration: const InputDecoration(
                                     labelText: "Comments",
                                   ),
                                   onChanged: (comment) {
                                     setState(() {
-                                      item.comments = comment;
+                                      //item.comments = comment;
+                                      _comments[item.name] = comment;
                                     });
                                   },
                                 ),
@@ -391,6 +409,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                   ),
                 );
               } else {
+                //context.read<AWSState>().addGradeSheet();
+                /*
                 GradeSheet gradeSheet = GradeSheet(
                   id: _isEditing ? widget.gradeSheet!.id : null,
                   instructorId: _instructor!,
@@ -418,7 +438,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                     : context
                         .read<ApplicationState>()
                         .addGradeSheet(gradeSheet);
-
+                */
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Grade Sheet Added"),
@@ -426,7 +446,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                 );
                 Navigator.pop(context);
                 Navigator.pop(context);
-                Navigator.push(
+                /*Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => GradeSheetPage(
@@ -436,7 +456,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                           .firstWhere((sheet) => sheet.id == id),
                     ),
                   ),
-                );
+                );*/
               }
             }
           },

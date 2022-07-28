@@ -75,6 +75,15 @@ class AWSState with ChangeNotifier {
         .map((event) => event.items.toList());
   }
 
+  Stream<List<CTSItem>> get ctsItems {
+    return Amplify.DataStore.observeQuery(CTSItem.classType)
+        .map((event) => event.items.toList());
+  }
+
+  Future<void> addCtsItem(CTSItem item) async {
+    Amplify.DataStore.save(item);
+  }
+
   Future<String> getSquad(String squadronID) async {
     final squad = await Amplify.DataStore.query(
       Squadron.classType,

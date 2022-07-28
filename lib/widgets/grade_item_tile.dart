@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/Grade.dart';
 import '../models/cts_list.dart';
 import '../models/current_flight.dart';
 import '../models/grade_sheet.dart';
@@ -73,7 +74,7 @@ class GradeItemTile extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: GradeRadiosFormField(
-            initialValue: gradeItem.grade,
+            initialValue: Grade.NOGRADE, //gradeItem.grade,
             validator: (value) {
               if (value == null) {
                 return "Please select a value";
@@ -86,9 +87,10 @@ class GradeItemTile extends StatelessWidget {
                 context.read<CurrentFlight>().updateByGradeItem(
                       student.email,
                       GradeItem(
-                          name: gradeItem.name,
-                          //comments: item.comments,
-                          grade: grade),
+                        name: gradeItem.name,
+                        //comments: item.comments,
+                        //grade: Grade.NOGRADE),//grade),
+                      ),
                     ),
           ),
         ),

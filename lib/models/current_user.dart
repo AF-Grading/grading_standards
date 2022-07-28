@@ -9,16 +9,19 @@ import 'user_setting.dart';
 
 class CurrentUser extends ChangeNotifier {
   CurrentUser() {
-    Amplify.Hub.listen([HubChannel.Auth], (hubEvent) async {
+    print("In Current USEr");
+    getSession();
+    Amplify.Hub.listen([HubChannel.Auth], (hubEvent) {
+      print("EVENTAASADSD ${hubEvent.eventName}");
       switch (hubEvent.eventName) {
         case 'SIGNED_IN':
-          final AuthUser authUser = await Amplify.Auth.getCurrentUser();
-          await Amplify.DataStore.observeQuery(User.classType)
+          /*final AuthUser authUser = await Amplify.Auth.getCurrentUser();
+          subscription = await Amplify.DataStore.observeQuery(User.classType)
               .listen((QuerySnapshot<User> snapshot) {
             _user = snapshot.items
                 .firstWhere((user) => user.email == authUser.username);
-          });
-          notifyListeners();
+            notifyListeners();
+          });*/
           print('USER IS SIGNED IN');
           break;
         case 'SIGNED_OUT':
@@ -33,6 +36,18 @@ class CurrentUser extends ChangeNotifier {
       }
     });
   }
+
+  getSession() async {
+    final AuthUser authUser = await Amplify.Auth.getCurrentUser();
+    subscription = Amplify.DataStore.observeQuery(User.classType)
+        .listen((QuerySnapshot<User> snapshot) {
+      _user =
+          snapshot.items.firstWhere((user) => user.email == authUser.username);
+      notifyListeners();
+    });
+  }
+
+  late final StreamSubscription subscription;
 
   User? _user;
   //Stream<User> _stream;

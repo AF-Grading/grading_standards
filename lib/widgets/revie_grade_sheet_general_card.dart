@@ -21,41 +21,38 @@ class ReviewGradeSheetGeneralCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               WeatherFormField(
-                  initialValue: context.read<CurrentFlight>().weather,
+                  //initialValue: context.read<CurrentFlight>().weather,
                   validator: (value) {
-                    if (value == null) {
-                      return "Please select a value";
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    context.read<CurrentFlight>().weather = value;
-                  }),
+                if (value == null) {
+                  return "Please select a value";
+                }
+                return null;
+              }, onChanged: (value) {
+                //context.read<CurrentFlight>().weather = value;
+              }),
               DayNightFormField(
-                  initialValue: context.read<CurrentFlight>().dayNight,
+                  //initialValue: context.read<CurrentFlight>().dayNight,
                   validator: (value) {
-                    if (value == null) {
-                      return "Please select a value";
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    context.read<CurrentFlight>().dayNight = value;
-                  }),
+                if (value == null) {
+                  return "Please select a value";
+                }
+                return null;
+              }, onChanged: (value) {
+                // context.read<CurrentFlight>().dayNight = value;
+              }),
             ],
           ),
         ),
         SortieTypeFormField(
-            initialValue: context.read<CurrentFlight>().sortieType,
+            //initialValue: context.read<CurrentFlight>().sortieType,
             validator: (value) {
-              if (value == null) {
-                return "Please select a value";
-              }
-              return null;
-            },
-            onChanged: (value) {
-              context.read<CurrentFlight>().sortieType = value;
-            }),
+          if (value == null) {
+            return "Please select a value";
+          }
+          return null;
+        }, onChanged: (value) {
+          //context.read<CurrentFlight>().sortieType = value;
+        }),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(

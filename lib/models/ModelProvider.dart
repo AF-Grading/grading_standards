@@ -20,20 +20,33 @@
 // ignore_for_file: public_member_api_docs, annotate_overrides, dead_code, dead_codepublic_member_api_docs, depend_on_referenced_packages, file_names, library_private_types_in_public_api, no_leading_underscores_for_library_prefixes, no_leading_underscores_for_local_identifiers, non_constant_identifier_names, null_check_on_nullable_type_parameter, prefer_adjacent_string_concatenation, prefer_const_constructors, prefer_if_null_operators, prefer_interpolation_to_compose_strings, slash_for_doc_comments, sort_child_properties_last, unnecessary_const, unnecessary_constructor_name, unnecessary_late, unnecessary_new, unnecessary_null_aware_assignments, unnecessary_nullable_for_final_variable_declarations, unnecessary_string_interpolations, use_build_context_synchronously
 
 import 'package:amplify_core/amplify_core.dart';
+import 'CTSItem.dart';
+import 'GradeItem.dart';
+import 'GradeItemGradeSheet.dart';
 import 'GradeSheet.dart';
+import 'GradingParam.dart';
 import 'Squadron.dart';
 import 'User.dart';
 
+export 'AdQual.dart';
+export 'CTSItem.dart';
+export 'DayNight.dart';
 export 'Grade.dart';
+export 'GradeItem.dart';
+export 'GradeItemGradeSheet.dart';
 export 'GradeSheet.dart';
+export 'GradingParam.dart';
+export 'PilotQual.dart';
+export 'SortieType.dart';
 export 'Squadron.dart';
 export 'User.dart';
+export 'Weather.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "6c9d87170dc2eea15a10192a6bccee83";
+  String version = "59d94ff7d76731f0916453edcd07d329";
   @override
-  List<ModelSchema> modelSchemas = [GradeSheet.schema, Squadron.schema, User.schema];
+  List<ModelSchema> modelSchemas = [CTSItem.schema, GradeItem.schema, GradeItemGradeSheet.schema, GradeSheet.schema, GradingParam.schema, Squadron.schema, User.schema];
   static final ModelProvider _instance = ModelProvider();
   @override
   List<ModelSchema> customTypeSchemas = [];
@@ -42,8 +55,16 @@ class ModelProvider implements ModelProviderInterface {
   
   ModelType getModelTypeByModelName(String modelName) {
     switch(modelName) {
+      case "CTSItem":
+        return CTSItem.classType;
+      case "GradeItem":
+        return GradeItem.classType;
+      case "GradeItemGradeSheet":
+        return GradeItemGradeSheet.classType;
       case "GradeSheet":
         return GradeSheet.classType;
+      case "GradingParam":
+        return GradingParam.classType;
       case "Squadron":
         return Squadron.classType;
       case "User":

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/grade_enums.dart';
+import '../models/Weather.dart';
 
 class WeatherFormField extends FormField<Weather> {
   WeatherFormField(
@@ -38,7 +38,7 @@ Widget _buildWide(
             const Text("Weather: "),
             const Text("vmc"),
             Radio<Weather>(
-              value: Weather.vmc,
+              value: Weather.VMC,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -47,7 +47,7 @@ Widget _buildWide(
             ),
             const Text("imc"),
             Radio<Weather>(
-              value: Weather.imc,
+              value: Weather.IMC,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -77,8 +77,8 @@ Widget _buildNarrow(
           const Text("Weather:"),
           DropdownButton<Weather>(
             items: const [
-              DropdownMenuItem(value: Weather.vmc, child: Text("VMC")),
-              DropdownMenuItem(value: Weather.imc, child: Text("IMC")),
+              DropdownMenuItem(value: Weather.VMC, child: Text("VMC")),
+              DropdownMenuItem(value: Weather.IMC, child: Text("IMC")),
             ],
             value: formState.value,
             onChanged: (newValue) {

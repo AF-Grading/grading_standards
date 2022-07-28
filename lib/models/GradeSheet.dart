@@ -21,6 +21,7 @@
 
 import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
 
@@ -31,19 +32,20 @@ class GradeSheet extends Model {
   final String id;
   final String? _instructorId;
   final String? _studentId;
-  final int? _missionNum;
-  final String? _grades;
-  final Grade? _grade;
-  final String? _adQual;
-  final String? _pilotQual;
-  final String? _weather;
-  final String? _sortieType;
-  final String? _dayNight;
-  final TemporalDateTime? _startTime;
-  final TemporalDateTime? _endTime;
+  final String? _missionNum;
+  final Grade? _overallGrade;
+  final AdQual? _adQual;
+  final PilotQual? _pilotQual;
+  final Weather? _weather;
+  final SortieType? _sortieType;
+  final DayNight? _dayNight;
+  final int? _startTime;
+  final int? _endTime;
   final String? _profile;
   final String? _overallComments;
   final String? _recommendations;
+  final List<GradeItemGradeSheet>? _gradeitems;
+  final bool? _isDraft;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -55,51 +57,74 @@ class GradeSheet extends Model {
     return id;
   }
   
-  String? get instructorId {
-    return _instructorId;
+  String get instructorId {
+    try {
+      return _instructorId!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
   
-  String? get studentId {
-    return _studentId;
+  String get studentId {
+    try {
+      return _studentId!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
   
-  int? get missionNum {
-    return _missionNum;
+  String get missionNum {
+    try {
+      return _missionNum!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
   
-  String? get grades {
-    return _grades;
+  Grade? get overallGrade {
+    return _overallGrade;
   }
   
-  Grade? get grade {
-    return _grade;
-  }
-  
-  String? get adQual {
+  AdQual? get adQual {
     return _adQual;
   }
   
-  String? get pilotQual {
+  PilotQual? get pilotQual {
     return _pilotQual;
   }
   
-  String? get weather {
+  Weather? get weather {
     return _weather;
   }
   
-  String? get sortieType {
+  SortieType? get sortieType {
     return _sortieType;
   }
   
-  String? get dayNight {
+  DayNight? get dayNight {
     return _dayNight;
   }
   
-  TemporalDateTime? get startTime {
+  int? get startTime {
     return _startTime;
   }
   
-  TemporalDateTime? get endTime {
+  int? get endTime {
     return _endTime;
   }
   
@@ -115,6 +140,23 @@ class GradeSheet extends Model {
     return _recommendations;
   }
   
+  List<GradeItemGradeSheet>? get gradeitems {
+    return _gradeitems;
+  }
+  
+  bool get isDraft {
+    try {
+      return _isDraft!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
+  }
+  
   TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -123,16 +165,15 @@ class GradeSheet extends Model {
     return _updatedAt;
   }
   
-  const GradeSheet._internal({required this.id, instructorId, studentId, missionNum, grades, grade, adQual, pilotQual, weather, sortieType, dayNight, startTime, endTime, profile, overallComments, recommendations, createdAt, updatedAt}): _instructorId = instructorId, _studentId = studentId, _missionNum = missionNum, _grades = grades, _grade = grade, _adQual = adQual, _pilotQual = pilotQual, _weather = weather, _sortieType = sortieType, _dayNight = dayNight, _startTime = startTime, _endTime = endTime, _profile = profile, _overallComments = overallComments, _recommendations = recommendations, _createdAt = createdAt, _updatedAt = updatedAt;
+  const GradeSheet._internal({required this.id, required instructorId, required studentId, required missionNum, overallGrade, adQual, pilotQual, weather, sortieType, dayNight, startTime, endTime, profile, overallComments, recommendations, gradeitems, required isDraft, createdAt, updatedAt}): _instructorId = instructorId, _studentId = studentId, _missionNum = missionNum, _overallGrade = overallGrade, _adQual = adQual, _pilotQual = pilotQual, _weather = weather, _sortieType = sortieType, _dayNight = dayNight, _startTime = startTime, _endTime = endTime, _profile = profile, _overallComments = overallComments, _recommendations = recommendations, _gradeitems = gradeitems, _isDraft = isDraft, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory GradeSheet({String? id, String? instructorId, String? studentId, int? missionNum, String? grades, Grade? grade, String? adQual, String? pilotQual, String? weather, String? sortieType, String? dayNight, TemporalDateTime? startTime, TemporalDateTime? endTime, String? profile, String? overallComments, String? recommendations}) {
+  factory GradeSheet({String? id, required String instructorId, required String studentId, required String missionNum, Grade? overallGrade, AdQual? adQual, PilotQual? pilotQual, Weather? weather, SortieType? sortieType, DayNight? dayNight, int? startTime, int? endTime, String? profile, String? overallComments, String? recommendations, List<GradeItemGradeSheet>? gradeitems, required bool isDraft}) {
     return GradeSheet._internal(
       id: id == null ? UUID.getUUID() : id,
       instructorId: instructorId,
       studentId: studentId,
       missionNum: missionNum,
-      grades: grades,
-      grade: grade,
+      overallGrade: overallGrade,
       adQual: adQual,
       pilotQual: pilotQual,
       weather: weather,
@@ -142,7 +183,9 @@ class GradeSheet extends Model {
       endTime: endTime,
       profile: profile,
       overallComments: overallComments,
-      recommendations: recommendations);
+      recommendations: recommendations,
+      gradeitems: gradeitems != null ? List<GradeItemGradeSheet>.unmodifiable(gradeitems) : gradeitems,
+      isDraft: isDraft);
   }
   
   bool equals(Object other) {
@@ -157,8 +200,7 @@ class GradeSheet extends Model {
       _instructorId == other._instructorId &&
       _studentId == other._studentId &&
       _missionNum == other._missionNum &&
-      _grades == other._grades &&
-      _grade == other._grade &&
+      _overallGrade == other._overallGrade &&
       _adQual == other._adQual &&
       _pilotQual == other._pilotQual &&
       _weather == other._weather &&
@@ -168,7 +210,9 @@ class GradeSheet extends Model {
       _endTime == other._endTime &&
       _profile == other._profile &&
       _overallComments == other._overallComments &&
-      _recommendations == other._recommendations;
+      _recommendations == other._recommendations &&
+      DeepCollectionEquality().equals(_gradeitems, other._gradeitems) &&
+      _isDraft == other._isDraft;
   }
   
   @override
@@ -182,19 +226,19 @@ class GradeSheet extends Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("instructorId=" + "$_instructorId" + ", ");
     buffer.write("studentId=" + "$_studentId" + ", ");
-    buffer.write("missionNum=" + (_missionNum != null ? _missionNum!.toString() : "null") + ", ");
-    buffer.write("grades=" + "$_grades" + ", ");
-    buffer.write("grade=" + (_grade != null ? enumToString(_grade)! : "null") + ", ");
-    buffer.write("adQual=" + "$_adQual" + ", ");
-    buffer.write("pilotQual=" + "$_pilotQual" + ", ");
-    buffer.write("weather=" + "$_weather" + ", ");
-    buffer.write("sortieType=" + "$_sortieType" + ", ");
-    buffer.write("dayNight=" + "$_dayNight" + ", ");
-    buffer.write("startTime=" + (_startTime != null ? _startTime!.format() : "null") + ", ");
-    buffer.write("endTime=" + (_endTime != null ? _endTime!.format() : "null") + ", ");
+    buffer.write("missionNum=" + "$_missionNum" + ", ");
+    buffer.write("overallGrade=" + (_overallGrade != null ? enumToString(_overallGrade)! : "null") + ", ");
+    buffer.write("adQual=" + (_adQual != null ? enumToString(_adQual)! : "null") + ", ");
+    buffer.write("pilotQual=" + (_pilotQual != null ? enumToString(_pilotQual)! : "null") + ", ");
+    buffer.write("weather=" + (_weather != null ? enumToString(_weather)! : "null") + ", ");
+    buffer.write("sortieType=" + (_sortieType != null ? enumToString(_sortieType)! : "null") + ", ");
+    buffer.write("dayNight=" + (_dayNight != null ? enumToString(_dayNight)! : "null") + ", ");
+    buffer.write("startTime=" + (_startTime != null ? _startTime!.toString() : "null") + ", ");
+    buffer.write("endTime=" + (_endTime != null ? _endTime!.toString() : "null") + ", ");
     buffer.write("profile=" + "$_profile" + ", ");
     buffer.write("overallComments=" + "$_overallComments" + ", ");
     buffer.write("recommendations=" + "$_recommendations" + ", ");
+    buffer.write("isDraft=" + (_isDraft != null ? _isDraft!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -202,14 +246,13 @@ class GradeSheet extends Model {
     return buffer.toString();
   }
   
-  GradeSheet copyWith({String? id, String? instructorId, String? studentId, int? missionNum, String? grades, Grade? grade, String? adQual, String? pilotQual, String? weather, String? sortieType, String? dayNight, TemporalDateTime? startTime, TemporalDateTime? endTime, String? profile, String? overallComments, String? recommendations}) {
+  GradeSheet copyWith({String? id, String? instructorId, String? studentId, String? missionNum, Grade? overallGrade, AdQual? adQual, PilotQual? pilotQual, Weather? weather, SortieType? sortieType, DayNight? dayNight, int? startTime, int? endTime, String? profile, String? overallComments, String? recommendations, List<GradeItemGradeSheet>? gradeitems, bool? isDraft}) {
     return GradeSheet._internal(
       id: id ?? this.id,
       instructorId: instructorId ?? this.instructorId,
       studentId: studentId ?? this.studentId,
       missionNum: missionNum ?? this.missionNum,
-      grades: grades ?? this.grades,
-      grade: grade ?? this.grade,
+      overallGrade: overallGrade ?? this.overallGrade,
       adQual: adQual ?? this.adQual,
       pilotQual: pilotQual ?? this.pilotQual,
       weather: weather ?? this.weather,
@@ -219,39 +262,46 @@ class GradeSheet extends Model {
       endTime: endTime ?? this.endTime,
       profile: profile ?? this.profile,
       overallComments: overallComments ?? this.overallComments,
-      recommendations: recommendations ?? this.recommendations);
+      recommendations: recommendations ?? this.recommendations,
+      gradeitems: gradeitems ?? this.gradeitems,
+      isDraft: isDraft ?? this.isDraft);
   }
   
   GradeSheet.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
       _instructorId = json['instructorId'],
       _studentId = json['studentId'],
-      _missionNum = (json['missionNum'] as num?)?.toInt(),
-      _grades = json['grades'],
-      _grade = enumFromString<Grade>(json['grade'], Grade.values),
-      _adQual = json['adQual'],
-      _pilotQual = json['pilotQual'],
-      _weather = json['weather'],
-      _sortieType = json['sortieType'],
-      _dayNight = json['dayNight'],
-      _startTime = json['startTime'] != null ? TemporalDateTime.fromString(json['startTime']) : null,
-      _endTime = json['endTime'] != null ? TemporalDateTime.fromString(json['endTime']) : null,
+      _missionNum = json['missionNum'],
+      _overallGrade = enumFromString<Grade>(json['overallGrade'], Grade.values),
+      _adQual = enumFromString<AdQual>(json['adQual'], AdQual.values),
+      _pilotQual = enumFromString<PilotQual>(json['pilotQual'], PilotQual.values),
+      _weather = enumFromString<Weather>(json['weather'], Weather.values),
+      _sortieType = enumFromString<SortieType>(json['sortieType'], SortieType.values),
+      _dayNight = enumFromString<DayNight>(json['dayNight'], DayNight.values),
+      _startTime = (json['startTime'] as num?)?.toInt(),
+      _endTime = (json['endTime'] as num?)?.toInt(),
       _profile = json['profile'],
       _overallComments = json['overallComments'],
       _recommendations = json['recommendations'],
+      _gradeitems = json['gradeitems'] is List
+        ? (json['gradeitems'] as List)
+          .where((e) => e?['serializedData'] != null)
+          .map((e) => GradeItemGradeSheet.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
+          .toList()
+        : null,
+      _isDraft = json['isDraft'],
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'instructorId': _instructorId, 'studentId': _studentId, 'missionNum': _missionNum, 'grades': _grades, 'grade': enumToString(_grade), 'adQual': _adQual, 'pilotQual': _pilotQual, 'weather': _weather, 'sortieType': _sortieType, 'dayNight': _dayNight, 'startTime': _startTime?.format(), 'endTime': _endTime?.format(), 'profile': _profile, 'overallComments': _overallComments, 'recommendations': _recommendations, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'instructorId': _instructorId, 'studentId': _studentId, 'missionNum': _missionNum, 'overallGrade': enumToString(_overallGrade), 'adQual': enumToString(_adQual), 'pilotQual': enumToString(_pilotQual), 'weather': enumToString(_weather), 'sortieType': enumToString(_sortieType), 'dayNight': enumToString(_dayNight), 'startTime': _startTime, 'endTime': _endTime, 'profile': _profile, 'overallComments': _overallComments, 'recommendations': _recommendations, 'gradeitems': _gradeitems?.map((GradeItemGradeSheet? e) => e?.toJson()).toList(), 'isDraft': _isDraft, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
   static final QueryField ID = QueryField(fieldName: "gradeSheet.id");
   static final QueryField INSTRUCTORID = QueryField(fieldName: "instructorId");
   static final QueryField STUDENTID = QueryField(fieldName: "studentId");
   static final QueryField MISSIONNUM = QueryField(fieldName: "missionNum");
-  static final QueryField GRADES = QueryField(fieldName: "grades");
-  static final QueryField GRADE = QueryField(fieldName: "grade");
+  static final QueryField OVERALLGRADE = QueryField(fieldName: "overallGrade");
   static final QueryField ADQUAL = QueryField(fieldName: "adQual");
   static final QueryField PILOTQUAL = QueryField(fieldName: "pilotQual");
   static final QueryField WEATHER = QueryField(fieldName: "weather");
@@ -262,6 +312,10 @@ class GradeSheet extends Model {
   static final QueryField PROFILE = QueryField(fieldName: "profile");
   static final QueryField OVERALLCOMMENTS = QueryField(fieldName: "overallComments");
   static final QueryField RECOMMENDATIONS = QueryField(fieldName: "recommendations");
+  static final QueryField GRADEITEMS = QueryField(
+    fieldName: "gradeitems",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (GradeItemGradeSheet).toString()));
+  static final QueryField ISDRAFT = QueryField(fieldName: "isDraft");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "GradeSheet";
     modelSchemaDefinition.pluralName = "GradeSheets";
@@ -281,30 +335,24 @@ class GradeSheet extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: GradeSheet.INSTRUCTORID,
-      isRequired: false,
+      isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: GradeSheet.STUDENTID,
-      isRequired: false,
+      isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: GradeSheet.MISSIONNUM,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.int)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: GradeSheet.GRADES,
-      isRequired: false,
+      isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: GradeSheet.GRADE,
+      key: GradeSheet.OVERALLGRADE,
       isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)
     ));
@@ -312,43 +360,43 @@ class GradeSheet extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: GradeSheet.ADQUAL,
       isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: GradeSheet.PILOTQUAL,
       isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: GradeSheet.WEATHER,
       isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: GradeSheet.SORTIETYPE,
       isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: GradeSheet.DAYNIGHT,
       isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: GradeSheet.STARTTIME,
       isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
+      ofType: ModelFieldType(ModelFieldTypeEnum.int)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: GradeSheet.ENDTIME,
       isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
+      ofType: ModelFieldType(ModelFieldTypeEnum.int)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
@@ -367,6 +415,19 @@ class GradeSheet extends Model {
       key: GradeSheet.RECOMMENDATIONS,
       isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
+      key: GradeSheet.GRADEITEMS,
+      isRequired: false,
+      ofModelName: (GradeItemGradeSheet).toString(),
+      associatedKey: GradeItemGradeSheet.GRADESHEET
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: GradeSheet.ISDRAFT,
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.bool)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(

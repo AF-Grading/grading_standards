@@ -5,6 +5,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:app_prototype/amplifyconfiguration.dart';
 import 'package:app_prototype/models/ModelProvider.dart';
 import 'package:app_prototype/models/aws_state.dart';
+import 'package:app_prototype/models/cts_items.dart';
 import 'package:app_prototype/models/grade_sheets_2.dart';
 import 'package:app_prototype/models/Squadrons.dart';
 import 'package:app_prototype/pages/not_logged_in_page.dart';
@@ -50,6 +51,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (context) => GradeSheets()),
           ChangeNotifierProvider(create: (context) => CurrentFlight()),
           ChangeNotifierProvider(create: (context) => Users()),
+          ChangeNotifierProvider(create: (context) => CtsItems()),
           ChangeNotifierProvider(create: (context) => ThemeChange()),
           ChangeNotifierProvider(create: (context) => CurrentUser()),
           ChangeNotifierProvider(create: (context) => GradeSheets2()),
@@ -90,14 +92,14 @@ class _MyAppState extends State<MyApp> {
       final session = await Amplify.Auth.fetchAuthSession();
 
       // TODO Remove this
-      if (session.isSignedIn) {
+      /*if (session.isSignedIn) {
         final AuthUser authUser = await Amplify.Auth.getCurrentUser();
         await Amplify.DataStore.observeQuery(User.classType)
             .listen((QuerySnapshot<User> snapshot) {
           context.read<CurrentUser>().setUser = snapshot.items
               .firstWhere((user) => user.email == authUser.username);
         });
-      }
+      }*/
 
       setState(() {
         //_initialState = session;

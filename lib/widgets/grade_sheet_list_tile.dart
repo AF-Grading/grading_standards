@@ -18,9 +18,8 @@ class GradeSheetListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text(
-        "${gradeSheet.grade!.name}",
-      ),
+      leading: Text("" //${gradeSheet.grade!.name}",
+          ),
       title: UserNameTextBox(
         email: gradeSheet.studentId!,
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/grade_enums.dart';
+import '../models/SortieType.dart';
 
 class SortieTypeFormField extends FormField<SortieType> {
   SortieTypeFormField(
@@ -37,7 +37,7 @@ Widget _buildWide(
             const Text("Sortie Type:"),
             const Text("Local"),
             Radio<SortieType>(
-              value: SortieType.local,
+              value: SortieType.LOCAL,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -46,7 +46,7 @@ Widget _buildWide(
             ),
             const Text("IMS"),
             Radio<SortieType>(
-              value: SortieType.ims,
+              value: SortieType.IMS,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -55,7 +55,7 @@ Widget _buildWide(
             ),
             const Text("Mission"),
             Radio<SortieType>(
-              value: SortieType.mission,
+              value: SortieType.MISSION,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -64,7 +64,7 @@ Widget _buildWide(
             ),
             const Text("OST"),
             Radio<SortieType>(
-              value: SortieType.ost,
+              value: SortieType.OST,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -73,7 +73,7 @@ Widget _buildWide(
             ),
             const Text("ISS"),
             Radio<SortieType>(
-              value: SortieType.instmtSim,
+              value: SortieType.INSTMTSIM,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -82,7 +82,7 @@ Widget _buildWide(
             ),
             const Text("Tactics Sim"),
             Radio<SortieType>(
-              value: SortieType.tacticsSim,
+              value: SortieType.TACTICSSIM,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -91,7 +91,7 @@ Widget _buildWide(
             ),
             const Text("MMP"),
             Radio<SortieType>(
-              value: SortieType.mmp,
+              value: SortieType.MMP,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -100,7 +100,7 @@ Widget _buildWide(
             ),
             const Text("JFE"),
             Radio<SortieType>(
-              value: SortieType.lfe,
+              value: SortieType.LFE,
               groupValue: formState.value,
               onChanged: (value) {
                 formState.didChange(value);
@@ -133,17 +133,17 @@ Widget _buildNarrow(
             DropdownButton(
                 items: const [
                   DropdownMenuItem(
-                      value: SortieType.local, child: Text("Local")),
-                  DropdownMenuItem(value: SortieType.ims, child: Text("IMS")),
+                      value: SortieType.LOCAL, child: Text("Local")),
+                  DropdownMenuItem(value: SortieType.IMS, child: Text("IMS")),
                   DropdownMenuItem(
-                      value: SortieType.mission, child: Text("Mission")),
-                  DropdownMenuItem(value: SortieType.ost, child: Text("OST")),
+                      value: SortieType.MISSION, child: Text("Mission")),
+                  DropdownMenuItem(value: SortieType.OST, child: Text("OST")),
                   DropdownMenuItem(
-                      value: SortieType.instmtSim, child: Text("ISS")),
+                      value: SortieType.INSTMTSIM, child: Text("ISS")),
                   DropdownMenuItem(
-                      value: SortieType.tacticsSim, child: Text("Tactics Sim")),
-                  DropdownMenuItem(value: SortieType.mmp, child: Text("MMP")),
-                  DropdownMenuItem(value: SortieType.lfe, child: Text("JFE")),
+                      value: SortieType.TACTICSSIM, child: Text("Tactics Sim")),
+                  DropdownMenuItem(value: SortieType.MMP, child: Text("MMP")),
+                  DropdownMenuItem(value: SortieType.LFE, child: Text("JFE")),
                 ],
                 value: formState.value,
                 onChanged: (SortieType? newValue) {

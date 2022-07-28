@@ -53,7 +53,7 @@ class NewFlightView extends StatelessWidget {
                             }
                             return null;
                           }, onChanged: (value) {
-                            context.read<CurrentFlight>().weather = value;
+                            //context.read<CurrentFlight>().weather = value;
                           }),
                         ],
                       ),
@@ -64,7 +64,7 @@ class NewFlightView extends StatelessWidget {
                       }
                       return null;
                     }, onChanged: (value) {
-                      context.read<CurrentFlight>().sortieType = value;
+                      //context.read<CurrentFlight>().sortieType = value;
                     }),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -76,7 +76,7 @@ class NewFlightView extends StatelessWidget {
                             }
                             return null;
                           }, onChanged: (value) {
-                            context.read<CurrentFlight>().dayNight = value;
+                            //context.read<CurrentFlight>().dayNight = value;
                           }),
                         ],
                       ),
@@ -153,7 +153,7 @@ class NewFlightView extends StatelessWidget {
                               }
                               return null;
                             }, onChanged: (value) {
-                              context.read<CurrentFlight>().weather = value;
+                              //context.read<CurrentFlight>().weather = value;
                             }),
                           ),
                           Container(
@@ -164,7 +164,7 @@ class NewFlightView extends StatelessWidget {
                               }
                               return null;
                             }, onChanged: (value) {
-                              context.read<CurrentFlight>().dayNight = value;
+                              //context.read<CurrentFlight>().dayNight = value;
                             }),
                           ),
                         ]),
@@ -176,7 +176,7 @@ class NewFlightView extends StatelessWidget {
                         }
                         return null;
                       }, onChanged: (value) {
-                        context.read<CurrentFlight>().sortieType = value;
+                        //context.read<CurrentFlight>().sortieType = value;
                       }),
                     ),
                     Padding(

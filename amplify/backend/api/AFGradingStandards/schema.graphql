@@ -1,3 +1,77 @@
+type GradeItem @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  gradesheetId: ID!
+  ctsItemId: ID!
+  grade: Grade!
+  comment: String
+  GradeSheets: [GradeSheet] @manyToMany(relationName: "GradeItemGradeSheet")
+}
+
+type GradingParam @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  ctsItemId: ID!
+  airland: Boolean!
+  min: Boolean!
+  oneOneOne: Boolean!
+  enroute: Boolean!
+  pattern: Boolean!
+  tactical: Boolean!
+  tacticalPlu: Boolean!
+  airdrop: Boolean!
+  airdropPlus: Boolean!
+}
+
+type CTSItem @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  performance: String!
+  standards: String!
+  fpc: Grade
+  fpq: Grade
+  mp: Grade
+  ip: Grade
+  cpad: Grade
+  acad: Grade
+  adip: Grade
+  ldad: Grade
+}
+
+enum SortieType {
+  LOCAL
+  IMS
+  MISSION
+  OST
+  INSTMTSIM
+  TACTICSSIM
+  MMP
+  LFE
+}
+
+enum Weather {
+  VMC
+  IMC
+}
+
+enum PilotQual {
+  FPQ
+  FPC
+  MP
+  IP
+}
+
+enum AdQual {
+  NONE
+  LDAD
+  ADIP
+  ACAD
+  CPAD
+}
+
+enum DayNight {
+  DAY
+  NIGHT
+}
+
 type Squadron @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
@@ -27,20 +101,21 @@ enum Grade {
 
 type GradeSheet @model @auth(rules: [{allow: public}]) {
   id: ID!
-  instructorId: ID
-  studentId: ID
-  missionNum: Int
-  grades: AWSJSON
-  grade: Grade
-  adQual: String
-  pilotQual: String
-  weather: String
-  sortieType: String
-  dayNight: String
-  startTime: AWSDateTime
-  endTime: AWSDateTime
+  instructorId: ID!
+  studentId: ID!
+  missionNum: String!
+  overallGrade: Grade
+  adQual: AdQual
+  pilotQual: PilotQual
+  weather: Weather
+  sortieType: SortieType
+  dayNight: DayNight
+  startTime: Int
+  endTime: Int
   profile: String
   overallComments: String
   recommendations: String
+  gradeitems: [GradeItem] @manyToMany(relationName: "GradeItemGradeSheet")
+  isDraft: Boolean!
 }
  

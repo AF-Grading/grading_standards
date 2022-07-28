@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "afgradingstandards963361aa963361aa": {}
+        "afgradingstandards963361aa963361aa": {},
+        "userPoolGroups": {}
       }
     }
   }

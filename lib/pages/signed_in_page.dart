@@ -4,6 +4,7 @@ import 'package:app_prototype/pages/user_log_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/CTSItem.dart';
 import '../models/GradeSheet.dart';
 import '../models/User.dart';
 import '../models/application_state.dart';
@@ -39,7 +40,7 @@ class _SignedInPageState extends State<SignedInPage> {
     try {
       final session = await Amplify.Auth.fetchAuthSession();
 
-      if (session.isSignedIn) {
+      /*if (session.isSignedIn) {
         print(" INT VKDFNVK INININININN");
         final AuthUser authUser = await Amplify.Auth.getCurrentUser();
         await Amplify.DataStore.observeQuery(User.classType)
@@ -47,7 +48,7 @@ class _SignedInPageState extends State<SignedInPage> {
           context.read<CurrentUser>().setUser = snapshot.items
               .firstWhere((user) => user.email == authUser.username);
         });
-      }
+      }*/
 
       setState(() {
         //_initialState = session;
@@ -86,6 +87,9 @@ class _SignedInPageState extends State<SignedInPage> {
                       create: (_) => context.read<ApplicationState>().users,
                       initialData: const [],
                     ),
+                    StreamProvider<List<CTSItem>>(
+                        create: (_) => context.read<AWSState>().ctsItems,
+                        initialData: const [])
 
                     /*FutureProvider<Stream<User>>(
                     create: (context) =>

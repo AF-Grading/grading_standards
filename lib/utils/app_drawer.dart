@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../models/User.dart';
 import '../pages/all_grade_sheets_page.dart';
+import '../pages/cts_items_page.dart';
 import '../pages/my_grade_sheets_page.dart';
 import '../pages/reference_materials_page.dart';
 import '../pages/settings_page.dart';
@@ -83,6 +84,15 @@ class _AppDrawerState extends State<AppDrawer> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const UsersPage()),
+            );
+          },
+        ),
+        ListTile(
+          title: const Text("Grading Criteria"),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CtsItemsPage()),
             );
           },
         ),
