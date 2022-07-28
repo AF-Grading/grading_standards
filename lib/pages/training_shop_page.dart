@@ -108,61 +108,61 @@ class TrainingShopPage extends StatelessWidget {
 
                             // TOP FIVE BOTTOM FIVE
 
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Column(
-                                    children: [
-                                      const Text(
-                                        "Top",
-                                        style: TextStyle(fontSize: 28),
-                                      ),
-                                      Column(
-                                        children: context
-                                            .watch<TrainingShop>()
-                                            .bestFive
-                                            .map((item) => SizedBox(
-                                                  // TODO alter to favor relative sizing
-                                                  width: 400,
-                                                  height: 40,
-                                                  child: ListTile(
-                                                      title: Text(item.name),
-                                                      trailing: Text(
-                                                          "${item.grade!.index - 2}")),
-                                                ))
-                                            .toList(),
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      const Text(
-                                        "Bottom",
-                                        style: TextStyle(fontSize: 28),
-                                      ),
-                                      Column(
-                                        children: context
-                                            .watch<TrainingShop>()
-                                            .worstFive
-                                            .map((item) => SizedBox(
-                                                  // TODO alter to favor relative sizing
-                                                  width: 400,
-                                                  height: 40,
-                                                  child: ListTile(
-                                                      title: Text(item.name),
-                                                      trailing: Text(
-                                                          "${item.grade!.index - 2}")),
-                                                ))
-                                            .toList(),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Row(
+                            //     mainAxisAlignment:
+                            //         MainAxisAlignment.spaceEvenly,
+                            //     children: [
+                            //       // Column(
+                            //       //   children: [
+                            //       //     const Text(
+                            //       //       "Top",
+                            //       //       style: TextStyle(fontSize: 28),
+                            //       //     ),
+                            //       //     Column(
+                            //       //       children: context
+                            //       //           .watch<TrainingShop>()
+                            //       //           .bestFive
+                            //       //           .map((item) => SizedBox(
+                            //       //                 // TODO alter to favor relative sizing
+                            //       //                 width: 400,
+                            //       //                 height: 40,
+                            //       //                 child: ListTile(
+                            //       //                     title: Text(item.name),
+                            //       //                     trailing: Text(
+                            //       //                         "${item.grade!.index - 2}")),
+                            //       //               ))
+                            //       //           .toList(),
+                            //       //     )
+                            //       //   ],
+                            //       // ),
+                            //       // Column(
+                            //       //   children: [
+                            //       //     const Text(
+                            //       //       "Bottom",
+                            //       //       style: TextStyle(fontSize: 28),
+                            //       //     ),
+                            //       //     Column(
+                            //       //       children: context
+                            //       //           .watch<TrainingShop>()
+                            //       //           .worstFive
+                            //       //           .map((item) => SizedBox(
+                            //       //                 // TODO alter to favor relative sizing
+                            //       //                 width: 400,
+                            //       //                 height: 40,
+                            //       //                 child: ListTile(
+                            //       //                     title: Text(item.name),
+                            //       //                     trailing: Text(
+                            //       //                         "${item.grade!.index - 2}")),
+                            //       //               ))
+                            //       //           .toList(),
+                            //       //     )
+                            //       //   ],
+                            //       // )
+                            //     ],
+                            //   ),
+                            // ),
 
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -175,6 +175,12 @@ class TrainingShopPage extends StatelessWidget {
                                       const Text(
                                         "Strong",
                                         style: TextStyle(fontSize: 28),
+                                      ),
+                                      const Text(
+                                        "(highest performing 5 categories all time)",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontStyle: FontStyle.italic),
                                       ),
                                       Column(
                                         children: context
@@ -200,6 +206,12 @@ class TrainingShopPage extends StatelessWidget {
                                       const Text(
                                         "Weak",
                                         style: TextStyle(fontSize: 28),
+                                      ),
+                                      const Text(
+                                        "(lowest performing 5 categories all time)",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontStyle: FontStyle.italic),
                                       ),
                                       Column(
                                         children: context
@@ -233,23 +245,63 @@ class TrainingShopPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 28),
                               ),
                             ),
-                            for (GradeSheet sheet in gradeSheets)
-                              ListTile(
-                                trailing:
-                                    Text("Grade ${sheet.overall!.index - 2}"),
-                                title: Text(sheet.instructorId),
-                                subtitle: Text(sheet.studentId),
-                                leading: Text(
-                                    "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GradeSheetPage(
-                                      gradeSheet: sheet,
+
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: gradeSheets.map((item) {
+                                String instructor_email = item.instructorId;
+                                String student_email = item.studentId;
+                                String instructor_real_name = "";
+                                String student_real_name = "";
+                                String? instructor_rank = "";
+                                String? student_rank = "";
+
+                                context
+                                    .watch<List<UserSetting>>()
+                                    .forEach((user) {
+                                  if (user.email == instructor_email) {
+                                    instructor_real_name = user.name;
+                                    instructor_rank = user.rank.pretty;
+                                    print(user.name);
+                                  }
+                                  if (user.email == student_email) {
+                                    student_real_name = user.name;
+                                    student_rank = user.rank.pretty;
+                                    print(user.name);
+                                  }
+                                });
+
+                                return ListTile(
+                                  trailing:
+                                      Text("Grade ${item.overall!.index - 2}"),
+                                  title: Text(
+                                    "${instructor_rank} ${instructor_real_name}",
+                                  ),
+                                  subtitle: Text(
+                                      "${student_rank} ${student_real_name}"),
+                                  leading: Text(
+                                      "${item.startTime.month} ${item.startTime.day}, ${item.startTime.year}"),
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => GradeSheetPage(
+                                        gradeSheet: item,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
+                                );
+                              }).toList(),
+                            ),
+
+                            // Column(children: [
+                            //   for (GradeSheet sheet in gradeSheets)
+
+                            //     // TODO: change this to names instead of emails
+                            //     {
+
+                            //     }.toList(),
+                            // ])
                           ]
                         : [
                             // build narrow
@@ -320,58 +372,58 @@ class TrainingShopPage extends StatelessWidget {
 
                             // TOP FIVE BOTTOM FIVE
 
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "Top",
-                                    style: TextStyle(fontSize: 28),
-                                  ),
-                                  Column(
-                                    children: context
-                                        .watch<TrainingShop>()
-                                        .bestFive
-                                        .map((item) => SizedBox(
-                                              // TODO alter to favor relative sizing
-                                              width: 400,
-                                              height: 40,
-                                              child: ListTile(
-                                                  title: Text(item.name),
-                                                  trailing: Text(
-                                                      "${item.grade!.index - 2}")),
-                                            ))
-                                        .toList(),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "Bottom",
-                                    style: TextStyle(fontSize: 28),
-                                  ),
-                                  Column(
-                                    children: context
-                                        .watch<TrainingShop>()
-                                        .worstFive
-                                        .map((item) => SizedBox(
-                                              // TODO alter to favor relative sizing
-                                              width: 400,
-                                              height: 40,
-                                              child: ListTile(
-                                                  title: Text(item.name),
-                                                  trailing: Text(
-                                                      "${item.grade!.index - 2}")),
-                                            ))
-                                        .toList(),
-                                  )
-                                ],
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
+                            //   child: Column(
+                            //     children: [
+                            //       const Text(
+                            //         "Top",
+                            //         style: TextStyle(fontSize: 28),
+                            //       ),
+                            //       Column(
+                            //         children: context
+                            //             .watch<TrainingShop>()
+                            //             .bestFive
+                            //             .map((item) => SizedBox(
+                            //                   // TODO alter to favor relative sizing
+                            //                   width: 400,
+                            //                   height: 40,
+                            //                   child: ListTile(
+                            //                       title: Text(item.name),
+                            //                       trailing: Text(
+                            //                           "${item.grade!.index - 2}")),
+                            //                 ))
+                            //             .toList(),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
+                            //   child: Column(
+                            //     children: [
+                            //       const Text(
+                            //         "Bottom",
+                            //         style: TextStyle(fontSize: 28),
+                            //       ),
+                            //       Column(
+                            //         children: context
+                            //             .watch<TrainingShop>()
+                            //             .worstFive
+                            //             .map((item) => SizedBox(
+                            //                   // TODO alter to favor relative sizing
+                            //                   width: 400,
+                            //                   height: 40,
+                            //                   child: ListTile(
+                            //                       title: Text(item.name),
+                            //                       trailing: Text(
+                            //                           "${item.grade!.index - 2}")),
+                            //                 ))
+                            //             .toList(),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
 
                             Padding(
                               padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
@@ -380,6 +432,10 @@ class TrainingShopPage extends StatelessWidget {
                                   const Text(
                                     "Strong",
                                     style: TextStyle(fontSize: 28),
+                                  ),
+                                  const Text(
+                                    "(highest performing 5 categories all time)",
+                                    style: TextStyle(fontSize: 12),
                                   ),
                                   Column(
                                     children: context
@@ -406,6 +462,12 @@ class TrainingShopPage extends StatelessWidget {
                                   const Text(
                                     "Weak",
                                     style: TextStyle(fontSize: 28),
+                                  ),
+                                  const Text(
+                                    "(lowest performing 5 categories all time)",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontStyle: FontStyle.italic),
                                   ),
                                   Column(
                                     children: context
@@ -435,23 +497,53 @@ class TrainingShopPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 28),
                               ),
                             ),
-                            for (GradeSheet sheet in gradeSheets)
-                              ListTile(
-                                trailing:
-                                    Text("Grade ${sheet.overall!.index - 2}"),
-                                title: Text(sheet.instructorId),
-                                subtitle: Text(sheet.studentId),
-                                leading: Text(
-                                    "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GradeSheetPage(
-                                      gradeSheet: sheet,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: gradeSheets.map((item) {
+                                String instructor_email = item.instructorId;
+                                String student_email = item.studentId;
+                                String instructor_real_name = "";
+                                String student_real_name = "";
+                                String? instructor_rank = "";
+                                String? student_rank = "";
+
+                                context
+                                    .watch<List<UserSetting>>()
+                                    .forEach((user) {
+                                  if (user.email == instructor_email) {
+                                    instructor_real_name = user.name;
+                                    instructor_rank = user.rank.pretty;
+                                    print(user.name);
+                                  }
+                                  if (user.email == student_email) {
+                                    student_real_name = user.name;
+                                    student_rank = user.rank.pretty;
+                                    print(user.name);
+                                  }
+                                });
+
+                                return ListTile(
+                                  trailing:
+                                      Text("Grade ${item.overall!.index - 2}"),
+                                  title: Text(
+                                    "${instructor_rank} ${instructor_real_name}",
+                                  ),
+                                  subtitle: Text(
+                                      "${student_rank} ${student_real_name}"),
+                                  leading: Text(
+                                      "${item.startTime.month} ${item.startTime.day}, ${item.startTime.year}"),
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => GradeSheetPage(
+                                        gradeSheet: item,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
+                                );
+                              }).toList(),
+                            ),
                           ]
 
                     //Text(context.watch<TrainingShop>().first.student),

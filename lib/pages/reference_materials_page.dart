@@ -13,10 +13,10 @@ class ReferenceMaterialsPages extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Reference Materials"),
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: [
               Text("Grade Criteria"),
-              Text("Items"),
+              Column(children: [Text("Grade"), Text("Items")]),
               Text("Proficiency Table")
             ],
           ),
@@ -28,18 +28,20 @@ class ReferenceMaterialsPages extends StatelessWidget {
                 children: gradeDescriptions
                     .map((gD) => Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Row(
+                          child: Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: SizedBox(
-                                    width: 130,
-                                    child: Text("${gD.proficiencyGrade}")),
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("${gD.proficiencyGrade}",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold)),
                               ),
-                              Expanded(
-                                child: Text(
-                                  "${gD.description}",
-                                ),
+                              Text(
+                                "${gD.description}",
+                              ),
+                              Divider(
+                                thickness: 2,
                               ),
                             ],
                           ),
@@ -53,11 +55,32 @@ class ReferenceMaterialsPages extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: ExpansionTile(
-                      title: Text("Notes"),
+                      title: Text(
+                        "Notes",
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text(
+                            "1. Purpose",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         Text(
-                            "1. Purpose — To provide individual task items to standardize grading procedures among C-17A instructors and to focus training on specific achievable desired learning objectives (DLOs)."),
-                        Text("2. General Proficiency Standards"),
+                            "To provide individual task items to standardize grading procedures among C-17A instructors and to focus training on specific achievable desired learning objectives (DLOs)."),
+                        Divider(
+                          thickness: 1,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            "2. General Proficiency Standards",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
@@ -73,51 +96,83 @@ class ReferenceMaterialsPages extends StatelessWidget {
                           child: Text(
                               "c. Procedural knowledge and application must be in accordance with applicable directives and allow the sortie to be accomplished efficiently."),
                         ),
-                        Text(
-                            "3. Job Tasks — Performance conditions and standards are specified in the following CTS table."),
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text("Grade Item"),
-                    subtitle: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Expanded(
-                          child: SizedBox(child: Text("Performance")),
+                        Divider(
+                          thickness: 1,
                         ),
-                        Expanded(
-                          child: SizedBox(child: Text("Standards")),
-                        )
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "3. Job Tasks",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 8.0),
+                          child: Text(
+                              "Performance conditions and standards are specified in the following CTS table."),
+                        ),
                       ],
                     ),
                   ),
-                  for (CTSItem item in ctsItems)
-                    ListTile(
-                      title: Text(item.name),
-                      subtitle: Column(
-                        children: [
-                          /*Row(
+                  // ListTile(
+                  //   title: const Text("Grade Item",
+                  //       style: TextStyle(
+                  //           fontSize: 18, fontWeight: FontWeight.bold)),
+                  //   subtitle: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //     children: const [
+                  //       Expanded(
+                  //         child: SizedBox(child: Text("Performance")),
+                  //       ),
+                  //       Expanded(
+                  //         child: SizedBox(child: Text("Standards")),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+                  for (CTSItem item in ctsItems) // title: Text(item.name),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                          child: Text(
+                            item.name,
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        /*Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: const [
                               Text("Performance"),
                               Text("Standards"),
                             ],
                           ),*/
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                  child:
-                                      SizedBox(child: Text(item.performance))),
-                              Expanded(
-                                  child: SizedBox(child: Text(item.standards))),
-                            ],
+                        Padding(
+                            padding: EdgeInsets.only(top: 14),
+                            child: Text("Performance",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold))),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(8, 8, 8, 12),
+                            child: Text(item.performance)),
+                        Text("Standards",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+                            child: Text(item.standards)),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 30),
+                          child: Divider(
+                            thickness: 2,
                           ),
-                        ],
-                      ),
-                      //trailing: Text("Passing Score: ${item.passingScore.index}"),
+                        ),
+                      ],
                     ),
+                  //trailing: Text("Passing Score: ${item.passingScore.index}"),
                 ],
               ),
             ),
@@ -127,83 +182,124 @@ class ReferenceMaterialsPages extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: ExpansionTile(
-                      title: Text("Notes"),
+                      title: Text(
+                        "Notes",
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                       children: [
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                              "1. The below table lists expected proficiency standards by crew qualification for each CTS item. If the item is not accomplished then no grade needs to be recorded, if an item is witnessed but not accomplished, record it with the grade “NG” in order to record that the pilot has at seen something accomplished."),
+                              "The below table lists expected proficiency standards by crew qualification for each CTS item. If the item is not accomplished then no grade needs to be recorded, if an item is witnessed but not accomplished, record it with the grade “NG” in order to record that the pilot has at seen something accomplished."),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: const [
-                        Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child:
-                              SizedBox(width: 150, child: Text("Pilot Item")),
-                        ),
-                        Text("FPC"),
-                        Text("FPQ"),
-                        Text("MP"),
-                        Text("IP"),
+                        SizedBox(
+                            width: 150,
+                            child: Text(
+                              "Pilot Item",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            )),
+                        SizedBox(width: 39, child: Center(child: Text("FPC"))),
+                        SizedBox(width: 39, child: Center(child: Text("FPQ"))),
+                        SizedBox(width: 39, child: Center(child: Text("MP"))),
+                        SizedBox(width: 39, child: Center(child: Text("IP"))),
                       ],
                     ),
                   ),
                   for (TableDescription tD in tableDescriptions)
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.fromLTRB(8.0, 8, 8, 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child:
-                                SizedBox(width: 150, child: Text(tD.ctsItem)),
+                          SizedBox(
+                              width: 150,
+                              height: 50,
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(tD.ctsItem))),
+                          SizedBox(
+                            width: 39,
+                            child: Center(child: Text(tD.fpc.toString())),
                           ),
-                          Text(tD.fpc.toString()),
-                          Text(tD.fpq.toString()),
-                          Text(tD.mp.toString()),
-                          Text(tD.ip.toString()),
+                          SizedBox(
+                            width: 39,
+                            child: Center(child: Text(tD.fpq.toString())),
+                          ),
+                          SizedBox(
+                            width: 39,
+                            child: Center(child: Text(tD.mp.toString())),
+                          ),
+                          SizedBox(
+                            width: 39,
+                            child: Center(child: Text(tD.ip.toString())),
+                          ),
                         ],
                       ),
                     ),
+                  Divider(
+                    thickness: 2,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(8.0, 30, 8, 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: const [
-                        Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child:
-                              SizedBox(width: 100, child: Text("Airdrop Item")),
-                        ),
-                        Text("CPAD"),
-                        Text("ACAD"),
-                        Text("ADIP"),
-                        Text("LDAD"),
+                        SizedBox(
+                            width: 150,
+                            child: Text("Airdrop Item",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold))),
+                        SizedBox(width: 39, child: Center(child: Text("CPAD"))),
+                        SizedBox(width: 39, child: Center(child: Text("ACAD"))),
+                        SizedBox(width: 39, child: Center(child: Text("ADIP"))),
+                        SizedBox(width: 39, child: Center(child: Text("LDAD"))),
                       ],
                     ),
                   ),
                   for (AirDropTableDescription tD in airDropDescriptions)
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.fromLTRB(8.0, 8, 8, 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child:
-                                SizedBox(width: 150, child: Text(tD.ctsItem)),
+                          SizedBox(
+                              width: 150,
+                              height: 50,
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(tD.ctsItem))),
+                          SizedBox(
+                            width: 39,
+                            child: Center(child: Text(tD.cpad.toString())),
                           ),
-                          Text(tD.cpad.toString()),
-                          Text(tD.acad.toString()),
-                          Text(tD.adip.toString()),
-                          Text(tD.ldad.toString()),
+                          SizedBox(
+                            width: 39,
+                            child: Center(
+                              child: Text(tD.acad.toString()),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 39,
+                            child: Center(
+                              child: Text(tD.adip.toString()),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 39,
+                            child: Center(
+                              child: Text(tD.ldad.toString()),
+                            ),
+                          ),
                         ],
                       ),
                     ),

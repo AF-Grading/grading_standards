@@ -42,6 +42,7 @@ dependencies:
   firebase_auth: ^3.4.1
   flutter_offline: ^2.1.0
   timer_builder: ^2.0.0
+  syncfusion_flutter_datepicker: ^20.2.40
 
 dev_dependencies:
   flutter_test:
