@@ -324,7 +324,7 @@ class IndividualReportPage extends StatelessWidget {
                             ),
 
                             // this is where the drop down buttons are suppose to be
-                            StatsButtons(),
+                            // StatsButtons(),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(8, 0, 8, 30),
                               child: Column(
