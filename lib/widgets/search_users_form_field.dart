@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../models/user.dart';
-import '../models/user_setting.dart';
+import '../models/User.dart';
 
 // TODO SEARCH BY ID NOT NAME
 class SearchUsersFormField extends FormField<String> {
   SearchUsersFormField(
       {Key? key,
-      required List<UserSetting> users,
+      required List<User> users,
       required labelText,
       controller = TextEditingController,
       ValueChanged<String>? onChanged,
@@ -45,10 +44,10 @@ class SearchUsersFormField extends FormField<String> {
                                     .contains(formState.value!))
                                 .map(
                                   (item) => GestureDetector(
-                                      onTap: () => onSaved!(item.email),
+                                      onTap: () => onSaved!(item.id),
 
                                       //() => formState.didChange(item.name),
-                                      child: Text(item.name)),
+                                      child: Text(item.name!)),
                                 )
                                 .toList()
                             : [],

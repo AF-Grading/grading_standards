@@ -17,13 +17,14 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 // internal imports
+import 'models/Users.dart';
 import 'models/application_state.dart';
+import 'models/grade_items.dart';
 import 'models/grade_sheet.dart';
 import 'models/grade_sheets.dart';
 import 'models/current_flight.dart';
 import 'models/theme_change.dart';
 import 'models/user_setting.dart';
-import 'models/users.dart';
 import 'models/current_user.dart';
 import 'pages/auth/not_authorized_page.dart';
 import 'pages/home_page_old.dart';
@@ -52,6 +53,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (context) => CurrentFlight()),
           ChangeNotifierProvider(create: (context) => Users()),
           ChangeNotifierProvider(create: (context) => CtsItems()),
+          ChangeNotifierProvider(create: (context) => GradeItems()),
           ChangeNotifierProvider(create: (context) => ThemeChange()),
           ChangeNotifierProvider(create: (context) => CurrentUser()),
           ChangeNotifierProvider(create: (context) => GradeSheets2()),

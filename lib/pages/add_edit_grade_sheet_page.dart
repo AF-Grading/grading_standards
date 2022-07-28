@@ -9,15 +9,15 @@ import '../models/Grade.dart';
 import '../models/GradeItem.dart';
 import '../models/GradeSheet.dart';
 import '../models/SortieType.dart';
+import '../models/Users.dart';
 import '../models/Weather.dart';
 import '../models/application_state.dart';
 //import '../models/grade_enums.dart';
 //import '../models/grade_sheet.dart';
 import '../models/aws_state.dart';
+import '../models/grade_items.dart';
 import '../models/grade_sheets.dart';
-import '../models/user.dart';
 import '../models/user_setting.dart';
-import '../models/users.dart';
 import '../widgets/date_picker.dart';
 import '../widgets/day_night_form_field.dart';
 import '../widgets/search_users_form_field.dart';
@@ -48,6 +48,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
 
   late String? _student = widget.gradeSheet?.studentId;
   late String? _instructor = widget.gradeSheet?.instructorId;
+  String? _studentId;
+  String? _instructorId;
   //final List<GradeItem> _grades = [];
   late Grade? _overall = widget.gradeSheet?.overallGrade;
   late Weather? _weather = widget.gradeSheet?.weather;
@@ -73,14 +75,20 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
     _isEditing = widget.gradeSheet != null ? true : false;
 
     if (_isEditing) {
+      final items = widget.gradeSheet;
+
+      /*final items = context
+          .read<GradeItems>()
+          .gradeItems
+          .where((item) => item.GradeSheets == widget.gradeSheet!.id);
+      _grades = {for (GradeItem item in items) item.ctsItemId: item.grade};
+      _comments = {for (GradeItem item in items) item.ctsItemId: item.comment!};*/
       /*_grades =
           context.read<GradeItems>().findGradesBySheet(widget.gradeSheet!.id);*/
     } else {
-      for (CTSItem item in context.read<CtsItems>().ctsItems) {
-        _grades[item.name] = Grade.NOGRADE;
-        _comments[item.name] = "";
-        //_grades.add(GradeItem(name: item.name, grade: Grade.NOGRADE));
-      }
+      final items = context.read<CtsItems>().ctsItems;
+      _grades = {for (CTSItem item in items) item.name: Grade.NOGRADE};
+      _comments = {for (CTSItem item in items) item.name: ""};
     }
 
     super.initState();
@@ -120,7 +128,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                           )
                         : SearchUsersFormField(
                             labelText: "Student Name",
-                            users: context.watch<List<UserSetting>>(),
+                            users: context.watch<Users>().users,
                             validator: (value) {
                               if (value != null) {
                                 return "Please select a student from dropdown";
@@ -130,11 +138,12 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             },
                             onSaved: (student) {
                               setState(() {
-                                _student = context
+                                final stud = context
                                     .read<Users>()
                                     .users
-                                    .firstWhere((user) => user.name == student)
-                                    .email;
+                                    .firstWhere((user) => user.id == student);
+                                _student = stud.name;
+                                _studentId = stud.id;
                               });
                             },
                           ),
@@ -158,7 +167,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                           )
                         : SearchUsersFormField(
                             labelText: "Instructor Name",
-                            users: context.watch<List<UserSetting>>(),
+                            users: context.watch<Users>().users,
                             validator: (value) {
                               if (value != null) {
                                 return "Please select an instructor from dropdown";
@@ -168,12 +177,13 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             },
                             onSaved: (instructor) {
                               setState(() {
-                                _instructor = context
+                                final inst = context
                                     .read<Users>()
                                     .users
                                     .firstWhere(
-                                        (user) => user.name == instructor)
-                                    .email;
+                                        (user) => user.id == instructor);
+                                _instructor = inst.name;
+                                _instructorId = inst.id;
                               });
                             },
                           ),
@@ -325,7 +335,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                 child: ExpansionTile(
                   title: const Text("Grade Items"),
                   children: context
-                      .read<List<CTSItem>>() //_grades
+                      .read<CtsItems>()
+                      .ctsItems //_grades
                       .map(
                         (item) => Card(
                           child: Wrap(
@@ -409,7 +420,30 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                   ),
                 );
               } else {
-                //context.read<AWSState>().addGradeSheet();
+                GradeSheet mySheet = GradeSheet(
+                  instructorId: _instructorId!,
+                  studentId: _studentId!,
+                  overallGrade: _overall,
+                  overallComments: _overallC.text,
+                  weather: _weather,
+                  dayNight: _dayNight,
+                  startTime: _startTime!.millisecondsSinceEpoch,
+                  endTime: _endTime!.millisecondsSinceEpoch,
+                  recommendations: _reccs.text,
+                  missionNum: _missionN.text,
+                  profile: _sortiePro.text,
+                  isDraft: false,
+                );
+                context.read<AWSState>().addGradeSheet(mySheet);
+
+                for (CTSItem item in context.read<CtsItems>().ctsItems) {
+                  context.read<AWSState>().addGradeItem(GradeItem(
+                        gradesheetId: mySheet.id,
+                        ctsItemId: item.id,
+                        grade: _grades[item.name]!,
+                        comment: _comments[item.name],
+                      ));
+                }
                 /*
                 GradeSheet gradeSheet = GradeSheet(
                   id: _isEditing ? widget.gradeSheet!.id : null,
@@ -444,7 +478,6 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                     content: Text("Grade Sheet Added"),
                   ),
                 );
-                Navigator.pop(context);
                 Navigator.pop(context);
                 /*Navigator.push(
                   context,

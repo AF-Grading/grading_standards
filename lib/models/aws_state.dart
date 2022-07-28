@@ -84,6 +84,14 @@ class AWSState with ChangeNotifier {
     Amplify.DataStore.save(item);
   }
 
+  Future<void> addGradeSheet(GradeSheet item) async {
+    Amplify.DataStore.save(item);
+  }
+
+  Future<void> addGradeItem(GradeItem item) async {
+    Amplify.DataStore.save(item);
+  }
+
   Future<String> getSquad(String squadronID) async {
     final squad = await Amplify.DataStore.query(
       Squadron.classType,

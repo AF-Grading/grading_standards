@@ -2,10 +2,8 @@ import 'package:app_prototype/widgets/user_name_text_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/Users.dart';
 import '../models/cts_list.dart';
-import '../models/user.dart';
-import '../models/user_setting.dart';
-import '../models/users.dart';
 import '../views/new_grade_sheet_view.dart';
 import '/models/current_flight.dart';
 import '/models/grade_sheet.dart';
@@ -70,7 +68,8 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                   labelText: "Student Name",
                   //obtains list of users that filters out already used students
                   users: context
-                      .watch<List<UserSetting>>()
+                      .watch<Users>()
+                      .users
                       .where((user) =>
                           context.watch<CurrentFlight>().gradeSheets.indexWhere(
                               (sheet) => sheet.studentId == user.email) ==
@@ -100,7 +99,8 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                         GradeSheet(
                           instructorId: widget.gradeSheet.instructorId,
                           studentId: context
-                              .read<List<UserSetting>>()
+                              .read<Users>()
+                              .users
                               .firstWhere((user) => user.email == student)
                               .email,
                           missionNum: widget.gradeSheet.missionNum,
