@@ -122,43 +122,38 @@ Widget _buildWide(
 
 Widget _buildNarrow(
     FormFieldState<SortieType> formState, ValueChanged<SortieType>? onChanged) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Text("Sortie Type:"),
-            DropdownButton(
-                items: const [
-                  DropdownMenuItem(
-                      value: SortieType.local, child: Text("Local")),
-                  DropdownMenuItem(value: SortieType.ims, child: Text("IMS")),
-                  DropdownMenuItem(
-                      value: SortieType.mission, child: Text("Mission")),
-                  DropdownMenuItem(value: SortieType.ost, child: Text("OST")),
-                  DropdownMenuItem(
-                      value: SortieType.instmtSim, child: Text("ISS")),
-                  DropdownMenuItem(
-                      value: SortieType.tacticsSim, child: Text("Tactics Sim")),
-                  DropdownMenuItem(value: SortieType.mmp, child: Text("MMP")),
-                  DropdownMenuItem(value: SortieType.lfe, child: Text("JFE")),
-                ],
-                value: formState.value,
-                onChanged: (SortieType? newValue) {
-                  formState.didChange(newValue);
-                  onChanged!(newValue!);
-                }),
-          ],
-        ),
-        formState.hasError
-            ? Text(
-                formState.errorText!,
-                style: const TextStyle(color: Colors.red),
-              )
-            : Container()
-      ],
-    ),
+  return Column(
+    children: [
+      Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          DropdownButton(
+              items: const [
+                DropdownMenuItem(value: SortieType.local, child: Text("Local")),
+                DropdownMenuItem(value: SortieType.ims, child: Text("IMS")),
+                DropdownMenuItem(
+                    value: SortieType.mission, child: Text("Mission")),
+                DropdownMenuItem(value: SortieType.ost, child: Text("OST")),
+                DropdownMenuItem(
+                    value: SortieType.instmtSim, child: Text("ISS")),
+                DropdownMenuItem(
+                    value: SortieType.tacticsSim, child: Text("Tactics Sim")),
+                DropdownMenuItem(value: SortieType.mmp, child: Text("MMP")),
+                DropdownMenuItem(value: SortieType.lfe, child: Text("JFE")),
+              ],
+              value: formState.value,
+              onChanged: (SortieType? newValue) {
+                formState.didChange(newValue);
+                onChanged!(newValue!);
+              }),
+        ],
+      ),
+      formState.hasError
+          ? Text(
+              formState.errorText!,
+              style: const TextStyle(color: Colors.red),
+            )
+          : Container()
+    ],
   );
 }

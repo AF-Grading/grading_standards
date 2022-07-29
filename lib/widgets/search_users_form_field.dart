@@ -27,14 +27,19 @@ class SearchUsersFormField extends FormField<String> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TextFormField(
-                        //controller: _controller.text,
-                        decoration: InputDecoration(
-                          labelText: labelText,
-                        ),
-                        initialValue: formState.value,
-                        //validator: validator,
-                        onChanged: (value) => formState.didChange(value),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 150,
+                            child: Text(labelText),
+                          ),
+                          Flexible(
+                            child: TextFormField(
+                              initialValue: formState.value,
+                              onChanged: (value) => formState.didChange(value),
+                            ),
+                          ),
+                        ],
                       ),
                       Column(
                         children: formState.value != null
