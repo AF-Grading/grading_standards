@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
+
+import '../../models/individual_report.dart';
 
 class StatsButtons extends StatefulWidget {
   const StatsButtons({Key? key}) : super(key: key);
@@ -71,6 +75,25 @@ class _StatsButtonsState extends State<StatsButtons> {
 
           selectionMode: DateRangePickerSelectionMode.range,
           // initialSelectedDate: ,
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8, 0, 8, 30),
+          child: Column(
+            children: [
+              const Text(
+                "Overall Grade Over Time",
+                style: TextStyle(fontSize: 28),
+              ),
+              SizedBox(
+                width: 300,
+                height: 300,
+                child: charts.TimeSeriesChart(
+                  context.watch<IndividualReport>().overallChart,
+                  defaultRenderer: new charts.BarRendererConfig<DateTime>(),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

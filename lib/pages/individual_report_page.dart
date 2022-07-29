@@ -324,29 +324,7 @@ class IndividualReportPage extends StatelessWidget {
                             ),
 
                             // this is where the drop down buttons are suppose to be
-                            // StatsButtons(),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 0, 8, 30),
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "Overall Grade Over Time",
-                                    style: TextStyle(fontSize: 28),
-                                  ),
-                                  SizedBox(
-                                    width: 300,
-                                    height: 300,
-                                    child: charts.TimeSeriesChart(
-                                      context
-                                          .watch<IndividualReport>()
-                                          .overallChart,
-                                      defaultRenderer: new charts
-                                          .BarRendererConfig<DateTime>(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            StatsButtons(),
 
                             //  FIVE BOTTOM FIVE
 
