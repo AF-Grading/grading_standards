@@ -186,11 +186,23 @@ class _NewFlightView2State extends State<NewFlightView2> {
                         ),
                 ),
                 SpacedItem(
-                  name: "Pre-select Params:",
+                  name: "Pre-select Params",
                   child: GradingParamFormField(
                     onChanged: (value) => setState(() {
                       _params[i] = value;
                     }),
+                    validator: (value) {
+                      if (value == null) {
+                        setState(() {
+                          _studentError[i] = true;
+                        });
+                        return "Please select a value";
+                      }
+                      setState(() {
+                        _studentError[i] = false;
+                      });
+                      return null;
+                    },
                   ),
                 ),
               ]),
@@ -234,6 +246,9 @@ class _NewFlightView2State extends State<NewFlightView2> {
                 ),
               ],
             ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: 100),
           )
         ],
       ),

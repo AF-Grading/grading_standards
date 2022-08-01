@@ -140,7 +140,7 @@ class SheetListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(gradeSheet.missionNum!),
+      title: Text(gradeSheet.missionNum),
     );
   }
 }
