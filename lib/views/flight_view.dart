@@ -1,4 +1,5 @@
 import 'package:app_prototype/models/current_flight.dart';
+import 'package:app_prototype/models/user.dart';
 import 'package:app_prototype/widgets/grades_card.dart';
 import 'package:app_prototype/widgets/overall_card.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class _FlightViewState extends State<FlightView>
       //body: Column(
       slivers: [
         SliverAppBar(
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).canvasColor,
           // Removes the back button
           automaticallyImplyLeading: false,
           // Keeps the text at the Top of the screen
@@ -65,7 +66,10 @@ class _FlightViewState extends State<FlightView>
                   "Overall",
                   style: TextStyle(color: Colors.red),
                 )
-              : Text("Overall"),
+              : Text(
+                  "Overall",
+                  style: TextStyle(color: Theme.of(context).primaryColorDark),
+                ),
         ),
         SliverToBoxAdapter(
           child: OverallCard(
@@ -84,7 +88,7 @@ class _FlightViewState extends State<FlightView>
               }),
         ),
         SliverAppBar(
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).canvasColor,
           automaticallyImplyLeading: false,
           pinned: true,
           elevation: 0,
@@ -93,12 +97,20 @@ class _FlightViewState extends State<FlightView>
                   "Grades",
                   style: TextStyle(color: Colors.red),
                 )
-              : Text("Grades"),
+              : Text("Grades",
+                  style: TextStyle(color: Theme.of(context).primaryColorDark)),
         ),
         SliverToBoxAdapter(
           child: GradesCard(
               student: context.watch<List<UserSetting>>().firstWhere(
-                  (user) => user.email == widget.gradeSheet.studentId),
+                  (user) => user.email == widget.gradeSheet.studentId,
+                  orElse: () => UserSetting(
+                      name: "f",
+                      rank: Rank.capt,
+                      squad: "squad",
+                      email: "email",
+                      adQual: AdQual.acad,
+                      pilotQual: PilotQual.fpc)),
               grades: _selectedGrades,
               title: "Grades",
               hasErrors: (hasError) {
@@ -116,7 +128,7 @@ class _FlightViewState extends State<FlightView>
         ),
         _unselectedGrades.isNotEmpty
             ? SliverAppBar(
-                backgroundColor: Theme.of(context).backgroundColor,
+                backgroundColor: Theme.of(context).canvasColor,
                 automaticallyImplyLeading: false,
                 elevation: 0,
                 pinned: true,

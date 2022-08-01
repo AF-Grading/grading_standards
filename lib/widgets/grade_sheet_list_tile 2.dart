@@ -19,7 +19,7 @@ class GradeSheetListTile extends StatelessWidget {
         "${gradeSheet.overall!.index - 1}",
       ),
       title: UserNameTextBox(
-        email: gradeSheet.studentId,
+        email: gradeSheet.studentId != null ? gradeSheet.studentId! : "",
       ),
       trailing: Text(
           "${gradeSheet.startTime.day}-${gradeSheet.startTime.month}-${gradeSheet.startTime.year}"),

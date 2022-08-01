@@ -15,7 +15,7 @@ class DayNightFormField extends FormField<DayNight> {
             validator: validator,
             builder: (formState) {
               return LayoutBuilder(builder: (context, constraints) {
-                if (MediaQuery.of(context).size.width > 600) {
+                if (MediaQuery.of(context).size.width > 400) {
                   return _buildWide(formState, onChanged);
                 } else {
                   return _buildNarrow(formState, onChanged);
@@ -26,79 +26,83 @@ class DayNightFormField extends FormField<DayNight> {
 
 Widget _buildWide(
     FormFieldState<DayNight> formState, ValueChanged<DayNight>? onChanged) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Text("Day"),
-            Radio<DayNight>(
-              value: DayNight.day,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
+  return Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Row(
+              children: [
+                const Text("Day"),
+                Radio<DayNight>(
+                  value: DayNight.day,
+                  groupValue: formState.value,
+                  onChanged: (value) {
+                    formState.didChange(value);
+                    onChanged!(value!);
+                  },
+                ),
+              ],
             ),
-            const Text("Night"),
-            Radio<DayNight>(
-              value: DayNight.night,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-          ],
-        ),
-        formState.hasError
-            ? Text(
-                formState.errorText!,
-                style: const TextStyle(color: Colors.red),
-              )
-            : Container()
-      ],
-    ),
+          ),
+          Row(
+            children: [
+              const Text("Night"),
+              Radio<DayNight>(
+                value: DayNight.night,
+                groupValue: formState.value,
+                onChanged: (value) {
+                  formState.didChange(value);
+                  onChanged!(value!);
+                },
+              ),
+            ],
+          )
+        ],
+      ),
+      formState.hasError
+          ? Text(
+              formState.errorText!,
+              style: const TextStyle(color: Colors.red),
+            )
+          : Container()
+    ],
   );
 }
 
 Widget _buildNarrow(
     FormFieldState<DayNight> formState, ValueChanged<DayNight>? onChanged) {
   //DayNight dropdownValue = DayNight.noSelection;
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-      children: [
-        Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          const Text("Time of Day: "),
-          DropdownButton<DayNight>(
-            value: formState.value,
-            items: const [
-              DropdownMenuItem(
-                value: DayNight.day,
-                child: Text("Day"),
-              ),
-              DropdownMenuItem(
-                value: DayNight.night,
-                child: Text("Night"),
-              ),
-            ],
-            onChanged: (DayNight? newValue) {
-              formState.didChange(newValue);
-              onChanged!(newValue!);
-              //dropdownValue = newValue;
-            },
-          ),
-        ]),
-        formState.hasError
-            ? Text(
-                formState.errorText!,
-                style: const TextStyle(color: Colors.red),
-              )
-            : Container()
-      ],
-    ),
+  return Column(
+    children: [
+      Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        DropdownButton<DayNight>(
+          value: formState.value,
+          items: const [
+            DropdownMenuItem(
+              value: DayNight.day,
+              child: Text("Day"),
+            ),
+            DropdownMenuItem(
+              value: DayNight.night,
+              child: Text("Night"),
+            ),
+          ],
+          onChanged: (DayNight? newValue) {
+            formState.didChange(newValue);
+            onChanged!(newValue!);
+            //dropdownValue = newValue;
+          },
+        ),
+      ]),
+      formState.hasError
+          ? Text(
+              formState.errorText!,
+              style: const TextStyle(color: Colors.red),
+            )
+          : Container()
+    ],
   );
 }

@@ -15,7 +15,7 @@ class WeatherFormField extends FormField<Weather> {
           validator: validator,
           builder: (formState) {
             return LayoutBuilder(builder: (context, constraints) {
-              if (MediaQuery.of(context).size.width > 600) {
+              if (MediaQuery.of(context).size.width > 400) {
                 // print("printing out constraints" + (constraints.maxWidth).toString());
                 return _buildWide(formState, onChanged);
               } else {
@@ -28,42 +28,49 @@ class WeatherFormField extends FormField<Weather> {
 
 Widget _buildWide(
     FormFieldState<Weather> formState, ValueChanged<Weather>? onChanged) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Text("Weather: "),
-            const Text("vmc"),
-            Radio<Weather>(
-              value: Weather.vmc,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
+  return Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Row(
+              children: [
+                const Text("VMC"),
+                Radio<Weather>(
+                  value: Weather.vmc,
+                  groupValue: formState.value,
+                  onChanged: (value) {
+                    formState.didChange(value);
+                    onChanged!(value!);
+                  },
+                ),
+              ],
             ),
-            const Text("imc"),
-            Radio<Weather>(
-              value: Weather.imc,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-          ],
-        ),
-        formState.hasError
-            ? Text(
-                formState.errorText!,
-                style: const TextStyle(color: Colors.red),
-              )
-            : Container()
-      ],
-    ),
+          ),
+          Row(
+            children: [
+              const Text("IMC"),
+              Radio<Weather>(
+                value: Weather.imc,
+                groupValue: formState.value,
+                onChanged: (value) {
+                  formState.didChange(value);
+                  onChanged!(value!);
+                },
+              ),
+            ],
+          )
+        ],
+      ),
+      formState.hasError
+          ? Text(
+              formState.errorText!,
+              style: const TextStyle(color: Colors.red),
+            )
+          : Container()
+    ],
   );
 }
 
