@@ -19,10 +19,10 @@ import '../models/grade_items.dart';
 import '../models/grade_sheets.dart';
 import '../models/user_setting.dart';
 import '../widgets/date_picker.dart';
-import '../widgets/day_night_form_field.dart';
-import '../widgets/search_users_form_field.dart';
-import '../widgets/sortie_type_form_field.dart';
-import '../widgets/weather_form_field.dart';
+import '../widgets/form_fields/day_night_form_field.dart';
+import '../widgets/form_fields/search_users_form_field.dart';
+import '../widgets/form_fields/sortie_type_form_field.dart';
+import '../widgets/form_fields/weather_form_field.dart';
 import '../models/current_user.dart';
 //import '/models/cts_list.dart';
 import '/pages/grade_sheet_page.dart';
@@ -127,7 +127,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             ],
                           )
                         : SearchUsersFormField(
-                            labelText: "Student Name",
+                            //labelText: "Student Name",
                             users: context.watch<Users>().users,
                             validator: (value) {
                               if (value != null) {
@@ -166,7 +166,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             ],
                           )
                         : SearchUsersFormField(
-                            labelText: "Instructor Name",
+                            //labelText: "Instructor Name",
                             users: context.watch<Users>().users,
                             validator: (value) {
                               if (value != null) {

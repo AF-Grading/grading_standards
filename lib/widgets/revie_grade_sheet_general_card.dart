@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/current_flight.dart';
-import 'day_night_form_field.dart';
-import 'sortie_type_form_field.dart';
-import 'weather_form_field.dart';
+import 'form_fields/day_night_form_field.dart';
+import 'form_fields/sortie_type_form_field.dart';
+import 'form_fields/weather_form_field.dart';
 
 class ReviewGradeSheetGeneralCard extends StatelessWidget {
   const ReviewGradeSheetGeneralCard({Key? key}) : super(key: key);

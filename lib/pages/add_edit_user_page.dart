@@ -273,11 +273,18 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
             if (_formKey.currentState!.validate()) {
               // if adding a new user, verify the email does not already exist
               if (!_isEditing) {
-                var code = context
-                    .read<ApplicationState>()
-                    .register(_email.text, "password");
-                if (await code == "") {
-                  /*String id = context.read<Users>().updateById(
+                var code = context.read<AWSState>().addUser(User(
+                      email: _email.text,
+                      name: _name.text,
+                      //adQual: _adQual,
+                      //pilotQual: _pilotQual,
+                      //permission: _permission,
+                      themeMode: "system",
+                      squadronID: "",
+                    ));
+                //.register(_email.text, "password");
+                //if (await code == "") {
+                /*String id = context.read<Users>().updateById(
                         User(
                           //id: widget.user?.id,
                           name: _name.text,
@@ -288,12 +295,13 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                           password: widget.user?.password,
                         ),
                       );*/
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("User Added"),
-                    ),
-                  );
-                  context.read<ApplicationState>().addUserSetting(UserSetting(
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("User Added"),
+                  ),
+                );
+                //);
+                /*context.read<ApplicationState>().addUserSetting(UserSetting(
                         name: _name.text,
                         rank: _rank!,
                         squad: _squad,
@@ -301,24 +309,34 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                         adQual: _adQual!,
                         pilotQual: _pilotQual!,
                         permission: _permission,
-                      ));
-                  Navigator.pop(context);
-                } else {
+                      ));*/
+                Navigator.pop(context);
+                /* } else {
                   setState(() {
-                    code.then((value) {
-                      _error = value;
+                    //code.then((value) {
+                      //_error = value;
                       // revalidate the form
                       _formKey.currentState!.validate();
-                    });
+                    //});
                   });
-                }
+                } */
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("User Edited"),
                   ),
                 );
-                context.read<ApplicationState>().editUserSetting(UserSetting(
+
+                context.read<AWSState>().addUser(User(
+                      email: _email.text,
+                      name: _name.text,
+                      //adQual: _adQual,
+                      //pilotQual: _pilotQual,
+                      //permission: _permission,
+                      themeMode: "system",
+                      squadronID: "",
+                    ));
+                /*context.read<ApplicationState>().editUserSetting(UserSetting(
                       name: _name.text,
                       rank: _rank!,
                       squad: _squad,
@@ -326,7 +344,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                       adQual: _adQual!,
                       pilotQual: _pilotQual!,
                       permission: _permission,
-                    ));
+                    ));*/
                 Navigator.pop(context);
               }
             }

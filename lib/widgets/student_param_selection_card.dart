@@ -7,7 +7,7 @@ import '../models/cts_list.dart';
 import '../views/new_grade_sheet_view.dart';
 import '/models/current_flight.dart';
 import '/models/grade_sheet.dart';
-import 'search_users_form_field.dart';
+import 'form_fields/search_users_form_field.dart';
 
 class StudentParamSelectionCard extends StatefulWidget {
   const StudentParamSelectionCard({Key? key, required this.gradeSheet})
@@ -65,7 +65,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                           )),
                   child: const Text("Select a different student"))
               : SearchUsersFormField(
-                  labelText: "Student Name",
+                  //labelText: "Student Name",
                   //obtains list of users that filters out already used students
                   users: context
                       .watch<Users>()

@@ -7,12 +7,55 @@ import '../pages/current_flight_page.dart';
 import '../theme/light_mode.dart';
 
 class NewFlightButtons extends StatelessWidget {
-  const NewFlightButtons({Key? key}) : super(key: key);
+  const NewFlightButtons({Key? key, required this.formKey}) : super(key: key);
+
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
     bool keyBoardIsOpen = MediaQuery.of(context).viewInsets.bottom > 0;
-    return Wrap(
+    return Theme(
+      data: Theme.of(context).copyWith(backgroundColor: primaryYellow),
+      child: Visibility(
+        visible: !keyBoardIsOpen,
+        child: FloatingActionButton(
+          heroTag: "start flight",
+          // TODO if already pressed, instead have a resume flight button
+          tooltip: "Start Flight",
+          child: const Icon(Icons.airplanemode_active),
+          onPressed: () {
+            if (formKey.currentState!.validate()) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("VALIDATED!"),
+                ),
+              );
+            }
+            /*if (context
+                      .read<CurrentFlight>()
+                      .newKey
+                      .currentState!
+                      .validate()) {
+                    context.read<CurrentFlight>().instructorId =
+                        context.read<CurrentUser>().user!.email;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CurrentFlightPage(
+                          length:
+                              context.read<CurrentFlight>().gradeSheets.length,
+                        ),
+                      ),
+                    );
+                    // TODO if in a flight, dont do this
+                    context.read<CurrentFlight>().start();
+                  }*/
+          },
+        ),
+      ),
+    );
+
+    /*  Wrap(
       direction: Axis.horizontal,
       //mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -99,7 +142,14 @@ class NewFlightButtons extends StatelessWidget {
                 tooltip: "Start Flight",
                 child: const Icon(Icons.airplanemode_active),
                 onPressed: () {
-                  if (context
+                  if (formKey.currentState!.validate()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("VALIDATED!"),
+                      ),
+                    );
+                  }
+                  /*if (context
                       .read<CurrentFlight>()
                       .newKey
                       .currentState!
@@ -117,13 +167,13 @@ class NewFlightButtons extends StatelessWidget {
                     );
                     // TODO if in a flight, dont do this
                     context.read<CurrentFlight>().start();
-                  }
+                  }*/
                 },
               ),
             ),
           ),
         ),
       ],
-    );
+    ); */
   }
 }

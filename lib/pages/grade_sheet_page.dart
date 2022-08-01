@@ -1,9 +1,10 @@
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../models/GradeSheet.dart';
 import '../models/grade_enums.dart';
 import '../models/user_setting.dart';
-import '/models/grade_sheet.dart';
+//import '/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
 
 import 'add_edit_grade_sheet_page.dart';
@@ -42,12 +43,12 @@ class GradeSheetPage extends StatelessWidget {
                 GestureDetector(
                   child: const Icon(Icons.copy),
                   onTap: () {
-                    Clipboard.setData(ClipboardData(
+                    /*Clipboard.setData(ClipboardData(
                             text: gradeSheet.copy(instructor, student)))
                         .then((result) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Copied to your clipboard !')));
-                    });
+                    });*/
                   },
                 ),
                 GestureDetector(
@@ -114,7 +115,7 @@ class GradeSheetPage extends StatelessWidget {
                                   height: dist,
                                   child: ListTile(
                                       leading: const Text("Sortie Profile"),
-                                      title: Text(gradeSheet.profile))),
+                                      title: Text(gradeSheet.profile!))),
                             ),
                           ],
                         ),
@@ -129,7 +130,8 @@ class GradeSheetPage extends StatelessWidget {
                                 height: dist,
                                 child: ListTile(
                                   leading: const Text("Overall Grade"),
-                                  title: Text("${gradeSheet.overall!.number}"),
+                                  title:
+                                      Text("${gradeSheet.overallGrade!.index}"),
                                 ),
                               ),
                             ),
@@ -138,7 +140,7 @@ class GradeSheetPage extends StatelessWidget {
                                   height: dist,
                                   child: ListTile(
                                     leading: const Text("Comments"),
-                                    title: Text(gradeSheet.overallComments),
+                                    title: Text(gradeSheet.overallComments!),
                                   )),
                             ),
                           ],
@@ -148,7 +150,7 @@ class GradeSheetPage extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: ListTile(
                             leading: const Text("Recommendations"),
-                            title: Text(gradeSheet.recommendations),
+                            title: Text(gradeSheet.recommendations!),
                           )),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -160,17 +162,15 @@ class GradeSheetPage extends StatelessWidget {
                                     height: dist,
                                     child: ListTile(
                                       leading: const Text("Day/Night"),
-                                      title: Text(
-                                          gradeSheet.dayNight.prettyDayNight),
+                                      title: Text(gradeSheet.dayNight!.name),
                                     ))),
                             Expanded(
                               child: SizedBox(
                                 height: dist,
                                 child: ListTile(
-                                  leading: const Text("Date"),
-                                  title: Text(
-                                      "${gradeSheet.startTime.year}/${gradeSheet.startTime.month}/${gradeSheet.startTime.day}"),
-                                ),
+                                    leading: const Text("Date"), title: Text("")
+                                    //"${gradeSheet.startTime.year}/${gradeSheet.startTime.month}/${gradeSheet.startTime.day}"),
+                                    ),
                               ),
                             ),
                           ],
@@ -186,8 +186,7 @@ class GradeSheetPage extends StatelessWidget {
                                     height: dist,
                                     child: ListTile(
                                       leading: const Text("Sortie Type:"),
-                                      title: Text(
-                                          gradeSheet.sortieType.prettySortie),
+                                      title: Text(gradeSheet.sortieType!.name),
                                     ))),
                           ],
                         ),
@@ -197,17 +196,17 @@ class GradeSheetPage extends StatelessWidget {
                 ),
                 Card(
                   child: ExpansionTile(
-                    title: const Text("Graded Items"),
-                    initiallyExpanded: true,
-                    children: gradeSheet.grades
+                      title: const Text("Graded Items"),
+                      initiallyExpanded: true,
+                      children: [] /*gradeSheet.grades
                         .where((item) => item.grade != Grade.noGrade)
                         .map((item) => ListTile(
                               leading: Text("${item.grade!.number}"),
                               title: Text(item.name),
                               subtitle: Text(item.comments),
                             ))
-                        .toList(),
-                  ),
+                        .toList(),*/
+                      ),
                 ),
               ],
             ),

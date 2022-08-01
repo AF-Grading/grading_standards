@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/DayNight.dart';
+import '../../models/DayNight.dart';
 
 class DayNightFormField extends FormField<DayNight> {
   DayNightFormField(
@@ -15,8 +15,8 @@ class DayNightFormField extends FormField<DayNight> {
             validator: validator,
             builder: (formState) {
               return LayoutBuilder(builder: (context, constraints) {
-                if (MediaQuery.of(context).size.width > 600) {
-                  return _buildWide(formState, onChanged);
+                if (MediaQuery.of(context).size.width > 300) {
+                  return _buildWide(formState, onChanged, context);
                 } else {
                   return _buildNarrow(formState, onChanged);
                 }
@@ -24,43 +24,50 @@ class DayNightFormField extends FormField<DayNight> {
             });
 }
 
-Widget _buildWide(
-    FormFieldState<DayNight> formState, ValueChanged<DayNight>? onChanged) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Text("Day"),
-            Radio<DayNight>(
-              value: DayNight.DAY,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-            const Text("Night"),
-            Radio<DayNight>(
-              value: DayNight.NIGHT,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-          ],
-        ),
-        formState.hasError
-            ? Text(
-                formState.errorText!,
-                style: const TextStyle(color: Colors.red),
-              )
-            : Container()
-      ],
-    ),
+Widget _buildWide(FormFieldState<DayNight> formState,
+    ValueChanged<DayNight>? onChanged, BuildContext context) {
+  return Row(
+    children: [
+      Row(
+        children: [
+          SizedBox(
+            width: 40,
+            child: const Text("Day"),
+          ),
+          Radio<DayNight>(
+            value: DayNight.DAY,
+            groupValue: formState.value,
+            onChanged: (value) {
+              formState.didChange(value);
+              onChanged!(value!);
+            },
+            fillColor: formState.hasError
+                ? MaterialStateProperty.resolveWith<Color>((states) {
+                    return Colors.red;
+                  })
+                : Theme.of(context).radioTheme.fillColor,
+          ),
+        ],
+      ),
+      Row(
+        children: [
+          SizedBox(width: 40, child: const Text("Night")),
+          Radio<DayNight>(
+            value: DayNight.NIGHT,
+            groupValue: formState.value,
+            onChanged: (value) {
+              formState.didChange(value);
+              onChanged!(value!);
+            },
+            fillColor: formState.hasError
+                ? MaterialStateProperty.resolveWith<Color>((states) {
+                    return Colors.red;
+                  })
+                : Theme.of(context).radioTheme.fillColor,
+          ),
+        ],
+      )
+    ],
   );
 }
 

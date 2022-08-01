@@ -24,12 +24,12 @@ class GradeSheetListTile extends StatelessWidget {
       trailing: Text(
           "${gradeSheet.startTime.day}-${gradeSheet.startTime.month}-${gradeSheet.startTime.year}"),
       onTap: () {
-        Navigator.push(
+        /* Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => GradeSheetPage(gradeSheet: gradeSheet),
-          ),
-        );
+              builder: (context) =>  //GradeSheetPage(gradeSheet: gradeSheet),
+              ),
+        ); */
       },
     );
   }

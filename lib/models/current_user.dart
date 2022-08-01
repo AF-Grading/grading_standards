@@ -11,20 +11,20 @@ class CurrentUser extends ChangeNotifier {
   CurrentUser() {
     print("In Current USEr");
     getSession();
-    Amplify.Hub.listen([HubChannel.Auth], (hubEvent) {
-      print("EVENTAASADSD ${hubEvent.eventName}");
+    Amplify.Hub.listen([HubChannel.Auth], (hubEvent) async {
       switch (hubEvent.eventName) {
         case 'SIGNED_IN':
-          /*final AuthUser authUser = await Amplify.Auth.getCurrentUser();
-          subscription = await Amplify.DataStore.observeQuery(User.classType)
+          final AuthUser authUser = await Amplify.Auth.getCurrentUser();
+          Amplify.DataStore.observeQuery(User.classType)
               .listen((QuerySnapshot<User> snapshot) {
             _user = snapshot.items
                 .firstWhere((user) => user.email == authUser.username);
             notifyListeners();
-          });*/
+          });
           print('USER IS SIGNED IN');
           break;
         case 'SIGNED_OUT':
+          _user = null;
           print('USER IS SIGNED OUT');
           break;
         case 'SESSION_EXPIRED':
@@ -38,13 +38,16 @@ class CurrentUser extends ChangeNotifier {
   }
 
   getSession() async {
-    final AuthUser authUser = await Amplify.Auth.getCurrentUser();
-    subscription = Amplify.DataStore.observeQuery(User.classType)
-        .listen((QuerySnapshot<User> snapshot) {
-      _user =
-          snapshot.items.firstWhere((user) => user.email == authUser.username);
-      notifyListeners();
-    });
+    final session = await Amplify.Auth.fetchAuthSession();
+    if (session.isSignedIn) {
+      final AuthUser authUser = await Amplify.Auth.getCurrentUser();
+      subscription = Amplify.DataStore.observeQuery(User.classType)
+          .listen((QuerySnapshot<User> snapshot) {
+        _user = snapshot.items
+            .firstWhere((user) => user.email == authUser.username);
+        notifyListeners();
+      });
+    }
   }
 
   late final StreamSubscription subscription;

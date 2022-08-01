@@ -84,6 +84,10 @@ class AWSState with ChangeNotifier {
     Amplify.DataStore.save(item);
   }
 
+  Future<void> addUser(User item) async {
+    Amplify.DataStore.save(item);
+  }
+
   Future<void> addGradeSheet(GradeSheet item) async {
     Amplify.DataStore.save(item);
   }

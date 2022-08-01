@@ -1,3 +1,4 @@
+import 'package:app_prototype/views/new_flight_view_2.dart';
 import 'package:app_prototype/widgets/offline_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,8 @@ class HomePageOld extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   late TabController _controller;
   int _index = 0;
   late int tabLength;
@@ -98,7 +101,9 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                 children: widget.permission == 1
                     ? [
                         //NewGradeSheetView(),
-                        NewFlightView(),
+                        NewFlightView2(
+                          formKey: _formKey,
+                        ),
                         const IndividualReportsView(),
                         TrainingShopPage(
 /*
@@ -106,7 +111,8 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                           squad: context.read<CurrentUser>().user!.squadronID,
                           */
                           instructor: true,
-                          gradeSheets: context
+                          gradeSheets: [],
+                          /*context
                               .watch<List<GradeSheet>>()
                               .where((element) {
                             //find the studentID, then find that individual base on their email (since studentID are the individuals email)
@@ -134,19 +140,21 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                             }
 
                             return returnVar;
-                          }).toList(),
+                          }).toList(),*/
                           squad: context.read<CurrentUser>().user!.squadronID,
                         ),
                       ]
                     : [
-                        NewFlightView(),
+                        NewFlightView2(
+                          formKey: _formKey,
+                        ),
                         IndividualReportsView(),
                         TrainingShopView(),
                       ],
               ),
               floatingActionButton:
                   // only show buttons if on new flight tab
-                  _index == 0 ? const NewFlightButtons() : null,
+                  _index == 0 ? NewFlightButtons(formKey: _formKey) : null,
             ),
     );
   }

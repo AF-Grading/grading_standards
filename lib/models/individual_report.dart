@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:timer_builder/timer_builder.dart';
 
+//import 'GradeItem.dart';
+//import 'GradeSheet.dart';
 import 'grade_enums.dart';
 import 'grade_sheet.dart';
 
@@ -142,7 +144,6 @@ class IndividualReport with ChangeNotifier {
       for (GradeItem item in baseGradeItems) item.name: 0
     };
     Map<String, double> averages = {
-
       for (GradeItem item in baseGradeItems) item.name: 0
     };
 
@@ -187,7 +188,7 @@ class IndividualReport with ChangeNotifier {
 
     current.sort((a, b) => a.average.compareTo(b.average));
 
-    return current.take(5).toList();
+    /*  */ return current.take(5).toList();
   }
 }
 

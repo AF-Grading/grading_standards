@@ -235,21 +235,22 @@ class TrainingShopPage extends StatelessWidget {
                             ),
                             for (GradeSheet sheet in gradeSheets)
                               ListTile(
-                                trailing:
-                                    Text("Grade ${sheet.overall!.index - 2}"),
-                                title: Text(sheet.instructorId),
-                                subtitle: Text(sheet.studentId),
-                                leading: Text(
-                                    "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
-                                onTap: () => Navigator.push(
+                                  trailing:
+                                      Text("Grade ${sheet.overall!.index - 2}"),
+                                  title: Text(sheet.instructorId),
+                                  subtitle: Text(sheet.studentId),
+                                  leading: Text(
+                                      "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
+                                  onTap: () =>
+                                      {} /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => GradeSheetPage(
                                       gradeSheet: sheet,
                                     ),
                                   ),
-                                ),
-                              ),
+                                ), */
+                                  ),
                           ]
                         : [
                             // build narrow
@@ -437,21 +438,22 @@ class TrainingShopPage extends StatelessWidget {
                             ),
                             for (GradeSheet sheet in gradeSheets)
                               ListTile(
-                                trailing:
-                                    Text("Grade ${sheet.overall!.index - 2}"),
-                                title: Text(sheet.instructorId),
-                                subtitle: Text(sheet.studentId),
-                                leading: Text(
-                                    "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
-                                onTap: () => Navigator.push(
+                                  trailing:
+                                      Text("Grade ${sheet.overall!.index - 2}"),
+                                  title: Text(sheet.instructorId),
+                                  subtitle: Text(sheet.studentId),
+                                  leading: Text(
+                                      "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
+                                  onTap: () =>
+                                      {} /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => GradeSheetPage(
                                       gradeSheet: sheet,
                                     ),
                                   ),
-                                ),
-                              ),
+                                ), */
+                                  ),
                           ]
 
                     //Text(context.watch<TrainingShop>().first.student),

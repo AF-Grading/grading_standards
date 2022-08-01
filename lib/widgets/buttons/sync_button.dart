@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/application_state.dart';
@@ -21,3 +21,4 @@ class SyncButton extends StatelessWidget {
     );
   }
 }
+ */

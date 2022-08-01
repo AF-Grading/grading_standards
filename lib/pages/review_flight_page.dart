@@ -117,9 +117,9 @@ class ReviewFlightPage extends StatelessWidget {
               context.read<CurrentFlight>().updateAll();
               for (GradeSheet sheet
                   in context.read<CurrentFlight>().gradeSheets) {
-                context.read<GradeSheets>().addSheet(sheet);
+                //context.read<GradeSheets>().addSheet(sheet);
                 // TODO if no internet, make sure sheet is draft and dont add
-                context.read<ApplicationState>().addGradeSheet(sheet);
+                //context.read<ApplicationState>().addGradeSheet(sheet);
               }
               context.read<CurrentFlight>().clear();
               // gets rid of all the flight pages and pushes the home page

@@ -83,10 +83,10 @@ class _SignedInPageState extends State<SignedInPage> {
           home: appState.state == CurrentState.loggedIn
               ? MultiProvider(
                   providers: [
-                    StreamProvider<List<UserSetting>>(
+                    /* StreamProvider<List<UserSetting>>(
                       create: (_) => context.read<ApplicationState>().users,
                       initialData: const [],
-                    ),
+                    ), */
                     StreamProvider<List<CTSItem>>(
                         create: (_) => context.read<AWSState>().ctsItems,
                         initialData: const [])

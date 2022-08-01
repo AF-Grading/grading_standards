@@ -1,4 +1,4 @@
-import 'package:app_prototype/widgets/sortie_type_form_field.dart';
+/* import 'package:app_prototype/widgets/sortie_type_form_field.dart';
 import 'package:app_prototype/widgets/student_param_selection_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../models/grade_sheet.dart';
 import '/widgets/weather_form_field.dart';
-import '/models/current_flight.dart';
+//import '/models/current_flight.dart';
 import '/widgets/day_night_form_field.dart';
 
 class NewFlightView extends StatelessWidget {
@@ -196,7 +196,7 @@ class NewFlightView extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
+                ), 
               ),
               for (GradeSheet gradeSheet
                   in context.watch<CurrentFlight>().gradeSheets)
@@ -208,3 +208,4 @@ class NewFlightView extends StatelessWidget {
     ));
   }
 }
+ */

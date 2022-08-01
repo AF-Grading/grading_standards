@@ -44,12 +44,12 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ApplicationState()),
+        //ChangeNotifierProvider(create: (context) => ApplicationState()),
         ChangeNotifierProvider(create: (context) => AWSState()),
       ],
       child: Phoenix(
         child: MultiProvider(providers: [
-          ChangeNotifierProvider(create: (context) => GradeSheets()),
+          //ChangeNotifierProvider(create: (context) => GradeSheets()),
           ChangeNotifierProvider(create: (context) => CurrentFlight()),
           ChangeNotifierProvider(create: (context) => Users()),
           ChangeNotifierProvider(create: (context) => CtsItems()),
