@@ -1,4 +1,5 @@
 import 'package:app_prototype/pages/home_page_old.dart';
+import 'package:app_prototype/widgets/slivers/barrel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,16 +29,7 @@ class ReviewFlightPage extends StatelessWidget {
         key: context.read<CurrentFlight>().reviewKey,
         child: CustomScrollView(
           slivers: [
-            SliverAppBar(
-              backgroundColor: Theme.of(context).canvasColor,
-              // Removes the back button
-              automaticallyImplyLeading: false,
-              // Keeps the text at the Top of the screen
-              pinned: true,
-              elevation: 0,
-              title: Text("General",
-                  style: TextStyle(color: Theme.of(context).primaryColorDark)),
-            ),
+            SliverTitleBar("General"),
             SliverToBoxAdapter(
               child: ReviewGradeSheetGeneralCard(),
             ),
@@ -83,29 +75,17 @@ class ReviewFlightPage extends StatelessWidget {
                 : SliverToBoxAdapter(),*/
             for (GradeSheet gradeSheet
                 in context.watch<CurrentFlight>().gradeSheets) ...[
-              SliverAppBar(
-                backgroundColor: Theme.of(context).canvasColor,
-                // Removes the back button
-                automaticallyImplyLeading: false,
-                // Keeps the text at the Top of the screen
-                pinned: true,
-                elevation: 0,
-                title: Text(
-                    context
-                        .watch<List<UserSetting>>()
-                        .firstWhere(
-                            (user) => user.email == gradeSheet.studentId,
-                            orElse: () => UserSetting(
-                                name: "f",
-                                rank: Rank.capt,
-                                squad: "squad",
-                                email: "email",
-                                adQual: AdQual.acad,
-                                pilotQual: PilotQual.fpc))
-                        .name,
-                    style:
-                        TextStyle(color: Theme.of(context).primaryColorDark)),
-              ),
+              SliverTitleBar(context
+                  .watch<List<UserSetting>>()
+                  .firstWhere((user) => user.email == gradeSheet.studentId,
+                      orElse: () => UserSetting(
+                          name: "f",
+                          rank: Rank.capt,
+                          squad: "squad",
+                          email: "email",
+                          adQual: AdQual.acad,
+                          pilotQual: PilotQual.fpc))
+                  .name),
               SliverToBoxAdapter(
                   child: ReviewGradeSheetCard(
                 gradeSheet: gradeSheet,

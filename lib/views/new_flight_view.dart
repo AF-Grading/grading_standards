@@ -10,6 +10,7 @@ import '../models/user_setting.dart';
 import '/widgets/weather_form_field.dart';
 import '/models/current_flight.dart';
 import '/widgets/day_night_form_field.dart';
+import '/widgets/slivers/barrel.dart';
 
 class NewFlightView extends StatelessWidget {
   const NewFlightView({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class NewFlightView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        TitleSliver(title: "General"),
+        SliverTitleBar("General"),
         SliverToBoxAdapter(
           child: Column(
             children: [
@@ -132,17 +133,16 @@ class NewFlightView extends StatelessWidget {
         ),
         for (GradeSheet gradeSheet
             in context.watch<CurrentFlight>().gradeSheets) ...[
-          TitleSliver(
-              title: gradeSheet.studentId == "1" ||
-                      gradeSheet.studentId == "2" ||
-                      gradeSheet.studentId == "3" ||
-                      gradeSheet.studentId == "4" ||
-                      gradeSheet.studentId == "0"
-                  ? "Student"
-                  : context
-                      .watch<List<UserSetting>>()
-                      .firstWhere((user) => user.email == gradeSheet.studentId)
-                      .name),
+          SliverTitleBar(gradeSheet.studentId == "1" ||
+                  gradeSheet.studentId == "2" ||
+                  gradeSheet.studentId == "3" ||
+                  gradeSheet.studentId == "4" ||
+                  gradeSheet.studentId == "0"
+              ? "Student"
+              : context
+                  .watch<List<UserSetting>>()
+                  .firstWhere((user) => user.email == gradeSheet.studentId)
+                  .name),
           SliverToBoxAdapter(
             child: StudentParamSelectionCard(gradeSheet: gradeSheet),
           ),
