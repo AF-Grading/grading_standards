@@ -246,7 +246,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
               if (!_isEditing) {
                 var code = context
                     .read<ApplicationState>()
-                    .register(_email.text, "password");
+                    .register(_email.text, "password", (e) {});
                 if (await code == "") {
                   /*String id = context.read<Users>().updateById(
                         User(

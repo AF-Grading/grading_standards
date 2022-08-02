@@ -1,11 +1,12 @@
+import 'package:app_prototype/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:provider/provider.dart';
 
-import '../models/application_state.dart';
-import '../models/user.dart';
-import '../models/users.dart';
-import '../models/current_user.dart';
+import '../../models/application_state.dart';
+import '../../models/user.dart';
+import '../../models/users.dart';
+import '../../models/current_user.dart';
 
 class UserLoginPage extends StatefulWidget {
   const UserLoginPage({Key? key}) : super(key: key);
@@ -99,53 +100,64 @@ class _UserLoginPageState extends State<UserLoginPage> {
                   },
                 ),
               ),
-              ElevatedButton(
-                  onPressed: () async {
-                    // Firebase Auth
-                    Future<bool> withoutErrors = context
-                        .read<ApplicationState>()
-                        .signInWithEmailAndPassword(_email, _password, (e) {
-                      setState(() {
-                        //_error
-                        _error = e.message;
-                      });
-                    });
-                    if (await withoutErrors) {
-                      context
-                          .read<ApplicationState>()
-                          .fetchCurrentUserSettings(_email)
-                          .then((value) =>
-                              context.read<CurrentUser>().userSetting = value)
-                          .then(
-                        (value) {
-                          if (value.permission.index >=
-                              Permission.student.index) {
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      onPressed: () async {
+                        // Firebase Auth
+                        Future<bool> withoutErrors = context
+                            .read<ApplicationState>()
+                            .signInWithEmailAndPassword(_email, _password, (e) {
+                          setState(() {
+                            //_error
+                            _error = e.message;
+                          });
+                        });
+                        if (await withoutErrors) {
+                          context
+                              .read<ApplicationState>()
+                              .fetchCurrentUserSettings(_email)
+                              .then((value) => context
+                                  .read<CurrentUser>()
+                                  .userSetting = value)
+                              .then(
+                            (value) {
+                              if (value.permission.index >=
+                                  Permission.student.index) {
+                                Navigator.popAndPushNamed(context, '/home');
+                              } else {
+                                setState(() {
+                                  _logInFail = true;
+                                });
+                              }
+                            },
+                          ).onError((error, stackTrace) {
+                            context.read<ApplicationState>().loginState =
+                                ApplicationLoginState.noUser;
                             Navigator.popAndPushNamed(context, '/home');
-                          } else {
-                            setState(() {
-                              _logInFail = true;
-                            });
-                          }
-                          /*for (User user in Users().users) {
-                            if (user.email == _email &&
-                                user.password == _password) {
-                              setState(() {
-                                _logInFail = false;
-                              });
-
-                              CurrentUser().setUser = user;
-
-                              context.read<CurrentUser>().setUser = user;*/
-
-                          // }
-                          // }
-                        },
+                          });
+                        } else {
+                          _formKey.currentState!.validate();
+                        }
+                      },
+                      child: const Text('Login')),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterPage(),
+                        ),
                       );
-                    } else {
-                      _formKey.currentState!.validate();
-                    }
-                  },
-                  child: const Text('Login')),
+                    },
+                    child: Text(
+                      "Or sign up",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ),
+                ],
+              ),
             ]),
           ),
         ),

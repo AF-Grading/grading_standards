@@ -42,6 +42,8 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
       tabLength = 3;
     } else if (widget.permission > 1) {
       tabLength = 3;
+    } else {
+      tabLength = 0;
     }
 
     _controller = TabController(length: tabLength, vsync: this);
@@ -55,90 +57,101 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Form(
       key: context.watch<CurrentFlight>().newKey,
-      child: tabLength == 1
+      child: tabLength == 0
           ? Scaffold(
-              appBar: AppBar(title: Text(widget.title)),
-              body: const GradeSheetsView(
-                isInstructor: false,
+              appBar: AppBar(title: Text("No User")),
+              body: Center(
+                child: Text(
+                    "No User. Please inform the higher office to create a user with the current email address."),
               ),
-              drawer: AppDrawer(),
             )
-          : Scaffold(
-              appBar: AppBar(
-                title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(widget.title),
-                      const OfflineChecker(),
-                      //const SyncButton(),
-                    ]),
-                bottom: widget.permission == 1
-                    ? TabBar(
-                        controller: _controller,
-                        tabs: [
-                          Tab(text: 'New Flight'),
-                          Tab(text: 'Reports'),
-                          Tab(text: 'Squads'),
-                        ],
-                      )
-                    : TabBar(
-                        controller: _controller,
-                        tabs: const [
-                          Tab(text: 'New Flight'),
-                          Tab(text: 'Reports'),
-                          Tab(text: 'Squads'),
-                        ],
-                      ),
-              ),
-              drawer: AppDrawer(),
-              body: TabBarView(
-                controller: _controller,
-                children: widget.permission == 1
-                    ? [
-                        //NewGradeSheetView(),
-                        NewFlightView(),
-                        const IndividualReportsView(),
-                        TrainingShopPage(
-                          instructor: true,
-                          gradeSheets: context
-                              .watch<List<GradeSheet>>()
-                              .where((element) {
-                            //find the studentID, then find that individual base on their email (since studentID are the individuals email)
-                            //then find the squdron of that individual, and then find all the individuals in that squadron
-                            //then find all of their gradesheets
+          : tabLength == 1
+              ? Scaffold(
+                  appBar: AppBar(title: Text(widget.title)),
+                  body: const GradeSheetsView(
+                    isInstructor: false,
+                  ),
+                  drawer: AppDrawer(),
+                )
+              : Scaffold(
+                  appBar: AppBar(
+                    title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(widget.title),
+                          const OfflineChecker(),
+                          //const SyncButton(),
+                        ]),
+                    bottom: widget.permission == 1
+                        ? TabBar(
+                            controller: _controller,
+                            tabs: [
+                              Tab(text: 'New Flight'),
+                              Tab(text: 'Reports'),
+                              Tab(text: 'Squads'),
+                            ],
+                          )
+                        : TabBar(
+                            controller: _controller,
+                            tabs: const [
+                              Tab(text: 'New Flight'),
+                              Tab(text: 'Reports'),
+                              Tab(text: 'Squads'),
+                            ],
+                          ),
+                  ),
+                  drawer: AppDrawer(),
+                  body: TabBarView(
+                    controller: _controller,
+                    children: widget.permission == 1
+                        ? [
+                            //NewGradeSheetView(),
+                            NewFlightView(),
+                            const IndividualReportsView(),
+                            TrainingShopPage(
+                              instructor: true,
+                              gradeSheets: context
+                                  .watch<List<GradeSheet>>()
+                                  .where((element) {
+                                //find the studentID, then find that individual base on their email (since studentID are the individuals email)
+                                //then find the squdron of that individual, and then find all the individuals in that squadron
+                                //then find all of their gradesheets
 
-                            bool returnVar = false;
-                            try {
-                              context
-                                  .watch<List<UserSetting>>()
-                                  .forEach((user) {
-                                if (user.email == element.studentId) {
-                                  if (user.squad ==
-                                      context.read<CurrentUser>().user.squad) {
-                                    returnVar = true;
-                                    throw "";
-                                  }
+                                bool returnVar = false;
+                                try {
+                                  context
+                                      .watch<List<UserSetting>>()
+                                      .forEach((user) {
+                                    if (user.email == element.studentId) {
+                                      if (user.squad ==
+                                          context
+                                              .read<CurrentUser>()
+                                              .user
+                                              .squad) {
+                                        returnVar = true;
+                                        throw "";
+                                      }
+                                    }
+                                  });
+                                } catch (e) {
+                                  print(e);
                                 }
-                              });
-                            } catch (e) {
-                              print(e);
-                            }
 
-                            return returnVar;
-                          }).toList(),
-                          squad: context.read<CurrentUser>().user.squad,
-                        ),
-                      ]
-                    : [
-                        NewFlightView(),
-                        IndividualReportsView(),
-                        TrainingShopView(),
-                      ],
-              ),
-              floatingActionButton:
-                  // only show buttons if on new flight tab
-                  _index == 0 ? const NewFlightButtons() : null,
-            ),
+                                return returnVar;
+                              }).toList(),
+                              squad: context.read<CurrentUser>().user.squad,
+                            ),
+                          ]
+                        : [
+                            NewFlightView(),
+                            IndividualReportsView(),
+                            TrainingShopView(),
+                          ],
+                  ),
+                  floatingActionButton:
+                      // only show buttons if on new flight tab
+                      _index == 0 ? const NewFlightButtons() : null,
+                ),
     );
   }
 }
