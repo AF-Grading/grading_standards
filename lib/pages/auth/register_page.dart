@@ -1,4 +1,7 @@
 import 'package:app_prototype/models/application_state.dart';
+import 'package:app_prototype/models/grade_enums.dart';
+import 'package:app_prototype/models/user.dart';
+import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:provider/provider.dart';
@@ -106,6 +109,15 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
 
                       if (e.isEmpty) {
+                        context.read<ApplicationState>().addUserSetting(
+                            UserSetting(
+                                name: "Test User",
+                                rank: Rank.secondLt,
+                                squad: "4th Airlift Squad",
+                                email: _email.text,
+                                adQual: AdQual.cpad,
+                                pilotQual: PilotQual.fpq,
+                                permission: Permission.wing_training));
                         Navigator.pop(context);
                       }
 

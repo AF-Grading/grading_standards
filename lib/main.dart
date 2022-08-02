@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
                       theme: light_theme,
                       darkTheme: dark_theme,
                       // themeMode: value.mode,
-                      themeMode: context.watch<ThemeChange>().mode,
+                      themeMode: context.watch<CurrentUser>().mode,
                       home: HomePageOld(
                           title: "Flying Standards",
                           permission:
