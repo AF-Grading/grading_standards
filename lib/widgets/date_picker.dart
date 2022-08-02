@@ -75,7 +75,7 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
         _startNull = false;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
-              'Selected: ${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}'),
+              'Selected: ${_selectedDate.value.month}/${_selectedDate.value.day}/${_selectedDate.value.year}'),
         ));
       });
       widget.onChanged(_date);
@@ -89,7 +89,7 @@ class _DatePickerState extends State<DatePicker> with RestorationMixin {
       children: [
         _startNull
             ? const Text("N/a")
-            : Text('Date: ${_date.year}/${_date.month}/${_date.day}'),
+            : Text('Date: ${_date.month}/${_date.day}/${_date.year}'),
         OutlinedButton(
           onPressed: () {
             _restorableDatePickerRouteFuture.present();

@@ -6,31 +6,37 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../models/grade_enums.dart';
-import '../widgets/stats/stats_buttons.dart';
+import '../widgets/date_picker.dart';
+import '../widgets/stats/stats_buttons_individual.dart';
+import '../widgets/stats/stats_vars.dart';
 import '/models/user.dart';
 import 'grade_sheet_page.dart';
 
-class IndividualReportPage extends StatelessWidget {
-  const IndividualReportPage({
+class IndividualReportPage extends StatefulWidget {
+  IndividualReportPage({
     Key? key,
     required this.user,
     required this.gradeSheets,
   }) : super(key: key);
-
   final User user;
   final List<GradeSheet> gradeSheets;
+  late TimeCalculate curr_value;
 
+  _IndividualReportPageState createState() => _IndividualReportPageState();
+}
+
+class _IndividualReportPageState extends State<IndividualReportPage> {
   @override
   Widget build(BuildContext context) {
     // We create the provider here because it will change for each student
     return ChangeNotifierProvider(
       // Here we inject the Individual's gradesheets
-      create: (context) => IndividualReport(gradeSheets),
+      create: (context) => IndividualReport(widget.gradeSheets),
       builder: (context, individualReport) {
         return Scaffold(
-          appBar: AppBar(title: Text(user.name)),
+          appBar: AppBar(title: Text(widget.user.name)),
           body: SingleChildScrollView(
-            child: gradeSheets.length == 0
+            child: widget.gradeSheets.length == 0
                 ? Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -271,7 +277,7 @@ class IndividualReportPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 28),
                               ),
                             ),
-                            for (GradeSheet sheet in gradeSheets)
+                            for (GradeSheet sheet in widget.gradeSheets)
                               ListTile(
                                 trailing:
                                     Text("Grade ${sheet.overall!.index - 2}"),
@@ -324,7 +330,34 @@ class IndividualReportPage extends StatelessWidget {
                             ),
 
                             // this is where the drop down buttons are suppose to be
-                            StatsButtons(),
+                            Text("Start Date"),
+                            DatePicker(
+                              date: context.watch<IndividualReport>().startDate,
+                              onChanged: (value) => setState(() {
+                                context.read<IndividualReport>().dateStart =
+                                    value;
+                              }),
+                            ),
+                            Text("End Date"),
+                            DatePicker(
+                              date: context.watch<IndividualReport>().endDate,
+                              onChanged: (value) => setState(() {
+                                context.read<IndividualReport>().dateEnd =
+                                    value;
+                              }),
+                            ),
+                            StatsButtonsIndividual(
+                              initialValue: TimeCalculate.pastMonthToday,
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Please select a value";
+                                }
+                                return null;
+                              },
+                              onChanged: (value) => setState(() {
+                                widget.curr_value = value;
+                              }),
+                            ),
 
                             //  FIVE BOTTOM FIVE
 
@@ -464,7 +497,7 @@ class IndividualReportPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 28),
                               ),
                             ),
-                            for (GradeSheet sheet in gradeSheets)
+                            for (GradeSheet sheet in widget.gradeSheets)
                               ListTile(
                                 trailing:
                                     Text("Grade ${sheet.overall!.index - 2}"),

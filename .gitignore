@@ -31,6 +31,12 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+Flutter 3.podspec
+flutter_export_environment 3.sh
+.flutter-plugins 3
+.flutter-plugins-dependencies 3
+.packages 3
+Generated 3.xcconfig
 
 # Web related
 lib/generated_plugin_registrant.dart
