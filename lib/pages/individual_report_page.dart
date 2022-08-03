@@ -288,7 +288,9 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                 style: TextStyle(fontSize: 28),
                               ),
                             ),
-                            for (GradeSheet sheet in widget.gradeSheets)
+                            for (GradeSheet sheet in context
+                                .watch<IndividualReport>()
+                                .modifiedGradeSheets)
                               ListTile(
                                 trailing:
                                     Text("Grade ${sheet.overall!.index - 2}"),
@@ -358,7 +360,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                               }),
                             ),
                             StatsButtonsIndividual(
-                              initialValue: TimeCalculate.pastMonthToday,
+                              initialValue: TimeCalculate.all,
                               validator: (value) {
                                 if (value == null) {
                                   return "Please select a value";
@@ -380,7 +382,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                   style: TextStyle(fontSize: 28),
                                 ),
                                 const Text(
-                                  "(most recent best performing 5 category)",
+                                  "(best performing 5 category during selected time period)",
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontStyle: FontStyle.italic),
@@ -411,7 +413,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                   style: TextStyle(fontSize: 28),
                                 ),
                                 const Text(
-                                  "(most recent worst performing 5 category)",
+                                  "(worst performing 5 category during selected time period)",
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontStyle: FontStyle.italic),
@@ -443,7 +445,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                     style: TextStyle(fontSize: 28),
                                   ),
                                   const Text(
-                                    "(highest performing 5 categories all time)",
+                                    "(highest performing 5 categories during selected time period)",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontStyle: FontStyle.italic),
@@ -475,7 +477,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                     style: TextStyle(fontSize: 28),
                                   ),
                                   const Text(
-                                    "(lowest performing 5 categories all time)",
+                                    "(lowest performing 5 categories during selected time period)",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontStyle: FontStyle.italic),
@@ -508,7 +510,9 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                 style: TextStyle(fontSize: 28),
                               ),
                             ),
-                            for (GradeSheet sheet in widget.gradeSheets)
+                            for (GradeSheet sheet in context
+                                .watch<IndividualReport>()
+                                .modifiedSortedGradeSheets)
                               ListTile(
                                 trailing:
                                     Text("Grade ${sheet.overall!.index - 2}"),

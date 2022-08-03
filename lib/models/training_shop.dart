@@ -12,23 +12,71 @@ class TrainingShop with ChangeNotifier {
   TrainingShop(this._gradeSheets);
 
   final List<GradeSheet> _gradeSheets;
-  DateTime _startDate = DateTime.now().subtract(Duration(days: 30));
+
+  late DateTime _startDate = DateTime(
+      sortedGradeSheets[0].startTime.year,
+      sortedGradeSheets[0].startTime.month,
+      sortedGradeSheets[0].startTime.day - 1);
   DateTime _endDate = DateTime.now();
 
-  DateTime get startDate => _startDate;
-  DateTime get endDate => _endDate;
-
+  // sets the start date
   set dateStart(DateTime value) {
     _startDate = value;
     notifyListeners();
   }
 
+  // sets the end date
   set dateEnd(DateTime value) {
     _endDate = value;
     notifyListeners();
   }
 
-// Returns the most recently altered gradeItems
+  List<GradeSheet> get gradeSheets => _gradeSheets;
+
+  DateTime get startDate => _startDate;
+  DateTime get endDate => _endDate;
+
+  // Returns the grade sheets that are sorted interms of start dates into ordered list
+  List<GradeSheet> get sortedGradeSheets {
+    List<GradeSheet> sorted = _gradeSheets.toList();
+    for (GradeSheet temp in sorted) {
+      print(temp.startTime.day.toString() +
+          " " +
+          temp.startTime.month.toString());
+    }
+    for (int i = 0; i < sorted.length; i++) {
+      GradeSheet key = sorted[i];
+      int j = i - 1;
+
+      while (j >= 0 && key.startTime.isBefore(sorted[j].startTime)) {
+        sorted[j + 1] = sorted[j];
+        j = j - 1;
+      }
+      sorted[j + 1] = key;
+    }
+    print('post sort');
+    for (GradeSheet temp in sorted) {
+      print(temp.startTime.day.toString() +
+          " " +
+          temp.startTime.month.toString());
+    }
+
+    return sorted;
+  }
+
+  // Returns the sorted grade sheets that are between the start and end dates
+  List<GradeSheet> get modifiedSortedGradeSheets {
+    List<GradeSheet> modified = [];
+    sortedGradeSheets.forEach((element) {
+      if (element.startTime.isAfter(_startDate) &&
+          element.endTime.isBefore(_endDate)) {
+        modified.add(element);
+      }
+    });
+    return modified;
+  }
+
+  // Returns the most recently altered gradeItems
   // This assumes grades length and itemnames are in the same spot
   List<GradeItem> get currentGrades {
     List<GradeItem> currentGrades = [];
@@ -39,13 +87,13 @@ class TrainingShop with ChangeNotifier {
     Map<String, Grade> allGrades = {
       for (GradeItem item in baseGradeItems) item.name: Grade.noGrade
     };
-    for (int i = 0; i < _gradeSheets.length; i++) {
-      for (GradeItem grade in _gradeSheets[i].grades) {
+    for (int i = 0; i < modifiedGradeSheets.length; i++) {
+      for (GradeItem grade in modifiedGradeSheets[i].grades) {
         if (allGradeTimes[grade.name]!.millisecondsSinceEpoch <
-            _gradeSheets[i].endTime.millisecondsSinceEpoch) {
+            modifiedGradeSheets[i].endTime.millisecondsSinceEpoch) {
           if (grade.grade != Grade.noGrade) {
             allGradeTimes.update(
-                grade.name, (value) => _gradeSheets[i].endTime);
+                grade.name, (value) => modifiedGradeSheets[i].endTime);
             allGrades.update(grade.name, (value) => grade.grade!);
           }
         }
@@ -59,38 +107,19 @@ class TrainingShop with ChangeNotifier {
     return currentGrades;
   }
 
-  // TODO remove noGrade items
-  List<GradeItem> get bestFive {
-    List<GradeItem> current = currentGrades
-        .where((gradeItem) => gradeItem.grade != Grade.noGrade)
-        .toList();
-
-    current.sort((a, b) => b.grade!.index.compareTo(a.grade!.index));
-
-    return current.take(5).toList();
-  }
-
-  // TODO remove noGrade items
-  List<GradeItem> get worstFive {
-    List<GradeItem> current = currentGrades
-        .where((gradeItem) => gradeItem.grade != Grade.noGrade)
-        .toList();
-
-    current.sort((a, b) => a.grade!.index.compareTo(b.grade!.index));
-
-    return current.take(5).toList();
-  }
-
+  // returns the average of the grades for the the grade items between selelct period
   double get overallAverage {
     int total = 0;
-    for (GradeSheet sheet in _gradeSheets) {
+    for (GradeSheet sheet in modifiedGradeSheets) {
       // noSelection = -2, noGrade = -1
-      total += sheet.overall!.index - 2;
+
+      total += sheet.overall!.index - 1;
     }
 
-    return total / _gradeSheets.length;
+    return total / modifiedGradeSheets.length;
   }
 
+  // returns the most recent comment of all time
   String get mostRecentComment {
     int newest = 0;
     String comment = '';
@@ -104,23 +133,37 @@ class TrainingShop with ChangeNotifier {
     return comment;
   }
 
-  // returns the time series chart of the average of the current squadron gradesheets
-  List<charts.Series<AverageGradeSheet, DateTime>> get overallChart {
-    List<GradeSheet> modified_sheets = [];
-    if (_startDate == DateTime(0)) {
-      modified_sheets = _gradeSheets;
-    } else {
-      _gradeSheets.forEach((element) {
-        if (element.startTime.isAfter(_startDate) &&
-            element.endTime.isBefore(_endDate)) {
-          modified_sheets.add(element);
-        }
-      });
+  // reutrns the most recent recommendation of all time
+  String get mostRecentRecommendation {
+    int newest = 0;
+    String recommendation = '';
+    for (GradeSheet sheet in _gradeSheets) {
+      if (sheet.endTime.millisecondsSinceEpoch > newest) {
+        if (sheet.recommendations != "") recommendation = sheet.recommendations;
+        newest = sheet.endTime.millisecondsSinceEpoch;
+      }
     }
 
+    return recommendation;
+  }
+
+  // this method will return a list of grade sheets that are within the given date range (start date and end date)
+  List<GradeSheet> get modifiedGradeSheets {
+    List<GradeSheet> modified = [];
+    gradeSheets.forEach((element) {
+      if (element.startTime.isAfter(_startDate) &&
+          element.endTime.isBefore(_endDate)) {
+        modified.add(element);
+      }
+    });
+    return modified;
+  }
+
+  // returns the time sereis char of the average of the student at the specific date
+  List<charts.Series<AverageGradeSheet, DateTime>> get overallChart {
     Map<DateTime, List<GradeSheet>> average_time_sheets = {};
 
-    modified_sheets.forEach((element) {
+    modifiedGradeSheets.forEach((element) {
       average_time_sheets.update(
         alignDateTime(element.endTime, const Duration(days: 1)),
         ((value) {
@@ -155,40 +198,6 @@ class TrainingShop with ChangeNotifier {
     return series;
   }
 
-  // Return the average overall grade for each instructor
-  List<AverageGrade> get avgPerInstructor {
-    Map<String, int> totalNum = {
-      for (GradeSheet sheet in _gradeSheets) sheet.instructorId: 0
-    };
-    Map<String, double> averages = {
-      for (GradeSheet sheet in _gradeSheets) sheet.instructorId: 0
-    };
-
-    for (GradeSheet sheet in _gradeSheets) {
-      if (sheet.overall != null && sheet.overall != Grade.noGrade) {
-        totalNum[sheet.instructorId] = totalNum[sheet.instructorId]! + 1;
-        averages[sheet.instructorId] =
-            averages[sheet.instructorId]! + sheet.overall!.index - 2;
-      }
-    }
-
-    totalNum.forEach((key, value) {
-      if (value != 0) {
-        averages[key] = averages[key]! / value;
-      }
-    });
-
-    List<AverageGrade> current = [];
-
-    averages.forEach((key, value) {
-      if (value != 0) current.add(AverageGrade(key, value));
-    });
-
-    //current.sort((a, b) => b.average.compareTo(a.average));
-
-    return current;
-  }
-
   // return the average for each grade item, leaving ungraded items as 0
   Map<String, double> get averageGrades {
     Map<String, int> totalNum = {
@@ -198,11 +207,14 @@ class TrainingShop with ChangeNotifier {
       for (GradeItem item in baseGradeItems) item.name: 0
     };
 
-    for (GradeSheet sheet in _gradeSheets) {
-      for (GradeItem item in sheet.grades) {
-        if (item.grade != Grade.noGrade) {
-          totalNum[item.name] = totalNum[item.name]! + 1;
-          averages[item.name] = averages[item.name]! + item.grade!.index - 2;
+    for (GradeSheet sheet in modifiedGradeSheets) {
+      if (sheet.startTime.isAfter(_startDate) &&
+          sheet.endTime.isBefore(_endDate)) {
+        for (GradeItem item in sheet.grades) {
+          if (item.grade != Grade.noGrade) {
+            totalNum[item.name] = totalNum[item.name]! + 1;
+            averages[item.name] = averages[item.name]! + item.grade!.index - 1;
+          }
         }
       }
     }
@@ -214,6 +226,28 @@ class TrainingShop with ChangeNotifier {
     });
 
     return averages;
+  }
+
+  // TODO remove noGrade items
+  List<GradeItem> get bestFive {
+    List<GradeItem> current = currentGrades
+        .where((gradeItem) => gradeItem.grade != Grade.noGrade)
+        .toList();
+
+    current.sort((a, b) => b.grade!.index.compareTo(a.grade!.index));
+
+    return current.take(5).toList();
+  }
+
+  // TODO remove noGrade items
+  List<GradeItem> get worstFive {
+    List<GradeItem> current = currentGrades
+        .where((gradeItem) => gradeItem.grade != Grade.noGrade)
+        .toList();
+
+    current.sort((a, b) => a.grade!.index.compareTo(b.grade!.index));
+
+    return current.take(5).toList();
   }
 
   // return the top 5 average grades, ignoring ungraded items
@@ -240,6 +274,40 @@ class TrainingShop with ChangeNotifier {
     current.sort((a, b) => a.average.compareTo(b.average));
 
     return current.take(5).toList();
+  }
+
+  // returns the average of the grades for the instructors grade items between selelct period
+  List<AverageGrade> get avgPerInstructor {
+    Map<String, int> totalNum = {
+      for (GradeSheet sheet in modifiedGradeSheets) sheet.instructorId: 0
+    };
+    Map<String, double> averages = {
+      for (GradeSheet sheet in modifiedGradeSheets) sheet.instructorId: 0
+    };
+
+    for (GradeSheet sheet in modifiedGradeSheets) {
+      if (sheet.overall != null && sheet.overall != Grade.noGrade) {
+        totalNum[sheet.instructorId] = totalNum[sheet.instructorId]! + 1;
+        averages[sheet.instructorId] =
+            averages[sheet.instructorId]! + sheet.overall!.index - 2;
+      }
+    }
+
+    totalNum.forEach((key, value) {
+      if (value != 0) {
+        averages[key] = averages[key]! / value;
+      }
+    });
+
+    List<AverageGrade> current = [];
+
+    averages.forEach((key, value) {
+      if (value != 0) current.add(AverageGrade(key, value));
+    });
+
+    //current.sort((a, b) => b.average.compareTo(a.average));
+
+    return current;
   }
 }
 

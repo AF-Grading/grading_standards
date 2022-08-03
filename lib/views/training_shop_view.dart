@@ -28,10 +28,7 @@ class TrainingShopView extends StatelessWidget {
                       squad: context.watch<List<Squadron>>()[index].squad,
                       gradeSheets:
                           context.watch<List<GradeSheet>>().where((element) {
-                        //find the studentID, then find that individual base on their email (since studentID are the individuals email)
-                        //then find the squdron of that individual, and then find all the individuals in that squadron
-                        //then find all of their gradesheets
-
+                       
                         bool returnVar = false;
                         try {
                           context.watch<List<UserSetting>>().forEach((user) {
