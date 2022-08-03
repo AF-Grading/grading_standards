@@ -7,10 +7,13 @@ import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import '../models/training_shop.dart';
+import '../widgets/date_picker.dart';
+import '../widgets/stats/stats_buttons_squadrons.dart';
+import '../widgets/stats/stats_vars.dart';
 import 'grade_sheet_page.dart';
 
-class TrainingShopPage extends StatelessWidget {
-  const TrainingShopPage({
+class TrainingShopPage extends StatefulWidget {
+  TrainingShopPage({
     Key? key,
     required this.instructor,
     required this.squad,
@@ -20,18 +23,23 @@ class TrainingShopPage extends StatelessWidget {
   final bool instructor;
   final String squad;
   final List<GradeSheet> gradeSheets;
+  late TimeCalculate curr_value;
 
+  _TrainingShopPageState createState() => _TrainingShopPageState();
+}
+
+class _TrainingShopPageState extends State<TrainingShopPage> {
   @override
   Widget build(BuildContext context) {
     // We create the provider here because it will change for each student
     return ChangeNotifierProvider(
       // Here we inject the Individual's gradesheets
-      create: (context) => TrainingShop(gradeSheets),
+      create: (context) => TrainingShop(widget.gradeSheets),
       builder: (context, trainingShop) {
         return Scaffold(
-          appBar: instructor ? null : AppBar(title: Text(squad)),
+          appBar: widget.instructor ? null : AppBar(title: Text(widget.squad)),
           body: SingleChildScrollView(
-            child: gradeSheets.length == 0
+            child: widget.gradeSheets.length == 0
                 ? Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -249,7 +257,7 @@ class TrainingShopPage extends StatelessWidget {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: gradeSheets.map((item) {
+                              children: widget.gradeSheets.map((item) {
                                 String instructor_email = item.instructorId;
                                 String student_email = item.studentId;
                                 String instructor_real_name = "";
@@ -346,28 +354,31 @@ class TrainingShopPage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 30),
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "Overall Grade Over Time",
-                                    style: TextStyle(fontSize: 28),
-                                  ),
-                                  SizedBox(
-                                    width: 300,
-                                    height: 300,
-                                    child: charts.TimeSeriesChart(
-                                      context
-                                          .watch<TrainingShop>()
-                                          .overallChart,
-                                      defaultRenderer: new charts
-                                          .BarRendererConfig<DateTime>(),
-                                      //domainAxis: charts.DateTimeAxisSpec(),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            Text("Start Date"),
+                            DatePicker(
+                              date: context.watch<TrainingShop>().startDate,
+                              onChanged: (value) => setState(() {
+                                context.read<TrainingShop>().dateStart = value;
+                              }),
+                            ),
+                            Text("End Date"),
+                            DatePicker(
+                              date: context.watch<TrainingShop>().endDate,
+                              onChanged: (value) => setState(() {
+                                context.read<TrainingShop>().dateEnd = value;
+                              }),
+                            ),
+                            StatsButtonsSquadrons(
+                              initialValue: TimeCalculate.pastMonthToday,
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Please select a value";
+                                }
+                                return null;
+                              },
+                              onChanged: (value) => setState(() {
+                                widget.curr_value = value;
+                              }),
                             ),
 
                             // TOP FIVE BOTTOM FIVE
@@ -500,7 +511,7 @@ class TrainingShopPage extends StatelessWidget {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: gradeSheets.map((item) {
+                              children: widget.gradeSheets.map((item) {
                                 String instructor_email = item.instructorId;
                                 String student_email = item.studentId;
                                 String instructor_real_name = "";
