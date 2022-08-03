@@ -381,7 +381,7 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
                               }),
                             ),
                             StatsButtonsSquadrons(
-                              initialValue: TimeCalculate.pastMonthToday,
+                              initialValue: TimeCalculate.all,
                               validator: (value) {
                                 if (value == null) {
                                   return "Please select a value";
@@ -520,65 +520,25 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
                                 style: TextStyle(fontSize: 28),
                               ),
                             ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: widget.gradeSheets.map((item) {
-                                String instructor_email = item.instructorId;
-                                String student_email = item.studentId;
-                                String instructor_real_name = "";
-                                String student_real_name = "";
-                                String? instructor_rank = "";
-                                String? student_rank = "";
-
-                                context
-                                    .watch<List<UserSetting>>()
-                                    .forEach((user) {
-                                  if (user.email == instructor_email) {
-                                    instructor_real_name = user.name;
-                                    instructor_rank = user.rank.pretty;
-                                    print(user.name);
-                                  }
-                                  if (user.email == student_email) {
-                                    student_real_name = user.name;
-                                    student_rank = user.rank.pretty;
-                                    print(user.name);
-                                  }
-                                });
-
-                                return ListTile(
-                                  trailing:
-                                      Text("Grade ${item.overall!.index - 2}"),
-                                  title: Text(
-                                    "${instructor_rank} ${instructor_real_name}",
-                                  ),
-                                  subtitle: Text(
-                                      "${student_rank} ${student_real_name}"),
-                                  leading: Text(
-                                      "${item.startTime.month} ${item.startTime.day}, ${item.startTime.year}"),
-                                  onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => GradeSheetPage(
-                                        gradeSheet: item,
-                                      ),
+                            for (GradeSheet sheet in context
+                                .watch<TrainingShop>()
+                                .modifiedSortedGradeSheets)
+                              ListTile(
+                                trailing:
+                                    Text("Grade ${sheet.overall!.index - 2}"),
+                                subtitle: Text(sheet.overallComments),
+                                title: Text(
+                                    "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GradeSheetPage(
+                                      gradeSheet: sheet,
                                     ),
                                   ),
-                                );
-                              }).toList(),
-                            ),
-                          ]
-
-                    //Text(context.watch<TrainingShop>().first.student),
-                    /*context
-                      .watch<TrainingShop>()
-                      .currentGrades
-                      .map((grade) => ListTile(
-                            title: Text(grade.name),
-                            subtitle: Text(grade.grade.index.toString()),
-                          ))
-                      .toList(),*/
-                    ),
+                                ),
+                              ),
+                          ]),
           ),
         );
       },

@@ -1,5 +1,6 @@
 
 enum TimeCalculate {
+  all,
   pastMonthToday,
   pastQuarterToday,
   pastHalfYearToday,
