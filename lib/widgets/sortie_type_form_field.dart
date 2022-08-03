@@ -34,7 +34,6 @@ Widget _buildWide(
         Wrap(
           //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const Text("Sortie Type:"),
             const Text("Local"),
             Radio<SortieType>(
               value: SortieType.local,
