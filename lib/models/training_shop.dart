@@ -12,6 +12,21 @@ class TrainingShop with ChangeNotifier {
   TrainingShop(this._gradeSheets);
 
   final List<GradeSheet> _gradeSheets;
+  DateTime _startDate = DateTime.now().subtract(Duration(days: 30));
+  DateTime _endDate = DateTime.now();
+
+  DateTime get startDate => _startDate;
+  DateTime get endDate => _endDate;
+
+  set dateStart(DateTime value) {
+    _startDate = value;
+    notifyListeners();
+  }
+
+  set dateEnd(DateTime value) {
+    _endDate = value;
+    notifyListeners();
+  }
 
 // Returns the most recently altered gradeItems
   // This assumes grades length and itemnames are in the same spot
@@ -91,9 +106,21 @@ class TrainingShop with ChangeNotifier {
 
   // returns the time series chart of the average of the current squadron gradesheets
   List<charts.Series<AverageGradeSheet, DateTime>> get overallChart {
+    List<GradeSheet> modified_sheets = [];
+    if (_startDate == DateTime(0)) {
+      modified_sheets = _gradeSheets;
+    } else {
+      _gradeSheets.forEach((element) {
+        if (element.startTime.isAfter(_startDate) &&
+            element.endTime.isBefore(_endDate)) {
+          modified_sheets.add(element);
+        }
+      });
+    }
+
     Map<DateTime, List<GradeSheet>> average_time_sheets = {};
 
-    _gradeSheets.forEach((element) {
+    modified_sheets.forEach((element) {
       average_time_sheets.update(
         alignDateTime(element.endTime, const Duration(days: 1)),
         ((value) {
@@ -125,7 +152,6 @@ class TrainingShop with ChangeNotifier {
         domainFn: (AverageGradeSheet sheet, _) => sheet.date,
       )
     ];
-
     return series;
   }
 
