@@ -1,11 +1,13 @@
 import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:app_prototype/models/individual_report.dart';
+import 'package:app_prototype/widgets/buttons/download_report.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../models/grade_enums.dart';
+import '../models/user_setting.dart';
 import '../widgets/date_picker.dart';
 import '../widgets/stats/stats_buttons_individual.dart';
 import '../widgets/stats/stats_vars.dart';
@@ -34,7 +36,16 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
       create: (context) => IndividualReport(widget.gradeSheets),
       builder: (context, individualReport) {
         return Scaffold(
-          appBar: AppBar(title: Text(widget.user.name)),
+          appBar: AppBar(
+            title: Text(widget.user.name),
+            actions: [
+              DownloadReport(
+                  gradeSheets: widget.gradeSheets,
+                  users: context.read<List<UserSetting>>(),
+                  filename:
+                      "${widget.user.name.toLowerCase().replaceAll(' ', '_')}_report"),
+            ],
+          ),
           body: SingleChildScrollView(
             child: widget.gradeSheets.length == 0
                 ? Container(

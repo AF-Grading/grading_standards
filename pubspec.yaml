@@ -43,6 +43,10 @@ dependencies:
   flutter_offline: ^2.1.0
   timer_builder: ^2.0.0
   syncfusion_flutter_datepicker: ^20.2.40
+  csv: ^5.0.1
+  permission_handler: ^10.0.0
+  download: ^0.0.1+1
+  universal_platform: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
