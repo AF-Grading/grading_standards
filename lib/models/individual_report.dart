@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:app_prototype/models/cts_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
