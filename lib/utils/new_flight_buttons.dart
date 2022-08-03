@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/application_state.dart';
 import '../models/current_flight.dart';
 import '../models/current_user.dart';
 import '../pages/current_flight_page.dart';
@@ -81,7 +82,7 @@ class NewFlightButtons extends StatelessWidget {
                       .currentState!
                       .validate()) {
                     context.read<CurrentFlight>().instructorId =
-                        context.read<CurrentUser>().email;
+                        context.read<ApplicationState>().user.email;
                     Navigator.push(
                       context,
                       MaterialPageRoute(

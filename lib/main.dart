@@ -35,7 +35,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (context) => CurrentFlight()),
           ChangeNotifierProvider(create: (context) => Users()),
           ChangeNotifierProvider(create: (context) => ThemeChange()),
-          ChangeNotifierProvider(create: (context) => CurrentUser()),
+          //ChangeNotifierProvider(create: (context) => CurrentUser()),
         ], child: MyApp()),
       ),
     ),
@@ -56,7 +56,34 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _getCurrentUser() async {
-    FirebaseAuth.instance.userChanges().listen((user) async {
+    final user = await FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final userSetting = await FirebaseFirestore.instance
+          .collection('Users')
+          .withConverter(
+              fromFirestore: UserSetting.fromFirestore,
+              toFirestore: (UserSetting userSetting, _) =>
+                  userSetting.toFirestore())
+          .where("email", isEqualTo: user!.email)
+          .get()
+          .then(
+            (value) => value.docs.first.data(),
+          );
+      context.read<ApplicationState>().userSetting = userSetting;
+
+      if (userSetting != null) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+
+    /*  FirebaseAuth.instance.userChanges().listen((user) async {
       if (user != null) {
         final userSetting = await FirebaseFirestore.instance
             .collection('Users')
@@ -69,14 +96,16 @@ class _MyAppState extends State<MyApp> {
             .then(
               (value) => value.docs.first.data(),
             );
-
-        context.read<CurrentUser>().userSetting = userSetting;
+        if (mounted) {
+          context.read<CurrentUser>().userSetting = userSetting;
+        }
+        if (userSetting != null) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
       }
-    });
-
-    setState(() {
-      _isLoading = false;
-    });
+    }); */
   }
 
   //  MyApp({Key? key}) : super(key: key);
@@ -90,28 +119,48 @@ class _MyAppState extends State<MyApp> {
             : MaterialApp(
                 theme: light_theme,
                 darkTheme: dark_theme,
-                themeMode: context.watch<CurrentUser>().mode,
+                themeMode: appState.mode, //context.watch<CurrentUser>().mode,
                 home: appState.loginState == ApplicationLoginState.loggedIn
                     ? MultiProvider(
                         providers: [
                             StreamProvider<List<UserSetting>>(
-                              create: (_) =>
-                                  context.read<ApplicationState>().users,
+                              create: (_) => FirebaseFirestore.instance
+                                  .collection('Users')
+                                  .snapshots()
+                                  .map((docs) => docs.docs
+                                      .map((doc) =>
+                                          UserSetting.fromFirestore(doc, null))
+                                      .toList()),
                               initialData: const [],
                             ),
                             StreamProvider<List<GradeSheet>>(
-                              create: (_) =>
-                                  context.watch<ApplicationState>().gradeSheets,
+                              create: (_) => FirebaseFirestore.instance
+                                  .collection('Gradesheets')
+                                  .snapshots()
+                                  .map((docs) => docs.docs
+                                      .map((doc) =>
+                                          GradeSheet.fromFirestore(doc, null))
+                                      .toList()),
                               initialData: const [],
                             ),
                             StreamProvider<List<Squadron>>(
-                              create: (_) =>
-                                  context.watch<ApplicationState>().squads,
+                              create: (_) => FirebaseFirestore.instance
+                                  .collection('Squadrons')
+                                  .snapshots()
+                                  .map((docs) => docs.docs
+                                      .map((doc) =>
+                                          Squadron.fromFirestore(doc, null))
+                                      .toList()),
                               initialData: const [],
                             ),
                           ],
-                        child: HomePageOld(
-                            title: "Flying Standards", permission: 2)
+                        child: MaterialApp(
+                          theme: light_theme,
+                          darkTheme: dark_theme,
+                          themeMode: context.watch<ApplicationState>().mode,
+                          home: HomePageOld(
+                              title: "Flying Standards", permission: 2),
+                        )
                         //context.watch<CurrentUser>().permission.index),
                         )
                     : const UserLoginPage(),

@@ -20,7 +20,7 @@ class SettingsPage extends StatelessWidget {
           title: const Text("Settings"),
           elevation: 0,
         ),
-        body: Consumer<CurrentUser>(
+        body: Consumer<ApplicationState>(
           builder: ((context, userProvider, child) {
             UserSetting user = userProvider.user;
             return Column(
@@ -57,7 +57,8 @@ class SettingsPage extends StatelessWidget {
                             children: [
                               const Text("Theme:         "),
                               ThemeField(
-                                initialValue: context.watch<CurrentUser>().mode,
+                                initialValue:
+                                    context.watch<ApplicationState>().mode,
                                 onChanged: (value) {
                                   userProvider.mode = value;
                                   context

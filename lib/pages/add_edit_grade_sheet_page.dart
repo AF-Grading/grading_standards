@@ -128,7 +128,12 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                               const Text("Instructor: "),
                               Text(_instructor!),
                               // only certain permissions can select an instructor that isnt themselves
-                              context.watch<CurrentUser>().permission.index > 2
+                              context
+                                          .watch<ApplicationState>()
+                                          .user
+                                          .permission
+                                          .index >
+                                      2
                                   ? ElevatedButton(
                                       onPressed: () {
                                         setState(() {

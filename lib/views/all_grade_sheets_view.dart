@@ -10,7 +10,7 @@ class AllGradeSheetsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<List<GradeSheet>>(builder: (context, stream, _) {
-      stream.sort((a, b) => b.startTime.compareTo(a.startTime));
+      //stream.sort((a, b) => b.startTime.compareTo(a.startTime));
       return SingleChildScrollView(
         child: Column(
             children: stream.isEmpty

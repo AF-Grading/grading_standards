@@ -1,10 +1,12 @@
 import 'package:app_prototype/pages/auth/register_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/application_state.dart';
 import '../../models/user.dart';
+import '../../models/user_setting.dart';
 import '../../models/users.dart';
 import '../../models/current_user.dart';
 
@@ -106,7 +108,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                   ElevatedButton(
                       onPressed: () async {
                         // Firebase Auth
-                        Future<bool> withoutErrors = context
+                        final withoutErrors = await context
                             .read<ApplicationState>()
                             .signInWithEmailAndPassword(_email, _password, (e) {
                           setState(() {
@@ -114,7 +116,8 @@ class _UserLoginPageState extends State<UserLoginPage> {
                             _error = e.message;
                           });
                         });
-                        if (await withoutErrors) {
+
+                        /*if (await withoutErrors) {
                           context
                               .read<ApplicationState>()
                               .fetchCurrentUserSettings(_email)
@@ -125,7 +128,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                             (value) {
                               if (value.permission.index >=
                                   Permission.student.index) {
-                                Navigator.popAndPushNamed(context, '/home');
+                                // Navigator.popAndPushNamed(context, '/home');
                               } else {
                                 setState(() {
                                   _logInFail = true;
@@ -133,13 +136,13 @@ class _UserLoginPageState extends State<UserLoginPage> {
                               }
                             },
                           ).onError((error, stackTrace) {
-                            context.read<ApplicationState>().loginState =
+                            /*context.read<ApplicationState>().loginState =
                                 ApplicationLoginState.noUser;
-                            Navigator.popAndPushNamed(context, '/home');
+                            Navigator.popAndPushNamed(context, '/home');*/
                           });
                         } else {
                           _formKey.currentState!.validate();
-                        }
+                        }*/
                       },
                       child: const Text('Login')),
                   GestureDetector(
