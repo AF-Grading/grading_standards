@@ -1,5 +1,4 @@
 import 'package:app_prototype/models/Squadrons.dart';
-import 'package:app_prototype/pages/not_logged_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -17,7 +16,7 @@ import 'models/current_user.dart';
 import 'pages/home_page_old.dart';
 import 'theme/dark_mode.dart';
 import 'theme/light_mode.dart';
-import 'pages/user_log_in_page.dart';
+import 'pages/auth/barrel.dart';
 
 Future<void> main() async {
   // ensures the initapp function runs
@@ -78,18 +77,17 @@ class _MyAppState extends State<MyApp> {
                         initialData: const [],
                       ),
                       StreamProvider<List<Squadron>>(
-                        create: (_) =>
-                            context.watch<ApplicationState>().squads,
+                        create: (_) => context.watch<ApplicationState>().squads,
                         initialData: const [],
                       ),
                     ],
                     child: MaterialApp(
-                      title: 'Flutter Demo',
+                      title: 'Grading Standards',
                       // themeMode: ThemeMode.light,
                       theme: light_theme,
                       darkTheme: dark_theme,
                       // themeMode: value.mode,
-                      themeMode: context.watch<ThemeChange>().mode,
+                      themeMode: context.watch<CurrentUser>().mode,
                       home: HomePageOld(
                           title: "Flying Standards",
                           permission:

@@ -35,7 +35,7 @@ class OverallCard extends StatelessWidget {
             },
             onChanged: (overall) =>
                 context.read<CurrentFlight>().updateByStudent(
-                    gradeSheet.studentId!,
+                    gradeSheet.studentId,
                     GradeSheet(
                       weather: gradeSheet.weather,
                       instructorId: gradeSheet.instructorId,
@@ -65,7 +65,7 @@ class OverallCard extends StatelessWidget {
             }
           },
           onChanged: (overall) => context.read<CurrentFlight>().updateByStudent(
-              gradeSheet.studentId!,
+              gradeSheet.studentId,
               GradeSheet(
                 weather: gradeSheet.weather,
                 instructorId: gradeSheet.instructorId,
@@ -94,7 +94,7 @@ class OverallCard extends StatelessWidget {
                   ),
                   onChanged: (recc) =>
                       context.read<CurrentFlight>().updateByStudent(
-                          gradeSheet.studentId!,
+                          gradeSheet.studentId,
                           GradeSheet(
                             weather: gradeSheet.weather,
                             instructorId: gradeSheet.instructorId,

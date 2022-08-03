@@ -10,6 +10,7 @@ class UserSetting {
   final Rank rank;
   final AdQual adQual;
   final PilotQual pilotQual;
+  final String themeMode;
   Permission permission;
 
   //TODO include user settings here
@@ -22,6 +23,7 @@ class UserSetting {
       required this.email,
       required this.adQual,
       required this.pilotQual,
+      this.themeMode = "system",
       Permission? permission})
       : permission = permission ?? Permission.student;
 
@@ -37,6 +39,7 @@ class UserSetting {
       rank: (data?['rank'] as String).rank!,
       adQual: (data?['adQual'] as String).adQual!,
       pilotQual: (data?['pilotQual'] as String).pilotQual!,
+      themeMode: data?['themeMode'],
       permission: (data?['permission'] as String).permission,
     );
   }
@@ -49,6 +52,7 @@ class UserSetting {
       "rank": rank.name,
       "adQual": adQual.name,
       "pilotQual": pilotQual.name,
+      "themeMode": themeMode,
       "permission": permission.name,
     };
   }

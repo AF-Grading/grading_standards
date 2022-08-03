@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import '../models/training_shop.dart';
+import '../widgets/buttons/download_report.dart';
 import '../widgets/date_picker.dart';
 import '../widgets/stats/stats_buttons_squadrons.dart';
 import '../widgets/stats/stats_vars.dart';
@@ -37,7 +38,18 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
       create: (context) => TrainingShop(widget.gradeSheets),
       builder: (context, trainingShop) {
         return Scaffold(
-          appBar: widget.instructor ? null : AppBar(title: Text(widget.squad)),
+          appBar: widget.instructor
+              ? null
+              : AppBar(
+                  title: Text(widget.squad),
+                  actions: [
+                    DownloadReport(
+                        gradeSheets: widget.gradeSheets,
+                        users: context.read<List<UserSetting>>(),
+                        filename:
+                            "${widget.squad.toLowerCase().replaceAll(' ', '_')}_report"),
+                  ],
+                ),
           body: SingleChildScrollView(
             child: widget.gradeSheets.length == 0
                 ? Container(

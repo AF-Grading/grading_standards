@@ -9,6 +9,7 @@ import 'grade_sheet.dart';
 enum ApplicationLoginState {
   loggedOut,
   emailAddress,
+  noUser,
   register,
   password,
   loggedIn,
@@ -111,6 +112,10 @@ class ApplicationState extends ChangeNotifier {
 
   ApplicationLoginState _loginState = ApplicationLoginState.loggedOut;
   ApplicationLoginState get loginState => _loginState;
+  set loginState(ApplicationLoginState state) {
+    _loginState = state;
+    notifyListeners();
+  }
 
   String? _email;
   String? get email => _email;
@@ -139,9 +144,8 @@ class ApplicationState extends ChangeNotifier {
       throw Exception('Must be logged in');
     }
     return FirebaseFirestore.instance.collection('Squadrons').snapshots().map(
-        (docs) => docs.docs
-            .map((doc) => Squadron.fromFirestore(doc, null))
-            .toList());
+        (docs) =>
+            docs.docs.map((doc) => Squadron.fromFirestore(doc, null)).toList());
   }
 
   void startLoginFlow() {
@@ -195,14 +199,19 @@ class ApplicationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String> register(String email, String password) async {
+  Future<String> register(
+    String email,
+    String password,
+    void Function(FirebaseAuthException e) errorCallback,
+  ) async {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+
       return "";
     } on FirebaseAuthException catch (e) {
+      errorCallback(e);
       return e.code;
-      //return false;
     }
   }
 
@@ -210,5 +219,3 @@ class ApplicationState extends ChangeNotifier {
     FirebaseAuth.instance.signOut();
   }
 }
-
-

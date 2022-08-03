@@ -1,4 +1,3 @@
-import 'package:app_prototype/models/current_flight.dart';
 import 'package:app_prototype/models/user.dart';
 import 'package:app_prototype/widgets/grades_card.dart';
 import 'package:app_prototype/widgets/overall_card.dart';
@@ -8,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../models/grade_enums.dart';
 import '../models/user_setting.dart';
 import '/models/grade_sheet.dart';
+import '/widgets/slivers/barrel.dart';
 
 class FlightView extends StatefulWidget {
   const FlightView({
@@ -54,22 +54,9 @@ class _FlightViewState extends State<FlightView>
     return CustomScrollView(
       //body: Column(
       slivers: [
-        SliverAppBar(
-          backgroundColor: Theme.of(context).canvasColor,
-          // Removes the back button
-          automaticallyImplyLeading: false,
-          // Keeps the text at the Top of the screen
-          pinned: true,
-          elevation: 0,
-          title: _overallError
-              ? Text(
-                  "Overall",
-                  style: TextStyle(color: Colors.red),
-                )
-              : Text(
-                  "Overall",
-                  style: TextStyle(color: Theme.of(context).primaryColorDark),
-                ),
+        SliverTitleBar(
+          "Overall",
+          hasErrors: _overallError,
         ),
         SliverToBoxAdapter(
           child: OverallCard(
@@ -87,19 +74,7 @@ class _FlightViewState extends State<FlightView>
                   });
               }),
         ),
-        SliverAppBar(
-          backgroundColor: Theme.of(context).canvasColor,
-          automaticallyImplyLeading: false,
-          pinned: true,
-          elevation: 0,
-          title: _gradesError
-              ? Text(
-                  "Grades",
-                  style: TextStyle(color: Colors.red),
-                )
-              : Text("Grades",
-                  style: TextStyle(color: Theme.of(context).primaryColorDark)),
-        ),
+        SliverTitleBar("Grades", hasErrors: _gradesError),
         SliverToBoxAdapter(
           child: GradesCard(
               student: context.watch<List<UserSetting>>().firstWhere(
@@ -132,7 +107,11 @@ class _FlightViewState extends State<FlightView>
                 automaticallyImplyLeading: false,
                 elevation: 0,
                 pinned: true,
-                title: Text("Unselected Grades"),
+                title: Text(
+                  "Unselected Grades",
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
                 actions: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
