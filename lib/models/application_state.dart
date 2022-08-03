@@ -20,6 +20,9 @@ class ApplicationState extends ChangeNotifier {
     init();
   }
   Future<void> init() async {
+    FirebaseFirestore.instance.settings =
+        const Settings(persistenceEnabled: true);
+
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
         _loginState = ApplicationLoginState.loggedIn;
@@ -28,6 +31,8 @@ class ApplicationState extends ChangeNotifier {
       }
       notifyListeners();
     });
+
+    print(_loginState);
   }
 
   Future<DocumentReference> addGradeSheet(GradeSheet gradeSheet) {

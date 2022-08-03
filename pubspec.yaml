@@ -47,6 +47,10 @@ dependencies:
   permission_handler: ^10.0.0
   download: ^0.0.1+1
   universal_platform: ^1.0.0+1
+  path_provider: ^2.0.11
+  dio: ^4.0.6
+  flutter_downloader: ^1.8.1
+  universal_html: ^2.0.8
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +78,8 @@ flutter_icons:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/ic_launcher-playstore.png
   fonts:
     - family: Cambo
       fonts:
