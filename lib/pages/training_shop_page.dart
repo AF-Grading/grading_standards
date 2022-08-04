@@ -109,17 +109,36 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
                                       "Overall Grade Over Time",
                                       style: TextStyle(fontSize: 28),
                                     ),
-                                    SizedBox(
-                                      width: 300,
-                                      height: 300,
-                                      child: charts.TimeSeriesChart(
-                                        context
-                                            .watch<TrainingShop>()
-                                            .overallChart,
-                                        defaultRenderer: new charts
-                                            .BarRendererConfig<DateTime>(),
-                                        //domainAxis: charts.DateTimeAxisSpec(),
-                                      ),
+                                    Text("Start Date"),
+                                    DatePicker(
+                                      date: context
+                                          .watch<TrainingShop>()
+                                          .startDate,
+                                      onChanged: (value) => setState(() {
+                                        context.read<TrainingShop>().dateStart =
+                                            value;
+                                      }),
+                                    ),
+                                    Text("End Date"),
+                                    DatePicker(
+                                      date:
+                                          context.watch<TrainingShop>().endDate,
+                                      onChanged: (value) => setState(() {
+                                        context.read<TrainingShop>().dateEnd =
+                                            value;
+                                      }),
+                                    ),
+                                    StatsButtonsSquadrons(
+                                      initialValue: TimeCalculate.all,
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return "Please select a value";
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) => setState(() {
+                                        widget.curr_value = value;
+                                      }),
                                     ),
                                   ],
                                 ),
@@ -266,53 +285,24 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
                               ),
                             ),
 
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: widget.gradeSheets.map((item) {
-                                String instructor_email = item.instructorId;
-                                String student_email = item.studentId;
-                                String instructor_real_name = "";
-                                String student_real_name = "";
-                                String? instructor_rank = "";
-                                String? student_rank = "";
-
-                                context
-                                    .watch<List<UserSetting>>()
-                                    .forEach((user) {
-                                  if (user.email == instructor_email) {
-                                    instructor_real_name = user.name;
-                                    instructor_rank = user.rank.pretty;
-                                    print(user.name);
-                                  }
-                                  if (user.email == student_email) {
-                                    student_real_name = user.name;
-                                    student_rank = user.rank.pretty;
-                                    print(user.name);
-                                  }
-                                });
-
-                                return ListTile(
-                                  trailing:
-                                      Text("Grade ${item.overall!.index - 2}"),
-                                  title: Text(
-                                    "${instructor_rank} ${instructor_real_name}",
-                                  ),
-                                  subtitle: Text(
-                                      "${student_rank} ${student_real_name}"),
-                                  leading: Text(
-                                      "${item.startTime.month} ${item.startTime.day}, ${item.startTime.year}"),
-                                  onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => GradeSheetPage(
-                                        gradeSheet: item,
-                                      ),
+                            for (GradeSheet sheet in context
+                                .watch<TrainingShop>()
+                                .modifiedSortedGradeSheets)
+                              ListTile(
+                                trailing:
+                                    Text("Grade ${sheet.overall!.index - 2}"),
+                                subtitle: Text(sheet.overallComments),
+                                title: Text(
+                                    "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GradeSheetPage(
+                                      gradeSheet: sheet,
                                     ),
                                   ),
-                                );
-                              }).toList(),
-                            ),
+                                ),
+                              ),
 
                             // Column(children: [
                             //   for (GradeSheet sheet in gradeSheets)

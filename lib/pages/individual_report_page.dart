@@ -113,24 +113,39 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                 ),
                                 Column(
                                   children: [
-                                    const Text(
-                                      "Overall Grade Over Time",
-                                      style: TextStyle(fontSize: 28),
-                                    ),
-                                    SizedBox(
-                                      width: 300,
-                                      height: 300,
-                                      child: charts.TimeSeriesChart(
+                                    Text("Start Date"),
+                                    DatePicker(
+                                      date: context
+                                          .watch<IndividualReport>()
+                                          .startDate,
+                                      onChanged: (value) => setState(() {
                                         context
-                                            .watch<IndividualReport>()
-                                            .overallChart,
-                                        defaultRenderer: new charts
-                                            .BarRendererConfig<DateTime>(),
-                                        // animate: true,
-                                        // defaultRenderer: new charts
-                                        //     .BarRendererConfig<DateTime>(),
-                                        // defaultInteractions: false,
-                                      ),
+                                            .read<IndividualReport>()
+                                            .dateStart = value;
+                                      }),
+                                    ),
+                                    Text("End Date"),
+                                    DatePicker(
+                                      date: context
+                                          .watch<IndividualReport>()
+                                          .endDate,
+                                      onChanged: (value) => setState(() {
+                                        context
+                                            .read<IndividualReport>()
+                                            .dateEnd = value;
+                                      }),
+                                    ),
+                                    StatsButtonsIndividual(
+                                      initialValue: TimeCalculate.all,
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return "Please select a value";
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) => setState(() {
+                                        widget.curr_value = value;
+                                      }),
                                     ),
                                   ],
                                 ),
