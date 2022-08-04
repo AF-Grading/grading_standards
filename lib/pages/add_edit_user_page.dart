@@ -8,6 +8,7 @@ import '../models/application_state.dart';
 import '../models/grade_enums.dart';
 import '../models/user.dart';
 import '../widgets/ad_qual_form_field.dart';
+import '../widgets/form_fields/barrel.dart';
 import '../widgets/permission_form_field.dart';
 import '../widgets/pilot_qual_form_field.dart';
 
@@ -42,8 +43,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
       TextEditingController(text: widget.user?.name);
   late final TextEditingController _email =
       TextEditingController(text: widget.user?.email);
-  late final TextEditingController _squad =
-      TextEditingController(text: widget.user?.squad);
+  late String? _squad = widget.user?.squad ?? null;
   late Permission? _permission = widget.user?.permission;
   late Rank? _rank = widget.user?.rank;
   late AdQual? _adQual = widget.user?.adQual;
@@ -128,17 +128,19 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                       width: _spaceBetween,
                       child: const Text("Squadron: "),
                     ),
-                    Flexible(
-                      child: TextFormField(
-                        controller: _squad,
+                    SquadronFormField(
+                        initialValue: _squad,
                         validator: (value) {
-                          if (value == "") {
-                            return "Please enter a Squadron";
+                          if (value == null) {
+                            return "Please select a value";
                           }
                           return null;
                         },
-                      ),
-                    ),
+                        onChanged: (value) {
+                          setState(() {
+                            _squad = value;
+                          });
+                        }),
                   ],
                 ),
               ),
@@ -267,7 +269,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                   context.read<ApplicationState>().addUserSetting(UserSetting(
                         name: _name.text,
                         rank: _rank!,
-                        squad: _squad.text,
+                        squad: _squad!,
                         email: _email.text,
                         adQual: _adQual!,
                         pilotQual: _pilotQual!,
@@ -292,7 +294,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                 context.read<ApplicationState>().editUserSetting(UserSetting(
                       name: _name.text,
                       rank: _rank!,
-                      squad: _squad.text,
+                      squad: _squad!,
                       email: _email.text,
                       adQual: _adQual!,
                       pilotQual: _pilotQual!,
