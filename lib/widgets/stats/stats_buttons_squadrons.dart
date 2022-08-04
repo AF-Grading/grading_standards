@@ -135,7 +135,7 @@ Widget _buildWide(FormFieldState<TimeCalculate> formState,
         child: Column(
           children: [
             const Text(
-              "Overall Grade Over Time",
+              "Grade Over Time",
               style: TextStyle(fontSize: 28),
             ),
             SizedBox(
@@ -257,7 +257,7 @@ Widget _buildNarrow(FormFieldState<TimeCalculate> formState,
         child: Column(
           children: [
             const Text(
-              "Overall Grade Over Time",
+              "Grade Over Time",
               style: TextStyle(fontSize: 28),
             ),
             SizedBox(

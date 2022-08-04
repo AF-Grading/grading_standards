@@ -16,78 +16,139 @@ class ProficencyTablePopup extends StatelessWidget {
                 style: TextStyle(color: Theme.of(context).primaryColor)),
             content: SingleChildScrollView(
               child: Column(
-                children: MediaQuery.of(context).size.width > 600
+                children: MediaQuery.of(context).size.width > 900
                     ? [
                         //big screen
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Row(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: const [
-                              Padding(
-                                padding: EdgeInsets.only(right: 8.0),
-                                child: SizedBox(
-                                    width: 100,
-                                    child: Text("Table Description")),
+                              Text("Table Description",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18)),
+                              Divider(
+                                thickness: 4,
+                                color: Colors.black,
                               ),
-                              Text("FPC"),
-                              Text("FPQ"),
-                              Text("MP"),
-                              Text("IP"),
                             ],
                           ),
                         ),
                         for (TableDescription tD in tableDescriptions)
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: SizedBox(
-                                      width: 150, child: Text(tD.ctsItem)),
+                                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                  child: Text(tD.ctsItem),
                                 ),
-                                Text(tD.fpc.toString()),
-                                Text(tD.fpq.toString()),
-                                Text(tD.mp.toString()),
-                                Text(tD.ip.toString()),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text("FPC"),
+                                        Text(tD.fpc.toString()),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text("FPQ"),
+                                        Text(tD.fpq.toString()),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text("MP"),
+                                        Text(tD.mp.toString()),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text("IP"),
+                                        Text(tD.ip.toString()),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  thickness: 2,
+                                ),
                               ],
                             ),
                           ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Row(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: const [
                               Padding(
-                                padding: EdgeInsets.only(right: 8.0),
-                                child: SizedBox(
-                                    width: 100,
-                                    child: Text("Air Drop Description")),
+                                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                                child: Text(
+                                  "Air Drop Description",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
                               ),
-                              Text("CPAD"),
-                              Text("ACAD"),
-                              Text("ADIP"),
-                              Text("LDAD"),
+                              Divider(
+                                thickness: 4,
+                                color: Colors.black,
+                              ),
                             ],
                           ),
                         ),
+                        // Text("CPAD"),
+                        // Text("ACAD"),
+                        // Text("ADIP"),
+                        // Text("LDAD"),
                         for (AirDropTableDescription tD in airDropDescriptions)
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: SizedBox(
-                                      width: 150, child: Text(tD.ctsItem)),
+                                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                  child: Text(tD.ctsItem),
                                 ),
-                                Text(tD.cpad.toString()),
-                                Text(tD.acad.toString()),
-                                Text(tD.adip.toString()),
-                                Text(tD.ldad.toString()),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text("CPAD"),
+                                        Text(tD.cpad.toString()),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text("ACAD"),
+                                        Text(tD.acad.toString()),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text("ADIP"),
+                                        Text(tD.adip.toString()),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text("LDAD"),
+                                        Text(tD.ldad.toString()),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  thickness: 2,
+                                ),
                               ],
                             ),
                           ),
