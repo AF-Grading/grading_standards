@@ -29,6 +29,8 @@ class CurrentFlight extends ChangeNotifier {
   DateTime _end = DateTime.now();
   static const int max = 4;
   final List<String> _selectedParams = ["All", "All", "All", "All"];
+  final List<String> _students = ["", "", "", ""];
+  int _studentNum = 1;
 
   // Individual Students
 
@@ -55,6 +57,7 @@ class CurrentFlight extends ChangeNotifier {
   List<GlobalKey<FormState>> get flightKeys => _flightKeys;
   GlobalKey<FormState> get reviewKey => _reviewKey;
   GlobalKey<FormState> get flightKey => _flightKey;
+  int get studentNum => _studentNum;
 
   List<GradeSheet> get gradeSheets => _gradeSheets;
   Weather? get weather => _weather;
@@ -65,6 +68,7 @@ class CurrentFlight extends ChangeNotifier {
   String get profile => _profile;
   DateTime get startTime => _start;
   DateTime get endTime => _end;
+  List<String> get students => _students;
   // filters the users out that appear in _gradesheets
   List<User> get filteredUsers => Users()
       .users
@@ -107,6 +111,11 @@ class CurrentFlight extends ChangeNotifier {
 
   set sortieNum(int value) {
     _sortieNum = value;
+    notifyListeners();
+  }
+
+  set studentNum(int value) {
+    _studentNum = value;
     notifyListeners();
   }
 

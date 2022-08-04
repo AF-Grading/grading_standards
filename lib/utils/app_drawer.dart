@@ -87,7 +87,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
         if (context.watch<ApplicationState>().user.permission.index > 2)
           ListTile(
-            title: const Text('Params'),
+            title: const Text('Parameters'),
             onTap: () {
               Navigator.push(
                 context,

@@ -1,4 +1,5 @@
-import 'package:app_prototype/widgets/sortie_type_form_field.dart';
+import 'package:app_prototype/widgets/form_fields/sortie_type_form_field.dart';
+import 'package:app_prototype/widgets/spaced_item.dart';
 import 'package:app_prototype/widgets/student_param_selection_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,9 +8,10 @@ import 'package:provider/provider.dart';
 import '../models/cts_list.dart';
 import '../models/grade_sheet.dart';
 import '../models/user_setting.dart';
-import '/widgets/weather_form_field.dart';
+import '../widgets/search_users_form_field.dart';
+import '../widgets/form_fields/weather_form_field.dart';
 import '/models/current_flight.dart';
-import '/widgets/day_night_form_field.dart';
+import '../widgets/form_fields/day_night_form_field.dart';
 import '/widgets/slivers/barrel.dart';
 
 class NewFlightView extends StatelessWidget {
@@ -146,8 +148,83 @@ class NewFlightView extends StatelessWidget {
                     .name,
           ),
           SliverToBoxAdapter(
-            child: StudentParamSelectionCard(gradeSheet: gradeSheet),
-          ),
+              child: Column(
+            children: [
+              int.tryParse(gradeSheet.studentId) == null
+                  ? ElevatedButton(
+                      onPressed: () =>
+                          context.read<CurrentFlight>().updateByStudent(
+                              gradeSheet.studentId,
+                              GradeSheet(
+                                instructorId: gradeSheet.instructorId,
+                                studentId: "0",
+                                missionNum: gradeSheet.missionNum,
+                                grades: gradeSheet.grades,
+                                overall: gradeSheet.overall,
+                                sortieType: gradeSheet.sortieType,
+                                dayNight: gradeSheet.dayNight,
+                                startTime: gradeSheet.startTime,
+                                endTime: gradeSheet.endTime,
+                                weather: gradeSheet.weather,
+                              )),
+                      child: const Text("Select a different student"))
+                  : SearchUsersFormField(
+                      //labelText: "Student Name: ",
+                      //obtains list of users that filters out already used students
+                      users: context
+                          .watch<List<UserSetting>>()
+                          .where((user) =>
+                              context
+                                  .watch<CurrentFlight>()
+                                  .gradeSheets
+                                  .indexWhere((sheet) =>
+                                      sheet.studentId == user.email) ==
+                              -1)
+                          .toList(),
+                      validator: (value) {
+                        // A bit of a bruteish method
+                        if (gradeSheet.studentId == "1" ||
+                            gradeSheet.studentId == "2" ||
+                            gradeSheet.studentId == "3" ||
+                            gradeSheet.studentId == "4" ||
+                            gradeSheet.studentId == "0") {
+                          /*setState(() {
+                      hasErrors = true;
+                    });*/
+                          return "Please select a student from dropdown";
+                        } else {
+                          /*setState(() {
+                      hasErrors = false;
+                    });*/
+                          return null;
+                        }
+                      },
+                      onSaved: (student) {
+                        context.read<CurrentFlight>().updateByStudent(
+                            gradeSheet.studentId,
+                            GradeSheet(
+                              instructorId: gradeSheet.instructorId,
+                              studentId: context
+                                  .read<List<UserSetting>>()
+                                  .firstWhere((user) => user.email == student)
+                                  .email,
+                              missionNum: gradeSheet.missionNum,
+                              grades: gradeSheet.grades,
+                              overall: gradeSheet.overall,
+                              sortieType: gradeSheet.sortieType,
+                              dayNight: gradeSheet.dayNight,
+                              startTime: gradeSheet.startTime,
+                              endTime: gradeSheet.endTime,
+                              weather: gradeSheet.weather,
+                            ));
+                        /*setState(() {
+                    hasErrors = false;
+                  });*/
+                      },
+                    ),
+            ],
+          ) //StudentParamSelectionCard(gradeSheet: gradeSheet),
+              ),
           /*SliverList(
             delegate: SliverChildListDelegate.fixed(
               [

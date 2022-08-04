@@ -1,3 +1,4 @@
+import 'package:app_prototype/widgets/spaced_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -10,10 +11,10 @@ import '../models/user.dart';
 import '../models/user_setting.dart';
 import '../models/users.dart';
 import '../widgets/date_picker.dart';
-import '../widgets/day_night_form_field.dart';
+import '../widgets/form_fields/day_night_form_field.dart';
 import '../widgets/search_users_form_field.dart';
-import '../widgets/sortie_type_form_field.dart';
-import '../widgets/weather_form_field.dart';
+import '../widgets/form_fields/sortie_type_form_field.dart';
+import '../widgets/form_fields/weather_form_field.dart';
 import '../models/current_user.dart';
 import '/models/cts_list.dart';
 import '/pages/grade_sheet_page.dart';
@@ -84,87 +85,94 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                   initiallyExpanded: true,
                   title: const Text("General"),
                   children: [
-                    _student != null
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              const Text("Student:"),
-                              Text(_student!),
-                              !_isEditing
-                                  ? ElevatedButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          _student = null;
-                                        });
-                                      },
-                                      child: const Text("Reselect"))
-                                  : Container()
-                            ],
-                          )
-                        : SearchUsersFormField(
-                            labelText: "Student Name: ",
-                            users: context.watch<List<UserSetting>>(),
-                            validator: (value) {
-                              if (value != null) {
-                                return "Please select a student from dropdown";
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (student) {
-                              setState(() {
-                                _student = context
-                                    .read<Users>()
-                                    .users
-                                    .firstWhere((user) => user.name == student)
-                                    .email;
-                              });
-                            },
-                          ),
-                    _instructor != null
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              const Text("Instructor: "),
-                              Text(_instructor!),
-                              // only certain permissions can select an instructor that isnt themselves
-                              context
-                                          .watch<ApplicationState>()
-                                          .user
-                                          .permission
-                                          .index >
-                                      2
-                                  ? ElevatedButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          _instructor = null;
-                                        });
-                                      },
-                                      child: const Text("Reselect"))
-                                  : Container(),
-                            ],
-                          )
-                        : SearchUsersFormField(
-                            labelText: "Instructor Name: ",
-                            users: context.watch<List<UserSetting>>(),
-                            validator: (value) {
-                              if (value != null) {
-                                return "Please select an instructor from dropdown";
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (instructor) {
-                              setState(() {
-                                _instructor = context
-                                    .read<Users>()
-                                    .users
-                                    .firstWhere(
-                                        (user) => user.name == instructor)
-                                    .email;
-                              });
-                            },
-                          ),
+                    SpacedItem(
+                      name: "Student",
+                      child: _student != null
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const Text("Student:"),
+                                Text(_student!),
+                                !_isEditing
+                                    ? ElevatedButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _student = null;
+                                          });
+                                        },
+                                        child: const Text("Reselect"))
+                                    : Container()
+                              ],
+                            )
+                          : SearchUsersFormField(
+                              //labelText: "Student Name: ",
+                              users: context.watch<List<UserSetting>>(),
+                              validator: (value) {
+                                if (value != null) {
+                                  return "Please select a student from dropdown";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onSaved: (student) {
+                                setState(() {
+                                  _student = context
+                                      .read<Users>()
+                                      .users
+                                      .firstWhere(
+                                          (user) => user.name == student)
+                                      .email;
+                                });
+                              },
+                            ),
+                    ),
+                    SpacedItem(
+                      name: "Instructor",
+                      child: _instructor != null
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const Text("Instructor: "),
+                                Text(_instructor!),
+                                // only certain permissions can select an instructor that isnt themselves
+                                context
+                                            .watch<ApplicationState>()
+                                            .user
+                                            .permission
+                                            .index >
+                                        2
+                                    ? ElevatedButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _instructor = null;
+                                          });
+                                        },
+                                        child: const Text("Reselect"))
+                                    : Container(),
+                              ],
+                            )
+                          : SearchUsersFormField(
+                              //labelText: "Instructor Name: ",
+                              users: context.watch<List<UserSetting>>(),
+                              validator: (value) {
+                                if (value != null) {
+                                  return "Please select an instructor from dropdown";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onSaved: (instructor) {
+                                setState(() {
+                                  _instructor = context
+                                      .read<Users>()
+                                      .users
+                                      .firstWhere(
+                                          (user) => user.name == instructor)
+                                      .email;
+                                });
+                              },
+                            ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(

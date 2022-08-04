@@ -57,7 +57,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                     )),
                 child: const Text("Select a different student"))
             : SearchUsersFormField(
-                labelText: "Student Name: ",
+                //labelText: "Student Name: ",
                 //obtains list of users that filters out already used students
                 users: context
                     .watch<List<UserSetting>>()

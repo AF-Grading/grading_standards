@@ -1,4 +1,5 @@
 import 'package:app_prototype/models/user_setting.dart';
+import 'package:app_prototype/views/flight_view_2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // prefer internal routes to be relative
@@ -37,7 +38,8 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
     bool keyBoardIsOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return Form(
       key: context.read<CurrentFlight>().flightKey,
-      child: context.watch<CurrentFlight>().gradeSheets.length == 1
+      child: context.watch<CurrentFlight>().studentNum ==
+              1 //gradeSheets.length == 1
           ? Scaffold(
               appBar: AppBar(
                 title: Row(
@@ -48,14 +50,15 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                   ],
                 ),
               ),
-              body: FlightView(
-                index: 0,
+              body: FlightView2(
+                //index: 0,
                 gradeSheet: context.watch<CurrentFlight>().gradeSheets.first,
-                hasErrors: (hasError) {
+                params: context.watch<CurrentFlight>().selectedParams[0],
+                /*hasErrors: (hasError) {
                   setState(() {
                     hasErrors[0] = hasError;
                   });
-                },
+                },*/
                 //selectedParams: widget.selectedParams,
               ),
               floatingActionButton: Visibility(
@@ -141,14 +144,15 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                       i < context.watch<CurrentFlight>().gradeSheets.length;
                       i++)
                     // _flightViews[i],
-                    FlightView(
-                      index: i,
+                    FlightView2(
+                      //index: i,
                       gradeSheet: context.watch<CurrentFlight>().gradeSheets[i],
-                      hasErrors: (hasError) {
+                      params: context.watch<CurrentFlight>().selectedParams[i],
+                      /* hasErrors: (hasError) {
                         setState(() {
                           hasErrors[i] = hasError;
                         });
-                      },
+                      }, */
                     )
                 ]),
                 floatingActionButton: Visibility(

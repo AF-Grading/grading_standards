@@ -7,6 +7,7 @@ import '../models/application_state.dart';
 import '../models/current_user.dart';
 import '../models/grade_sheet.dart';
 import '../models/user_setting.dart';
+import '../views/new_flight_view_2.dart';
 import '/models/current_flight.dart';
 import '/models/grade_sheets.dart';
 import 'training_shop_page.dart';
@@ -33,6 +34,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
   late TabController _controller;
   int _index = 0;
   late int tabLength;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -80,7 +82,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(widget.title),
-                          const OfflineChecker(),
+                          //const OfflineChecker(),
                           //const SyncButton(),
                         ]),
                     bottom: widget.permission == 1
@@ -107,7 +109,9 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                     children: widget.permission == 1
                         ? [
                             //NewGradeSheetView(),
-                            NewFlightView(),
+                            NewFlightView2(
+                              formKey: _formKey,
+                            ),
                             const IndividualReportsView(),
                             TrainingShopPage(
                               instructor: true,
@@ -145,14 +149,16 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                             ),
                           ]
                         : [
-                            NewFlightView(),
+                            NewFlightView2(
+                              formKey: _formKey,
+                            ),
                             IndividualReportsView(),
                             TrainingShopView(),
                           ],
                   ),
                   floatingActionButton:
                       // only show buttons if on new flight tab
-                      _index == 0 ? const NewFlightButtons() : null,
+                      _index == 0 ? NewFlightButtons(formKey: _formKey) : null,
                 ),
     );
   }

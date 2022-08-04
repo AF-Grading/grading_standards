@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/grade_enums.dart';
+import '../../models/grade_enums.dart';
 
 class SortieTypeFormField extends FormField<SortieType> {
   SortieTypeFormField(
@@ -18,7 +18,7 @@ class SortieTypeFormField extends FormField<SortieType> {
               if (MediaQuery.of(context).size.width > 600) {
                 return _buildWide(formState, onChanged);
               } else {
-                return _buildNarrow(formState, onChanged);
+                return _buildNarrow(formState, onChanged, context);
               }
             }));
           },
@@ -119,40 +119,35 @@ Widget _buildWide(
   );
 }
 
-Widget _buildNarrow(
-    FormFieldState<SortieType> formState, ValueChanged<SortieType>? onChanged) {
+Widget _buildNarrow(FormFieldState<SortieType> formState,
+    ValueChanged<SortieType>? onChanged, BuildContext context) {
   return Column(
     children: [
-      Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          DropdownButton(
-              items: const [
-                DropdownMenuItem(value: SortieType.local, child: Text("Local")),
-                DropdownMenuItem(value: SortieType.ims, child: Text("IMS")),
-                DropdownMenuItem(
-                    value: SortieType.mission, child: Text("Mission")),
-                DropdownMenuItem(value: SortieType.ost, child: Text("OST")),
-                DropdownMenuItem(
-                    value: SortieType.instmtSim, child: Text("ISS")),
-                DropdownMenuItem(
-                    value: SortieType.tacticsSim, child: Text("Tactics Sim")),
-                DropdownMenuItem(value: SortieType.mmp, child: Text("MMP")),
-                DropdownMenuItem(value: SortieType.lfe, child: Text("JFE")),
-              ],
-              value: formState.value,
-              onChanged: (SortieType? newValue) {
-                formState.didChange(newValue);
-                onChanged!(newValue!);
-              }),
-        ],
-      ),
-      formState.hasError
-          ? Text(
-              formState.errorText!,
-              style: const TextStyle(color: Colors.red),
-            )
-          : Container()
+      DropdownButton(
+          underline: Container(
+              decoration: BoxDecoration(
+            border: Border.all(
+                width: 0.0,
+                color: formState.hasError
+                    ? Colors.red
+                    : Theme.of(context).highlightColor),
+          )),
+          items: const [
+            DropdownMenuItem(value: SortieType.local, child: Text("Local")),
+            DropdownMenuItem(value: SortieType.ims, child: Text("IMS")),
+            DropdownMenuItem(value: SortieType.mission, child: Text("Mission")),
+            DropdownMenuItem(value: SortieType.ost, child: Text("OST")),
+            DropdownMenuItem(value: SortieType.instmtSim, child: Text("ISS")),
+            DropdownMenuItem(
+                value: SortieType.tacticsSim, child: Text("Tactics Sim")),
+            DropdownMenuItem(value: SortieType.mmp, child: Text("MMP")),
+            DropdownMenuItem(value: SortieType.lfe, child: Text("JFE")),
+          ],
+          value: formState.value,
+          onChanged: (SortieType? newValue) {
+            formState.didChange(newValue);
+            onChanged!(newValue!);
+          }),
     ],
   );
 }
