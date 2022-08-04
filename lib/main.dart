@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
               fromFirestore: UserSetting.fromFirestore,
               toFirestore: (UserSetting userSetting, _) =>
                   userSetting.toFirestore())
-          .where("email", isEqualTo: user!.email)
+          .where("email", isEqualTo: user.email)
           .get()
           .then(
             (value) => value.docs.first.data(),
