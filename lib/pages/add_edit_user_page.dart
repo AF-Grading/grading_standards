@@ -246,11 +246,11 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
             if (_formKey.currentState!.validate()) {
               // if adding a new user, verify the email does not already exist
               if (!_isEditing) {
-                var code = context
+                /* var code = context
                     .read<ApplicationState>()
                     .register(_email.text, "password", (e) {});
-                if (await code == "") {
-                  /*String id = context.read<Users>().updateById(
+                if (await code == "") { */
+                /*String id = context.read<Users>().updateById(
                         User(
                           //id: widget.user?.id,
                           name: _name.text,
@@ -261,22 +261,22 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                           password: widget.user?.password,
                         ),
                       );*/
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("User Added"),
-                    ),
-                  );
-                  context.read<ApplicationState>().addUserSetting(UserSetting(
-                        name: _name.text,
-                        rank: _rank!,
-                        squad: _squad!,
-                        email: _email.text,
-                        adQual: _adQual!,
-                        pilotQual: _pilotQual!,
-                        permission: _permission,
-                      ));
-                  Navigator.pop(context);
-                } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("User Added"),
+                  ),
+                );
+                context.read<ApplicationState>().addUserSetting(UserSetting(
+                      name: _name.text,
+                      rank: _rank!,
+                      squad: _squad!,
+                      email: _email.text,
+                      adQual: _adQual!,
+                      pilotQual: _pilotQual!,
+                      permission: _permission,
+                    ));
+                Navigator.pop(context);
+                /* } else {
                   setState(() {
                     code.then((value) {
                       _error = value;
@@ -284,7 +284,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                       _formKey.currentState!.validate();
                     });
                   });
-                }
+                } */
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

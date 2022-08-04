@@ -1,4 +1,6 @@
 import 'package:app_prototype/models/Squadrons.dart';
+import 'package:app_prototype/models/grading_criterion.dart';
+import 'package:app_prototype/views/new_grade_sheet_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ import 'models/application_state.dart';
 import 'models/grade_sheet.dart';
 import 'models/grade_sheets.dart';
 import 'models/current_flight.dart';
+import 'models/grading_parameter.dart';
 import 'models/theme_change.dart';
 import 'models/user_setting.dart';
 import 'models/users.dart';
@@ -150,6 +153,28 @@ class _MyAppState extends State<MyApp> {
                                   .map((docs) => docs.docs
                                       .map((doc) =>
                                           Squadron.fromFirestore(doc, null))
+                                      .toList()),
+                              initialData: const [],
+                            ),
+                            StreamProvider<List<GradingParameter>>(
+                              create: (_) => FirebaseFirestore.instance
+                                  .collection('Grading Parameters')
+                                  .snapshots()
+                                  .map((docs) => docs.docs
+                                      .map((doc) =>
+                                          GradingParameter.fromFirestore(
+                                              doc, null))
+                                      .toList()),
+                              initialData: const [],
+                            ),
+                            StreamProvider<List<GradingCriterion>>(
+                              create: (_) => FirebaseFirestore.instance
+                                  .collection('Grading Criteria')
+                                  .snapshots()
+                                  .map((docs) => docs.docs
+                                      .map((doc) =>
+                                          GradingCriterion.fromFirestore(
+                                              doc, null))
                                       .toList()),
                               initialData: const [],
                             ),

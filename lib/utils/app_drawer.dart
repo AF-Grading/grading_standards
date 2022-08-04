@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../models/application_state.dart';
 import '../pages/all_grade_sheets_page.dart';
+import '../pages/lists/barrel.dart';
 import '../pages/my_grade_sheets_page.dart';
 import '../pages/reference_materials_page.dart';
 import '../pages/settings_page.dart';
@@ -81,6 +82,17 @@ class _AppDrawerState extends State<AppDrawer> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const UsersPage()),
+              );
+            },
+          ),
+        if (context.watch<ApplicationState>().user.permission.index > 2)
+          ListTile(
+            title: const Text('Params'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const GradingParametersPage()),
               );
             },
           ),

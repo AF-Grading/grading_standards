@@ -133,16 +133,18 @@ class NewFlightView extends StatelessWidget {
         ),
         for (GradeSheet gradeSheet
             in context.watch<CurrentFlight>().gradeSheets) ...[
-          SliverTitleBar(gradeSheet.studentId == "1" ||
-                  gradeSheet.studentId == "2" ||
-                  gradeSheet.studentId == "3" ||
-                  gradeSheet.studentId == "4" ||
-                  gradeSheet.studentId == "0"
-              ? "Student"
-              : context
-                  .watch<List<UserSetting>>()
-                  .firstWhere((user) => user.email == gradeSheet.studentId)
-                  .name),
+          SliverTitleBar(
+            gradeSheet.studentId == "1" ||
+                    gradeSheet.studentId == "2" ||
+                    gradeSheet.studentId == "3" ||
+                    gradeSheet.studentId == "4" ||
+                    gradeSheet.studentId == "0"
+                ? "Student"
+                : context
+                    .watch<List<UserSetting>>()
+                    .firstWhere((user) => user.email == gradeSheet.studentId)
+                    .name,
+          ),
           SliverToBoxAdapter(
             child: StudentParamSelectionCard(gradeSheet: gradeSheet),
           ),

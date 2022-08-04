@@ -1,10 +1,10 @@
-import 'package:app_prototype/models/grading_parameter.dart';
-import 'package:app_prototype/views/new_grade_sheet_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class GradingParametersFormField extends FormField<String> {
-  GradingParametersFormField(
+import '../../models/Squadrons.dart';
+
+class SquadronFormField extends FormField<String> {
+  SquadronFormField(
       {Key? key,
       String? initialValue,
       ValueChanged<String>? onChanged,
@@ -17,9 +17,8 @@ class GradingParametersFormField extends FormField<String> {
           builder: (formState) {
             return LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
-              List<GradingParameter> params =
-                  context.watch<List<GradingParameter>>();
-              return _buildNarrow(formState, onChanged, params, context);
+              List<Squadron> squads = context.watch<List<Squadron>>();
+              return _buildNarrow(formState, onChanged, squads, context);
             });
           },
         );
@@ -28,7 +27,7 @@ class GradingParametersFormField extends FormField<String> {
 Widget _buildNarrow(
     FormFieldState<String> formState,
     ValueChanged<String>? onChanged,
-    List<GradingParameter> squads,
+    List<Squadron> squads,
     BuildContext context) {
   return DropdownButton<String>(
     underline: Container(
@@ -40,8 +39,8 @@ Widget _buildNarrow(
               : Theme.of(context).highlightColor),
     )),
     items: [
-      for (GradingParameter squad in squads)
-        DropdownMenuItem(value: squad.paramName, child: Text(squad.paramName))
+      for (Squadron squad in squads)
+        DropdownMenuItem(value: squad.squad, child: Text(squad.squad))
     ],
     value: formState.value,
     onChanged: (String? newValue) {

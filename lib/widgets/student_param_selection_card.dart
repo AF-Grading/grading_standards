@@ -1,3 +1,5 @@
+import 'package:app_prototype/widgets/form_fields/barrel.dart';
+import 'package:app_prototype/widgets/spaced_item.dart';
 import 'package:app_prototype/widgets/user_name_text_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +29,8 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
   final Map<String, bool> _selectedParams = {
     for (CTSItem item in ctsItems) item.name: true
   };
+
+  String _param = "All";
 
   final double spaceBetween = 150;
   bool hasErrors = false;
@@ -103,6 +107,15 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                   });
                 },
               ),
+        SpacedItem(
+          name: "Grading Parameters (2)",
+          child: GradingParametersFormField(
+            initialValue: _param,
+            onChanged: (value) => setState(() {
+              _param = value;
+            }),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -239,7 +252,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
                       ),
                     ]),
         ),
-        SizedBox(
+        /* SizedBox(
           height: 400,
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -283,7 +296,7 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
               );
             },
           ),
-        ),
+        ), */
       ],
     );
   }
