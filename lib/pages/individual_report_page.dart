@@ -125,15 +125,19 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                       }),
                                     ),
                                     Text("End Date"),
-                                    DatePicker(
-                                      date: context
-                                          .watch<IndividualReport>()
-                                          .endDate,
-                                      onChanged: (value) => setState(() {
-                                        context
-                                            .read<IndividualReport>()
-                                            .dateEnd = value;
-                                      }),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20.0),
+                                      child: DatePicker(
+                                        date: context
+                                            .watch<IndividualReport>()
+                                            .endDate,
+                                        onChanged: (value) => setState(() {
+                                          context
+                                              .read<IndividualReport>()
+                                              .dateEnd = value;
+                                        }),
+                                      ),
                                     ),
                                     StatsButtonsIndividual(
                                       initialValue: TimeCalculate.all,
@@ -367,12 +371,15 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                               }),
                             ),
                             Text("End Date"),
-                            DatePicker(
-                              date: context.watch<IndividualReport>().endDate,
-                              onChanged: (value) => setState(() {
-                                context.read<IndividualReport>().dateEnd =
-                                    value;
-                              }),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20.0),
+                              child: DatePicker(
+                                date: context.watch<IndividualReport>().endDate,
+                                onChanged: (value) => setState(() {
+                                  context.read<IndividualReport>().dateEnd =
+                                      value;
+                                }),
+                              ),
                             ),
                             StatsButtonsIndividual(
                               initialValue: TimeCalculate.all,
@@ -387,7 +394,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                               }),
                             ),
 
-                            //  FIVE BOTTOM FIVE
+                            // TOP FIVE BOTTOM FIVE
 
                             Padding(
                               padding: const EdgeInsets.fromLTRB(8, 0, 8, 30),
@@ -397,7 +404,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                   style: TextStyle(fontSize: 28),
                                 ),
                                 const Text(
-                                  "(best performing 5 category during selected time period)",
+                                  "(highest single scores during selected time period)",
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontStyle: FontStyle.italic),
@@ -428,7 +435,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                   style: TextStyle(fontSize: 28),
                                 ),
                                 const Text(
-                                  "(worst performing 5 category during selected time period)",
+                                  "(lowest single scores during selected time period)",
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontStyle: FontStyle.italic),
@@ -460,7 +467,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                     style: TextStyle(fontSize: 28),
                                   ),
                                   const Text(
-                                    "(highest performing 5 categories during selected time period)",
+                                    "(highest average categories during selected time period)",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontStyle: FontStyle.italic),
@@ -492,7 +499,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                     style: TextStyle(fontSize: 28),
                                   ),
                                   const Text(
-                                    "(lowest performing 5 categories during selected time period)",
+                                    "(lowest average categories during selected time period)",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontStyle: FontStyle.italic),

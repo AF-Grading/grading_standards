@@ -106,54 +106,65 @@ class _StudentParamSelectionCardState extends State<StudentParamSelectionCard> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
-              children: MediaQuery.of(context).size.width > 600
+              children: MediaQuery.of(context).size.width > 900
                   ?
                   // build wide
                   [
-                      const Text("Preselect Grading Paramaters:"),
+                      Padding(
+                          padding: const EdgeInsets.only(right: 20.0),
+                          child: const Text("Preselect Grading Paramaters:")),
                       const Text("Free Select"),
-                      Radio<GradingParams>(
-                        value: GradingParams.freeSelect,
-                        groupValue: _gradingParams,
-                        onChanged: (GradingParams? value) {
-                          setState(() {
-                            _gradingParams = value!;
-                          });
-                        },
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: Radio<GradingParams>(
+                          value: GradingParams.freeSelect,
+                          groupValue: _gradingParams,
+                          onChanged: (GradingParams? value) {
+                            setState(() {
+                              _gradingParams = value!;
+                            });
+                          },
+                        ),
                       ),
                       const Text("All"),
-                      Radio<GradingParams>(
-                        value: GradingParams.all,
-                        groupValue: _gradingParams,
-                        onChanged: (GradingParams? value) {
-                          setState(() {
-                            _gradingParams = value!;
-                            // set all params to true
-                            _selectedParams.forEach((key, value) {
-                              _selectedParams[key] = true;
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: Radio<GradingParams>(
+                          value: GradingParams.all,
+                          groupValue: _gradingParams,
+                          onChanged: (GradingParams? value) {
+                            setState(() {
+                              _gradingParams = value!;
+                              // set all params to true
+                              _selectedParams.forEach((key, value) {
+                                _selectedParams[key] = true;
+                              });
                             });
-                          });
-                          context.read<CurrentFlight>().updateParamsByStudent(
-                              widget.gradeSheet.studentId, _selectedParams);
-                        },
+                            context.read<CurrentFlight>().updateParamsByStudent(
+                                widget.gradeSheet.studentId, _selectedParams);
+                          },
+                        ),
                       ),
                       const Text("Formation and Airdrop"),
-                      Radio<GradingParams>(
-                        value: GradingParams.formationAndAirdop,
-                        groupValue: _gradingParams,
-                        onChanged: (GradingParams? value) {
-                          setState(() {
-                            _gradingParams = value!;
-                            // set all params to false except airdrop
-                            for (CTSItem item in ctsItems) {
-                              if (item.isAirdrop) {
-                                _selectedParams[item.name] = true;
-                              } else {
-                                _selectedParams[item.name] = false;
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: Radio<GradingParams>(
+                          value: GradingParams.formationAndAirdop,
+                          groupValue: _gradingParams,
+                          onChanged: (GradingParams? value) {
+                            setState(() {
+                              _gradingParams = value!;
+                              // set all params to false except airdrop
+                              for (CTSItem item in ctsItems) {
+                                if (item.isAirdrop) {
+                                  _selectedParams[item.name] = true;
+                                } else {
+                                  _selectedParams[item.name] = false;
+                                }
                               }
-                            }
-                          });
-                        },
+                            });
+                          },
+                        ),
                       ),
                       const Text("None"),
                       Radio<GradingParams>(

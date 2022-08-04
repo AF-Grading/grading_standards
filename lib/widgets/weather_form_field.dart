@@ -81,7 +81,6 @@ Widget _buildNarrow(
     child: Column(
       children: [
         Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          const Text("Weather:"),
           DropdownButton<Weather>(
             items: const [
               DropdownMenuItem(value: Weather.vmc, child: Text("VMC")),

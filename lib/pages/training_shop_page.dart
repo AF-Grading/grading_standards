@@ -105,10 +105,6 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
                                 ),
                                 Column(
                                   children: [
-                                    const Text(
-                                      "Overall Grade Over Time",
-                                      style: TextStyle(fontSize: 28),
-                                    ),
                                     Text("Start Date"),
                                     DatePicker(
                                       date: context
@@ -120,13 +116,18 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
                                       }),
                                     ),
                                     Text("End Date"),
-                                    DatePicker(
-                                      date:
-                                          context.watch<TrainingShop>().endDate,
-                                      onChanged: (value) => setState(() {
-                                        context.read<TrainingShop>().dateEnd =
-                                            value;
-                                      }),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20.0),
+                                      child: DatePicker(
+                                        date: context
+                                            .watch<TrainingShop>()
+                                            .endDate,
+                                        onChanged: (value) => setState(() {
+                                          context.read<TrainingShop>().dateEnd =
+                                              value;
+                                        }),
+                                      ),
                                     ),
                                     StatsButtonsSquadrons(
                                       initialValue: TimeCalculate.all,
@@ -364,11 +365,14 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
                               }),
                             ),
                             Text("End Date"),
-                            DatePicker(
-                              date: context.watch<TrainingShop>().endDate,
-                              onChanged: (value) => setState(() {
-                                context.read<TrainingShop>().dateEnd = value;
-                              }),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20.0),
+                              child: DatePicker(
+                                date: context.watch<TrainingShop>().endDate,
+                                onChanged: (value) => setState(() {
+                                  context.read<TrainingShop>().dateEnd = value;
+                                }),
+                              ),
                             ),
                             StatsButtonsSquadrons(
                               initialValue: TimeCalculate.all,
@@ -447,8 +451,10 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
                                     style: TextStyle(fontSize: 28),
                                   ),
                                   const Text(
-                                    "(highest performing 5 categories all time)",
-                                    style: TextStyle(fontSize: 12),
+                                    "(highest average categories during selected time period)",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontStyle: FontStyle.italic),
                                   ),
                                   Column(
                                     children: context
@@ -477,7 +483,7 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
                                     style: TextStyle(fontSize: 28),
                                   ),
                                   const Text(
-                                    "(lowest performing 5 categories all time)",
+                                    "(lowest average categories during selected time period)",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontStyle: FontStyle.italic),

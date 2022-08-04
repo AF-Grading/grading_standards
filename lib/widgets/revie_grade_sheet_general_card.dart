@@ -7,55 +7,82 @@ import 'sortie_type_form_field.dart';
 import 'weather_form_field.dart';
 
 class ReviewGradeSheetGeneralCard extends StatelessWidget {
-  const ReviewGradeSheetGeneralCard({Key? key}) : super(key: key);
-
+   ReviewGradeSheetGeneralCard({Key? key}) : super(key: key);
+  double spaceBetween = 150;
   @override
   Widget build(BuildContext context) {
     return Column(
       //title: const Text("General"),
       //initiallyExpanded: true,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              WeatherFormField(
-                  initialValue: context.read<CurrentFlight>().weather,
-                  validator: (value) {
-                    if (value == null) {
-                      return "Please select a value";
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    context.read<CurrentFlight>().weather = value;
-                  }),
-              DayNightFormField(
-                  initialValue: context.read<CurrentFlight>().dayNight,
-                  validator: (value) {
-                    if (value == null) {
-                      return "Please select a value";
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    context.read<CurrentFlight>().dayNight = value;
-                  }),
-            ],
-          ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: spaceBetween,
+                    child: Text("Weather: "),
+                  ),
+                  WeatherFormField(
+                      initialValue: context.read<CurrentFlight>().weather,
+                      validator: (value) {
+                        if (value == null) {
+                          return "Please select a value";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        context.read<CurrentFlight>().weather = value;
+                      }),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: spaceBetween,
+                    child: Text("Time of Day: "),
+                  ),
+                  DayNightFormField(
+                      initialValue: context.read<CurrentFlight>().dayNight,
+                      validator: (value) {
+                        if (value == null) {
+                          return "Please select a value";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        context.read<CurrentFlight>().dayNight = value;
+                      }),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  SizedBox(width: spaceBetween, child: Text("Sortie Type: ")),
+                  SortieTypeFormField(
+                      initialValue: context.read<CurrentFlight>().sortieType,
+                      validator: (value) {
+                        if (value == null) {
+                          return "Please select a value";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        context.read<CurrentFlight>().sortieType = value;
+                      }),
+                ],
+              ),
+            ),
+          ],
         ),
-        SortieTypeFormField(
-            initialValue: context.read<CurrentFlight>().sortieType,
-            validator: (value) {
-              if (value == null) {
-                return "Please select a value";
-              }
-              return null;
-            },
-            onChanged: (value) {
-              context.read<CurrentFlight>().sortieType = value;
-            }),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(

@@ -15,7 +15,7 @@ class SortieTypeFormField extends FormField<SortieType> {
           validator: validator,
           builder: (formState) {
             return LayoutBuilder(builder: ((context, constraints) {
-              if (MediaQuery.of(context).size.width > 600) {
+              if (MediaQuery.of(context).size.width > 1200) {
                 return _buildWide(formState, onChanged);
               } else {
                 return _buildNarrow(formState, onChanged);
@@ -27,95 +27,145 @@ class SortieTypeFormField extends FormField<SortieType> {
 
 Widget _buildWide(
     FormFieldState<SortieType> formState, ValueChanged<SortieType>? onChanged) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-      children: [
-        Wrap(
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Text("Local"),
-            Radio<SortieType>(
-              value: SortieType.local,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
+  return Row(
+    children: [
+      Wrap(
+        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Row(
+              children: [
+                const Text("Local"),
+                Radio<SortieType>(
+                  value: SortieType.local,
+                  groupValue: formState.value,
+                  onChanged: (value) {
+                    formState.didChange(value);
+                    onChanged!(value!);
+                  },
+                ),
+              ],
             ),
-            const Text("IMS"),
-            Radio<SortieType>(
-              value: SortieType.ims,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Row(
+              children: [
+                const Text("IMS"),
+                Radio<SortieType>(
+                  value: SortieType.ims,
+                  groupValue: formState.value,
+                  onChanged: (value) {
+                    formState.didChange(value);
+                    onChanged!(value!);
+                  },
+                ),
+              ],
             ),
-            const Text("Mission"),
-            Radio<SortieType>(
-              value: SortieType.mission,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Row(
+              children: [
+                const Text("Mission"),
+                Radio<SortieType>(
+                  value: SortieType.mission,
+                  groupValue: formState.value,
+                  onChanged: (value) {
+                    formState.didChange(value);
+                    onChanged!(value!);
+                  },
+                ),
+              ],
             ),
-            const Text("OST"),
-            Radio<SortieType>(
-              value: SortieType.ost,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Row(
+              children: [
+                const Text("OST"),
+                Radio<SortieType>(
+                  value: SortieType.ost,
+                  groupValue: formState.value,
+                  onChanged: (value) {
+                    formState.didChange(value);
+                    onChanged!(value!);
+                  },
+                ),
+              ],
             ),
-            const Text("ISS"),
-            Radio<SortieType>(
-              value: SortieType.instmtSim,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Row(
+              children: [
+                const Text("ISS"),
+                Radio<SortieType>(
+                  value: SortieType.instmtSim,
+                  groupValue: formState.value,
+                  onChanged: (value) {
+                    formState.didChange(value);
+                    onChanged!(value!);
+                  },
+                ),
+              ],
             ),
-            const Text("Tactics Sim"),
-            Radio<SortieType>(
-              value: SortieType.tacticsSim,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Row(
+              children: [
+                const Text("Tactics Sim"),
+                Radio<SortieType>(
+                  value: SortieType.tacticsSim,
+                  groupValue: formState.value,
+                  onChanged: (value) {
+                    formState.didChange(value);
+                    onChanged!(value!);
+                  },
+                ),
+              ],
             ),
-            const Text("MMP"),
-            Radio<SortieType>(
-              value: SortieType.mmp,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Row(
+              children: [
+                const Text("MMP"),
+                Radio<SortieType>(
+                  value: SortieType.mmp,
+                  groupValue: formState.value,
+                  onChanged: (value) {
+                    formState.didChange(value);
+                    onChanged!(value!);
+                  },
+                ),
+              ],
             ),
-            const Text("JFE"),
-            Radio<SortieType>(
-              value: SortieType.lfe,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-          ],
-        ),
-        formState.hasError
-            ? Text(
-                formState.errorText!,
-                style: const TextStyle(color: Colors.red),
-              )
-            : Container()
-      ],
-    ),
+          ),
+          Row(
+            children: [
+              const Text("JFE"),
+              Radio<SortieType>(
+                value: SortieType.lfe,
+                groupValue: formState.value,
+                onChanged: (value) {
+                  formState.didChange(value);
+                  onChanged!(value!);
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+      formState.hasError
+          ? Text(
+              formState.errorText!,
+              style: const TextStyle(color: Colors.red),
+            )
+          : Container()
+    ],
   );
 }
 
