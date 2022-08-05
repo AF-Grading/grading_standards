@@ -67,7 +67,7 @@ class _NewFlightView2State extends State<NewFlightView2> {
                   name: "Weather",
                   child: WeatherFormField(
                     onChanged: (value) {
-                      _weather = value;
+                      //_weather = value;
                       context.read<CurrentFlight>().weather = value;
                     },
                     validator: (value) {
@@ -101,7 +101,7 @@ class _NewFlightView2State extends State<NewFlightView2> {
                       return null;
                     },
                     onChanged: (value) {
-                      _sortieType = value;
+                      //_sortieType = value;
                       context.read<CurrentFlight>().sortieType = value;
                     },
                   ),
@@ -122,7 +122,7 @@ class _NewFlightView2State extends State<NewFlightView2> {
                       return null;
                     },
                     onChanged: (value) {
-                      _dayNight = value;
+                      //_dayNight = value;
                       context.read<CurrentFlight>().dayNight = value;
                     },
                   ),
