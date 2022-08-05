@@ -7,7 +7,9 @@ import '../models/grade_enums.dart';
 import '../models/grade_sheet.dart';
 import '../models/user.dart';
 import '../models/user_setting.dart';
+import 'grade_item_tile2.dart';
 import 'grades_card.dart';
+import 'slivers/sliver_title_bar.dart';
 
 class ReviewGradeSheetCard extends StatelessWidget {
   const ReviewGradeSheetCard({Key? key, required this.gradeSheet})
@@ -26,33 +28,38 @@ class ReviewGradeSheetCard extends StatelessWidget {
           // TODO Implement?
           hasErrors: (_) {},
         ),
-        GradesCard(
-          title: "Graded Items",
-          student: context.read<List<UserSetting>>().firstWhere(
-              (user) => user.email == gradeSheet.studentId,
-              orElse: () => UserSetting(
-                  name: "f",
-                  rank: Rank.capt,
-                  squad: "squad",
-                  email: "email",
-                  adQual: AdQual.acad,
-                  pilotQual: PilotQual.fpc)),
-          grades: gradeSheet.grades
-              .where((item) => item.grade != Grade.noGrade)
-              .toList(),
-          hasErrors: (_) {},
-        ),
-        /*GradesCard(
-          title: "Ungraded",
-          initiallyExpanded: false,
-          student: context
-              .watch<List<UserSetting>>()
-              .firstWhere((user) => user.email == gradeSheet.studentId),
-          grades: gradeSheet.grades
-              .where((item) => item.grade == Grade.noGrade)
-              .toList(),
-          hasErrors: (_) {},
-        ),*/
+        //SliverTitleBar("Grades"),
+        Column(
+          children: [
+            for (GradeItem item in gradeSheet.grades)
+              GradeItemTile2(
+                gradeItem: item,
+                onChanged: (gradeItem) {
+                  context
+                      .read<CurrentFlight>()
+                      .updateByGradeItem(gradeSheet.studentId, gradeItem);
+                },
+                hasErrors: (_) => {},
+              )
+          ], /* ((item) => GradeItemTile2(
+                    gradeItem: item,
+                    onChanged: (gradeItem) {
+                      setState(() {
+                        final index = _selectedGrades.indexOf(item);
+                        _selectedGrades
+                            .replaceRange(index, index + 1, [gradeItem]);
+                      });
+                      context
+                          .read<CurrentFlight>()
+                          .updateByGradeItem(widget.student.email, gradeItem);
+                    },
+                    hasErrors: (error) {
+                      setState(() {
+                        _gradesError = error;
+                      });
+                    }))
+                .toList()) */
+        )
       ],
     );
   }

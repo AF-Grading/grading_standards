@@ -171,9 +171,22 @@ class _NewFlightView2State extends State<NewFlightView2> {
                             setState(() {
                               _studentError[i] = false;
                               _studentIds[i] = studentId;
-                              context.read<CurrentFlight>().students[i] =
-                                  studentId;
                             });
+                            final student = context
+                                .read<List<UserSetting>>()
+                                .firstWhere((user) => user.email == studentId);
+                            if (context.read<CurrentFlight>().students.length <
+                                i + 1) {
+                              context
+                                  .read<CurrentFlight>()
+                                  .students
+                                  .add(student);
+                            } else {
+                              context
+                                  .read<CurrentFlight>()
+                                  .students
+                                  .replaceRange(i, i + 1, [student]);
+                            }
                           },
                           validator: (value) {
                             if (_studentIds[i] == "") {
@@ -216,7 +229,7 @@ class _NewFlightView2State extends State<NewFlightView2> {
                       setState(() {
                         _students--;
                       });
-                      context.read<CurrentFlight>().studentNum--;
+                      context.read<CurrentFlight>().studentNum = _students;
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -233,7 +246,7 @@ class _NewFlightView2State extends State<NewFlightView2> {
                       setState(() {
                         _students++;
                       });
-                      context.read<CurrentFlight>().studentNum++;
+                      context.read<CurrentFlight>().studentNum = _students;
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

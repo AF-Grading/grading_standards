@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/grading_parameter.dart';
 import 'package:app_prototype/models/user_setting.dart';
 import 'package:app_prototype/views/flight_view_2.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +12,9 @@ import '/pages/review_flight_page.dart';
 import '/views/flight_view.dart';
 
 class CurrentFlightPage extends StatefulWidget {
-  const CurrentFlightPage({Key? key, required this.length}) : super(key: key);
+  const CurrentFlightPage({Key? key, required this.students}) : super(key: key);
 
-  final int length;
+  final List<UserSetting> students;
   //final List<GradeSheet> gradeSheets;
   //final Map<String, bool> selectedParams;
 
@@ -38,8 +39,7 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
     bool keyBoardIsOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return Form(
       key: context.read<CurrentFlight>().flightKey,
-      child: context.watch<CurrentFlight>().studentNum ==
-              1 //gradeSheets.length == 1
+      child: widget.students.length == 1 //gradeSheets.length == 1
           ? Scaffold(
               appBar: AppBar(
                 title: Row(
@@ -52,14 +52,17 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
               ),
               body: FlightView2(
                 //index: 0,
-                gradeSheet: context.watch<CurrentFlight>().gradeSheets.first,
-                params: context.watch<CurrentFlight>().selectedParams[0],
-                /*hasErrors: (hasError) {
+                hasErrors: (error) {
                   setState(() {
-                    hasErrors[0] = hasError;
+                    hasErrors[0] = error;
                   });
-                },*/
-                //selectedParams: widget.selectedParams,
+                },
+                student: widget.students[0],
+                gradeSheet: context.watch<CurrentFlight>().gradeSheets.first,
+                params: context.read<List<GradingParameter>>().firstWhere(
+                    (param) =>
+                        param.paramName ==
+                        context.watch<CurrentFlight>().selectedParams[0]),
               ),
               floatingActionButton: Visibility(
                 visible: !keyBoardIsOpen,
@@ -85,7 +88,7 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
             )
           : DefaultTabController(
               initialIndex: 0,
-              length: context.watch<CurrentFlight>().gradeSheets.length,
+              length: widget.students.length,
               child: Scaffold(
                 appBar: AppBar(
                   title: Row(
@@ -97,62 +100,38 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                   ),
                   bottom: TabBar(
                     tabs: [
-                      for (int i = 0;
-                          i < context.watch<CurrentFlight>().gradeSheets.length;
-                          i++)
+                      for (int i = 0; i < widget.students.length; i++)
                         hasErrors[i]
                             ? Tab(
                                 child: Text(
-                                  context
-                                      .watch<List<UserSetting>>()
-                                      .firstWhere((user) =>
-                                          user.email ==
-                                          context
-                                              .watch<CurrentFlight>()
-                                              .gradeSheets[i]
-                                              .studentId)
-                                      .name,
+                                  widget.students[i].name,
                                   style: const TextStyle(color: Colors.red),
                                 ),
                               )
                             : Tab(
                                 child: Text(
-                                context
-                                    .watch<List<UserSetting>>()
-                                    .firstWhere((user) =>
-                                        user.email ==
-                                        context
-                                            .watch<CurrentFlight>()
-                                            .gradeSheets[i]
-                                            .studentId)
-                                    .name,
+                                widget.students[i].name,
                               ))
                     ],
-
-                    /*context
-                        .watch<CurrentFlight>()
-                        .gradeSheets
-                        .map((gradeSheet) {
-                      return Tab(
-                        child: Text(gradeSheet.student),
-                      );
-                    }).toList(),*/
                   ),
                 ),
                 body: TabBarView(children: [
-                  for (int i = 0;
-                      i < context.watch<CurrentFlight>().gradeSheets.length;
-                      i++)
+                  for (int i = 0; i < widget.students.length; i++)
                     // _flightViews[i],
                     FlightView2(
                       //index: i,
-                      gradeSheet: context.watch<CurrentFlight>().gradeSheets[i],
-                      params: context.watch<CurrentFlight>().selectedParams[i],
-                      /* hasErrors: (hasError) {
+                      hasErrors: (error) {
                         setState(() {
-                          hasErrors[i] = hasError;
+                          hasErrors[i] = error;
                         });
-                      }, */
+                      },
+                      student: widget.students[i],
+                      gradeSheet: context.watch<CurrentFlight>().gradeSheets[i],
+                      params: context
+                          .watch<List<GradingParameter>>()
+                          .firstWhere((param) =>
+                              param.paramName ==
+                              context.watch<CurrentFlight>().selectedParams[i]),
                     )
                 ]),
                 floatingActionButton: Visibility(
@@ -176,7 +155,7 @@ class _CurrentFlightPageState extends State<CurrentFlightPage> {
                     child: const Text("Review"),
                   ),
                 ),
-              ), // This trailing comma makes auto-formatting nicer for build methods.
+              ),
             ),
     );
   }

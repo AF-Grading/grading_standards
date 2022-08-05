@@ -25,16 +25,16 @@ class GradeSheet {
   final bool isDraft;
 
   GradeSheet({
-    required this.instructorId,
+    this.instructorId = '',
     required this.studentId,
-    required this.missionNum,
+    this.missionNum = "",
     required this.grades,
     this.overall,
     this.adQual = AdQual.none,
     this.pilotQual = PilotQual.fpc,
     this.weather,
-    required this.sortieType,
-    required this.dayNight,
+    this.sortieType = SortieType.ims,
+    this.dayNight = DayNight.day,
     required this.startTime,
     required this.endTime,
     this.profile = '',
@@ -95,6 +95,46 @@ class GradeSheet {
       "recommendations": recommendations,
       "id": id
     };
+  }
+
+  GradeSheet copyWith({
+    String? id,
+    String? instructorId,
+    String? studentId,
+    String? missionNum,
+    List<GradeItem>? grades,
+    Grade? overall,
+    AdQual? adQual, //TODO does this need to be on gsheet?
+    PilotQual? pilotQual,
+    Weather? weather,
+    SortieType? sortieType,
+    DayNight? dayNight,
+    DateTime? startTime,
+    DateTime? endTime,
+    String? profile,
+    String? overallComments,
+    String? recommendations,
+    bool? isDraft,
+  }) {
+    return GradeSheet(
+      id: id ?? this.id,
+      instructorId: instructorId ?? this.instructorId,
+      studentId: studentId ?? this.studentId,
+      missionNum: missionNum ?? this.missionNum,
+      grades: grades ?? this.grades,
+      overall: overall ?? this.overall,
+      adQual: adQual ?? this.adQual,
+      pilotQual: pilotQual ?? this.pilotQual,
+      weather: weather ?? this.weather,
+      sortieType: sortieType ?? this.sortieType,
+      dayNight: dayNight ?? this.dayNight,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      profile: profile ?? this.profile,
+      overallComments: overallComments ?? this.overallComments,
+      recommendations: recommendations ?? this.recommendations,
+      isDraft: isDraft ?? this.isDraft,
+    );
   }
 
   String copy(String instructorName, UserSetting student) {

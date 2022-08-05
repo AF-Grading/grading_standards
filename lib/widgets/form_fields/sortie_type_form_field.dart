@@ -1,3 +1,4 @@
+import 'package:app_prototype/widgets/misc/radio_spacing.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/grade_enums.dart';
@@ -15,8 +16,8 @@ class SortieTypeFormField extends FormField<SortieType> {
           validator: validator,
           builder: (formState) {
             return LayoutBuilder(builder: ((context, constraints) {
-              if (MediaQuery.of(context).size.width > 600) {
-                return _buildWide(formState, onChanged);
+              if (MediaQuery.of(context).size.width > 900) {
+                return _buildWide(formState, onChanged, context);
               } else {
                 return _buildNarrow(formState, onChanged, context);
               }
@@ -25,97 +26,134 @@ class SortieTypeFormField extends FormField<SortieType> {
         );
 }
 
-Widget _buildWide(
-    FormFieldState<SortieType> formState, ValueChanged<SortieType>? onChanged) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-      children: [
-        Wrap(
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Text("Local"),
-            Radio<SortieType>(
-              value: SortieType.local,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-            const Text("IMS"),
-            Radio<SortieType>(
-              value: SortieType.ims,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-            const Text("Mission"),
-            Radio<SortieType>(
-              value: SortieType.mission,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-            const Text("OST"),
-            Radio<SortieType>(
-              value: SortieType.ost,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-            const Text("ISS"),
-            Radio<SortieType>(
-              value: SortieType.instmtSim,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-            const Text("Tactics Sim"),
-            Radio<SortieType>(
-              value: SortieType.tacticsSim,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-            const Text("MMP"),
-            Radio<SortieType>(
-              value: SortieType.mmp,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-            const Text("JFE"),
-            Radio<SortieType>(
-              value: SortieType.lfe,
-              groupValue: formState.value,
-              onChanged: (value) {
-                formState.didChange(value);
-                onChanged!(value!);
-              },
-            ),
-          ],
-        ),
-        formState.hasError
-            ? Text(
-                formState.errorText!,
-                style: const TextStyle(color: Colors.red),
-              )
-            : Container()
-      ],
-    ),
+Widget _buildWide(FormFieldState<SortieType> formState,
+    ValueChanged<SortieType>? onChanged, BuildContext context) {
+  return Row(
+    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      SizedBox(
+        width: 40,
+        child: const Text("Local"),
+      ),
+      Radio<SortieType>(
+          value: SortieType.local,
+          groupValue: formState.value,
+          onChanged: (value) {
+            formState.didChange(value);
+            onChanged!(value!);
+          },
+          fillColor: formState.hasError
+              ? MaterialStateProperty.resolveWith<Color>((states) {
+                  return Colors.red;
+                })
+              : Theme.of(context).radioTheme.fillColor),
+      SizedBox(
+        width: 40,
+        child: const Text("IMS"),
+      ),
+      Radio<SortieType>(
+          value: SortieType.ims,
+          groupValue: formState.value,
+          onChanged: (value) {
+            formState.didChange(value);
+            onChanged!(value!);
+          },
+          fillColor: formState.hasError
+              ? MaterialStateProperty.resolveWith<Color>((states) {
+                  return Colors.red;
+                })
+              : Theme.of(context).radioTheme.fillColor),
+      RadioSpacing("Mission"),
+      Radio<SortieType>(
+          value: SortieType.mission,
+          groupValue: formState.value,
+          onChanged: (value) {
+            formState.didChange(value);
+            onChanged!(value!);
+          },
+          fillColor: formState.hasError
+              ? MaterialStateProperty.resolveWith<Color>((states) {
+                  return Colors.red;
+                })
+              : Theme.of(context).radioTheme.fillColor),
+      SizedBox(
+        width: 40,
+        child: const Text("OST"),
+      ),
+      Radio<SortieType>(
+          value: SortieType.ost,
+          groupValue: formState.value,
+          onChanged: (value) {
+            formState.didChange(value);
+            onChanged!(value!);
+          },
+          fillColor: formState.hasError
+              ? MaterialStateProperty.resolveWith<Color>((states) {
+                  return Colors.red;
+                })
+              : Theme.of(context).radioTheme.fillColor),
+      SizedBox(
+        width: 40,
+        child: const Text("ISS"),
+      ),
+      Radio<SortieType>(
+          value: SortieType.instmtSim,
+          groupValue: formState.value,
+          onChanged: (value) {
+            formState.didChange(value);
+            onChanged!(value!);
+          },
+          fillColor: formState.hasError
+              ? MaterialStateProperty.resolveWith<Color>((states) {
+                  return Colors.red;
+                })
+              : Theme.of(context).radioTheme.fillColor),
+      RadioSpacing("Tactics Sim"),
+      Radio<SortieType>(
+          value: SortieType.tacticsSim,
+          groupValue: formState.value,
+          onChanged: (value) {
+            formState.didChange(value);
+            onChanged!(value!);
+          },
+          fillColor: formState.hasError
+              ? MaterialStateProperty.resolveWith<Color>((states) {
+                  return Colors.red;
+                })
+              : Theme.of(context).radioTheme.fillColor),
+      SizedBox(
+        width: 40,
+        child: const Text("MMP"),
+      ),
+      Radio<SortieType>(
+          value: SortieType.mmp,
+          groupValue: formState.value,
+          onChanged: (value) {
+            formState.didChange(value);
+            onChanged!(value!);
+          },
+          fillColor: formState.hasError
+              ? MaterialStateProperty.resolveWith<Color>((states) {
+                  return Colors.red;
+                })
+              : Theme.of(context).radioTheme.fillColor),
+      SizedBox(
+        width: 40,
+        child: const Text("JFE"),
+      ),
+      Radio<SortieType>(
+          value: SortieType.lfe,
+          groupValue: formState.value,
+          onChanged: (value) {
+            formState.didChange(value);
+            onChanged!(value!);
+          },
+          fillColor: formState.hasError
+              ? MaterialStateProperty.resolveWith<Color>((states) {
+                  return Colors.red;
+                })
+              : Theme.of(context).radioTheme.fillColor),
+    ],
   );
 }
 

@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import '../../models/grading_criterion.dart';
 import '../add_edit/barrel.dart';
 
-class GradingParametersPage extends StatelessWidget {
-  const GradingParametersPage({Key? key}) : super(key: key);
+class GradingCriteriaPage extends StatelessWidget {
+  const GradingCriteriaPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class GradingParametersPage extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Grading Parameters"),
+            const Text("Grading Critera"),
             GestureDetector(
               child: const Icon(
                 Icons.add,
@@ -24,9 +24,7 @@ class GradingParametersPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AddEditGradingParameterPage(
-                      gradingCriteria: context.read<List<GradingCriterion>>(),
-                    ),
+                    builder: (context) => const AddEditGradingCriterionPage(),
                   ),
                 );
               },
@@ -34,7 +32,7 @@ class GradingParametersPage extends StatelessWidget {
           ],
         ),
       ),
-      body: Consumer<List<GradingParameter>>(
+      body: Consumer<List<GradingCriterion>>(
         builder: (context, stream, _) =>
             //stream.sort((a, b) => b.startTime.compareTo(a.startTime));
             SingleChildScrollView(
@@ -42,16 +40,14 @@ class GradingParametersPage extends StatelessWidget {
               children: stream.isEmpty
                   ? [const Text("No Data...")]
                   : stream
-                      .map((gradingParam) => ListTile(
-                            title: Text(gradingParam.paramName),
+                      .map((criterion) => ListTile(
+                            title: Text(criterion.criterion),
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    AddEditGradingParameterPage(
-                                  gradingParameter: gradingParam,
-                                  gradingCriteria:
-                                      context.read<List<GradingCriterion>>(),
+                                    AddEditGradingCriterionPage(
+                                  gradingCriterion: criterion,
                                 ),
                               ),
                             ),

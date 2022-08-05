@@ -39,7 +39,8 @@ class _AddEditGradingParameterPageState
 
     if (_isEditing) {
       for (Param param in widget.gradingParameter!.params) {
-        _params[param.gradingItem] = param.isUsed;
+        if (_params[param.gradingItem] != null)
+          _params[param.gradingItem] = param.isUsed;
       }
     }
 
