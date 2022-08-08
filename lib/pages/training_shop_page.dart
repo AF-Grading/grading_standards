@@ -1,5 +1,6 @@
 import 'package:app_prototype/models/application_state.dart';
 import 'package:app_prototype/models/grade_sheet.dart';
+import 'package:app_prototype/models/grading_criterion.dart';
 import 'package:app_prototype/models/user.dart';
 import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,8 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
     // We create the provider here because it will change for each student
     return ChangeNotifierProvider(
       // Here we inject the Individual's gradesheets
-      create: (context) => TrainingShop(widget.gradeSheets),
+      create: (context) => TrainingShop(
+          widget.gradeSheets, context.read<List<GradingCriterion>>()),
       builder: (context, trainingShop) {
         return Scaffold(
           appBar: widget.instructor
