@@ -20,7 +20,7 @@ class IndividualReportPage extends StatefulWidget {
     required this.user,
     required this.gradeSheets,
   }) : super(key: key);
-  final User user;
+  final UserSetting user;
   final List<GradeSheet> gradeSheets;
   late TimeCalculate curr_value;
 

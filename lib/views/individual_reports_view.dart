@@ -1,4 +1,5 @@
 import 'package:app_prototype/models/grade_sheets.dart';
+import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,9 +16,9 @@ class IndividualReportsView extends StatelessWidget {
     // TODO change this list depending on user permissions
     // for example: the captain of one squadron can't see another's students
 
-    return Consumer<Users>(
+    return Consumer<List<UserSetting>>(
       builder: ((context, usersProvider, child) {
-        List<User> users = usersProvider.users;
+        List<UserSetting> users = usersProvider;
         return ListView.builder(
           itemCount: users.length,
           itemBuilder: (context, index) {
@@ -29,7 +30,7 @@ class IndividualReportsView extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => IndividualReportPage(
-                      user: user,
+                      user: users[index],
                       // pass the gradeSheets that this user is a student of
                       gradeSheets: context
                           .watch<List<GradeSheet>>()
