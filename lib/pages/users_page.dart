@@ -34,32 +34,34 @@ class UsersPage extends StatelessWidget {
             ],
           ),
         ),
-        body: Consumer<List<UserSetting>>(
-          builder: (context, userStream, child) {
-            return Column(
-              children: userStream
-                  .map(
-                    (user) => ListTile(
-                      title: Text("${user.rank.pretty} ${user.name}"),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => UserPage(
-                                user: UserSetting(
-                                    name: user.name,
-                                    rank: user.rank,
-                                    email: user.email,
-                                    permission: user.permission,
-                                    pilotQual: user.pilotQual,
-                                    adQual: user.adQual,
-                                    squad: user.squad))),
+        body: SingleChildScrollView(
+          child: Consumer<List<UserSetting>>(
+            builder: (context, userStream, child) {
+              return Column(
+                children: userStream
+                    .map(
+                      (user) => ListTile(
+                        title: Text("${user.rank.pretty} ${user.name}"),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UserPage(
+                                  user: UserSetting(
+                                      name: user.name,
+                                      rank: user.rank,
+                                      email: user.email,
+                                      permission: user.permission,
+                                      pilotQual: user.pilotQual,
+                                      adQual: user.adQual,
+                                      squad: user.squad))),
+                        ),
                       ),
-                    ),
-                  )
-                  .toList(),
-            );
-          },
-          //),
+                    )
+                    .toList(),
+              );
+            },
+            //),
+          ),
         ));
   }
 }

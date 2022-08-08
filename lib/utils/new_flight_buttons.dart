@@ -1,13 +1,19 @@
+import 'package:app_prototype/models/grade_sheet.dart';
+import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/application_state.dart';
 import '../models/current_flight.dart';
 import '../models/current_user.dart';
+import '../models/grading_criterion.dart';
 import '../pages/current_flight_page.dart';
 import '../theme/light_mode.dart';
 
 class NewFlightButtons extends StatelessWidget {
-  const NewFlightButtons({Key? key}) : super(key: key);
+  const NewFlightButtons({Key? key, required this.formKey}) : super(key: key);
+
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,7 @@ class NewFlightButtons extends StatelessWidget {
       direction: Axis.horizontal,
       //mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Padding(
+        /* Padding(
           padding: const EdgeInsets.all(8.0),
           child: Theme(
             data: Theme.of(context).copyWith(backgroundColor: primaryYellow),
@@ -39,8 +45,8 @@ class NewFlightButtons extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        Padding(
+        ), */
+        /* Padding(
           padding: const EdgeInsets.all(8.0),
           child: Theme(
             data: Theme.of(context).copyWith(backgroundColor: primaryYellow),
@@ -62,7 +68,7 @@ class NewFlightButtons extends StatelessWidget {
                   child: const Icon(Icons.add)),
             ),
           ),
-        ),
+        ), */
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Theme(
@@ -75,20 +81,35 @@ class NewFlightButtons extends StatelessWidget {
                 tooltip: "Start Flight",
                 child: const Icon(Icons.airplanemode_active),
                 onPressed: () {
-                  if (context
+                  if (/* context
                       .read<CurrentFlight>()
                       .newKey
                       .currentState!
-                      .validate()) {
+                      .validate() */
+                      formKey.currentState!.validate()) {
                     context.read<CurrentFlight>().instructorId =
-                        context.read<CurrentUser>().email;
+                        context.read<ApplicationState>().user.email;
+                    final students = context.read<CurrentFlight>().students;
+
+                    context.read<CurrentFlight>().gradeSheets.clear();
+                    for (UserSetting student in students) {
+                      /*final List<GradeItem> grades = context
+                          .watch<List<GradingCriterion>>()
+                          .map((criterion) =>
+                              GradeItem(name: criterion.criterion))
+                          .toList();*/
+                      context.read<CurrentFlight>().gradeSheets.add(GradeSheet(
+                          studentId: student.email,
+                          grades: [], //grades,
+                          startTime: DateTime.now(),
+                          endTime: DateTime.now()));
+                    }
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => CurrentFlightPage(
-                          length:
-                              context.read<CurrentFlight>().gradeSheets.length,
-                        ),
+                            students: context.read<CurrentFlight>().students),
                       ),
                     );
                     // TODO if in a flight, dont do this

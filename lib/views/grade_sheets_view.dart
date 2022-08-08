@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/application_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,12 +21,12 @@ class GradeSheetsView extends StatelessWidget {
             ? gradeSheetsStream
                 .where((gradesheet) =>
                     gradesheet.instructorId ==
-                    context.watch<CurrentUser>().user.email)
+                    context.watch<ApplicationState>().user.email)
                 .toList()
             : gradeSheetsStream
                 .where((gradesheet) =>
                     gradesheet.studentId ==
-                    context.watch<CurrentUser>().user.email)
+                    context.watch<ApplicationState>().user.email)
                 .toList();
         final missionNumbers = gradeSheetsStream
             .map((gradeSheet) => gradeSheet.missionNum)

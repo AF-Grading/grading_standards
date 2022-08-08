@@ -8,13 +8,16 @@ import '../models/application_state.dart';
 import '../models/grade_enums.dart';
 import '../models/user.dart';
 import '../widgets/ad_qual_form_field.dart';
+import '../widgets/form_fields/barrel.dart';
 import '../widgets/permission_form_field.dart';
 import '../widgets/pilot_qual_form_field.dart';
 
 class AddEditUserPage extends StatefulWidget {
-  const AddEditUserPage({Key? key, this.user}) : super(key: key);
+  const AddEditUserPage({Key? key, this.user, this.settings = false})
+      : super(key: key);
 
   final UserSetting? user;
+  final bool settings;
 
   @override
   State<AddEditUserPage> createState() => _AddEditUserPageState();
@@ -42,8 +45,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
       TextEditingController(text: widget.user?.name);
   late final TextEditingController _email =
       TextEditingController(text: widget.user?.email);
-  late final TextEditingController _squad =
-      TextEditingController(text: widget.user?.squad);
+  late String? _squad = widget.user?.squad ?? null;
   late Permission? _permission = widget.user?.permission;
   late Rank? _rank = widget.user?.rank;
   late AdQual? _adQual = widget.user?.adQual;
@@ -128,17 +130,19 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                       width: _spaceBetween,
                       child: const Text("Squadron: "),
                     ),
-                    Flexible(
-                      child: TextFormField(
-                        controller: _squad,
+                    SquadronFormField(
+                        initialValue: _squad,
                         validator: (value) {
-                          if (value == "") {
-                            return "Please enter a Squadron";
+                          if (value == null) {
+                            return "Please select a value";
                           }
                           return null;
                         },
-                      ),
-                    ),
+                        onChanged: (value) {
+                          setState(() {
+                            _squad = value;
+                          });
+                        }),
                   ],
                 ),
               ),
@@ -244,11 +248,11 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
             if (_formKey.currentState!.validate()) {
               // if adding a new user, verify the email does not already exist
               if (!_isEditing) {
-                var code = context
+                /* var code = context
                     .read<ApplicationState>()
                     .register(_email.text, "password", (e) {});
-                if (await code == "") {
-                  /*String id = context.read<Users>().updateById(
+                if (await code == "") { */
+                /*String id = context.read<Users>().updateById(
                         User(
                           //id: widget.user?.id,
                           name: _name.text,
@@ -259,22 +263,22 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                           password: widget.user?.password,
                         ),
                       );*/
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("User Added"),
-                    ),
-                  );
-                  context.read<ApplicationState>().addUserSetting(UserSetting(
-                        name: _name.text,
-                        rank: _rank!,
-                        squad: _squad.text,
-                        email: _email.text,
-                        adQual: _adQual!,
-                        pilotQual: _pilotQual!,
-                        permission: _permission,
-                      ));
-                  Navigator.pop(context);
-                } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("User Added"),
+                  ),
+                );
+                context.read<ApplicationState>().addUserSetting(UserSetting(
+                      name: _name.text,
+                      rank: _rank!,
+                      squad: _squad!,
+                      email: _email.text,
+                      adQual: _adQual!,
+                      pilotQual: _pilotQual!,
+                      permission: _permission,
+                    ));
+                Navigator.pop(context);
+                /* } else {
                   setState(() {
                     code.then((value) {
                       _error = value;
@@ -282,7 +286,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                       _formKey.currentState!.validate();
                     });
                   });
-                }
+                } */
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -292,12 +296,26 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                 context.read<ApplicationState>().editUserSetting(UserSetting(
                       name: _name.text,
                       rank: _rank!,
-                      squad: _squad.text,
+                      squad: _squad!,
                       email: _email.text,
                       adQual: _adQual!,
                       pilotQual: _pilotQual!,
                       permission: _permission,
+                      themeMode: widget.user!.themeMode,
                     ));
+
+                if (widget.settings) {
+                  context.read<ApplicationState>().userSetting = UserSetting(
+                    name: _name.text,
+                    rank: _rank!,
+                    squad: _squad!,
+                    email: _email.text,
+                    adQual: _adQual!,
+                    pilotQual: _pilotQual!,
+                    permission: _permission,
+                    themeMode: widget.user!.themeMode,
+                  );
+                }
                 Navigator.pop(context);
               }
             }

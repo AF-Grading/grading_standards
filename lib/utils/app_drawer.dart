@@ -3,7 +3,9 @@ import 'package:app_prototype/models/theme_change.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/application_state.dart';
 import '../pages/all_grade_sheets_page.dart';
+import '../pages/lists/barrel.dart';
 import '../pages/my_grade_sheets_page.dart';
 import '../pages/reference_materials_page.dart';
 import '../pages/settings_page.dart';
@@ -33,7 +35,7 @@ class _AppDrawerState extends State<AppDrawer> {
             color: Theme.of(context).colorScheme.primary,
           ),
           child: Text(
-            context.watch<CurrentUser>().user.name,
+            context.watch<ApplicationState>().user.name,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 24,
@@ -41,7 +43,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
         ),
         // only display this tab if the user is instructor or greater
-        if (context.watch<CurrentUser>().permission.index > 0)
+        if (context.watch<ApplicationState>().user.permission.index > 0)
           ListTile(
             title: const Text('My Grade Sheets'),
             onTap: () {
@@ -52,7 +54,7 @@ class _AppDrawerState extends State<AppDrawer> {
               );
             },
           ),
-        if (context.watch<CurrentUser>().permission.index > 2)
+        if (context.watch<ApplicationState>().user.permission.index > 2)
           ListTile(
             title: const Text('All Grade Sheets'),
             onTap: () {
@@ -73,13 +75,35 @@ class _AppDrawerState extends State<AppDrawer> {
             );
           },
         ),
-        if (context.watch<CurrentUser>().permission.index > 2)
+        if (context.watch<ApplicationState>().user.permission.index > 2)
           ListTile(
             title: const Text('Users'),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const UsersPage()),
+              );
+            },
+          ),
+        if (context.watch<ApplicationState>().user.permission.index > 2)
+          ListTile(
+            title: const Text('Parameters'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const GradingParametersPage()),
+              );
+            },
+          ),
+        if (context.watch<ApplicationState>().user.permission.index > 2)
+          ListTile(
+            title: const Text('Grading Criteria'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const GradingCriteriaPage()),
               );
             },
           ),

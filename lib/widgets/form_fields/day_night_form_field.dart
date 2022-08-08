@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/grade_enums.dart';
+import '../../models/grade_enums.dart';
 
 class DayNightFormField extends FormField<DayNight> {
   DayNightFormField(
@@ -16,7 +16,7 @@ class DayNightFormField extends FormField<DayNight> {
             builder: (formState) {
               return LayoutBuilder(builder: (context, constraints) {
                 if (MediaQuery.of(context).size.width > 400) {
-                  return _buildWide(formState, onChanged);
+                  return _buildWide(formState, onChanged, context);
                 } else {
                   return _buildNarrow(formState, onChanged);
                 }
@@ -24,50 +24,51 @@ class DayNightFormField extends FormField<DayNight> {
             });
 }
 
-Widget _buildWide(
-    FormFieldState<DayNight> formState, ValueChanged<DayNight>? onChanged) {
-  return Column(
+Widget _buildWide(FormFieldState<DayNight> formState,
+    ValueChanged<DayNight>? onChanged, BuildContext context) {
+  return Row(
     children: [
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: Row(
-              children: [
-                const Text("Day"),
-                Radio<DayNight>(
-                  value: DayNight.day,
-                  groupValue: formState.value,
-                  onChanged: (value) {
-                    formState.didChange(value);
-                    onChanged!(value!);
-                  },
-                ),
-              ],
-            ),
+          SizedBox(
+            width: 40,
+            child: const Text("Day"),
           ),
-          Row(
-            children: [
-              const Text("Night"),
-              Radio<DayNight>(
-                value: DayNight.night,
-                groupValue: formState.value,
-                onChanged: (value) {
-                  formState.didChange(value);
-                  onChanged!(value!);
-                },
-              ),
-            ],
-          )
+          Radio<DayNight>(
+              value: DayNight.day,
+              groupValue: formState.value,
+              onChanged: (value) {
+                formState.didChange(value);
+                onChanged!(value!);
+              },
+              fillColor: formState.hasError
+                  ? MaterialStateProperty.resolveWith<Color>((states) {
+                      return Colors.red;
+                    })
+                  : Theme.of(context).radioTheme.fillColor),
         ],
       ),
-      formState.hasError
-          ? Text(
-              formState.errorText!,
-              style: const TextStyle(color: Colors.red),
-            )
-          : Container()
+      Row(
+        children: [
+          SizedBox(
+            width: 40,
+            child: const Text("Night"),
+          ),
+          Radio<DayNight>(
+            value: DayNight.night,
+            groupValue: formState.value,
+            onChanged: (value) {
+              formState.didChange(value);
+              onChanged!(value!);
+            },
+            fillColor: formState.hasError
+                ? MaterialStateProperty.resolveWith<Color>((states) {
+                    return Colors.red;
+                  })
+                : Theme.of(context).radioTheme.fillColor,
+          ),
+        ],
+      )
     ],
   );
 }
