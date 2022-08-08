@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/grading_criterion.dart';
 import 'package:flutter/foundation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:timer_builder/timer_builder.dart';
@@ -9,8 +10,9 @@ import 'grade_sheet.dart';
 class TrainingShop with ChangeNotifier {
   // The gradesheets are injected as a dependency and
   // should remain unmodfified
-  TrainingShop(this._gradeSheets);
+  TrainingShop(this._gradeSheets, this._gradeItems);
 
+  final List<GradingCriterion> _gradeItems;
   final List<GradeSheet> _gradeSheets;
 
   late DateTime _startDate = DateTime(
@@ -71,14 +73,18 @@ class TrainingShop with ChangeNotifier {
   List<GradeItem> get currentGrades {
     List<GradeItem> currentGrades = [];
     Map<String, DateTime> allGradeTimes = {
-      for (GradeItem item in baseGradeItems)
-        item.name: DateTime.fromMillisecondsSinceEpoch(0)
+      for (GradingCriterion item in _gradeItems)
+        item.criterion: DateTime.fromMillisecondsSinceEpoch(0)
     };
     Map<String, Grade> allGrades = {
-      for (GradeItem item in baseGradeItems) item.name: Grade.noGrade
+      for (GradingCriterion item in _gradeItems) item.criterion: Grade.noGrade
     };
     for (int i = 0; i < modifiedGradeSheets.length; i++) {
       for (GradeItem grade in modifiedGradeSheets[i].grades) {
+        if (!allGradeTimes.containsKey(grade.name)) {
+          allGradeTimes[grade.name] = DateTime.fromMicrosecondsSinceEpoch(0);
+          allGrades[grade.name] = Grade.noGrade;
+        }
         if (allGradeTimes[grade.name]!.millisecondsSinceEpoch <
             modifiedGradeSheets[i].endTime.millisecondsSinceEpoch) {
           if (grade.grade != Grade.noGrade) {
@@ -191,16 +197,20 @@ class TrainingShop with ChangeNotifier {
   // return the average for each grade item, leaving ungraded items as 0
   Map<String, double> get averageGrades {
     Map<String, int> totalNum = {
-      for (GradeItem item in baseGradeItems) item.name: 0
+      for (GradingCriterion item in _gradeItems) item.criterion: 0
     };
     Map<String, double> averages = {
-      for (GradeItem item in baseGradeItems) item.name: 0
+      for (GradingCriterion item in _gradeItems) item.criterion: 0
     };
 
     for (GradeSheet sheet in modifiedGradeSheets) {
       if (sheet.startTime.isAfter(_startDate) &&
           sheet.endTime.isBefore(_endDate)) {
         for (GradeItem item in sheet.grades) {
+          if (!totalNum.containsKey(item.name)) {
+            totalNum[item.name] = 0;
+            averages[item.name] = 0;
+          }
           if (item.grade != Grade.noGrade) {
             totalNum[item.name] = totalNum[item.name]! + 1;
             averages[item.name] = averages[item.name]! + item.grade!.index - 1;

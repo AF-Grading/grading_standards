@@ -77,7 +77,6 @@ Widget _buildWide(FormFieldState<Weather> formState,
 Widget _buildNarrow(FormFieldState<Weather> formState,
     ValueChanged<Weather>? onChanged, BuildContext context) {
   return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    const Text("Weather"),
     DropdownButton<Weather>(
       underline: Container(
           decoration: BoxDecoration(
