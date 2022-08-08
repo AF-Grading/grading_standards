@@ -13,9 +13,11 @@ import '../widgets/permission_form_field.dart';
 import '../widgets/pilot_qual_form_field.dart';
 
 class AddEditUserPage extends StatefulWidget {
-  const AddEditUserPage({Key? key, this.user}) : super(key: key);
+  const AddEditUserPage({Key? key, this.user, this.settings = false})
+      : super(key: key);
 
   final UserSetting? user;
+  final bool settings;
 
   @override
   State<AddEditUserPage> createState() => _AddEditUserPageState();
@@ -299,7 +301,21 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                       adQual: _adQual!,
                       pilotQual: _pilotQual!,
                       permission: _permission,
+                      themeMode: widget.user!.themeMode,
                     ));
+
+                if (widget.settings) {
+                  context.read<ApplicationState>().userSetting = UserSetting(
+                    name: _name.text,
+                    rank: _rank!,
+                    squad: _squad!,
+                    email: _email.text,
+                    adQual: _adQual!,
+                    pilotQual: _pilotQual!,
+                    permission: _permission,
+                    themeMode: widget.user!.themeMode,
+                  );
+                }
                 Navigator.pop(context);
               }
             }

@@ -156,56 +156,51 @@ class _NewFlightView2State extends State<NewFlightView2> {
             ),
             SliverToBoxAdapter(
               child: Column(children: [
-                SpacedItem(
-                  name: "Student Name",
-                  child: _studentIds[i].isEmpty
-                      ? SearchUsersFormField(
-                          users: context
-                              .watch<List<UserSetting>>()
-                              .where((user) =>
-                                  _studentIds
-                                      .indexWhere((id) => user.email == id) ==
-                                  -1)
-                              .toList(),
-                          onSaved: (studentId) {
+                _studentIds[i].isEmpty
+                    ? SearchUsersFormField(
+                        title: "Student Name",
+                        users: context
+                            .watch<List<UserSetting>>()
+                            .where((user) =>
+                                _studentIds
+                                    .indexWhere((id) => user.email == id) ==
+                                -1)
+                            .toList(),
+                        onSaved: (studentId) {
+                          setState(() {
+                            _studentError[i] = false;
+                            _studentIds[i] = studentId;
+                          });
+                          final student = context
+                              .read<List<UserSetting>>()
+                              .firstWhere((user) => user.email == studentId);
+                          if (context.read<CurrentFlight>().students.length <
+                              i + 1) {
+                            context.read<CurrentFlight>().students.add(student);
+                          } else {
+                            context
+                                .read<CurrentFlight>()
+                                .students
+                                .replaceRange(i, i + 1, [student]);
+                          }
+                        },
+                        validator: (value) {
+                          if (_studentIds[i] == "") {
                             setState(() {
-                              _studentError[i] = false;
-                              _studentIds[i] = studentId;
+                              _studentError[i] = true;
                             });
-                            final student = context
-                                .read<List<UserSetting>>()
-                                .firstWhere((user) => user.email == studentId);
-                            if (context.read<CurrentFlight>().students.length <
-                                i + 1) {
-                              context
-                                  .read<CurrentFlight>()
-                                  .students
-                                  .add(student);
-                            } else {
-                              context
-                                  .read<CurrentFlight>()
-                                  .students
-                                  .replaceRange(i, i + 1, [student]);
-                            }
-                          },
-                          validator: (value) {
-                            if (_studentIds[i] == "") {
-                              setState(() {
-                                _studentError[i] = true;
-                              });
-                              return "Please select a student";
-                            }
+                            return "Please select a student";
+                          }
 
-                            return null;
-                          },
-                        )
-                      : ElevatedButton(
-                          onPressed: () => setState(() {
-                            _studentIds[i] = "";
-                          }),
-                          child: Text("Select Different Student"),
-                        ),
-                ),
+                          return null;
+                        },
+                      )
+                    : ElevatedButton(
+                        onPressed: () => setState(() {
+                          _studentIds[i] = "";
+                        }),
+                        child: Text("Select Different Student"),
+                      ),
                 SpacedItem(
                   name: "Pre-select Params",
                   child: GradingParametersFormField(

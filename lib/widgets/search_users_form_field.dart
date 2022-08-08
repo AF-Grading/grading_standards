@@ -1,3 +1,4 @@
+import 'package:app_prototype/widgets/spaced_item.dart';
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
@@ -7,6 +8,7 @@ import '../models/user_setting.dart';
 class SearchUsersFormField extends FormField<String> {
   SearchUsersFormField(
       {Key? key,
+      required String title,
       required List<UserSetting> users,
       controller = TextEditingController,
       ValueChanged<String>? onChanged,
@@ -22,30 +24,40 @@ class SearchUsersFormField extends FormField<String> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  children: [
-                    Flexible(
-                      child: TextFormField(
-                        initialValue: formState.value,
-                        validator: validator,
-                        onChanged: (value) => formState.didChange(value),
-                      ),
-                    ),
-                  ],
+                SpacedItem(
+                  name: title,
+                  child: TextFormField(
+                    initialValue: formState.value,
+                    decoration: InputDecoration(
+                        hintText: "Name, Squadron, Email, Rank..."),
+                    validator: validator,
+                    onChanged: (value) => formState.didChange(value),
+                  ),
                 ),
                 Column(
                   children: formState.value != null
                       ? //Users()
                       users
-                          .where((user) => user.email
-                              .toLowerCase()
-                              .contains(formState.value!))
+                          .where((user) =>
+                              user.email
+                                  .toLowerCase()
+                                  .contains(formState.value!.toLowerCase()) ||
+                              user.name
+                                  .toLowerCase()
+                                  .contains(formState.value!.toLowerCase()) ||
+                              user.rank.pretty!
+                                  .toLowerCase()
+                                  .contains(formState.value!.toLowerCase()) ||
+                              user.squad
+                                  .toLowerCase()
+                                  .contains(formState.value!.toLowerCase()))
                           .map(
                             (item) => GestureDetector(
                                 onTap: () => onSaved!(item.email),
 
                                 //() => formState.didChange(item.name),
-                                child: Text(item.name)),
+                                child:
+                                    Text("${item.rank.pretty} ${item.name}")),
                           )
                           .toList()
                       : [],
