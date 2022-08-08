@@ -160,10 +160,17 @@ class _FlightView2State extends State<FlightView2>
                 automaticallyImplyLeading: false,
                 elevation: 0,
                 pinned: true,
-                title: Text(
-                  "Unselected Grades",
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                title: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _expandUnselected = !_expandUnselected;
+                    });
+                  },
+                  child: Text(
+                    "Unselected Grades",
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                  ),
                 ),
                 actions: [
                   Padding(
