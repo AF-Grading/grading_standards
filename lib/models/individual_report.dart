@@ -1,4 +1,5 @@
 import 'package:app_prototype/models/cts_list.dart';
+import 'package:app_prototype/models/grading_criterion.dart';
 import 'package:flutter/foundation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/services.dart';
@@ -12,7 +13,9 @@ import 'grade_sheet.dart';
 class IndividualReport with ChangeNotifier {
   // The gradesheets are injected as a dependency and
   // should remain unmodfified
-  IndividualReport(this._gradeSheets);
+  IndividualReport(this._gradeSheets, this._gradeItems);
+
+  final List<GradingCriterion> _gradeItems;
 
   final List<GradeSheet> _gradeSheets;
 
@@ -72,16 +75,24 @@ class IndividualReport with ChangeNotifier {
   // Returns the most recently altered gradeItems
   // This assumes grades length and itemnames are in the same spot
   List<GradeItem> get currentGrades {
+    // TODO: change logic incase that the gradeshett doens't have all the grading criteria
     List<GradeItem> currentGrades = [];
     Map<String, DateTime> allGradeTimes = {
-      for (GradeItem item in baseGradeItems)
-        item.name: DateTime.fromMillisecondsSinceEpoch(0)
+      for (GradingCriterion item in _gradeItems)
+        item.criterion: DateTime.fromMillisecondsSinceEpoch(0)
     };
     Map<String, Grade> allGrades = {
-      for (GradeItem item in baseGradeItems) item.name: Grade.noGrade
+      for (GradingCriterion item in _gradeItems) item.criterion: Grade.noGrade
     };
+    // going through each gradesheet
     for (int i = 0; i < modifiedGradeSheets.length; i++) {
+      // going through individual grade in the gradesheet
       for (GradeItem grade in modifiedGradeSheets[i].grades) {
+        if (!allGradeTimes.containsKey(grade.name)) {
+          allGradeTimes[grade.name] = DateTime.fromMicrosecondsSinceEpoch(0);
+          allGrades[grade.name] = Grade.noGrade;
+        }
+        // assuming this grade exist
         if (allGradeTimes[grade.name]!.millisecondsSinceEpoch <
             modifiedGradeSheets[i].endTime.millisecondsSinceEpoch) {
           if (grade.grade != Grade.noGrade) {
@@ -194,16 +205,20 @@ class IndividualReport with ChangeNotifier {
   // return the average for each grade item, leaving ungraded items as 0
   Map<String, double> get averageGrades {
     Map<String, int> totalNum = {
-      for (GradeItem item in baseGradeItems) item.name: 0
+      for (GradingCriterion item in _gradeItems) item.criterion: 0
     };
     Map<String, double> averages = {
-      for (GradeItem item in baseGradeItems) item.name: 0
+      for (GradingCriterion item in _gradeItems) item.criterion: 0
     };
 
     for (GradeSheet sheet in modifiedGradeSheets) {
       if (sheet.startTime.isAfter(_startDate) &&
           sheet.endTime.isBefore(_endDate)) {
         for (GradeItem item in sheet.grades) {
+          if (!totalNum.containsKey(item.name)) {
+            totalNum[item.name] = 0;
+            averages[item.name] = 0;
+          }
           if (item.grade != Grade.noGrade) {
             totalNum[item.name] = totalNum[item.name]! + 1;
             averages[item.name] = averages[item.name]! + item.grade!.index - 1;

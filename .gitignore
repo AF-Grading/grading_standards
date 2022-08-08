@@ -37,6 +37,12 @@ flutter_export_environment 3.sh
 .flutter-plugins-dependencies 3
 .packages 3
 Generated 3.xcconfig
+.flutter-plugins 4
+.flutter-plugins-dependencies 4
+.packages 4
+Generated 4.xcconfig
+flutter_export_environment 4.sh
+Flutter 4.podspec
 
 # Web related
 lib/generated_plugin_registrant.dart

@@ -1,4 +1,5 @@
 import 'package:app_prototype/models/grade_sheet.dart';
+import 'package:app_prototype/models/grading_criterion.dart';
 import 'package:app_prototype/models/individual_report.dart';
 import 'package:app_prototype/widgets/buttons/download_report.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class IndividualReportPage extends StatefulWidget {
     required this.user,
     required this.gradeSheets,
   }) : super(key: key);
-  final User user;
+  final UserSetting user;
   final List<GradeSheet> gradeSheets;
   late TimeCalculate curr_value;
 
@@ -33,7 +34,12 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
     // We create the provider here because it will change for each student
     return ChangeNotifierProvider(
       // Here we inject the Individual's gradesheets
-      create: (context) => IndividualReport(widget.gradeSheets),
+      create: (context) => IndividualReport(
+        widget.gradeSheets,
+
+        // how do I get the thing from firebase?
+        context.read<List<GradingCriterion>>(),
+      ),
       builder: (context, individualReport) {
         return Scaffold(
           appBar: AppBar(
@@ -309,7 +315,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                             ),
                             for (GradeSheet sheet in context
                                 .watch<IndividualReport>()
-                                .modifiedGradeSheets)
+                                .modifiedSortedGradeSheets)
                               ListTile(
                                 trailing:
                                     Text("Grade ${sheet.overall!.index - 2}"),
