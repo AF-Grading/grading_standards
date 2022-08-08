@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/grading_criterion.dart';
 import 'package:app_prototype/widgets/spaced_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,9 +22,16 @@ import '/pages/grade_sheet_page.dart';
 import '/widgets/grade_radio_form_field.dart';
 
 class AddEditGradeSheetPage extends StatefulWidget {
-  const AddEditGradeSheetPage({Key? key, this.gradeSheet}) : super(key: key);
+  const AddEditGradeSheetPage(
+      {Key? key,
+      this.gradeSheet,
+      required this.gradingCriteria,
+      required this.users})
+      : super(key: key);
 
   final GradeSheet? gradeSheet;
+  final List<GradingCriterion> gradingCriteria;
+  final List<UserSetting> users;
   //final User? instructor;
   @override
   State<AddEditGradeSheetPage> createState() => _AddEditGradeSheetPageState();
@@ -35,8 +43,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
   late bool _isEditing;
   bool _dateError = false;
 
-  late String? _student = widget.gradeSheet?.studentId;
-  late String? _instructor = widget.gradeSheet?.instructorId;
+  UserSetting? _student; //= widget.gradeSheet?.studentId;
+  UserSetting? _instructor; // = widget.gradeSheet?.instructorId;
   final List<GradeItem> _grades = [];
   late Grade? _overall = widget.gradeSheet?.overall;
   late Weather? _weather = widget.gradeSheet?.weather;
@@ -62,9 +70,16 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
         _grades.add(item);
       }
     } else {
-      for (GradeItem item in baseGradeItems) {
-        _grades.add(GradeItem(name: item.name, grade: Grade.noGrade));
+      for (GradingCriterion item in widget.gradingCriteria) {
+        _grades.add(GradeItem(name: item.criterion, grade: Grade.noGrade));
       }
+    }
+
+    if (_isEditing) {
+      _student = widget.users.firstWhere(
+          (element) => element.email == widget.gradeSheet!.studentId);
+      _instructor = widget.users.firstWhere(
+          (element) => element.email == widget.gradeSheet!.instructorId);
     }
 
     super.initState();
@@ -88,26 +103,21 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                   title: const Text("General"),
                   children: [
                     _student != null
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              const Text("Student:"),
-                              Text(_student!),
-                              !_isEditing
-                                  ? ElevatedButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          _student = null;
-                                        });
-                                      },
-                                      child: const Text("Reselect"))
-                                  : Container()
-                            ],
-                          )
+                        ? SpacedItem(
+                            name: _student!.name,
+                            child: !_isEditing
+                                ? ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _student = null;
+                                      });
+                                    },
+                                    child: const Text("Reselect"))
+                                : Container())
                         : SearchUsersFormField(
                             title: "Student Name",
                             //labelText: "Student Name: ",
-                            users: context.watch<List<UserSetting>>(),
+                            users: widget.users,
                             validator: (value) {
                               if (value != null) {
                                 return "Please select a student from dropdown";
@@ -117,39 +127,27 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             },
                             onSaved: (student) {
                               setState(() {
-                                _student = context
-                                    .read<List<UserSetting>>()
-                                    .firstWhere((user) => user.email == student)
-                                    .email;
+                                _student = widget.users.firstWhere(
+                                    (user) => user.email == student);
                               });
                             },
                           ),
                     _instructor != null
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(_instructor!),
-                              // only certain permissions can select an instructor that isnt themselves
-                              context
-                                          .watch<ApplicationState>()
-                                          .user
-                                          .permission
-                                          .index >
-                                      2
-                                  ? ElevatedButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          _instructor = null;
-                                        });
-                                      },
-                                      child: const Text("Reselect"))
-                                  : Container(),
-                            ],
-                          )
+                        ? SpacedItem(
+                            name: _instructor!.name,
+                            child: !_isEditing
+                                ? ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _instructor = null;
+                                      });
+                                    },
+                                    child: const Text("Reselect"))
+                                : Container())
                         : SearchUsersFormField(
                             title: "Instructor Name",
                             //labelText: "Instructor Name: ",
-                            users: context.watch<List<UserSetting>>(),
+                            users: widget.users,
                             validator: (value) {
                               if (value != null) {
                                 return "Please select an instructor from dropdown";
@@ -159,11 +157,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             },
                             onSaved: (instructor) {
                               setState(() {
-                                _instructor = context
-                                    .read<List<UserSetting>>()
-                                    .firstWhere(
-                                        (user) => user.email == instructor)
-                                    .email;
+                                _instructor = widget.users.firstWhere(
+                                    (user) => user.email == instructor);
                               });
                             },
                           ),
@@ -349,6 +344,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
               Card(
                 child: ExpansionTile(
                   title: const Text("Grade Items"),
+                  initiallyExpanded: true,
                   children: _grades
                       .map(
                         (item) => Card(
@@ -414,7 +410,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                       )
                       .toList(),
                 ),
-              )
+              ),
+              SizedBox(height: 100),
             ],
           ),
         ),
@@ -435,8 +432,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
               } else {
                 GradeSheet gradeSheet = GradeSheet(
                   id: _isEditing ? widget.gradeSheet!.id : null,
-                  instructorId: _instructor!,
-                  studentId: _student!,
+                  instructorId: _instructor!.email,
+                  studentId: _student!.email,
                   missionNum:
                       _missionN.text, //_missionNum != null ? _missionNum! : 0,
                   grades: _grades,

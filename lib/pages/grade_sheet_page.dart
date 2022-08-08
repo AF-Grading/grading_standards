@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../models/grade_enums.dart';
+import '../models/grading_criterion.dart';
 import '../models/user_setting.dart';
 import '/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,9 @@ class GradeSheetPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => AddEditGradeSheetPage(
+                        gradingCriteria:
+                            context.watch<List<GradingCriterion>>(),
+                        users: context.watch<List<UserSetting>>(),
                         gradeSheet: gradeSheet,
                       ),
                     ),
