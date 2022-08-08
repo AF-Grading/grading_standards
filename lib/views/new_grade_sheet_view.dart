@@ -224,7 +224,7 @@ class _NewGradeSheetViewState extends State<NewGradeSheetView> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => CurrentFlightPage(
-                    length: context.read<CurrentFlight>().gradeSheets.length,
+                    students: context.read<CurrentFlight>().students,
                   ),
                 ),
               );

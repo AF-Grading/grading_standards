@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //internal imports
 import '../models/Squadrons.dart';
+import '../models/application_state.dart';
 import '../models/current_user.dart';
 import '../models/grade_sheet.dart';
 import '../models/user_setting.dart';
+import '../views/new_flight_view_2.dart';
 import '/models/current_flight.dart';
 import '/models/grade_sheets.dart';
 import 'training_shop_page.dart';
@@ -32,6 +34,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
   late TabController _controller;
   int _index = 0;
   late int tabLength;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -79,7 +82,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(widget.title),
-                          const OfflineChecker(),
+                          //const OfflineChecker(),
                           //const SyncButton(),
                         ]),
                     bottom: widget.permission == 1
@@ -88,7 +91,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                             tabs: [
                               Tab(text: 'New Flight'),
                               Tab(text: 'Reports'),
-                              Tab(text: 'Squads'),
+                              Tab(text: 'Units'),
                             ],
                           )
                         : TabBar(
@@ -96,7 +99,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                             tabs: const [
                               Tab(text: 'New Flight'),
                               Tab(text: 'Reports'),
-                              Tab(text: 'Squads'),
+                              Tab(text: 'Units'),
                             ],
                           ),
                   ),
@@ -106,7 +109,9 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                     children: widget.permission == 1
                         ? [
                             //NewGradeSheetView(),
-                            NewFlightView(),
+                            NewFlightView2(
+                              formKey: _formKey,
+                            ),
                             const IndividualReportsView(),
                             TrainingShopPage(
                               instructor: true,
@@ -125,7 +130,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                                     if (user.email == element.studentId) {
                                       if (user.squad ==
                                           context
-                                              .read<CurrentUser>()
+                                              .read<ApplicationState>()
                                               .user
                                               .squad) {
                                         returnVar = true;
@@ -139,18 +144,21 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
 
                                 return returnVar;
                               }).toList(),
-                              squad: context.read<CurrentUser>().user.squad,
+                              squad:
+                                  context.read<ApplicationState>().user.squad,
                             ),
                           ]
                         : [
-                            NewFlightView(),
+                            NewFlightView2(
+                              formKey: _formKey,
+                            ),
                             IndividualReportsView(),
                             TrainingShopView(),
                           ],
                   ),
                   floatingActionButton:
                       // only show buttons if on new flight tab
-                      _index == 0 ? const NewFlightButtons() : null,
+                      _index == 0 ? NewFlightButtons(formKey: _formKey) : null,
                 ),
     );
   }

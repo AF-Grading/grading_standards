@@ -1,3 +1,4 @@
+import 'package:app_prototype/widgets/spaced_item.dart';
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
@@ -7,8 +8,8 @@ import '../models/user_setting.dart';
 class SearchUsersFormField extends FormField<String> {
   SearchUsersFormField(
       {Key? key,
+      required String title,
       required List<UserSetting> users,
-      required labelText,
       controller = TextEditingController,
       ValueChanged<String>? onChanged,
       ValueChanged<String>? onSaved,
@@ -20,54 +21,48 @@ class SearchUsersFormField extends FormField<String> {
           validator: validator,
           //onSaved: onSaved,
           builder: (formState) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 150,
-                            child: Text(labelText),
-                          ),
-                          Flexible(
-                            child: TextFormField(
-                              initialValue: formState.value,
-                              onChanged: (value) => formState.didChange(value),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: formState.value != null
-                            ? //Users()
-                            users
-                                .where((user) => user.email
-                                    .toLowerCase()
-                                    .contains(formState.value!))
-                                .map(
-                                  (item) => GestureDetector(
-                                      onTap: () => onSaved!(item.email),
-
-                                      //() => formState.didChange(item.name),
-                                      child: Text(item.name)),
-                                )
-                                .toList()
-                            : [],
-                      )
-                    ],
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SpacedItem(
+                  name: title,
+                  child: TextFormField(
+                    initialValue: formState.value,
+                    decoration: InputDecoration(
+                        hintText: "Name, Squadron, Email, Rank..."),
+                    validator: validator,
+                    onChanged: (value) => formState.didChange(value),
                   ),
-                  formState.hasError
-                      ? Text(
-                          formState.errorText!,
-                          style: const TextStyle(color: Colors.red),
-                        )
-                      : Container()
-                ],
-              ),
+                ),
+                Column(
+                  children: formState.value != null
+                      ? //Users()
+                      users
+                          .where((user) =>
+                              user.email
+                                  .toLowerCase()
+                                  .contains(formState.value!.toLowerCase()) ||
+                              user.name
+                                  .toLowerCase()
+                                  .contains(formState.value!.toLowerCase()) ||
+                              user.rank.pretty!
+                                  .toLowerCase()
+                                  .contains(formState.value!.toLowerCase()) ||
+                              user.squad
+                                  .toLowerCase()
+                                  .contains(formState.value!.toLowerCase()))
+                          .map(
+                            (item) => GestureDetector(
+                                onTap: () => onSaved!(item.email),
+
+                                //() => formState.didChange(item.name),
+                                child:
+                                    Text("${item.rank.pretty} ${item.name}")),
+                          )
+                          .toList()
+                      : [],
+                )
+              ],
             );
           },
         );

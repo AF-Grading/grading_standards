@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:app_prototype/models/cts_list.dart';
 import 'package:app_prototype/models/user_setting.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
 import 'package:download/download.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+//import 'package:universal_html/html.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 import '../../models/grade_sheet.dart';
@@ -25,12 +30,6 @@ class DownloadReport extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
-          Map<Permission, PermissionStatus> statuses = await [
-            Permission.storage,
-          ].request();
-        }
-
         gradeSheets.sort((a, b) => b.startTime.compareTo(a.startTime));
         List<List<dynamic>> data = [];
         List<dynamic> first = [];
@@ -77,17 +76,35 @@ class DownloadReport extends StatelessWidget {
         }
 
         String csv = const ListToCsvConverter().convert(data);
-        final stream = Stream.fromIterable(csv.codeUnits);
-        /*String dir = await ExtStorage.getExternalStoragePublicDirectory(
-            ExtStorage.DIRECTORY_DOWNLOADS);
-        print("dir $dir");
-        String file = "$dir";*/
 
-        //File f = File("${file}/${filename}.csv");
+        if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
+          /*await FlutterDownloader.initialize();
 
-        download(stream, "${filename}.csv");
+          FirebaseFirestore.instance.;
 
-        //f.writeAsString(csv);
+          final bytes = utf8.encode(csv);
+          final blob = Blob([bytes]);
+          final url = Url.createObjectUrlFromBlob(blob);
+          final anchor = document.createElement('a') as AnchorElement
+            ..href = url
+            ..style.display = 'none'
+            ..download = '${filename}.csv';
+
+          document.body!.children.add(anchor);
+
+          anchor.click();
+
+          final stream = Stream.fromIterable(csv.codeUnits);
+
+          final taskId = await FlutterDownloader.enqueue(
+              url: url, savedDir: '/storage/emulated/0/Download/');*/
+
+          File file = File('/storage/emulated/0/Download/${filename}.csv');
+          file.writeAsString(csv);
+        } else {
+          final stream = Stream.fromIterable(csv.codeUnits);
+          download(stream, "${filename}.csv");
+        }
       },
       child: Icon(Icons.download),
     );

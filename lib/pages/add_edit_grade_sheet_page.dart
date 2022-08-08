@@ -1,3 +1,4 @@
+import 'package:app_prototype/widgets/spaced_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -10,10 +11,10 @@ import '../models/user.dart';
 import '../models/user_setting.dart';
 import '../models/users.dart';
 import '../widgets/date_picker.dart';
-import '../widgets/day_night_form_field.dart';
+import '../widgets/form_fields/day_night_form_field.dart';
 import '../widgets/search_users_form_field.dart';
-import '../widgets/sortie_type_form_field.dart';
-import '../widgets/weather_form_field.dart';
+import '../widgets/form_fields/sortie_type_form_field.dart';
+import '../widgets/form_fields/weather_form_field.dart';
 import '../models/current_user.dart';
 import '/models/cts_list.dart';
 import '/pages/grade_sheet_page.dart';
@@ -104,7 +105,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             ],
                           )
                         : SearchUsersFormField(
-                            labelText: "Student Name: ",
+                            title: "Student Name",
+                            //labelText: "Student Name: ",
                             users: context.watch<List<UserSetting>>(),
                             validator: (value) {
                               if (value != null) {
@@ -116,9 +118,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             onSaved: (student) {
                               setState(() {
                                 _student = context
-                                    .read<Users>()
-                                    .users
-                                    .firstWhere((user) => user.name == student)
+                                    .read<List<UserSetting>>()
+                                    .firstWhere((user) => user.email == student)
                                     .email;
                               });
                             },
@@ -127,10 +128,14 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              const Text("Instructor: "),
                               Text(_instructor!),
                               // only certain permissions can select an instructor that isnt themselves
-                              context.watch<CurrentUser>().permission.index > 2
+                              context
+                                          .watch<ApplicationState>()
+                                          .user
+                                          .permission
+                                          .index >
+                                      2
                                   ? ElevatedButton(
                                       onPressed: () {
                                         setState(() {
@@ -142,7 +147,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             ],
                           )
                         : SearchUsersFormField(
-                            labelText: "Instructor Name: ",
+                            title: "Instructor Name",
+                            //labelText: "Instructor Name: ",
                             users: context.watch<List<UserSetting>>(),
                             validator: (value) {
                               if (value != null) {
@@ -154,10 +160,9 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             onSaved: (instructor) {
                               setState(() {
                                 _instructor = context
-                                    .read<Users>()
-                                    .users
+                                    .read<List<UserSetting>>()
                                     .firstWhere(
-                                        (user) => user.name == instructor)
+                                        (user) => user.email == instructor)
                                     .email;
                               });
                             },

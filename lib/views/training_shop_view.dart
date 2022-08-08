@@ -24,11 +24,10 @@ class TrainingShopView extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => TrainingShopPage(
-                    instructor: false,
+                      instructor: false,
                       squad: context.watch<List<Squadron>>()[index].squad,
                       gradeSheets:
                           context.watch<List<GradeSheet>>().where((element) {
-                       
                         bool returnVar = false;
                         try {
                           context.watch<List<UserSetting>>().forEach((user) {

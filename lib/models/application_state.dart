@@ -20,6 +20,9 @@ class ApplicationState extends ChangeNotifier {
     init();
   }
   Future<void> init() async {
+    FirebaseFirestore.instance.settings =
+        const Settings(persistenceEnabled: true);
+
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
         _loginState = ApplicationLoginState.loggedIn;
@@ -28,6 +31,8 @@ class ApplicationState extends ChangeNotifier {
       }
       notifyListeners();
     });
+
+    print(_loginState);
   }
 
   Future<DocumentReference> addGradeSheet(GradeSheet gradeSheet) {
@@ -184,8 +189,25 @@ class ApplicationState extends ChangeNotifier {
         password: password,
       )
           .then((value) {
-        _loginState = ApplicationLoginState.loggedIn;
-        notifyListeners();
+        FirebaseFirestore.instance
+            .collection('Users')
+            .withConverter(
+                fromFirestore: UserSetting.fromFirestore,
+                toFirestore: (UserSetting userSetting, _) =>
+                    userSetting.toFirestore())
+            .where("email", isEqualTo: email)
+            .get()
+            .then(
+              (value) => value.docs.first.data(),
+            )
+            .then((value) {
+          _userSetting = value;
+          _mode = value.themeMode.mode!;
+        }).then((value) {
+          _loginState = ApplicationLoginState.loggedIn;
+
+          notifyListeners();
+        });
       });
       return true;
     } on FirebaseAuthException catch (e) {
@@ -193,6 +215,35 @@ class ApplicationState extends ChangeNotifier {
       return false;
     }
   }
+
+  UserSetting? _userSetting;
+  ThemeMode _mode = ThemeMode.system;
+
+  /*set setUser(User value) {
+    _currentUser = value;
+    notifyListeners();
+  }*/
+
+  set userSetting(UserSetting value) {
+    _userSetting = value;
+    _mode = value.themeMode.mode!;
+    notifyListeners();
+  }
+
+  ThemeMode get mode => _mode;
+
+  set mode(ThemeMode mode) {
+    _mode = mode;
+    notifyListeners();
+  }
+
+  UserSetting get user => _userSetting!;
+
+  //User get user => _currentUser;
+
+  //String get email => _userSetting!.email;
+
+  //Permission get permission => _userSetting!.permission;
 
   void cancelRegistration() {
     _loginState = ApplicationLoginState.emailAddress;
@@ -216,6 +267,23 @@ class ApplicationState extends ChangeNotifier {
   }
 
   void signOut() {
+    _userSetting = null;
+    _mode = ThemeMode.system;
     FirebaseAuth.instance.signOut();
+    notifyListeners();
+  }
+}
+
+extension LightModeFromString on String {
+  ThemeMode? get mode {
+    switch (this) {
+      case "system":
+        return ThemeMode.system;
+      case "dark":
+        return ThemeMode.dark;
+      case "light":
+        return ThemeMode.light;
+    }
+    return null;
   }
 }

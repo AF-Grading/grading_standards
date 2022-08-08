@@ -28,6 +28,26 @@ extension GradeFromString on String {
   }
 }
 
+extension GradeFromInt on int {
+  Grade? get grade {
+    switch (this) {
+      case -1:
+        return Grade.noGrade;
+      case 0:
+        return Grade.unsatisfactory;
+      case 1:
+        return Grade.introductory;
+      case 2:
+        return Grade.familiar;
+      case 3:
+        return Grade.proficient;
+      case 4:
+        return Grade.expert;
+    }
+    return null;
+  }
+}
+
 // Converts Grade enum to numbered String
 extension GradetoString on Grade {
   String get number {

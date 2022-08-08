@@ -1,3 +1,4 @@
+import 'package:app_prototype/models/user_setting.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'grade_enums.dart';
@@ -29,6 +30,8 @@ class CurrentFlight extends ChangeNotifier {
   DateTime _end = DateTime.now();
   static const int max = 4;
   final List<String> _selectedParams = ["All", "All", "All", "All"];
+  final List<UserSetting> _students = [];
+  int _studentNum = 1;
 
   // Individual Students
 
@@ -55,6 +58,7 @@ class CurrentFlight extends ChangeNotifier {
   List<GlobalKey<FormState>> get flightKeys => _flightKeys;
   GlobalKey<FormState> get reviewKey => _reviewKey;
   GlobalKey<FormState> get flightKey => _flightKey;
+  int get studentNum => _studentNum;
 
   List<GradeSheet> get gradeSheets => _gradeSheets;
   Weather? get weather => _weather;
@@ -65,6 +69,7 @@ class CurrentFlight extends ChangeNotifier {
   String get profile => _profile;
   DateTime get startTime => _start;
   DateTime get endTime => _end;
+  List<UserSetting> get students => _students;
   // filters the users out that appear in _gradesheets
   List<User> get filteredUsers => Users()
       .users
@@ -107,6 +112,11 @@ class CurrentFlight extends ChangeNotifier {
 
   set sortieNum(int value) {
     _sortieNum = value;
+    notifyListeners();
+  }
+
+  set studentNum(int value) {
+    _studentNum = value;
     notifyListeners();
   }
 
@@ -209,22 +219,24 @@ class CurrentFlight extends ChangeNotifier {
   }
 
   void updateByGradeItem(String student, GradeItem item) {
-    GradeSheet gradeSheet =
-        _gradeSheets.firstWhere((sheet) => sheet.studentId == student);
-
-    int index = gradeSheet.grades
+    int gradeSheet =
+        _gradeSheets.indexWhere((sheet) => sheet.studentId == student);
+    print(student);
+    int index = _gradeSheets[gradeSheet]
+        .grades
         .indexWhere((gradeItem) => gradeItem.name == item.name);
 
     // item.grade or item.comments will be null depending on what was changed
-    GradeItem newItem = GradeItem(
-        name: item.name,
-        grade: item.grade ?? gradeSheet.grades[index].grade,
-        comments: item.comments != ""
-            ? item.comments
-            : gradeSheet.grades[index].comments);
 
-    gradeSheet.grades.replaceRange(index, index + 1, [newItem]);
+    GradeItem newItem =
+        GradeItem(name: item.name, grade: item.grade, comments: item.comments);
+    if (index == -1) {
+      _gradeSheets[gradeSheet].grades.add(newItem);
+    } else {
+      _gradeSheets[gradeSheet].grades.replaceRange(index, index + 1, [newItem]);
+    }
 
+    print(_gradeSheets[gradeSheet].grades);
     notifyListeners();
   }
 
@@ -255,7 +267,8 @@ class CurrentFlight extends ChangeNotifier {
     _start = DateTime.now();
     _end = DateTime.now();
     _gradeSheets.clear();
-    _gradeSheets.add(GradeSheet(
+    _students.clear();
+    /* _gradeSheets.add(GradeSheet(
       // TODO find this by current user instead
       instructorId: Users().user.email,
       studentId: "1",
@@ -269,7 +282,7 @@ class CurrentFlight extends ChangeNotifier {
       dayNight: DayNight.day,
       startTime: DateTime.now(),
       endTime: DateTime.now(),
-    ));
+    )); */
     notifyListeners();
   }
 
