@@ -267,6 +267,7 @@ class CurrentFlight extends ChangeNotifier {
     _start = DateTime.now();
     _end = DateTime.now();
     _gradeSheets.clear();
+    _students.clear();
     /* _gradeSheets.add(GradeSheet(
       // TODO find this by current user instead
       instructorId: Users().user.email,

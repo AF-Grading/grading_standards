@@ -74,18 +74,22 @@ class _AddEditGradingCriterionPageState
         body: SingleChildScrollView(
           child: Column(
             children: [
-              SpacedItem(
-                name: "Parameter",
-                child: TextFormField(
-                  controller: _criterionName,
-                  validator: (value) {
-                    if (value == "") {
-                      return "Please enter a name";
-                    }
-                    return null;
-                  },
-                ),
-              ),
+              _isEditing
+                  ? SpacedItem(
+                      name: "Parameter",
+                      child: Text(widget.gradingCriterion!.criterion))
+                  : SpacedItem(
+                      name: "Parameter",
+                      child: TextFormField(
+                        controller: _criterionName,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Please enter a name";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
               SpacedItem(
                 name: "Standards",
                 child: TextFormField(
@@ -153,6 +157,9 @@ class _AddEditGradingCriterionPageState
                   pilotQuals: _pilotQuals,
                   adQuals: _adQuals);
 
+              final List<GradingParameter> params =
+                  context.read<List<GradingParameter>>();
+
               if (!_isEditing) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -163,6 +170,32 @@ class _AddEditGradingCriterionPageState
                 FirebaseFirestore.instance
                     .collection('Grading Criteria')
                     .add(gradingCriterion.toFirestore());
+
+                //Updates all Params to include the new value
+
+                for (GradingParameter param in params) {
+                  var newParams = param.params;
+                  newParams.add(Param(_criterionName.text, false));
+                  final newParam = GradingParameter(
+                      paramName: param.paramName, params: newParams);
+
+                  FirebaseFirestore.instance
+                      .collection('Grading Parameters')
+                      .withConverter(
+                          fromFirestore: GradingParameter.fromFirestore,
+                          toFirestore: (GradingParameter setting, _) =>
+                              setting.toFirestore())
+                      .where("paramName", isEqualTo: param.paramName)
+                      .get()
+                      .then((value) => FirebaseFirestore.instance
+                          .collection('Grading Parameters')
+                          .withConverter(
+                              fromFirestore: GradingParameter.fromFirestore,
+                              toFirestore: (GradingParameter setting, _) =>
+                                  setting.toFirestore())
+                          .doc(value.docs[0].id)
+                          .update(newParam.toFirestore()));
+                }
 
                 Navigator.pop(context);
               } else {

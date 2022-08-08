@@ -16,11 +16,11 @@ class GradeRadiosFormField extends FormField<Grade> {
           builder: (formState) {
             return LayoutBuilder(
                 builder: (BuildContext context2, BoxConstraints constraints) {
-              //if (constraints.maxWidth > 500) {
-              return _buildWide(formState, onChanged, context2);
-              //} else {
-              return _buildNarrow(formState, onChanged);
-              //}
+              if (constraints.maxWidth > 350) {
+                return _buildWide(formState, onChanged, context2);
+              } else {
+                return _buildNarrow(formState, onChanged, context2);
+              }
               //;
             });
           },
@@ -143,34 +143,29 @@ Widget _buildWide(FormFieldState<Grade> formState,
   );
 }
 
-Widget _buildNarrow(
-    FormFieldState<Grade> formState, ValueChanged<Grade>? onChanged) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-      children: [
-        DropdownButton<Grade>(
-          items: const [
-            DropdownMenuItem(value: Grade.noGrade, child: Text("NG")),
-            DropdownMenuItem(value: Grade.unsatisfactory, child: Text("0")),
-            DropdownMenuItem(value: Grade.introductory, child: Text("1")),
-            DropdownMenuItem(value: Grade.familiar, child: Text("2")),
-            DropdownMenuItem(value: Grade.proficient, child: Text("3")),
-            DropdownMenuItem(value: Grade.expert, child: Text("4")),
-          ],
-          value: formState.value,
-          onChanged: (Grade? newValue) {
-            formState.didChange(newValue);
-            onChanged!(newValue!);
-          },
-        ),
-        formState.hasError
-            ? Text(
-                formState.errorText!,
-                style: const TextStyle(color: Colors.red),
-              )
-            : Container()
-      ],
-    ),
+Widget _buildNarrow(FormFieldState<Grade> formState,
+    ValueChanged<Grade>? onChanged, BuildContext context) {
+  return DropdownButton<Grade>(
+    underline: Container(
+        decoration: BoxDecoration(
+      border: Border.all(
+          width: 0.0,
+          color: formState.hasError
+              ? Colors.red
+              : Theme.of(context).highlightColor),
+    )),
+    items: const [
+      DropdownMenuItem(value: Grade.noGrade, child: Text("NG")),
+      DropdownMenuItem(value: Grade.unsatisfactory, child: Text("0")),
+      DropdownMenuItem(value: Grade.introductory, child: Text("1")),
+      DropdownMenuItem(value: Grade.familiar, child: Text("2")),
+      DropdownMenuItem(value: Grade.proficient, child: Text("3")),
+      DropdownMenuItem(value: Grade.expert, child: Text("4")),
+    ],
+    value: formState.value,
+    onChanged: (Grade? newValue) {
+      formState.didChange(newValue);
+      onChanged!(newValue!);
+    },
   );
 }

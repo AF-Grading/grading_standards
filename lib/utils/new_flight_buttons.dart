@@ -93,14 +93,14 @@ class NewFlightButtons extends StatelessWidget {
 
                     context.read<CurrentFlight>().gradeSheets.clear();
                     for (UserSetting student in students) {
-                      final List<GradeItem> grades = context
-                          .read<List<GradingCriterion>>()
+                      /*final List<GradeItem> grades = context
+                          .watch<List<GradingCriterion>>()
                           .map((criterion) =>
                               GradeItem(name: criterion.criterion))
-                          .toList();
+                          .toList();*/
                       context.read<CurrentFlight>().gradeSheets.add(GradeSheet(
                           studentId: student.email,
-                          grades: grades,
+                          grades: [], //grades,
                           startTime: DateTime.now(),
                           endTime: DateTime.now()));
                     }

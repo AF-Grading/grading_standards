@@ -26,9 +26,9 @@ class _NewFlightView2State extends State<NewFlightView2> {
   List<String> _params = ["All", "All", "All", "All"];
 
   TextEditingController _missionNumber = TextEditingController();
-  Weather? _weather;
-  SortieType? _sortieType;
-  DayNight? _dayNight;
+  //Weather? _weather;
+  //SortieType? _sortieType;
+  //DayNight? _dayNight;
   TextEditingController _sortieProfile = TextEditingController();
 
   List<String> _studentIds = ["", "", "", ""];
