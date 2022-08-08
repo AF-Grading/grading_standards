@@ -39,11 +39,7 @@ class TrainingShop with ChangeNotifier {
   // Returns the grade sheets that are sorted interms of start dates into ordered list
   List<GradeSheet> get sortedGradeSheets {
     List<GradeSheet> sorted = _gradeSheets.toList();
-    for (GradeSheet temp in sorted) {
-      print(temp.startTime.day.toString() +
-          " " +
-          temp.startTime.month.toString());
-    }
+
     for (int i = 0; i < sorted.length; i++) {
       GradeSheet key = sorted[i];
       int j = i - 1;
@@ -53,12 +49,6 @@ class TrainingShop with ChangeNotifier {
         j = j - 1;
       }
       sorted[j + 1] = key;
-    }
-    print('post sort');
-    for (GradeSheet temp in sorted) {
-      print(temp.startTime.day.toString() +
-          " " +
-          temp.startTime.month.toString());
     }
 
     return sorted;

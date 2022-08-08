@@ -21,7 +21,6 @@ class GradeRadiosFormField extends FormField<Grade> {
               } else {
                 return _buildNarrow(formState, onChanged, context2);
               }
-              //;
             });
           },
         );

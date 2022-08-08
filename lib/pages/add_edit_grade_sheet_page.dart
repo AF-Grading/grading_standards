@@ -72,6 +72,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
 
   @override
   Widget build(BuildContext context) {
+    double spaceBetween = 150;
+
     return Form(
       key: _key,
       child: Scaffold(
@@ -174,6 +176,21 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                             ),
                     ),
                     Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 20, 8, 10),
+                      child: GradeRadiosFormField(
+                        initialValue: _overall,
+                        validator: (value) {
+                          if (value == null) {
+                            return "Please select a value";
+                          }
+                          return null;
+                        },
+                        onChanged: (value) => setState(() {
+                          _overall = value;
+                        }),
+                      ),
+                    ),
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         controller: _overallC,
@@ -188,62 +205,82 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                         },
                       ),
                     ),
-                    GradeRadiosFormField(
-                      initialValue: _overall,
-                      validator: (value) {
-                        if (value == null) {
-                          return "Please select a value";
-                        }
-                        return null;
-                      },
-                      onChanged: (value) => setState(() {
-                        _overall = value;
-                      }),
-                    ),
-                    Row(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        WeatherFormField(
-                            initialValue: _weather,
-                            validator: (value) {
-                              if (value == null) {
-                                return "Please select a value";
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              setState(() {
-                                _weather = value;
-                              });
-                            }),
-                        DayNightFormField(
-                            initialValue: _dayNight,
-                            validator: (value) {
-                              if (value == null) {
-                                return "Please select a value";
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              setState(() {
-                                _dayNight = value;
-                              });
-                            }),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: spaceBetween,
+                                child: Text("Weather: "),
+                              ),
+                              WeatherFormField(
+                                  initialValue: _weather,
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return "Please select a value";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _weather = value;
+                                    });
+                                  }),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: spaceBetween,
+                                child: Text("Time of Day: "),
+                              ),
+                              DayNightFormField(
+                                  initialValue: _dayNight,
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return "Please select a value";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _dayNight = value;
+                                    });
+                                  }),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                  width: spaceBetween,
+                                  child: Text("Sortie Type: ")),
+                              SortieTypeFormField(
+                                  initialValue: _sortieType,
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return "Please select a value";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _sortieType = value;
+                                    });
+                                  }),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                    SortieTypeFormField(
-                        initialValue: _sortieType,
-                        validator: (value) {
-                          if (value == null) {
-                            return "Please select a value";
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            _sortieType = value;
-                          });
-                        }),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(

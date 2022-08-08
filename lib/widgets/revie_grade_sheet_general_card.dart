@@ -8,8 +8,8 @@ import 'form_fields/weather_form_field.dart';
 import 'spaced_item.dart';
 
 class ReviewGradeSheetGeneralCard extends StatelessWidget {
-  const ReviewGradeSheetGeneralCard({Key? key}) : super(key: key);
-
+  ReviewGradeSheetGeneralCard({Key? key}) : super(key: key);
+  double spaceBetween = 150;
   @override
   Widget build(BuildContext context) {
     return Column(
