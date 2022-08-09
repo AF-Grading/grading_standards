@@ -130,7 +130,7 @@ class _MyAppState extends State<MyApp> {
               title: "AF Grading Standards",
               theme: light_theme,
               darkTheme: dark_theme,
-              themeMode: context.watch<ApplicationState>().mode,
+              themeMode: appState.mode,
               home: NotLoggedInPage());
         } else {
           return _isLoading
