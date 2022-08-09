@@ -60,6 +60,63 @@ class IndividualReport with ChangeNotifier {
     return sorted;
   }
 
+  Map<String, List<num>> get firstHalf {
+    // having a map with the key being the grading criterion and the value being an array
+    // storing the start, end, and the difference between the two
+
+    // sample array: [start total, time seen]
+    Map<String, List<num>> firstHalf = {};
+
+    // this does not have the optimal run time
+    for (int i = 0; i < ((sortedGradeSheets.length) / 2).floor(); i++) {
+      sortedGradeSheets[i].grades.forEach((element) {
+        if (element.grade != Grade.noGrade) {
+          if (firstHalf.containsKey(element.name)) {
+            firstHalf[element.name]![0] += int.parse(element.grade!.number);
+            firstHalf[element.name]![1] += 1;
+          } else {
+            firstHalf[element.name] = [int.parse(element.grade!.number), 1];
+          }
+        }
+      });
+    }
+
+    firstHalf.keys.forEach((key) {
+      firstHalf[key]![0] /= firstHalf[key]![1];
+    });
+    // we left off on summing all of the items together
+
+    return firstHalf;
+  }
+
+  Map<String, List<num>> get secondHalf {
+    // return total / ((sortedGradeSheets.length) / 2).ceil();
+    Map<String, List<num>> secondHalf = {};
+
+    // this does not have the optimal run time
+    for (int i = ((sortedGradeSheets.length) / 2).floor();
+        i < sortedGradeSheets.length;
+        i++) {
+      sortedGradeSheets[i].grades.forEach((element) {
+        if (element.grade != Grade.noGrade) {
+          if (secondHalf.containsKey(element.name)) {
+            secondHalf[element.name]![0] += int.parse(element.grade!.number);
+            secondHalf[element.name]![1] += 1;
+          } else {
+            secondHalf[element.name] = [int.parse(element.grade!.number), 1];
+          }
+        }
+      });
+    }
+
+    secondHalf.keys.forEach((key) {
+      secondHalf[key]![0] /= secondHalf[key]![1];
+    });
+    // we left off on summing all of the items together
+
+    return secondHalf;
+  }
+
   // Returns the sorted grade sheets that are between the start and end dates
   List<GradeSheet> get modifiedSortedGradeSheets {
     List<GradeSheet> modified = [];
