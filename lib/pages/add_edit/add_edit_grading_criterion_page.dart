@@ -34,6 +34,11 @@ class _AddEditGradingCriterionPageState
   late final TextEditingController _performance =
       TextEditingController(text: widget.gradingCriterion?.performance);
 
+  late final TextEditingController _id = TextEditingController(
+      text: widget.gradingCriterion != null
+          ? "${widget.gradingCriterion?.id}"
+          : null);
+
   late Map<String, int> _pilotQuals;
 
   late Map<String, int> _adQuals;
@@ -90,6 +95,19 @@ class _AddEditGradingCriterionPageState
                         },
                       ),
                     ),
+              SpacedItem(
+                name: "id",
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: _id,
+                  validator: (value) {
+                    if (value == "") {
+                      return "Please enter a name";
+                    }
+                    return null;
+                  },
+                ),
+              ),
               SpacedItem(
                 name: "Standards",
                 child: TextFormField(
@@ -151,6 +169,7 @@ class _AddEditGradingCriterionPageState
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
               final gradingCriterion = GradingCriterion(
+                  id: int.parse(_id.text),
                   criterion: _criterionName.text,
                   standards: _standards.text,
                   performance: _performance.text,

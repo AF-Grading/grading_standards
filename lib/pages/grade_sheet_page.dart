@@ -1,7 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../models/application_state.dart';
 import '../models/grade_enums.dart';
+import '../models/grading_criterion.dart';
 import '../models/user_setting.dart';
 import '/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
@@ -51,16 +53,26 @@ class GradeSheetPage extends StatelessWidget {
                   },
                 ),
                 GestureDetector(
-                  child: const Icon(Icons.edit),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddEditGradeSheetPage(
-                        gradeSheet: gradeSheet,
-                      ),
-                    ),
-                  ),
-                )
+                    child: const Icon(Icons.edit),
+                    onTap: () {
+                      if (context
+                              .read<ApplicationState>()
+                              .user!
+                              .permission
+                              .index >
+                          0)
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddEditGradeSheetPage(
+                              gradingCriteria:
+                                  context.watch<List<GradingCriterion>>(),
+                              users: context.watch<List<UserSetting>>(),
+                              gradeSheet: gradeSheet,
+                            ),
+                          ),
+                        );
+                    })
               ],
             ),
           ),
@@ -113,7 +125,7 @@ class GradeSheetPage extends StatelessWidget {
                               child: SizedBox(
                                   height: dist,
                                   child: ListTile(
-                                      leading: const Text("Sortie Profile"),
+                                      leading: const Text("Flight Information"),
                                       title: Text(gradeSheet.profile))),
                             ),
                           ],

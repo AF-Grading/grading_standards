@@ -25,7 +25,7 @@ class GradingParametersPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddEditGradingParameterPage(
-                      gradingCriteria: context.read<List<GradingCriterion>>(),
+                      gradingCriteria: context.watch<List<GradingCriterion>>(),
                     ),
                   ),
                 );
@@ -51,7 +51,7 @@ class GradingParametersPage extends StatelessWidget {
                                     AddEditGradingParameterPage(
                                   gradingParameter: gradingParam,
                                   gradingCriteria:
-                                      context.read<List<GradingCriterion>>(),
+                                      context.watch<List<GradingCriterion>>(),
                                 ),
                               ),
                             ),

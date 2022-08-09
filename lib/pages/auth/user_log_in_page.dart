@@ -1,4 +1,5 @@
 import 'package:app_prototype/pages/auth/register_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -38,7 +39,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Login'),
+        title: Center(child: const Text('Grading Standards Login')),
       ),
       // Single Child Scroll View allows the keyboard to not overflow
       body: SingleChildScrollView(
@@ -48,11 +49,10 @@ class _UserLoginPageState extends State<UserLoginPage> {
             key: _formKey,
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Icon(
-                Icons.person,
-                size: 300,
-                //color: Colors.white,
-              ),
+              SizedBox(
+                  height: 300,
+                  width: 300,
+                  child: Image.asset("assets/af_logo.png")),
               _error == ""
                   ? Container()
                   : Text(

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GradingCriterion {
+  final int id;
   final String criterion;
   final String performance;
   final String standards;
@@ -8,7 +9,8 @@ class GradingCriterion {
   final Map<String, int>? adQuals;
 
   GradingCriterion(
-      {required this.criterion,
+      {required this.id,
+      required this.criterion,
       required this.performance,
       required this.standards,
       this.pilotQuals,
@@ -20,6 +22,7 @@ class GradingCriterion {
   ) {
     final data = snapshot.data();
     return GradingCriterion(
+        id: data?['id'] ?? 0,
         criterion: data?['criterion'],
         performance: data?['performance'],
         standards: data?['standards'],
@@ -33,6 +36,7 @@ class GradingCriterion {
 
   Map<String, dynamic> toFirestore() {
     return {
+      "id": id,
       "criterion": criterion,
       "performance": performance,
       "standards": standards,

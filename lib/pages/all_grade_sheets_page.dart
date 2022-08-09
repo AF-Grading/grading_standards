@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../models/application_state.dart';
 import '../models/grade_sheet.dart';
+import '../models/grading_criterion.dart';
+import '../models/user_setting.dart';
 import '../views/all_grade_sheets_view.dart';
 import '/pages/add_edit_grade_sheet_page.dart';
 
@@ -25,7 +27,11 @@ class AllGradeSheetsPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const AddEditGradeSheetPage(),
+                      builder: (context) => AddEditGradeSheetPage(
+                        gradingCriteria:
+                            context.watch<List<GradingCriterion>>(),
+                        users: context.watch<List<UserSetting>>(),
+                      ),
                     ),
                   );
                 },
