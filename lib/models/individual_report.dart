@@ -116,8 +116,9 @@ class IndividualReport with ChangeNotifier {
     int total = 0;
     for (GradeSheet sheet in modifiedGradeSheets) {
       // noSelection = -2, noGrade = -1
-
-      total += sheet.overall!.index - 1;
+      if (sheet.overall!.number != "NG") {
+        total += int.parse(sheet.overall!.number);
+      }
     }
 
     return total / modifiedGradeSheets.length;
@@ -183,7 +184,9 @@ class IndividualReport with ChangeNotifier {
     average_time_sheets.forEach((key, value) {
       double temp = 0;
       value.forEach((element) {
-        temp += element.overall!.index - 2;
+        if (element.overall! != Grade.noGrade) {
+          temp += int.parse(element.overall!.number);
+        }
       });
       AverageGradeSheet temp_sheet =
           AverageGradeSheet(key, temp / value.length);
@@ -221,7 +224,8 @@ class IndividualReport with ChangeNotifier {
           }
           if (item.grade != Grade.noGrade) {
             totalNum[item.name] = totalNum[item.name]! + 1;
-            averages[item.name] = averages[item.name]! + item.grade!.index - 1;
+            averages[item.name] =
+                averages[item.name]! + int.parse(item.grade!.number);
           }
         }
       }
@@ -263,7 +267,7 @@ class IndividualReport with ChangeNotifier {
     List<AverageGrade> current = [];
 
     averageGrades.forEach((key, value) {
-      if (value != 0) current.add(AverageGrade(key, value - 1));
+      if (value != 0) current.add(AverageGrade(key, value));
     });
 
     current.sort((a, b) => b.average.compareTo(a.average));

@@ -108,8 +108,9 @@ class TrainingShop with ChangeNotifier {
     int total = 0;
     for (GradeSheet sheet in modifiedGradeSheets) {
       // noSelection = -2, noGrade = -1
-
-      total += sheet.overall!.index - 1;
+      if (sheet.overall! != Grade.noGrade) {
+        total += int.parse(sheet.overall!.number);
+      }
     }
 
     return total / modifiedGradeSheets.length;
@@ -175,7 +176,9 @@ class TrainingShop with ChangeNotifier {
     average_time_sheets.forEach((key, value) {
       double temp = 0;
       value.forEach((element) {
-        temp += element.overall!.index - 2;
+        if (element.overall != Grade.noGrade) {
+          temp += int.parse(element.overall!.number);
+        }
       });
       AverageGradeSheet temp_sheet =
           AverageGradeSheet(key, temp / value.length);
@@ -213,7 +216,7 @@ class TrainingShop with ChangeNotifier {
           }
           if (item.grade != Grade.noGrade) {
             totalNum[item.name] = totalNum[item.name]! + 1;
-            averages[item.name] = averages[item.name]! + item.grade!.index - 1;
+            averages[item.name] = averages[item.name]! + int.parse(item.grade!.number);
           }
         }
       }
@@ -289,7 +292,7 @@ class TrainingShop with ChangeNotifier {
       if (sheet.overall != null && sheet.overall != Grade.noGrade) {
         totalNum[sheet.instructorId] = totalNum[sheet.instructorId]! + 1;
         averages[sheet.instructorId] =
-            averages[sheet.instructorId]! + sheet.overall!.index - 2;
+            averages[sheet.instructorId]! + int.parse(sheet.overall!.number);
       }
     }
 
