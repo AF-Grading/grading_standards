@@ -71,11 +71,17 @@ class _MyAppState extends State<MyApp> {
           .where("email", isEqualTo: user.email)
           .get()
           .then(
-            (value) => value.docs.first.data(),
+            (value) => value.docs.isEmpty ? null : value.docs.first.data(),
           );
-      context.read<ApplicationState>().userSetting = userSetting;
 
       if (userSetting != null) {
+        context.read<ApplicationState>().userSetting = userSetting;
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        context.read<ApplicationState>().loginState =
+            ApplicationLoginState.noUser;
         setState(() {
           _isLoading = false;
         });
@@ -117,131 +123,98 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Consumer<ApplicationState>(
       builder: ((context, appState, child) {
-        return _isLoading
-            ? SplashPage()
-            : MaterialApp(
-                title: "AF Grading Standards",
-                theme: light_theme,
-                darkTheme: dark_theme,
-                themeMode: appState.mode, //context.watch<CurrentUser>().mode,
-                home: appState.loginState == ApplicationLoginState.loggedIn
-                    ? MultiProvider(
-                        providers: [
-                            StreamProvider<List<UserSetting>>(
-                              create: (_) => FirebaseFirestore.instance
-                                  .collection('Users')
-                                  .snapshots()
-                                  .map((docs) => docs.docs
-                                      .map((doc) =>
-                                          UserSetting.fromFirestore(doc, null))
-                                      .toList()),
-                              initialData: const [],
-                            ),
-                            StreamProvider<List<GradeSheet>>(
-                              create: (_) => FirebaseFirestore.instance
-                                  .collection('Gradesheets')
-                                  .snapshots()
-                                  .map((docs) => docs.docs
-                                      .map((doc) =>
-                                          GradeSheet.fromFirestore(doc, null))
-                                      .toList()),
-                              initialData: const [],
-                            ),
-                            StreamProvider<List<Squadron>>(
-                              create: (_) => FirebaseFirestore.instance
-                                  .collection('Squadrons')
-                                  .snapshots()
-                                  .map((docs) => docs.docs
-                                      .map((doc) =>
-                                          Squadron.fromFirestore(doc, null))
-                                      .toList()),
-                              initialData: const [],
-                            ),
-                            StreamProvider<List<GradingParameter>>(
-                              create: (_) => FirebaseFirestore.instance
-                                  .collection('Grading Parameters')
-                                  .snapshots()
-                                  .map((docs) => docs.docs
-                                      .map((doc) =>
-                                          GradingParameter.fromFirestore(
-                                              doc, null))
-                                      .toList()),
-                              initialData: const [],
-                            ),
-                            StreamProvider<List<GradingCriterion>>(
-                              create: (_) => FirebaseFirestore.instance
-                                  .collection('Grading Criteria')
-                                  .snapshots()
-                                  .map((docs) => docs.docs
-                                      .map((doc) =>
-                                          GradingCriterion.fromFirestore(
-                                              doc, null))
-                                      .toList()),
-                              initialData: const [],
-                            ),
-                          ],
-                        child: MaterialApp(
-                          title: "AF Grading Standards",
-                          theme: light_theme,
-                          darkTheme: dark_theme,
-                          themeMode: context.watch<ApplicationState>().mode,
-                          home: HomePageOld(
-                              title: "Flying Standards", permission: 2),
-                        )
-                        //context.watch<CurrentUser>().permission.index),
-                        )
-                    : const UserLoginPage(),
-                /*initialRoute: '/',
-          routes: {
-            '/': (context) => const UserLoginPage(),
-            '/home': (context) => context
-                        .watch<ApplicationState>()
-                        .loginState ==
-                    ApplicationLoginState.loggedIn
-                ? WillPopScope(
-                    onWillPop: () async {
-                      return true;
-                    },
-                    child: Consumer<ThemeChange>(
-                      builder: (context, value, child) => MultiProvider(
-                        providers: [
-                          StreamProvider<List<UserSetting>>(
-                            create: (_) =>
-                                context.read<ApplicationState>().users,
-                            initialData: const [],
-                          ),
-                          StreamProvider<List<GradeSheet>>(
-                            create: (_) =>
-                                context.watch<ApplicationState>().gradeSheets,
-                            initialData: const [],
-                          ),
-                          StreamProvider<List<Squadron>>(
-                            create: (_) =>
-                                context.watch<ApplicationState>().squads,
-                            initialData: const [],
-                          ),
-                        ],
-                        child: MaterialApp(
-                          title: 'Grading Standards',
-                          // themeMode: ThemeMode.light,
-                          theme: light_theme,
-                          darkTheme: dark_theme,
-                          // themeMode: value.mode,
-                          themeMode: context.watch<CurrentUser>().mode,
-                          home: HomePageOld(
-                              title: "Flying Standards",
-                              permission: context
-                                  .watch<CurrentUser>()
-                                  .permission
-                                  .index),
-                        ),
-                      ),
-                    ),
-                  )
-                : const NotLoggedInPage(),
-          },*/
-                // home: UserLoginView(),
-              );
+        if (_isLoading) {
+          return SplashPage();
+        } else if (appState.loginState == ApplicationLoginState.noUser) {
+          return MaterialApp(
+              title: "AF Grading Standards",
+              theme: light_theme,
+              darkTheme: dark_theme,
+              themeMode: context.watch<ApplicationState>().mode,
+              home: NotLoggedInPage());
+        } else {
+          return _isLoading
+              ? SplashPage()
+              : MaterialApp(
+                  title: "AF Grading Standards",
+                  theme: light_theme,
+                  darkTheme: dark_theme,
+                  themeMode: appState.mode, //context.watch<CurrentUser>().mode,
+                  home: appState == ApplicationLoginState.noUser
+                      ? NotLoggedInPage()
+                      : appState.loginState == ApplicationLoginState.loggedIn
+                          ? MultiProvider(
+                              providers: [
+                                  StreamProvider<List<UserSetting>>(
+                                    create: (_) => FirebaseFirestore.instance
+                                        .collection('Users')
+                                        .snapshots()
+                                        .map((docs) => docs.docs
+                                            .map((doc) =>
+                                                UserSetting.fromFirestore(
+                                                    doc, null))
+                                            .toList()),
+                                    initialData: const [],
+                                  ),
+                                  StreamProvider<List<GradeSheet>>(
+                                    create: (_) => FirebaseFirestore.instance
+                                        .collection('Gradesheets')
+                                        .snapshots()
+                                        .map((docs) => docs.docs
+                                            .map((doc) =>
+                                                GradeSheet.fromFirestore(
+                                                    doc, null))
+                                            .toList()),
+                                    initialData: const [],
+                                  ),
+                                  StreamProvider<List<Squadron>>(
+                                    create: (_) => FirebaseFirestore.instance
+                                        .collection('Squadrons')
+                                        .snapshots()
+                                        .map((docs) => docs.docs
+                                            .map((doc) =>
+                                                Squadron.fromFirestore(
+                                                    doc, null))
+                                            .toList()),
+                                    initialData: const [],
+                                  ),
+                                  StreamProvider<List<GradingParameter>>(
+                                    create: (_) => FirebaseFirestore.instance
+                                        .collection('Grading Parameters')
+                                        .snapshots()
+                                        .map((docs) => docs.docs
+                                            .map((doc) =>
+                                                GradingParameter.fromFirestore(
+                                                    doc, null))
+                                            .toList()),
+                                    initialData: const [],
+                                  ),
+                                  StreamProvider<List<GradingCriterion>>(
+                                    create: (_) => FirebaseFirestore.instance
+                                        .collection('Grading Criteria')
+                                        .snapshots()
+                                        .map((docs) => docs.docs
+                                            .map((doc) =>
+                                                GradingCriterion.fromFirestore(
+                                                    doc, null))
+                                            .toList()),
+                                    initialData: const [],
+                                  ),
+                                ],
+                              child: MaterialApp(
+                                title: "AF Grading Standards",
+                                theme: light_theme,
+                                darkTheme: dark_theme,
+                                themeMode:
+                                    context.watch<ApplicationState>().mode,
+                                home: HomePageOld(
+                                    title: "Flying Standards", permission: 2),
+                              )
+                              //context.watch<CurrentUser>().permission.index),
+                              )
+                          : const UserLoginPage(),
+                );
+        }
       }),
     );
   }
