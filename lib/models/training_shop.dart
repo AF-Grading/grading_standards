@@ -64,8 +64,8 @@ class TrainingShop with ChangeNotifier {
     Map<String, List<num>> firstHalf = {};
 
     // this does not have the optimal run time
-    for (int i = 0; i < ((sortedGradeSheets.length) / 2).floor(); i++) {
-      sortedGradeSheets[i].grades.forEach((element) {
+    for (int i = 0; i < ((modifiedSortedGradeSheets.length) / 2).floor(); i++) {
+      modifiedSortedGradeSheets[i].grades.forEach((element) {
         if (element.grade != Grade.noGrade) {
           if (firstHalf.containsKey(element.name)) {
             firstHalf[element.name]![0] += int.parse(element.grade!.number);
@@ -86,14 +86,14 @@ class TrainingShop with ChangeNotifier {
   }
 
   Map<String, List<num>> get secondHalf {
-    // return total / ((sortedGradeSheets.length) / 2).ceil();
+    // return total / ((modifiedSortedGradeSheets.length) / 2).ceil();
     Map<String, List<num>> secondHalf = {};
 
     // this does not have the optimal run time
-    for (int i = ((sortedGradeSheets.length) / 2).floor();
-        i < sortedGradeSheets.length;
+    for (int i = ((modifiedSortedGradeSheets.length) / 2).floor();
+        i < modifiedSortedGradeSheets.length;
         i++) {
-      sortedGradeSheets[i].grades.forEach((element) {
+      modifiedSortedGradeSheets[i].grades.forEach((element) {
         if (element.grade != Grade.noGrade) {
           if (secondHalf.containsKey(element.name)) {
             secondHalf[element.name]![0] += int.parse(element.grade!.number);
