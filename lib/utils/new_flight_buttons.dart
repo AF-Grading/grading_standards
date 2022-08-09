@@ -88,7 +88,7 @@ class NewFlightButtons extends StatelessWidget {
                       .validate() */
                       formKey.currentState!.validate()) {
                     context.read<CurrentFlight>().instructorId =
-                        context.read<ApplicationState>().user.email;
+                        context.read<ApplicationState>().user!.email;
                     final students = context.read<CurrentFlight>().students;
 
                     context.read<CurrentFlight>().gradeSheets.clear();

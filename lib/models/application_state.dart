@@ -265,7 +265,7 @@ class ApplicationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  UserSetting get user => _userSetting!;
+  UserSetting? get user => _userSetting;
 
   //User get user => _currentUser;
 

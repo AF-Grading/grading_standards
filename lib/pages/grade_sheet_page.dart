@@ -57,7 +57,7 @@ class GradeSheetPage extends StatelessWidget {
                     onTap: () {
                       if (context
                               .read<ApplicationState>()
-                              .user
+                              .user!
                               .permission
                               .index >
                           0)

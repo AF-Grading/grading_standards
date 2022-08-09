@@ -132,6 +132,9 @@ class _MyAppState extends State<MyApp> {
               darkTheme: dark_theme,
               themeMode: appState.mode,
               home: NotLoggedInPage());
+        } else if (appState.loginState == ApplicationLoginState.loggedIn &&
+            appState.user == null) {
+          return SplashPage();
         } else {
           return _isLoading
               ? SplashPage()
@@ -209,7 +212,9 @@ class _MyAppState extends State<MyApp> {
                                     context.watch<ApplicationState>().mode,
                                 home: HomePageOld(
                                     title: "Flying Standards",
-                                    permission: appState.user.permission.index),
+                                    permission: appState.user != null
+                                        ? appState.user!.permission.index
+                                        : 0),
                               )
                               //context.watch<CurrentUser>().permission.index),
                               )

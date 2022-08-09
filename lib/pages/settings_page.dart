@@ -21,7 +21,7 @@ class SettingsPage extends StatelessWidget {
     return Consumer<List<Squadron>>(builder: (context, squads, child) {
       return Consumer<ApplicationState>(
         builder: ((context, userProvider, child) {
-          UserSetting user = userProvider.user;
+          UserSetting user = userProvider.user!;
           Squadron? squad = squads.isEmpty
               ? null
               : squads.firstWhere((squad) => squad.squad == user.squad);

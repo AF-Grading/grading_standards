@@ -21,12 +21,12 @@ class GradeSheetsView extends StatelessWidget {
             ? gradeSheetsStream
                 .where((gradesheet) =>
                     gradesheet.instructorId ==
-                    context.watch<ApplicationState>().user.email)
+                    context.watch<ApplicationState>().user!.email)
                 .toList()
             : gradeSheetsStream
                 .where((gradesheet) =>
                     gradesheet.studentId ==
-                    context.watch<ApplicationState>().user.email)
+                    context.watch<ApplicationState>().user!.email)
                 .toList();
         /* final missionNumbers = gradeSheetsStream
             .map((gradeSheet) => gradeSheet.missionNum)

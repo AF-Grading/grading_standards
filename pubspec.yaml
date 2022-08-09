@@ -79,6 +79,7 @@ flutter_icons:
 flutter:
   assets:
     - assets/ic_launcher-playstore.png
+    - assets/af_logo.png
   fonts:
     - family: Cambo
       fonts:

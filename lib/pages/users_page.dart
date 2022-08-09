@@ -45,7 +45,7 @@ class UsersPage extends StatelessWidget {
                           onTap: () {
                             if (context
                                     .read<ApplicationState>()
-                                    .user
+                                    .user!
                                     .permission
                                     .index <
                                 user.permission.index) {

@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                                       if (user.squad ==
                                           context
                                               .read<ApplicationState>()
-                                              .user
+                                              .user!
                                               .squad) {
                                         returnVar = true;
                                         throw "";
@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                                 return returnVar;
                               }).toList(),
                               squad:
-                                  context.read<ApplicationState>().user.squad,
+                                  context.read<ApplicationState>().user!.squad,
                             ),
                           ]
                         : [

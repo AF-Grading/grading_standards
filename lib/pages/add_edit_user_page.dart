@@ -225,7 +225,7 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                         child: const Text("Permissions: ")),
                     PermissionFormField(
                       userPermission:
-                          context.read<ApplicationState>().user.permission,
+                          context.read<ApplicationState>().user!.permission,
                       initialValue: _permission,
                       validator: (value) {
                         if (value == null) {

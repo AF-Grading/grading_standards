@@ -24,8 +24,8 @@ class TrainingShopView extends StatelessWidget {
         } else {
           final user = context.watch<ApplicationState>().user;
           final squad =
-              squadronss.firstWhere((squad) => squad.squad == user.squad);
-          final squadrons = user.permission == Permission.training_shop
+              squadronss.firstWhere((squad) => squad.squad == user!.squad);
+          final squadrons = user!.permission == Permission.training_shop
               ? squadronss.where((squady) => squady.wing == squad.wing).toList()
               : squadronss;
           return ListView.builder(
