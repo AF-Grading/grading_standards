@@ -120,6 +120,7 @@ class _MyAppState extends State<MyApp> {
         return _isLoading
             ? SplashPage()
             : MaterialApp(
+                title: "AF Grading Standards",
                 theme: light_theme,
                 darkTheme: dark_theme,
                 themeMode: appState.mode, //context.watch<CurrentUser>().mode,
@@ -180,6 +181,7 @@ class _MyAppState extends State<MyApp> {
                             ),
                           ],
                         child: MaterialApp(
+                          title: "AF Grading Standards",
                           theme: light_theme,
                           darkTheme: dark_theme,
                           themeMode: context.watch<ApplicationState>().mode,
