@@ -5,6 +5,7 @@ import '../models/user.dart';
 class PermissionFormField extends FormField<Permission> {
   PermissionFormField(
       {Key? key,
+      Permission? userPermission,
       Permission? initialValue,
       ValueChanged<Permission>? onChanged,
       FormFieldValidator<Permission>? validator})
@@ -17,19 +18,17 @@ class PermissionFormField extends FormField<Permission> {
             return LayoutBuilder(
                 builder: (BuildContext context2, BoxConstraints constraints) {
               if (constraints.minWidth > 400) {
-                return _buildWide(formState, onChanged);
+                return _buildWide(formState, onChanged, userPermission!);
               } else {
-                return _buildNarrow(formState, onChanged);
+                return _buildNarrow(formState, onChanged, userPermission!);
               }
             });
           },
         );
 }
 
-Widget _buildWide(
-  FormFieldState<Permission> formState,
-  ValueChanged<Permission>? onChanged,
-) {
+Widget _buildWide(FormFieldState<Permission> formState,
+    ValueChanged<Permission>? onChanged, Permission userPermission) {
   return Column(
     children: [
       Wrap(
@@ -40,8 +39,10 @@ Widget _buildWide(
             value: Permission.student,
             groupValue: formState.value,
             onChanged: (value) {
-              formState.didChange(value);
-              onChanged!(value!);
+              if (userPermission.index >= value!.index) {
+                formState.didChange(value);
+                onChanged!(value);
+              }
             },
           ),
           const Text("Instructor"),
@@ -49,8 +50,10 @@ Widget _buildWide(
             value: Permission.instructor,
             groupValue: formState.value,
             onChanged: (value) {
-              formState.didChange(value);
-              onChanged!(value!);
+              if (userPermission.index >= value!.index) {
+                formState.didChange(value);
+                onChanged!(value);
+              }
             },
           ),
           const Text("Training Shop"),
@@ -58,8 +61,10 @@ Widget _buildWide(
             value: Permission.training_shop,
             groupValue: formState.value,
             onChanged: (value) {
-              formState.didChange(value);
-              onChanged!(value!);
+              if (userPermission.index >= value!.index) {
+                formState.didChange(value);
+                onChanged!(value);
+              }
             },
           ),
           const Text("Wing Training"),
@@ -67,8 +72,10 @@ Widget _buildWide(
             value: Permission.wing_training,
             groupValue: formState.value,
             onChanged: (value) {
-              formState.didChange(value);
-              onChanged!(value!);
+              if (userPermission.index >= value!.index) {
+                formState.didChange(value);
+                onChanged!(value);
+              }
             },
           ),
         ],
@@ -83,8 +90,8 @@ Widget _buildWide(
   );
 }
 
-Widget _buildNarrow(
-    FormFieldState<Permission> formState, ValueChanged<Permission>? onChanged) {
+Widget _buildNarrow(FormFieldState<Permission> formState,
+    ValueChanged<Permission>? onChanged, Permission userPermission) {
   return Column(
     children: [
       DropdownButton<Permission>(
@@ -99,8 +106,10 @@ Widget _buildNarrow(
         ],
         value: formState.value,
         onChanged: (Permission? newValue) {
-          formState.didChange(newValue);
-          onChanged!(newValue!);
+          if (userPermission.index >= newValue!.index) {
+            formState.didChange(newValue);
+            onChanged!(newValue);
+          }
         },
       ),
       formState.hasError

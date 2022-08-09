@@ -224,6 +224,8 @@ class _AddEditUserPageState extends State<AddEditUserPage> {
                         width: _spaceBetween,
                         child: const Text("Permissions: ")),
                     PermissionFormField(
+                      userPermission:
+                          context.read<ApplicationState>().user.permission,
                       initialValue: _permission,
                       validator: (value) {
                         if (value == null) {

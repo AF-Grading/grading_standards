@@ -34,13 +34,15 @@ class GradingCriteriaPage extends StatelessWidget {
       ),
       body: Consumer<List<GradingCriterion>>(
         builder: (context, stream, _) {
-          final myList = stream;
+          final myList = []; //stream.addAll(iterable);
+          myList.addAll(stream);
+
           myList.sort((a, b) => a.id.compareTo(b.id));
           return SingleChildScrollView(
             child: Column(
-              children: stream.isEmpty
+              children: myList.isEmpty
                   ? [const Text("No Data...")]
-                  : stream
+                  : myList
                       .map(
                         (criterion) => ListTile(
                           leading: Text("${criterion.id}"),

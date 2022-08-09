@@ -75,7 +75,7 @@ class _AppDrawerState extends State<AppDrawer> {
             );
           },
         ),
-        if (context.watch<ApplicationState>().user.permission.index > 2)
+        if (context.watch<ApplicationState>().user.permission.index > 0)
           ListTile(
             title: const Text('Users'),
             onTap: () {
