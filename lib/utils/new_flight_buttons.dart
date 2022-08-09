@@ -100,6 +100,7 @@ class NewFlightButtons extends StatelessWidget {
                           .toList();*/
                       context.read<CurrentFlight>().gradeSheets.add(GradeSheet(
                           studentId: student.email,
+                          missionNum: "0",
                           grades: [], //grades,
                           startTime: DateTime.now(),
                           endTime: DateTime.now()));

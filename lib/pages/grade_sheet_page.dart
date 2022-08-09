@@ -117,7 +117,7 @@ class GradeSheetPage extends StatelessWidget {
                               child: SizedBox(
                                   height: dist,
                                   child: ListTile(
-                                      leading: const Text("Sortie Profile"),
+                                      leading: const Text("Flight Information"),
                                       title: Text(gradeSheet.profile))),
                             ),
                           ],

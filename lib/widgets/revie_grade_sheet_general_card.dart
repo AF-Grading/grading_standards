@@ -58,7 +58,7 @@ class ReviewGradeSheetGeneralCard extends StatelessWidget {
                 context.read<CurrentFlight>().sortieType = value;
               }),
         ),
-        SpacedItem(
+        /* SpacedItem(
           name: "Mission Number",
           child: TextFormField(
             initialValue: context.read<CurrentFlight>().missionNum.toString(),
@@ -72,9 +72,9 @@ class ReviewGradeSheetGeneralCard extends StatelessWidget {
                 // tryparse needed because of empty string else error
                 context.read<CurrentFlight>().missionNum = value,
           ),
-        ),
+        ), */
         SpacedItem(
-          name: "Sortie Profile",
+          name: "Flight Information",
           child: TextFormField(
             initialValue: context.read<CurrentFlight>().profile,
             validator: (value) {

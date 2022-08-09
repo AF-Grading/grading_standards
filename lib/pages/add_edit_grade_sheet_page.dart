@@ -268,7 +268,7 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                         ),
                       ],
                     ),
-                    Padding(
+                    /* Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
@@ -288,13 +288,13 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                           ),
                         ],
                       ),
-                    ),
+                    ), */
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         controller: _sortiePro,
                         decoration: const InputDecoration(
-                          labelText: "Sortie Profile",
+                          labelText: "Flight Information (No sortie profile)",
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -434,8 +434,8 @@ class _AddEditGradeSheetPageState extends State<AddEditGradeSheetPage> {
                   id: _isEditing ? widget.gradeSheet!.id : null,
                   instructorId: _instructor!.email,
                   studentId: _student!.email,
-                  missionNum:
-                      _missionN.text, //_missionNum != null ? _missionNum! : 0,
+                  missionNum: "",
+                  //_missionN.text, //_missionNum != null ? _missionNum! : 0,
                   grades: _grades,
                   overall: _overall!,
                   weather: _weather!,
