@@ -208,7 +208,8 @@ class _MyAppState extends State<MyApp> {
                                 themeMode:
                                     context.watch<ApplicationState>().mode,
                                 home: HomePageOld(
-                                    title: "Flying Standards", permission: 2),
+                                    title: "Flying Standards",
+                                    permission: appState.user.permission.index),
                               )
                               //context.watch<CurrentUser>().permission.index),
                               )

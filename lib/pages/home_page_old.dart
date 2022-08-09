@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePageOld> with TickerProviderStateMixin {
                             tabs: [
                               Tab(text: 'New Flight'),
                               Tab(text: 'Reports'),
-                              Tab(text: 'Units'),
+                              Tab(text: 'My Unit'),
                             ],
                           )
                         : TabBar(
