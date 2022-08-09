@@ -1,7 +1,9 @@
+import 'package:app_prototype/models/Squadrons.dart';
 import 'package:app_prototype/models/current_user.dart';
 import 'package:app_prototype/models/theme_change.dart';
 //import 'package:app_prototype/models/user_profile.dart';
 import 'package:app_prototype/widgets/theme_field.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +21,9 @@ class SettingsPage extends StatelessWidget {
     return Consumer<ApplicationState>(
       builder: ((context, userProvider, child) {
         UserSetting user = userProvider.user;
+        Squadron squad = context
+            .read<List<Squadron>>()
+            .firstWhere((squad) => squad.squad == user.squad);
 
         return Scaffold(
             appBar: AppBar(
@@ -45,9 +50,14 @@ class SettingsPage extends StatelessWidget {
             ),
             body:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Icon(
-                Icons.pets,
-                size: 300,
+              SizedBox(
+                height: 150,
+                width: 150,
+                child: CachedNetworkImage(
+                  imageUrl: squad.image!,
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
               ),
               Text(user.name),
               Text(

@@ -25,9 +25,9 @@ class ApplicationState extends ChangeNotifier {
 
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
-        if (_userSetting != null) {
-          _loginState = ApplicationLoginState.loggedIn;
-        }
+        //if (_userSetting != null) {
+        _loginState = ApplicationLoginState.loggedIn;
+        //}
       } else {
         if (_loginState != ApplicationLoginState.noUser)
           _loginState = ApplicationLoginState.loggedOut;
@@ -286,7 +286,9 @@ class ApplicationState extends ChangeNotifier {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-
+      _loginState = ApplicationLoginState.loggedOut;
+      FirebaseAuth.instance.signOut();
+      notifyListeners();
       return "";
     } on FirebaseAuthException catch (e) {
       errorCallback(e);

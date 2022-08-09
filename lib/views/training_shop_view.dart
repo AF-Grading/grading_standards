@@ -1,6 +1,7 @@
 import 'package:app_prototype/models/Squadrons.dart';
 import 'package:app_prototype/models/user.dart';
 import 'package:app_prototype/models/user_setting.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,12 +14,11 @@ class TrainingShopView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final squadrons = context.watch<List<Squadron>>();
     return ListView.builder(
-        itemCount: context.watch<List<Squadron>>().length,
+        itemCount: squadrons.length, //context.watch<List<Squadron>>().length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Center(
-                child: Text(context.watch<List<Squadron>>()[index].squad)),
+          return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
@@ -50,6 +50,30 @@ class TrainingShopView extends StatelessWidget {
                 ),
               );
             },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                squadrons[index].image != null
+                    ? SizedBox(
+                        height: 150,
+                        width: 150,
+                        child: CachedNetworkImage(
+                          imageUrl: squadrons[index].image!,
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
+                      )
+                    : Container(),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Center(
+                      child:
+                          Text(context.watch<List<Squadron>>()[index].squad)),
+                ),
+              ],
+            ),
           );
         });
   }
