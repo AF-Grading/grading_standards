@@ -3,7 +3,9 @@ import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
+import '../models/application_state.dart';
 import '../pages/grade_sheet_page.dart';
 import 'user_name_text_box.dart';
 

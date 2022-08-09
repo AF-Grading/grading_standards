@@ -25,14 +25,15 @@ class ApplicationState extends ChangeNotifier {
 
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
+        //if (_userSetting != null) {
         _loginState = ApplicationLoginState.loggedIn;
+        //}
       } else {
-        _loginState = ApplicationLoginState.loggedOut;
+        if (_loginState != ApplicationLoginState.noUser)
+          _loginState = ApplicationLoginState.loggedOut;
       }
       notifyListeners();
     });
-
-    print(_loginState);
   }
 
   Future<DocumentReference> addGradeSheet(GradeSheet gradeSheet) {
@@ -183,12 +184,13 @@ class ApplicationState extends ChangeNotifier {
     void Function(FirebaseAuthException e) errorCallback,
   ) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
+      final val = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
-      )
-          .then((value) {
+      );
+
+      if (val.user != null) getUserSetting(val.user!.email);
+      /* .then((value) {
         FirebaseFirestore.instance
             .collection('Users')
             .withConverter(
@@ -197,23 +199,49 @@ class ApplicationState extends ChangeNotifier {
                     userSetting.toFirestore())
             .where("email", isEqualTo: email)
             .get()
-            .then(
-              (value) => value.docs.first.data(),
-            )
             .then((value) {
-          _userSetting = value;
-          _mode = value.themeMode.mode!;
+          return value.docs.isEmpty ? null : value.docs.first.data();
         }).then((value) {
-          _loginState = ApplicationLoginState.loggedIn;
-
-          notifyListeners();
+          if (value != null) {
+            _userSetting = value;
+            _mode = value.themeMode.mode!;
+            _loginState = ApplicationLoginState.loggedIn;
+          } else {
+            print("whad");
+            _loginState = ApplicationLoginState.noUser;
+            notifyListeners();
+          }
         });
-      });
+      }); */
       return true;
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
       return false;
     }
+  }
+
+  Future<void> getUserSetting(String? email) async {
+    final userSetting = await FirebaseFirestore.instance
+        .collection('Users')
+        .withConverter(
+            fromFirestore: UserSetting.fromFirestore,
+            toFirestore: (UserSetting userSetting, _) =>
+                userSetting.toFirestore())
+        .where("email", isEqualTo: email)
+        .get()
+        .then((value) {
+      return value.docs.isEmpty ? null : value.docs.first.data();
+    });
+
+    if (userSetting != null) {
+      _userSetting = userSetting;
+      _mode = userSetting.themeMode.mode!;
+      _loginState = ApplicationLoginState.loggedIn;
+    } else {
+      _loginState = ApplicationLoginState.noUser;
+    }
+
+    notifyListeners();
   }
 
   UserSetting? _userSetting;
@@ -237,7 +265,7 @@ class ApplicationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  UserSetting get user => _userSetting!;
+  UserSetting? get user => _userSetting;
 
   //User get user => _currentUser;
 
@@ -258,7 +286,9 @@ class ApplicationState extends ChangeNotifier {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-
+      _loginState = ApplicationLoginState.loggedOut;
+      FirebaseAuth.instance.signOut();
+      notifyListeners();
       return "";
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
@@ -269,6 +299,7 @@ class ApplicationState extends ChangeNotifier {
   void signOut() {
     _userSetting = null;
     _mode = ThemeMode.system;
+    _loginState = ApplicationLoginState.loggedOut;
     FirebaseAuth.instance.signOut();
     notifyListeners();
   }

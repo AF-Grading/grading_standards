@@ -88,7 +88,7 @@ class NewFlightButtons extends StatelessWidget {
                       .validate() */
                       formKey.currentState!.validate()) {
                     context.read<CurrentFlight>().instructorId =
-                        context.read<ApplicationState>().user.email;
+                        context.read<ApplicationState>().user!.email;
                     final students = context.read<CurrentFlight>().students;
 
                     context.read<CurrentFlight>().gradeSheets.clear();
@@ -100,6 +100,7 @@ class NewFlightButtons extends StatelessWidget {
                           .toList();*/
                       context.read<CurrentFlight>().gradeSheets.add(GradeSheet(
                           studentId: student.email,
+                          missionNum: "0",
                           grades: [], //grades,
                           startTime: DateTime.now(),
                           endTime: DateTime.now()));

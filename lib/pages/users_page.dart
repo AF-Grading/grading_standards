@@ -41,21 +41,36 @@ class UsersPage extends StatelessWidget {
                 children: userStream
                     .map(
                       (user) => ListTile(
-                        title: Text("${user.rank.pretty} ${user.name}"),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => UserPage(
-                                  user: UserSetting(
-                                      name: user.name,
-                                      rank: user.rank,
-                                      email: user.email,
-                                      permission: user.permission,
-                                      pilotQual: user.pilotQual,
-                                      adQual: user.adQual,
-                                      squad: user.squad))),
-                        ),
-                      ),
+                          title: Text("${user.rank.pretty} ${user.name}"),
+                          onTap: () {
+                            if (context
+                                    .read<ApplicationState>()
+                                    .user!
+                                    .permission
+                                    .index <
+                                user.permission.index) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      "Cannot modify user of higher permission"),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserPage(
+                                        user: UserSetting(
+                                            name: user.name,
+                                            rank: user.rank,
+                                            email: user.email,
+                                            permission: user.permission,
+                                            pilotQual: user.pilotQual,
+                                            adQual: user.adQual,
+                                            squad: user.squad))),
+                              );
+                            }
+                          }),
                     )
                     .toList(),
               );

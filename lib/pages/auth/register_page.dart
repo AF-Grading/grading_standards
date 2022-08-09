@@ -109,7 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
 
                       if (e.isEmpty) {
-                        context.read<ApplicationState>().addUserSetting(
+                        /* context.read<ApplicationState>().addUserSetting(
                             UserSetting(
                                 name: "Test User",
                                 rank: Rank.secondLt,
@@ -117,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 email: _email.text,
                                 adQual: AdQual.cpad,
                                 pilotQual: PilotQual.fpq,
-                                permission: Permission.wing_training));
+                                permission: Permission.wing_training)); */
                         Navigator.pop(context);
                       }
 

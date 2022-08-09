@@ -21,41 +21,43 @@ class GradeSheetsView extends StatelessWidget {
             ? gradeSheetsStream
                 .where((gradesheet) =>
                     gradesheet.instructorId ==
-                    context.watch<ApplicationState>().user.email)
+                    context.watch<ApplicationState>().user!.email)
                 .toList()
             : gradeSheetsStream
                 .where((gradesheet) =>
                     gradesheet.studentId ==
-                    context.watch<ApplicationState>().user.email)
+                    context.watch<ApplicationState>().user!.email)
                 .toList();
-        final missionNumbers = gradeSheetsStream
+        /* final missionNumbers = gradeSheetsStream
             .map((gradeSheet) => gradeSheet.missionNum)
             .toSet()
             .toList()
             .where((number) =>
                 gradeSheets.any((sheet) => sheet.missionNum == number))
-            .toList();
-        return missionNumbers.isEmpty
+            .toList(); */
+        return gradeSheets.isEmpty //missionNumbers.isEmpty
             ? const Center(
-                child: Text("No Missions"),
+                child: Text("No GradeSheets"),
               )
             : ListView.builder(
-                itemCount: missionNumbers.length,
+                itemCount: gradeSheets.length, //missionNumbers.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text("Mission: ${missionNumbers[index]}"),
-                    subtitle: Container(
+                  return GradeSheetListTile(gradeSheet: gradeSheets[index]);
+
+                  /* ListTile(
+                    //title: Text("Mission: ${missionNumbers[index]}"),
+                    title: Text /* Container(
                       color: Colors.black12,
                       child: Column(
                           children: gradeSheets
-                              .where((gradeSheet) =>
+                              /* .where((gradeSheet) =>
                                   gradeSheet.missionNum ==
-                                  missionNumbers[index])
+                                  missionNumbers[index]) */
                               .map((gradeSheet) =>
                                   GradeSheetListTile(gradeSheet: gradeSheet))
                               .toList()),
-                    ),
-                  );
+                    ), */
+                  ); */
                 },
               );
       },

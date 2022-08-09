@@ -43,7 +43,7 @@ class _NewFlightView2State extends State<NewFlightView2> {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                SpacedItem(
+                /* SpacedItem(
                   name: "Mission Number",
                   child: TextFormField(
                     controller: _missionNumber,
@@ -62,7 +62,7 @@ class _NewFlightView2State extends State<NewFlightView2> {
                       return null;
                     },
                   ),
-                ),
+                ), */
                 SpacedItem(
                   name: "Weather",
                   child: WeatherFormField(
@@ -128,9 +128,11 @@ class _NewFlightView2State extends State<NewFlightView2> {
                   ),
                 ),
                 SpacedItem(
-                  name: "Sortie Profile",
+                  name: "Flight Information",
                   child: TextFormField(
                     controller: _sortieProfile,
+                    decoration: InputDecoration(
+                        hintText: "No Sortie Information Allowed"),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter a value";

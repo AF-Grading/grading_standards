@@ -35,7 +35,7 @@ class _AppDrawerState extends State<AppDrawer> {
             color: Theme.of(context).colorScheme.primary,
           ),
           child: Text(
-            context.watch<ApplicationState>().user.name,
+            context.watch<ApplicationState>().user!.name,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 24,
@@ -43,7 +43,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
         ),
         // only display this tab if the user is instructor or greater
-        if (context.watch<ApplicationState>().user.permission.index > 0)
+        if (context.watch<ApplicationState>().user!.permission.index > 0)
           ListTile(
             title: const Text('My Grade Sheets'),
             onTap: () {
@@ -54,7 +54,7 @@ class _AppDrawerState extends State<AppDrawer> {
               );
             },
           ),
-        if (context.watch<ApplicationState>().user.permission.index > 2)
+        if (context.watch<ApplicationState>().user!.permission.index > 2)
           ListTile(
             title: const Text('All Grade Sheets'),
             onTap: () {
@@ -75,7 +75,7 @@ class _AppDrawerState extends State<AppDrawer> {
             );
           },
         ),
-        if (context.watch<ApplicationState>().user.permission.index > 2)
+        if (context.watch<ApplicationState>().user!.permission.index > 0)
           ListTile(
             title: const Text('Users'),
             onTap: () {
@@ -85,7 +85,7 @@ class _AppDrawerState extends State<AppDrawer> {
               );
             },
           ),
-        if (context.watch<ApplicationState>().user.permission.index > 2)
+        if (context.watch<ApplicationState>().user!.permission.index > 2)
           ListTile(
             title: const Text('Parameters'),
             onTap: () {
@@ -96,7 +96,7 @@ class _AppDrawerState extends State<AppDrawer> {
               );
             },
           ),
-        if (context.watch<ApplicationState>().user.permission.index > 2)
+        if (context.watch<ApplicationState>().user!.permission.index > 2)
           ListTile(
             title: const Text('Grading Criteria'),
             onTap: () {

@@ -33,27 +33,34 @@ class GradingCriteriaPage extends StatelessWidget {
         ),
       ),
       body: Consumer<List<GradingCriterion>>(
-        builder: (context, stream, _) =>
-            //stream.sort((a, b) => b.startTime.compareTo(a.startTime));
-            SingleChildScrollView(
-          child: Column(
-              children: stream.isEmpty
+        builder: (context, stream, _) {
+          final myList = []; //stream.addAll(iterable);
+          myList.addAll(stream);
+
+          myList.sort((a, b) => a.id.compareTo(b.id));
+          return SingleChildScrollView(
+            child: Column(
+              children: myList.isEmpty
                   ? [const Text("No Data...")]
-                  : stream
-                      .map((criterion) => ListTile(
-                            title: Text(criterion.criterion),
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    AddEditGradingCriterionPage(
-                                  gradingCriterion: criterion,
-                                ),
+                  : myList
+                      .map(
+                        (criterion) => ListTile(
+                          leading: Text("${criterion.id}"),
+                          title: Text(criterion.criterion),
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddEditGradingCriterionPage(
+                                gradingCriterion: criterion,
                               ),
                             ),
-                          ))
-                      .toList()),
-        ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+            ),
+          );
+        },
       ),
     );
   }
