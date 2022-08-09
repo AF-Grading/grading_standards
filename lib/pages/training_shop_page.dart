@@ -1,4 +1,5 @@
 import 'package:app_prototype/models/application_state.dart';
+import 'package:app_prototype/models/grade_enums.dart';
 import 'package:app_prototype/models/grade_sheet.dart';
 import 'package:app_prototype/models/grading_criterion.dart';
 import 'package:app_prototype/models/user.dart';
@@ -293,7 +294,7 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
                                 .modifiedSortedGradeSheets)
                               ListTile(
                                 trailing:
-                                    Text("Grade ${sheet.overall!.index - 2}"),
+                                    Text("Grade ${sheet.overall!.number}"),
                                 subtitle: Text(sheet.overallComments),
                                 title: Text(
                                     "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
@@ -523,7 +524,7 @@ class _TrainingShopPageState extends State<TrainingShopPage> {
                                 .modifiedSortedGradeSheets)
                               ListTile(
                                 trailing:
-                                    Text("Grade ${sheet.overall!.index - 2}"),
+                                    Text("Grade ${sheet.overall!.number}"),
                                 subtitle: Text(sheet.overallComments),
                                 title: Text(
                                     "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),

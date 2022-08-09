@@ -21,11 +21,11 @@ class StatsButtonsSquadrons extends FormField<TimeCalculate> {
           builder: (formState) {
             return LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
-              if (constraints.minWidth > 400) {
-                return _buildWide(formState, onChanged, context);
-              } else {
-                return _buildNarrow(formState, onChanged, context);
-              }
+              // if (constraints.minWidth > 400) {
+              //   return _buildWide(formState, onChanged, context);
+              // } else {
+              return _buildNarrow(formState, onChanged, context);
+              // }
             });
           },
         );
@@ -270,6 +270,90 @@ Widget _buildNarrow(FormFieldState<TimeCalculate> formState,
             ),
           ],
         ),
+      ),
+      Padding(
+          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+          child: Text("Trend", style: TextStyle(fontSize: 28))),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(8, 0, 8, 30),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  alignment: Alignment.centerLeft,
+                  width: 200,
+                  height: 25,
+                  child: Text(
+                    "Grade Area",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+              // this will be all of the individual grade areas
+
+              Container(
+                  alignment: Alignment.center,
+                  width: 40,
+                  height: 25,
+                  child: Text("start",
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+
+              Container(
+                  alignment: Alignment.center,
+                  width: 40,
+                  height: 25,
+                  child: Text("end",
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+
+              Container(
+                  alignment: Alignment.center,
+                  width: 45,
+                  height: 25,
+                  child: Text('diff',
+                      style: TextStyle(fontWeight: FontWeight.bold)))
+            ],
+          ),
+          for (String key in context.read<TrainingShop>().firstHalf.keys)
+            if (context.read<TrainingShop>().secondHalf.containsKey(key))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      width: 200,
+                      height: 40,
+                      child: Text(key)),
+                  // this will be all of the individual grade areas
+
+                  Container(
+                      alignment: Alignment.center,
+                      width: 40,
+                      height: 25,
+                      child: Text(context
+                          .read<TrainingShop>()
+                          .firstHalf[key]![0]
+                          .toStringAsPrecision(3))),
+
+                  Container(
+                      alignment: Alignment.center,
+                      width: 40,
+                      height: 25,
+                      child: Text(context
+                          .read<TrainingShop>()
+                          .secondHalf[key]![0]
+                          .toStringAsPrecision(3))),
+
+                  Container(
+                      alignment: Alignment.center,
+                      width: 45,
+                      height: 25,
+                      child: Text((context
+                                  .read<TrainingShop>()
+                                  .secondHalf[key]![0] -
+                              context.read<TrainingShop>().firstHalf[key]![0])
+                          .toStringAsPrecision(3)))
+                ],
+              ),
+        ]),
       ),
     ],
   );

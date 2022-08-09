@@ -193,7 +193,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                                   child: ListTile(
                                                       title: Text(item.name),
                                                       trailing: Text(
-                                                          "${item.grade!.index - 2}")),
+                                                          "${item.grade!.number}")),
                                                 ))
                                             .toList(),
                                       )
@@ -222,7 +222,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                                   child: ListTile(
                                                       title: Text(item.name),
                                                       trailing: Text(
-                                                          "${item.grade!.index - 2}")),
+                                                          "${item.grade!.number}")),
                                                 ))
                                             .toList(),
                                       )
@@ -318,7 +318,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                 .modifiedSortedGradeSheets)
                               ListTile(
                                 trailing:
-                                    Text("Grade ${sheet.overall!.index - 2}"),
+                                    Text("Grade ${sheet.overall!.number}"),
                                 subtitle: Text(sheet.overallComments),
                                 title: Text(
                                     "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
@@ -426,7 +426,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                             child: ListTile(
                                                 title: Text(item.name),
                                                 trailing: Text(
-                                                    "${item.grade!.index - 2}")),
+                                                    "${item.grade!.number}")),
                                           ))
                                       .toList(),
                                 ),
@@ -457,7 +457,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                             child: ListTile(
                                                 title: Text(item.name),
                                                 trailing: Text(
-                                                    "${item.grade!.index - 2}")),
+                                                    "${item.grade!.number}")),
                                           ))
                                       .toList(),
                                 ),
@@ -543,7 +543,7 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                                 .modifiedSortedGradeSheets)
                               ListTile(
                                 trailing:
-                                    Text("Grade ${sheet.overall!.index - 2}"),
+                                    Text("Grade ${sheet.overall!.number}"),
                                 subtitle: Text(sheet.overallComments),
                                 title: Text(
                                     "${sheet.startTime.month} ${sheet.startTime.day}, ${sheet.startTime.year}"),
