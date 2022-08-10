@@ -50,13 +50,32 @@ class GradeItemTile2 extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    var ctsItem = ctsItems.firstWhere(
-                        (ctsItem) => gradeItem.name == ctsItem.name);
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        title: Text(ctsItem.name),
-                        content: Text(ctsItem.standards),
+                        title: Text(criterion.criterion),
+                        content: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Padding(
+                                  padding: EdgeInsets.only(top: 14),
+                                  child: Text("Performance",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold))),
+                              Padding(
+                                  padding: EdgeInsets.fromLTRB(8, 8, 8, 12),
+                                  child: Text(criterion.performance)),
+                              Text("Standards",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              Padding(
+                                  padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+                                  child: Text(criterion.standards)),
+                            ],
+                          ),
+                        ),
                         actions: <Widget>[
                           TextButton(
                               onPressed: () =>

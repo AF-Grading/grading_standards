@@ -133,14 +133,14 @@ class _NewFlightView2State extends State<NewFlightView2> {
                     controller: _sortieProfile,
                     decoration: InputDecoration(
                         hintText: "No Sortie Information Allowed"),
-                    validator: (value) {
+                    /* validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter a value";
                       }
                       context.read<CurrentFlight>().profile =
                           _sortieProfile.text;
                       return null;
-                    },
+                    }, */
                   ),
                 ),
               ],
