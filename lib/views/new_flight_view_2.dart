@@ -141,6 +141,10 @@ class _NewFlightView2State extends State<NewFlightView2> {
                           _sortieProfile.text;
                       return null;
                     }, */
+                    onChanged: (value) {
+                      context.read<CurrentFlight>().profile =
+                          _sortieProfile.text;
+                    },
                   ),
                 ),
               ],
