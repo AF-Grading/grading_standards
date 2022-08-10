@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../models/grade_enums.dart';
 import '../../models/grading_parameter.dart';
 import '../../widgets/spaced_item.dart';
+import '../lists/grading_criteria_page.dart';
 
 class AddEditGradingCriterionPage extends StatefulWidget {
   const AddEditGradingCriterionPage({Key? key, this.gradingCriterion})
@@ -71,184 +72,306 @@ class _AddEditGradingCriterionPageState
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Scaffold(
-        appBar: AppBar(
-            title: _isEditing
-                ? const Text("Edit Criterion")
-                : const Text("Add Criterion")),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              _isEditing
-                  ? SpacedItem(
-                      name: "Parameter",
-                      child: Text(widget.gradingCriterion!.criterion))
-                  : SpacedItem(
-                      name: "Parameter",
-                      child: TextFormField(
-                        controller: _criterionName,
-                        validator: (value) {
-                          if (value == "") {
-                            return "Please enter a name";
-                          }
-                          return null;
+      child: Consumer<List<GradingParameter>>(
+          builder: (context, gradingParams, child) {
+        if (gradingParams.isEmpty) {
+          return Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        } else {
+          return Scaffold(
+            appBar: AppBar(
+              title: _isEditing
+                  ? const Text("Edit Criterion")
+                  : const Text("Add Criterion"),
+              actions: [
+                _isEditing
+                    ? GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text("Delete"),
+                              content: Text(
+                                  "Are you sure you want to delete criterion?"),
+                              actions: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 30.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text("Criterion Deleted"),
+                                        ),
+                                      );
+
+                                      //Updates all Params to delete the old value
+
+                                      for (GradingParameter param
+                                          in gradingParams) {
+                                        var newParams = param.params;
+
+                                        newParams.removeWhere((paramm) =>
+                                            paramm.gradingItem ==
+                                            _criterionName.text);
+                                        final newParam = GradingParameter(
+                                            paramName: param.paramName,
+                                            params: newParams);
+
+                                        FirebaseFirestore.instance
+                                            .collection('Grading Parameters')
+                                            .withConverter(
+                                                fromFirestore: GradingParameter
+                                                    .fromFirestore,
+                                                toFirestore:
+                                                    (GradingParameter setting,
+                                                            _) =>
+                                                        setting.toFirestore())
+                                            .where("paramName",
+                                                isEqualTo: param.paramName)
+                                            .get()
+                                            .then((value) => FirebaseFirestore
+                                                .instance
+                                                .collection(
+                                                    'Grading Parameters')
+                                                .withConverter(
+                                                    fromFirestore:
+                                                        GradingParameter
+                                                            .fromFirestore,
+                                                    toFirestore:
+                                                        (GradingParameter
+                                                                    setting,
+                                                                _) =>
+                                                            setting
+                                                                .toFirestore())
+                                                .doc(value.docs[0].id)
+                                                .update(
+                                                    newParam.toFirestore()));
+                                      }
+
+                                      FirebaseFirestore.instance
+                                          .collection('Grading Criteria')
+                                          .withConverter(
+                                              fromFirestore: GradingCriterion
+                                                  .fromFirestore,
+                                              toFirestore:
+                                                  (GradingCriterion setting,
+                                                          _) =>
+                                                      setting.toFirestore())
+                                          .where("criterion",
+                                              isEqualTo:
+                                                  widget.gradingCriterion!
+                                                      .criterion)
+                                          .get()
+                                          .then((value) => FirebaseFirestore
+                                              .instance
+                                              .collection('Grading Criteria')
+                                              .withConverter(
+                                                  fromFirestore:
+                                                      GradingCriterion
+                                                          .fromFirestore,
+                                                  toFirestore:
+                                                      (GradingCriterion setting,
+                                                              _) =>
+                                                          setting.toFirestore())
+                                              .doc(value.docs[0].id)
+                                              .delete());
+                                      Navigator.popUntil(
+                                        context,
+                                        ModalRoute.withName('/'),
+                                      );
+                                    },
+                                    child: Text("Yes"),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context, 'Back to grading');
+                                  },
+                                  child: Text("No"),
+                                )
+                              ],
+                            ),
+                          );
                         },
-                      ),
-                    ),
-              SpacedItem(
-                name: "id",
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: _id,
-                  validator: (value) {
-                    if (value == "") {
-                      return "Please enter a name";
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              SpacedItem(
-                name: "Standards",
-                child: TextFormField(
-                  controller: _standards,
-                  minLines: 3,
-                  maxLines: 10,
-                  validator: (value) {
-                    if (value == "") {
-                      return "Please enter a name";
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              SpacedItem(
-                name: "Performance",
-                child: TextFormField(
-                  controller: _performance,
-                  minLines: 3,
-                  maxLines: 10,
-                  validator: (value) {
-                    if (value == "") {
-                      return "Please enter a name";
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              const Text("Pilot Qualifications"),
-              ..._pilotQuals.entries
-                  .map(
-                    (entry) => SpacedItem(
-                      name: entry.key.toUpperCase(),
-                      child: GradeRadiosFormField(
-                        initialValue: entry.value.grade,
-                        onChanged: (value) => setState(() {
-                          _pilotQuals[entry.key] = value.index - 1;
-                        }),
-                      ),
-                    ),
-                  )
-                  .toList(),
-              const Text("Airdrop Qualifications"),
-              ..._adQuals.entries
-                  .map((entry) => SpacedItem(
-                        name: entry.key.toUpperCase(),
-                        child: GradeRadiosFormField(
-                          initialValue: entry.value.grade,
-                          onChanged: (value) => setState(() {
-                            _adQuals[entry.key] = value.index - 1;
-                          }),
+                        child: Icon(Icons.delete),
+                      )
+                    : Container()
+              ],
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _isEditing
+                      ? SpacedItem(
+                          name: "Parameter",
+                          child: Text(widget.gradingCriterion!.criterion))
+                      : SpacedItem(
+                          name: "Parameter",
+                          child: TextFormField(
+                            controller: _criterionName,
+                            validator: (value) {
+                              if (value == "") {
+                                return "Please enter a name";
+                              }
+                              return null;
+                            },
+                          ),
                         ),
-                      ))
-                  .toList()
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            if (_formKey.currentState!.validate()) {
-              final gradingCriterion = GradingCriterion(
-                  id: int.parse(_id.text),
-                  criterion: _criterionName.text,
-                  standards: _standards.text,
-                  performance: _performance.text,
-                  pilotQuals: _pilotQuals,
-                  adQuals: _adQuals);
-
-              final List<GradingParameter> params =
-                  context.read<List<GradingParameter>>();
-
-              if (!_isEditing) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Criterion Added"),
+                  SpacedItem(
+                    name: "id",
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: _id,
+                      validator: (value) {
+                        if (value == "") {
+                          return "Please enter a name";
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                );
+                  SpacedItem(
+                    name: "Standards",
+                    child: TextFormField(
+                      controller: _standards,
+                      minLines: 3,
+                      maxLines: 10,
+                      validator: (value) {
+                        if (value == "") {
+                          return "Please enter a name";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  SpacedItem(
+                    name: "Performance",
+                    child: TextFormField(
+                      controller: _performance,
+                      minLines: 3,
+                      maxLines: 10,
+                      validator: (value) {
+                        if (value == "") {
+                          return "Please enter a name";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const Text("Pilot Qualifications"),
+                  ..._pilotQuals.entries
+                      .map(
+                        (entry) => SpacedItem(
+                          name: entry.key.toUpperCase(),
+                          child: GradeRadiosFormField(
+                            initialValue: entry.value.grade,
+                            onChanged: (value) => setState(() {
+                              _pilotQuals[entry.key] = value.index - 1;
+                            }),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  const Text("Airdrop Qualifications"),
+                  ..._adQuals.entries
+                      .map((entry) => SpacedItem(
+                            name: entry.key.toUpperCase(),
+                            child: GradeRadiosFormField(
+                              initialValue: entry.value.grade,
+                              onChanged: (value) => setState(() {
+                                _adQuals[entry.key] = value.index - 1;
+                              }),
+                            ),
+                          ))
+                      .toList()
+                ],
+              ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  final gradingCriterion = GradingCriterion(
+                      id: int.parse(_id.text),
+                      criterion: _criterionName.text,
+                      standards: _standards.text,
+                      performance: _performance.text,
+                      pilotQuals: _pilotQuals,
+                      adQuals: _adQuals);
 
-                FirebaseFirestore.instance
-                    .collection('Grading Criteria')
-                    .add(gradingCriterion.toFirestore());
+                  if (!_isEditing) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Criterion Added"),
+                      ),
+                    );
 
-                //Updates all Params to include the new value
+                    FirebaseFirestore.instance
+                        .collection('Grading Criteria')
+                        .add(gradingCriterion.toFirestore());
 
-                for (GradingParameter param in params) {
-                  var newParams = param.params;
-                  newParams.add(Param(_criterionName.text, false));
-                  final newParam = GradingParameter(
-                      paramName: param.paramName, params: newParams);
+                    //Updates all Params to include the new value
 
-                  FirebaseFirestore.instance
-                      .collection('Grading Parameters')
-                      .withConverter(
-                          fromFirestore: GradingParameter.fromFirestore,
-                          toFirestore: (GradingParameter setting, _) =>
-                              setting.toFirestore())
-                      .where("paramName", isEqualTo: param.paramName)
-                      .get()
-                      .then((value) => FirebaseFirestore.instance
+                    for (GradingParameter param in gradingParams) {
+                      var newParams = param.params;
+                      newParams.add(Param(_criterionName.text, false));
+                      final newParam = GradingParameter(
+                          paramName: param.paramName, params: newParams);
+
+                      FirebaseFirestore.instance
                           .collection('Grading Parameters')
                           .withConverter(
                               fromFirestore: GradingParameter.fromFirestore,
                               toFirestore: (GradingParameter setting, _) =>
                                   setting.toFirestore())
-                          .doc(value.docs[0].id)
-                          .update(newParam.toFirestore()));
-                }
+                          .where("paramName", isEqualTo: param.paramName)
+                          .get()
+                          .then((value) => FirebaseFirestore.instance
+                              .collection('Grading Parameters')
+                              .withConverter(
+                                  fromFirestore: GradingParameter.fromFirestore,
+                                  toFirestore: (GradingParameter setting, _) =>
+                                      setting.toFirestore())
+                              .doc(value.docs[0].id)
+                              .update(newParam.toFirestore()));
+                    }
 
-                Navigator.pop(context);
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Parameter Edited"),
-                  ),
-                );
+                    Navigator.pop(context);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Parameter Edited"),
+                      ),
+                    );
 
-                FirebaseFirestore.instance
-                    .collection('Grading Criteria')
-                    .withConverter(
-                        fromFirestore: GradingCriterion.fromFirestore,
-                        toFirestore: (GradingCriterion setting, _) =>
-                            setting.toFirestore())
-                    .where("criterion",
-                        isEqualTo: widget.gradingCriterion!.criterion)
-                    .get()
-                    .then((value) => FirebaseFirestore.instance
+                    FirebaseFirestore.instance
                         .collection('Grading Criteria')
                         .withConverter(
                             fromFirestore: GradingCriterion.fromFirestore,
                             toFirestore: (GradingCriterion setting, _) =>
                                 setting.toFirestore())
-                        .doc(value.docs[0].id)
-                        .update(gradingCriterion.toFirestore()));
+                        .where("criterion",
+                            isEqualTo: widget.gradingCriterion!.criterion)
+                        .get()
+                        .then((value) => FirebaseFirestore.instance
+                            .collection('Grading Criteria')
+                            .withConverter(
+                                fromFirestore: GradingCriterion.fromFirestore,
+                                toFirestore: (GradingCriterion setting, _) =>
+                                    setting.toFirestore())
+                            .doc(value.docs[0].id)
+                            .update(gradingCriterion.toFirestore()));
 
-                Navigator.pop(context);
-              }
-            }
-          },
-          child: const Icon(Icons.save),
-        ),
-      ),
+                    Navigator.pop(context);
+                  }
+                }
+              },
+              child: const Icon(Icons.save),
+            ),
+          );
+        }
+      }),
     );
   }
 }

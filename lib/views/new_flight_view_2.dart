@@ -131,8 +131,8 @@ class _NewFlightView2State extends State<NewFlightView2> {
                   name: "Flight Information",
                   child: TextFormField(
                     controller: _sortieProfile,
-                    decoration: InputDecoration(
-                        hintText: "No Sortie Information Allowed"),
+                    decoration:
+                        InputDecoration(hintText: "No Sortie Profile Allowed"),
                     /* validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter a value";

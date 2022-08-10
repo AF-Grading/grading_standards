@@ -90,12 +90,15 @@ class GradeItemTile2 extends StatelessWidget {
                   ),
                 ),
                 criterion.adQuals != null
-                    ? criterion.adQuals![student.adQual.name] != -1
+                    ? criterion.adQuals![student.adQual.name] != -1 &&
+                            criterion.adQuals![student.adQual.name] != null
                         ? Text("Ps: ${criterion.adQuals![student.adQual.name]}")
                         : Container()
                     : Container(),
                 criterion.pilotQuals != null
-                    ? criterion.pilotQuals![student.pilotQual.name] != -1
+                    ? criterion.pilotQuals![student.pilotQual.name] != -1 &&
+                            criterion.pilotQuals![student.pilotQual.name] !=
+                                null
                         ? Text(
                             "Ps: ${criterion.pilotQuals![student.pilotQual.name]}")
                         : Container()
