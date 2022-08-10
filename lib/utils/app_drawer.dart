@@ -1,5 +1,6 @@
 import 'package:app_prototype/models/current_user.dart';
 import 'package:app_prototype/models/theme_change.dart';
+import 'package:app_prototype/widgets/about_us/about_us.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -113,6 +114,15 @@ class _AppDrawerState extends State<AppDrawer> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SettingsPage()),
+            );
+          },
+        ),
+        ListTile(
+          title: const Text('About Us'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AboutUs()),
             );
           },
         ),
