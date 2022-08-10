@@ -55,7 +55,7 @@ class SettingsPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        user.name,
+                        "${user.rank.pretty} ${user.name}",
                         style: TextStyle(fontSize: 24),
                       ),
                     ),
