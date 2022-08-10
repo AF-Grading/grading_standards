@@ -221,7 +221,6 @@ class CurrentFlight extends ChangeNotifier {
   void updateByGradeItem(String student, GradeItem item) {
     int gradeSheet =
         _gradeSheets.indexWhere((sheet) => sheet.studentId == student);
-    print(student);
     int index = _gradeSheets[gradeSheet]
         .grades
         .indexWhere((gradeItem) => gradeItem.name == item.name);
@@ -236,7 +235,6 @@ class CurrentFlight extends ChangeNotifier {
       _gradeSheets[gradeSheet].grades.replaceRange(index, index + 1, [newItem]);
     }
 
-    print(_gradeSheets[gradeSheet].grades);
     notifyListeners();
   }
 

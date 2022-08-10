@@ -88,6 +88,10 @@ class ReviewFlightPage extends StatelessWidget {
                   .name),
               SliverToBoxAdapter(
                   child: ReviewGradeSheetCard(
+                student: context
+                    .watch<CurrentFlight>()
+                    .students
+                    .firstWhere((stud) => gradeSheet.studentId == stud.email),
                 gradeSheet: gradeSheet,
               )),
             ],

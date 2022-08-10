@@ -64,7 +64,7 @@ class SettingsPage extends StatelessWidget {
                       width: 300,
                       child: squad != null
                           ? CachedNetworkImage(
-                              imageUrl: squad!.image!,
+                              imageUrl: squad.image!,
                               placeholder: (context, url) =>
                                   CircularProgressIndicator(),
                               errorWidget: (context, url, error) =>

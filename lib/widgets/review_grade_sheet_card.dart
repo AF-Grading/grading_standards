@@ -12,9 +12,11 @@ import 'grades_card.dart';
 import 'slivers/sliver_title_bar.dart';
 
 class ReviewGradeSheetCard extends StatelessWidget {
-  const ReviewGradeSheetCard({Key? key, required this.gradeSheet})
+  const ReviewGradeSheetCard(
+      {Key? key, required this.gradeSheet, required this.student})
       : super(key: key);
 
+  final UserSetting student;
   final GradeSheet gradeSheet;
 
   @override
@@ -33,6 +35,7 @@ class ReviewGradeSheetCard extends StatelessWidget {
           children: [
             for (GradeItem item in gradeSheet.grades)
               GradeItemTile2(
+                student: student,
                 gradeItem: item,
                 onChanged: (gradeItem) {
                   context

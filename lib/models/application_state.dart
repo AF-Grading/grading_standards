@@ -29,8 +29,8 @@ class ApplicationState extends ChangeNotifier {
         _loginState = ApplicationLoginState.loggedIn;
         //}
       } else {
-        if (_loginState != ApplicationLoginState.noUser)
-          _loginState = ApplicationLoginState.loggedOut;
+        //if (_loginState != ApplicationLoginState.noUser)
+        _loginState = ApplicationLoginState.loggedOut;
       }
       notifyListeners();
     });
@@ -188,6 +188,8 @@ class ApplicationState extends ChangeNotifier {
         email: email,
         password: password,
       );
+
+      //if (val.user != null) val.user!.sendEmailVerification();
 
       if (val.user != null) getUserSetting(val.user!.email);
       /* .then((value) {
