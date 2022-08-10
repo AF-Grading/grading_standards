@@ -315,8 +315,8 @@ Widget _buildNarrow(FormFieldState<TimeCalculate> formState,
                       style: TextStyle(fontWeight: FontWeight.bold)))
             ],
           ),
-          for (String key in context.read<IndividualReport>().firstHalf.keys)
-            if (context.read<IndividualReport>().secondHalf.containsKey(key))
+          for (String key in context.watch<IndividualReport>().firstHalf.keys)
+            if (context.watch<IndividualReport>().secondHalf.containsKey(key))
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -332,7 +332,7 @@ Widget _buildNarrow(FormFieldState<TimeCalculate> formState,
                       width: 40,
                       height: 25,
                       child: Text(context
-                          .read<IndividualReport>()
+                          .watch<IndividualReport>()
                           .firstHalf[key]![0]
                           .toStringAsPrecision(3))),
 
@@ -341,7 +341,7 @@ Widget _buildNarrow(FormFieldState<TimeCalculate> formState,
                       width: 40,
                       height: 25,
                       child: Text(context
-                          .read<IndividualReport>()
+                          .watch<IndividualReport>()
                           .secondHalf[key]![0]
                           .toStringAsPrecision(3))),
 
@@ -350,10 +350,10 @@ Widget _buildNarrow(FormFieldState<TimeCalculate> formState,
                       width: 45,
                       height: 25,
                       child: Text((context
-                                  .read<IndividualReport>()
+                                  .watch<IndividualReport>()
                                   .secondHalf[key]![0] -
                               context
-                                  .read<IndividualReport>()
+                                  .watch<IndividualReport>()
                                   .firstHalf[key]![0])
                           .toStringAsPrecision(3)))
                 ],

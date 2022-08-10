@@ -312,8 +312,8 @@ Widget _buildNarrow(FormFieldState<TimeCalculate> formState,
                       style: TextStyle(fontWeight: FontWeight.bold)))
             ],
           ),
-          for (String key in context.read<TrainingShop>().firstHalf.keys)
-            if (context.read<TrainingShop>().secondHalf.containsKey(key))
+          for (String key in context.watch<TrainingShop>().firstHalf.keys)
+            if (context.watch<TrainingShop>().secondHalf.containsKey(key))
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -329,7 +329,7 @@ Widget _buildNarrow(FormFieldState<TimeCalculate> formState,
                       width: 40,
                       height: 25,
                       child: Text(context
-                          .read<TrainingShop>()
+                          .watch<TrainingShop>()
                           .firstHalf[key]![0]
                           .toStringAsPrecision(3))),
 
@@ -338,7 +338,7 @@ Widget _buildNarrow(FormFieldState<TimeCalculate> formState,
                       width: 40,
                       height: 25,
                       child: Text(context
-                          .read<TrainingShop>()
+                          .watch<TrainingShop>()
                           .secondHalf[key]![0]
                           .toStringAsPrecision(3))),
 
@@ -347,7 +347,7 @@ Widget _buildNarrow(FormFieldState<TimeCalculate> formState,
                       width: 45,
                       height: 25,
                       child: Text((context
-                                  .read<TrainingShop>()
+                                  .watch<TrainingShop>()
                                   .secondHalf[key]![0] -
                               context.read<TrainingShop>().firstHalf[key]![0])
                           .toStringAsPrecision(3)))
