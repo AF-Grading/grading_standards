@@ -89,6 +89,9 @@ class TrainingShopView extends StatelessWidget {
                             child: Text(
                                 context.watch<List<Squadron>>()[index].squad)),
                       ),
+                      Container(
+                        width: 100,
+                      ),
                     ],
                   ),
                 );

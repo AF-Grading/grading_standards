@@ -135,6 +135,7 @@ class _FlightView2State extends State<FlightView2>
           child: Column(
               children: _selectedGrades
                   .map((item) => GradeItemTile2(
+                      student: widget.student,
                       gradeItem: item,
                       onChanged: (gradeItem) {
                         setState(() {
@@ -194,6 +195,7 @@ class _FlightView2State extends State<FlightView2>
                 child: Column(
                     children: _unselectedGrades
                         .map((item) => GradeItemTile2(
+                            student: widget.student,
                             gradeItem: item,
                             onChanged: (gradeItem) {
                               setState(() {

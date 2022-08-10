@@ -77,12 +77,12 @@ class ReviewGradeSheetGeneralCard extends StatelessWidget {
           name: "Flight Information",
           child: TextFormField(
             initialValue: context.read<CurrentFlight>().profile,
-            validator: (value) {
+            /* validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Please enter a value";
               }
               return null;
-            },
+            }, */
             onChanged: (value) => context.read<CurrentFlight>().profile = value,
           ),
         ),
