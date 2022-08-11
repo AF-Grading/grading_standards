@@ -25,7 +25,7 @@ For first sign in, most users will opt to using the `sign up` option. After fini
 
 After successful login, users are greeted by multiple tabs. The first tab, `New Flight`, is the bread and butter of Grading Standards. On this tab, users will fill out the form, including any general information. Up to 4 students are allowed on each flight. The pre-select params option is to have some of the grading criteria to be already filled out. 
 
-![](readme_images/home.png){width=50%}
+![](readme_images/home.png)
 
 When ready, users will press the start flight button at the bottom right of the page.
 
@@ -35,7 +35,7 @@ The `Current Flight` page shows the tabs for each selected user, with the pre-se
 
 At the top, The `Proficiency Table` and `Grade Description` items show helpful information about the grading criteria and passing scores needed. Additionally, each criterion has an information icon that can be clicked to show the standards and performance metrics for each item. Finally, The `Ps` number shows the passing score associated with the students' pilot qualification or airdrop qualification, depending on the criterion.
 
-![](readme_images/current.png){width=50%}
+![](readme_images/current.png)
 
 Once the gradesheet is filled out, the user is then taken to a review page, clicking the button once more saves the sheet. Users have no need to fear losing work when offline, as the gradesheets are saved locally, then the database is updated automatically when it gets service. 
 
@@ -43,7 +43,7 @@ Once the gradesheet is filled out, the user is then taken to a review page, clic
 
 Once back at the Home Page, clicking the hamburger button at the top left brings up the navigation menu. Here, depending on the level of permissions, users will see different things. `My Grade Sheets` is the gradesheets the user has created. `All Grade Sheets` and `Users` are lists of all of the available items, users and gradesheets can be edited in each of their respective pages. On an individual grade sheet, a copy option is also available. A formatted version of the gradesheet will be saved to the clipboard, with a similar look as the output of the old Excel file.
 
-![](readme_images/home.png){width=50%}
+![](readme_images/home.png)
 
 For wing training level users, they will also see tabs fos `Parameters` and `Grading Criteria`. New items can be added or edited there as well. In the `Settings` page, users can select light mode or dark mode, as well as sign out. 
 
