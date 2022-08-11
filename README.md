@@ -9,7 +9,7 @@ Grading Standards is live in three locations:
 
 [Google Play](https://play.google.com/store/apps/details?id=com.af.grading_standards)
 
-[Play Store](https://testflight.apple.com/join/c5rDxaxH)
+[App Store](https://testflight.apple.com/join/c5rDxaxH)
 
 [Web](https://grading-standards.web.app/#/)
 
