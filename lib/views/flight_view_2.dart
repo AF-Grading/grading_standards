@@ -69,6 +69,8 @@ class _FlightView2State extends State<FlightView2>
               SpacedItem(
                 name: "Overall Comments",
                 child: TextFormField(
+                  minLines: 1,
+                  maxLines: 10,
                   onChanged: (value) => context.read<CurrentFlight>().update(
                       widget.gradeSheet.copyWith(overallComments: value)),
                   validator: (value) {

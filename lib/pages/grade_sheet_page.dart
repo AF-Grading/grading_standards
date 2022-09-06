@@ -145,14 +145,18 @@ class GradeSheetPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Expanded(
-                              child: SizedBox(
-                                  height: dist,
-                                  child: ListTile(
-                                    leading: const Text("Comments"),
-                                    title: Text(gradeSheet.overallComments),
-                                  )),
-                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            ListTile(leading: const Text("Comments")),
+                            Padding(
+                              padding: const EdgeInsets.only(left:16.0),
+                              child: Text(gradeSheet.overallComments),
+                            )
                           ],
                         ),
                       ),
