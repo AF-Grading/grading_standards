@@ -71,51 +71,55 @@ class _IndividualReportPageState extends State<IndividualReportPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Average Overall Grade: ${context.watch<IndividualReport>().overallAverage.toStringAsPrecision(3)}",
-                                      style: const TextStyle(fontSize: 22),
-                                    ),
-                                    const Text(
-                                      "Most Recent Overall Comment:",
-                                      style: TextStyle(fontSize: 22),
-                                    ),
-                                    Text(context
-                                        .watch<IndividualReport>()
-                                        .mostRecentComment),
-                                    const Text(
-                                      "Most Recent Recommendation:",
-                                      style: TextStyle(fontSize: 22),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 0, 0, 30),
-                                      child: Text(context
+                                Flexible(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Average Overall Grade: ${context.watch<IndividualReport>().overallAverage.toStringAsPrecision(3)}",
+                                        style: const TextStyle(fontSize: 22),
+                                      ),
+                                      const Text(                                      
+                                        "Most Recent Overall Comment:",
+                                        style: TextStyle(fontSize: 22),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 10,
+                                      ),
+                                      Text(context
                                           .watch<IndividualReport>()
-                                          .mostRecentRecommendation),
-                                    ),
-                                    const Text(
-                                      "Ungraded Items:",
-                                      style: TextStyle(fontSize: 22),
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: context
-                                          .watch<IndividualReport>()
-                                          .currentGrades
-                                          .where((item) =>
-                                              item.grade == Grade.noGrade)
-                                          .map((item) => Text(item.name))
-                                          .toList(),
-                                    )
-                                  ],
+                                          .mostRecentComment),
+                                      const Text(
+                                        "Most Recent Recommendation:",
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 0, 0, 30),
+                                        child: Text(context
+                                            .watch<IndividualReport>()
+                                            .mostRecentRecommendation),
+                                      ),
+                                      const Text(
+                                        "Ungraded Items:",
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: context
+                                            .watch<IndividualReport>()
+                                            .currentGrades
+                                            .where((item) =>
+                                                item.grade == Grade.noGrade)
+                                            .map((item) => Text(item.name))
+                                            .toList(),
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 Column(
                                   children: [
